@@ -1,0 +1,14 @@
+apply plugin:'java'
+
+repositories {
+    mavenCentral()
+}
+
+description = 'Spring richclient bagger business'
+dependencies {
+    compile 'org.springframework.boot:spring-boot-starter-logging:1.3.2.RELEASE',
+            'org.springframework:spring-core:2.5.1',
+            'org.springframework:spring-beans:2.5.1',
+            'org.springframework:spring-context:2.5.1',
+            'org.json:json:20151123'
+}
