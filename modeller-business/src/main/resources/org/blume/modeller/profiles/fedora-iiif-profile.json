@@ -1,0 +1,24 @@
+{
+  "ordered": [
+    {
+      "FedoraBaseURI" : {
+        "fieldRequired" : true
+      }
+    },
+    {
+      "CollectionRoot" : {
+        "fieldRequired" : true,
+      }
+    },
+    {
+      "ObjektID" : {
+        "fieldRequired" : true
+      }
+    },
+    {
+      "IIIFServiceBaseURI" : {
+        "fieldRequired" : true
+      }
+    }
+  ]
+}

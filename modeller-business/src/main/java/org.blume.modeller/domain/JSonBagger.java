@@ -31,7 +31,7 @@ import org.blume.modeller.Profile;
  *
  * <P>
  *
- * Leverages saving and loading profiles in JSON format.
+ * Leverages saving and loading org.blume.modeller.profiles in JSON format.
  *
  */
 public class JSonBagger implements Bagger {
@@ -39,7 +39,7 @@ public class JSonBagger implements Bagger {
   private File profilesFolder;
   
   private static final String BAGGER_PROFILES_HOME_PROPERTY = "BAGGER_PROFILES_HOME";
-  private static final String RESOURCE_DIR = "org/blume/modeller/org.blume.modeller/profiles";
+  private static final String RESOURCE_DIR = "org/blume/modeller/org.blume.modeller/org.blume.modeller.profiles";
   private static final String[] DEFAULT_PROFILES = new String[]{"eDeposit-profile.json", "ndiipp-profile.json", 
       "ndnp-profile.json", "other-project-profile.json", "Digital-Records-Accession-Generic-profile.json", 
       "Digital-Records-Accession-IARA-Indiana-profile.json"};
@@ -51,7 +51,7 @@ public class JSonBagger implements Bagger {
     }
     
     String profilesPath = homeDir + File.separator + "org.blume.modeller";
-    log.info("Using profiles from {}", profilesPath);
+    log.info("Using org.blume.modeller.profiles from {}", profilesPath);
     
     profilesFolder = new File(profilesPath);
     copyDefautprofilesToUserFolder(profilesFolder);

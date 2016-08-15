@@ -285,7 +285,7 @@
  </bean> 
 
  <bean id="toolBarButtonConfigurer" class="org.blume.modeller.BbToolBarCommandButtonConfigurer">
- <property name="useLargeIcons" value="false" />
+ <property name="useLargeIcons" value="true" />
  </bean> 
    
 </beans>

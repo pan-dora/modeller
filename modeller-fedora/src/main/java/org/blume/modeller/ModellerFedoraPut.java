@@ -13,19 +13,15 @@ import org.fcrepo.client.FcrepoOperationFailedException;
 
 import static java.net.URI.create;
 
-public class ModellerFedora {
-    public static final String baseUrl = "http://localhost:8080/fcrepo/rest/collection";
-    public static final String RDF_XML = "application/rdf+xml";
-    public static final String TEXT_TURTLE = "text/turtle";
+public class ModellerFedoraPut {
+    public static final String baseUrl = "http://localhost:8080/fcrepo/rest/collection/AIG/760";
     public static void main(String[] args) {
 
         final URI uri = create(baseUrl);
         FcrepoClient testClient;
         testClient = FcrepoClient.client().throwExceptionOnFailure().build();
         try {
-            FcrepoResponse response = testClient.get(uri)
-                    .accept(TEXT_TURTLE )
-                    .preferRepresentation()
+            FcrepoResponse response = testClient.put(uri)
                     .perform();
             try {
                 System.out.println(IOUtils.toString(response.getBody()));

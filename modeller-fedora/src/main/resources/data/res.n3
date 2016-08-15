@@ -1,0 +1,35 @@
+@prefix premis: <http://www.loc.gov/premis/rdf/v1#>
+@prefix image: <http://www.modeshape.org/images/1.0>
+@prefix sv: <http://www.jcp.org/jcr/sv/1.0>
+@prefix test: <info:fedora/test/>
+@prefix nt: <http://www.jcp.org/jcr/nt/1.0>
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+@prefix xsi: <http://www.w3.org/2001/XMLSchema-instance>
+@prefix mode: <http://www.modeshape.org/1.0>
+@prefix xmlns: <http://www.w3.org/2000/xmlns/>
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+@prefix fedora: <http://fedora.info/definitions/v4/repository#>
+@prefix xml: <http://www.w3.org/XML/1998/namespace>
+@prefix jcr: <http://www.jcp.org/jcr/1.0>
+@prefix ebucore: <http://www.ebu.ch/metadata/ontologies/ebucore/ebucore#>
+@prefix ldp: <http://www.w3.org/ns/ldp#>
+@prefix xs: <http://www.w3.org/2001/XMLSchema>
+@prefix fedoraconfig: <http://fedora.info/definitions/v4/config#>
+@prefix mix: <http://www.jcp.org/jcr/mix/1.0>
+@prefix foaf: <http://xmlns.com/foaf/0.1/>
+@prefix dc: <http://purl.org/dc/elements/1.1/>
+@prefix iiif: <http://iiif.io/api/image/2#>
+@prefix sc: <http://iiif.io/api/presentation/2#>
+@prefix exif: <http://www.w3.org/2003/12/exif/ns#>
+@prefix dc: <http://purl.org/dc/elements/1.1/>
+@prefix oa: <http://www.w3.org/ns/oa#>
+@prefix cnt: <http://www.w3.org/2011/content#>
+@prefix dcterms: <http://purl.org/dc/terms/>
+@prefix dctypes: <http://purl.org/dc/dcmitype/>
+@prefix doap: <http://usefulinc.com/ns/doap#>
+@prefix foaf: <http://xmlns.com/foaf/0.1/>
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>
+@prefix svcs: <http://rdfs.org/sioc/services#>
+@prefix as: <http://www.w3.org/ns/activitystreams#>
+
+<> <http://purl.org/dc/elements/1.1/format> "image/jpeg" .
