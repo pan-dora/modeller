@@ -17,7 +17,6 @@ PREFIX xs: <http://www.w3.org/2001/XMLSchema>
 PREFIX fedoraconfig: <http://fedora.info/definitions/v4/config#>
 PREFIX mix: <http://www.jcp.org/jcr/mix/1.0>
 PREFIX foaf: <http://xmlns.com/foaf/0.1/>
-PREFIX dc: <http://purl.org/dc/elements/1.1/>
 PREFIX iiif: <http://iiif.io/api/image/2#>
 PREFIX sc: <http://iiif.io/api/presentation/2#>
 PREFIX exif: <http://www.w3.org/2003/12/exif/ns#>
