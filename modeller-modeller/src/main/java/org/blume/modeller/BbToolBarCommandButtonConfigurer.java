@@ -14,51 +14,50 @@ import javax.swing.*;
  */
 public class BbToolBarCommandButtonConfigurer extends ToolBarCommandButtonConfigurer {
 
-  /**
-   * Indicates if large icons should be used.
-   */
-  private Boolean useLargeIcons;
+    /**
+     * Indicates if large icons should be used.
+     */
+    private Boolean useLargeIcons;
 
-  /**
-   * Creates this command button configurer.
-   */
-  public BbToolBarCommandButtonConfigurer() {
+    /**
+     * Creates this command button configurer.
+     */
+    public BbToolBarCommandButtonConfigurer() {
 
-    super();
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public void configure(AbstractButton button, AbstractCommand command, CommandFaceDescriptor faceDescriptor) {
-
-    super.configure(button, command, faceDescriptor);
-    faceDescriptor.configureIconInfo(button, this.getUseLargeIcons());
-  }
-
-  /**
-   * Gets the useLargeIcons.
-   * 
-   * @return the useLargeIcons
-   */
-  public Boolean getUseLargeIcons() {
-
-    if (this.useLargeIcons == null) {
-      this.setUseLargeIcons(Boolean.TRUE);
+        super();
     }
 
-    return this.useLargeIcons;
-  }
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void configure(AbstractButton button, AbstractCommand command, CommandFaceDescriptor faceDescriptor) {
 
-  /**
-   * Sets the useLargeIcons.
-   * 
-   * @param useLargeIcons
-   *          the useLargeIcons to set
-   */
-  public void setUseLargeIcons(Boolean useLargeIcons) {
-    Assert.notNull(useLargeIcons, "useLargeIcons");
-    this.useLargeIcons = useLargeIcons;
-  }
+        super.configure(button, command, faceDescriptor);
+        faceDescriptor.configureIconInfo(button, this.getUseLargeIcons());
+    }
+
+    /**
+     * Gets the useLargeIcons.
+     *
+     * @return the useLargeIcons
+     */
+    public Boolean getUseLargeIcons() {
+
+        if (this.useLargeIcons == null) {
+            this.setUseLargeIcons(Boolean.TRUE);
+        }
+
+        return this.useLargeIcons;
+    }
+
+    /**
+     * Sets the useLargeIcons.
+     *
+     * @param useLargeIcons the useLargeIcons to set
+     */
+    public void setUseLargeIcons(Boolean useLargeIcons) {
+        Assert.notNull(useLargeIcons, "useLargeIcons");
+        this.useLargeIcons = useLargeIcons;
+    }
 }

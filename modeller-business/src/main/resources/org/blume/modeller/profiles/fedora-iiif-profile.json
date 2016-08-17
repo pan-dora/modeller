@@ -2,12 +2,13 @@
   "ordered": [
     {
       "FedoraBaseURI" : {
-        "fieldRequired" : true
+        "fieldRequired" : true,
+        "requiredValue" : "http://localhost:8080/fcrepo/rest/"
       }
     },
     {
       "CollectionRoot" : {
-        "fieldRequired" : true,
+        "fieldRequired" : true
       }
     },
     {
@@ -17,7 +18,8 @@
     },
     {
       "IIIFServiceBaseURI" : {
-        "fieldRequired" : true
+        "fieldRequired" : true,
+        "requiredValue" : "http://localhost:8888/iiif/"
       }
     }
   ]

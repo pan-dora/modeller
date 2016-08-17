@@ -13,17 +13,17 @@ import org.springframework.richclient.command.support.ExitCommand;
  * @author Jon Steinbach
  */
 public class BaggerExit extends ExitCommand {
-  protected static final Logger log = LoggerFactory.getLogger(BaggerExit.class);
+    protected static final Logger log = LoggerFactory.getLogger(BaggerExit.class);
 
-  /**
-   * Closes the single {@link Application} instance.
-   *
-   * @see Application#close()
-   */
-  @Override
-  public void doExecuteCommand() {
-    super.doExecuteCommand();
-    log.debug("BaggerExit.doExecuteCommand");
-    System.exit(0);
-  }
+    /**
+     * Closes the single {@link Application} instance.
+     *
+     * @see Application#close()
+     */
+    @Override
+    public void doExecuteCommand() {
+        super.doExecuteCommand();
+        log.debug("BaggerExit.doExecuteCommand");
+        System.exit(0);
+    }
 }
