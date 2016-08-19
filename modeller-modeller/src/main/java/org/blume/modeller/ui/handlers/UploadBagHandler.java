@@ -2,6 +2,9 @@ package org.blume.modeller.ui.handlers;
 
 import java.awt.event.ActionEvent;
 import java.io.File;
+import java.net.URI;
+import java.nio.file.Path;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -11,6 +14,7 @@ import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
 import gov.loc.repository.bagit.impl.AbstractBagConstants;
+import org.blume.modeller.bag.BagInfoField;
 import org.blume.modeller.bag.BaggerFileEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +26,8 @@ import org.blume.modeller.ui.BagView;
 import org.blume.modeller.ui.Progress;
 import org.blume.modeller.ui.util.ApplicationContextUtil;
 import org.blume.modeller.ui.UploadBagFrame;
+import org.blume.modeller.ModellerClient;
+import org.fcrepo.client.FcrepoOperationFailedException;
 import gov.loc.repository.bagit.BagFactory;
 import gov.loc.repository.bagit.writer.Writer;
 import gov.loc.repository.bagit.writer.impl.FileSystemWriter;
@@ -34,6 +40,8 @@ public class UploadBagHandler extends AbstractAction implements Progress {
     DefaultBag bag;
     private BagView bagView;
     List<String> payload = null;
+    HashMap<String, BagInfoField> map;
+    BagInfoField baseURI, collectionRoot, objektID;
     private File tmpRootPath;
     private boolean clearAfterSaving = false;
     private String messages;
@@ -190,42 +198,21 @@ public class UploadBagHandler extends AbstractAction implements Progress {
         dialog.showDialog();
     }
 
-    public void saveBagAs() {
-        DefaultBag bag = bagView.getBag();
-        File selectFile = new File(File.separator + ".");
-        JFrame frame = new JFrame();
-        JFileChooser fs = new JFileChooser(selectFile);
-        fs.setDialogType(JFileChooser.SAVE_DIALOG);
-        fs.setFileSelectionMode(JFileChooser.FILES_ONLY);
-        // fs.addChoosableFileFilter(bagView.infoInputPane.tarFilter);
-        fs.setDialogTitle("Save Bag As");
-        fs.setCurrentDirectory(bag.getRootDir());
-        if (bag.getName() != null && !bag.getName().equalsIgnoreCase(bagView.getPropertyMessage("bag.label.noname"))) {
-            String selectedName = bag.getName();
-            if (bag.getSerialMode() == DefaultBag.ZIP_MODE) {
-                selectedName += "." + DefaultBag.ZIP_LABEL;
-            }
-            fs.setSelectedFile(new File(selectedName));
-        }
-        int option = fs.showSaveDialog(frame);
-
-        if (option == JFileChooser.APPROVE_OPTION) {
-            File file = fs.getSelectedFile();
-            upload(file);
-        }
-    }
-
     public void upload(File file) {
         DefaultBag bag = bagView.getBag();
         payload = bag.getPayloadPaths();
+        map = bag.getInfo().getFieldMap();
         String basePath = AbstractBagConstants.DATA_DIRECTORY;
-
+        Path rootDir = bagView.getBagRootPath().toPath();
         for (Iterator<String> it = payload.iterator(); it.hasNext();) {
             String filePath = it.next();
             try {
-                String normalPath;
-                    normalPath = BaggerFileEntity.removeBasePath(basePath, filePath);
-                    log.debug("File path {}", normalPath);
+                String normalPath = BaggerFileEntity.removeBasePath(basePath, filePath);
+                String destinationURI = getDestinationURI(map, normalPath);
+                Path absoluteFilePath = rootDir.resolve(filePath);
+                File bagResource = absoluteFilePath.toFile();
+                ModellerClient client = new ModellerClient();
+                client.doBinaryPut(destinationURI, bagResource);
             } catch (Exception e) {
                 log.error("Failed to remove base path from {}", filePath, e);
             }
@@ -235,21 +222,6 @@ public class UploadBagHandler extends AbstractAction implements Progress {
             file = bagView.getBagRootPath();
         }
         bag.setName(file.getName());
-        File bagFile = new File(file, bag.getName());
-        if (bagFile.exists()) {
-            tmpRootPath = file;
-            confirmWriteBag();
-        } else {
-            if (bag.getSize() > DefaultBag.MAX_SIZE) {
-                tmpRootPath = file;
-                confirmAcceptBagSize();
-            } else {
-                bagView.setBagRootPath(file);
-                saveBag(bagView.getBagRootPath());
-            }
-        }
-        String fileName = bagFile.getAbsolutePath();
-        bagView.infoInputPane.setBagName(fileName);
         bagView.getControl().invalidate();
     }
 
@@ -258,5 +230,18 @@ public class UploadBagHandler extends AbstractAction implements Progress {
         uploadBagFrame = new UploadBagFrame(bagView, bagView.getPropertyMessage("bag.frame.save"));
         uploadBagFrame.setBag(bag);
         uploadBagFrame.setVisible(true);
+    }
+
+    public String getDestinationURI(HashMap<String, BagInfoField> map, String normalPath) {
+
+        baseURI = map.get("FedoraBaseURI");
+        collectionRoot = map.get("CollectionRoot");
+        objektID = map.get("ObjektID");
+        String destinationURI = new StringBuilder(baseURI.getValue())
+                .append(collectionRoot.getValue())
+                .append(objektID.getValue())
+                .append(normalPath)
+                .toString();
+        return destinationURI;
     }
 }

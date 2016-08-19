@@ -150,7 +150,7 @@ public class UploadBagFrame extends JFrame implements ActionListener {
 
         DefaultBag bag = bagView.getBag();
         if (bag != null) {
-            map  = bag.getInfo().getFieldMap();
+            map = bag.getInfo().getFieldMap();
         }
 
         urlLabel = new JLabel(bagView.getPropertyMessage("baseURL.label"));
@@ -159,7 +159,9 @@ public class UploadBagFrame extends JFrame implements ActionListener {
         baseURI = map.get("FedoraBaseURI");
         collectionRoot = map.get("CollectionRoot");
         objektID = map.get("ObjektID");
-        String uri = new StringBuilder(baseURI.getValue()).append(collectionRoot.getValue()).append(objektID.getValue()).toString();
+        String uri = new StringBuilder(baseURI.getValue())
+                .append(collectionRoot.getValue())
+                .append(objektID.getValue()).toString();
         try {
             urlField.setText(uri);
         } catch (Exception e) {
@@ -208,31 +210,6 @@ public class UploadBagFrame extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         invalidate();
         repaint();
-    }
-
-    public class SerializeBagHandler extends AbstractAction {
-        private static final long serialVersionUID = 1L;
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            JRadioButton cb = (JRadioButton) e.getSource();
-            boolean isSel = cb.isSelected();
-            if (isSel) {
-                if (cb == noneButton) {
-                    bagView.getBag().isSerial(false);
-                    bagView.getBag().setSerialMode(DefaultBag.NO_MODE);
-                    bagView.infoInputPane.serializeValue.setText(DefaultBag.NO_LABEL);
-                } else if (cb == zipButton) {
-                    bagView.getBag().isSerial(true);
-                    bagView.getBag().setSerialMode(DefaultBag.ZIP_MODE);
-                    bagView.infoInputPane.serializeValue.setText(DefaultBag.ZIP_LABEL);
-                } else {
-                    bagView.getBag().isSerial(false);
-                    bagView.getBag().setSerialMode(DefaultBag.NO_MODE);
-                    bagView.infoInputPane.serializeValue.setText(DefaultBag.NO_LABEL);
-                }
-            }
-        }
     }
 
     private class UploadBagHandler extends AbstractAction {
