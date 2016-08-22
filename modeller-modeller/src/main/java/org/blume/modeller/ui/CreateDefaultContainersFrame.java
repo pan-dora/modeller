@@ -55,7 +55,7 @@ import org.springframework.richclient.util.GuiStandardUtils;
 import org.blume.modeller.bag.impl.DefaultBag;
 import org.blume.modeller.bag.BagInfoField;
 
-public class UploadBagFrame extends JFrame implements ActionListener {
+public class CreateDefaultContainersFrame extends JFrame implements ActionListener {
     protected static final Logger log = LoggerFactory.getLogger(SaveBagFrame.class);
     private static final long serialVersionUID = 1L;
     transient BagView bagView;
@@ -69,7 +69,7 @@ public class UploadBagFrame extends JFrame implements ActionListener {
     JRadioButton noneButton;
     JRadioButton zipButton;
 
-    public UploadBagFrame(BagView bagView, String title) {
+    public CreateDefaultContainersFrame(BagView bagView, String title) {
         super(title);
         this.bagView = bagView;
         if (bagView != null) {
@@ -103,7 +103,7 @@ public class UploadBagFrame extends JFrame implements ActionListener {
             @Override
             public void doExecuteCommand() {
 
-                new OkUploadBagHandler().actionPerformed(null);
+                new OkCreateDefaultContainersHandler().actionPerformed(null);
 
             }
         };
@@ -112,7 +112,7 @@ public class UploadBagFrame extends JFrame implements ActionListener {
 
             @Override
             public void doExecuteCommand() {
-                new CancelUploadBagHandler().actionPerformed(null);
+                new CancelCreateDefaultContainersHandler().actionPerformed(null);
             }
         };
     }
@@ -140,14 +140,14 @@ public class UploadBagFrame extends JFrame implements ActionListener {
         initStandardCommands();
         JPanel pageControl = new JPanel(new BorderLayout());
         JPanel titlePaneContainer = new JPanel(new BorderLayout());
-        titlePane.setTitle(bagView.getPropertyMessage("UploadBagFrame.title"));
-        titlePane.setMessage(new DefaultMessage(bagView.getPropertyMessage("Define the Repository settings")));
+        titlePane.setTitle(bagView.getPropertyMessage("CreateContainersFrame.title"));
+        titlePane.setMessage(new DefaultMessage(bagView.getPropertyMessage("Create the default IIIF Containers")));
         titlePaneContainer.add(titlePane.getControl());
         titlePaneContainer.add(new JSeparator(), BorderLayout.SOUTH);
         pageControl.add(titlePaneContainer, BorderLayout.NORTH);
         JPanel contentPane = new JPanel();
-        DefaultBag bag = bagView.getBag();
 
+        DefaultBag bag = bagView.getBag();
         if (bag != null) {
             map = bag.getInfo().getFieldMap();
         }
@@ -155,17 +155,11 @@ public class UploadBagFrame extends JFrame implements ActionListener {
         urlLabel = new JLabel(bagView.getPropertyMessage("baseURL.label"));
         urlLabel.setToolTipText(bagView.getPropertyMessage("baseURL.description"));
         urlField = new JTextField("");
-        String uri = bagView.uploadBagHandler.getResourceContainer(map);
+        String uri = bagView.createDefaultContainersHandler.getObjektURI(map);
         try {
             urlField.setText(uri);
         } catch (Exception e) {
             log.error("Failed to set url label", e);
-        }
-        urlField.setEnabled(false);
-
-        //only if bag is not null
-        if (bag != null) {
-            urlLabel.setEnabled(true);
         }
 
         GridBagLayout layout = new GridBagLayout();
@@ -175,6 +169,13 @@ public class UploadBagFrame extends JFrame implements ActionListener {
 
         int row = 0;
 
+        row++;
+        buildConstraints(glbc, 0, row, 1, 1, 1, 50, GridBagConstraints.NONE, GridBagConstraints.WEST);
+        layout.setConstraints(urlLabel, glbc);
+        panel.add(urlLabel);
+        buildConstraints(glbc, 1, row, 1, 1, 80, 50, GridBagConstraints.HORIZONTAL, GridBagConstraints.CENTER);
+        layout.setConstraints(urlField, glbc);
+        panel.add(urlField);
         row++;
         buildConstraints(glbc, 0, row, 1, 1, 1, 50, GridBagConstraints.NONE, GridBagConstraints.WEST);
         layout.setConstraints(urlLabel, glbc);
@@ -206,18 +207,18 @@ public class UploadBagFrame extends JFrame implements ActionListener {
         repaint();
     }
 
-    private class OkUploadBagHandler extends AbstractAction {
+    private class OkCreateDefaultContainersHandler extends AbstractAction {
         private static final long serialVersionUID = 1L;
 
         @Override
         public void actionPerformed(ActionEvent e) {
             setVisible(false);
             bagView.getBag().setName(bagFileName);
-            bagView.uploadBagHandler.upload(bagFile);
+            bagView.createDefaultContainersHandler.create();
         }
     }
 
-    private class CancelUploadBagHandler extends AbstractAction {
+    private class CancelCreateDefaultContainersHandler extends AbstractAction {
         private static final long serialVersionUID = 1L;
 
         @Override

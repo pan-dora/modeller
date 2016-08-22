@@ -34,4 +34,21 @@ public class ModellerClient {
             e.printStackTrace();
         }
     }
+
+    public void doPut(String destinationURI) {
+        final URI uri = create(destinationURI);
+        FcrepoClient testClient;
+        testClient = FcrepoClient.client().throwExceptionOnFailure().build();
+        try {
+            FcrepoResponse response = testClient.put(uri)
+                    .perform();
+            try {
+                System.out.println(IOUtils.toString(response.getBody()));
+            } catch (IOException e){
+                System.out.println(e);
+            }
+        } catch (FcrepoOperationFailedException e) {
+            System.out.println(e);
+        }
+    }
 }

@@ -62,6 +62,8 @@ import org.blume.modeller.ui.handlers.OpenBagHandler;
 import org.blume.modeller.ui.handlers.OpenExecutor;
 import org.blume.modeller.ui.handlers.RemoveDataHandler;
 import org.blume.modeller.ui.handlers.RemoveTagFileHandler;
+import org.blume.modeller.ui.handlers.CreateDefaultContainersExecutor;
+import org.blume.modeller.ui.handlers.CreateDefaultContainersHandler;
 import org.blume.modeller.ui.handlers.UploadBagExecutor;
 import org.blume.modeller.ui.handlers.UploadBagHandler;
 import org.blume.modeller.ui.handlers.SaveBagAsExecutor;
@@ -116,6 +118,8 @@ public class BagView extends AbstractView implements ApplicationListener {
     public CreateBagInPlaceHandler createBagInPlaceHandler;
     public CreateBagInPlaceExecutor createBagInPlaceExecutor = new CreateBagInPlaceExecutor(this);
     public SaveBagHandler saveBagHandler;
+    public CreateDefaultContainersHandler createDefaultContainersHandler;
+    public CreateDefaultContainersExecutor createDefaultContainersExecutor = new CreateDefaultContainersExecutor(this);
     public UploadBagHandler uploadBagHandler;
     public UploadBagExecutor uploadBagExecutor = new UploadBagExecutor(this);
     public SaveBagExecutor saveBagExecutor = new SaveBagExecutor(this);
@@ -248,6 +252,7 @@ public class BagView extends AbstractView implements ApplicationListener {
         saveBagHandler = new SaveBagHandler(this);
         saveBagAsHandler = new SaveBagAsHandler(this);
         uploadBagHandler = new UploadBagHandler(this);
+        createDefaultContainersHandler = new CreateDefaultContainersHandler(this);
         completeBagHandler = new CompleteBagHandler(this);
         validateBagHandler = new ValidateBagHandler(this);
         clearBagHandler = new ClearBagHandler(this);
@@ -648,6 +653,7 @@ public class BagView extends AbstractView implements ApplicationListener {
         context.register("addDataCommand", addDataExecutor);
         context.register("saveBagCommand", saveBagExecutor);
         context.register("saveBagAsCommand", saveBagAsExecutor);
+        context.register("createDefaultContainersCommand", createDefaultContainersExecutor);
         context.register("uploadBagCommand", uploadBagExecutor);
     }
 

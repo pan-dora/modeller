@@ -21,6 +21,48 @@
         "fieldRequired" : true,
         "requiredValue" : "http://localhost:8888/iiif/"
       }
+    },
+    {
+      "IIIFManifestContainer" : {
+        "fieldRequired" : true,
+        "requiredValue" : "manifest/"
+      }
+    },
+    {
+      "IIIFSequenceContainer" : {
+        "fieldRequired" : true,
+        "requiredValue" : "sequence/"
+      }
+    },
+    {
+      "IIIFRangeContainer" : {
+        "fieldRequired" : true,
+        "requiredValue" : "range/"
+      }
+    },
+    {
+      "IIIFCanvasContainer" : {
+        "fieldRequired" : true,
+        "requiredValue" : "canvas/"
+      }
+    },
+    {
+      "IIIFResourceContainer" : {
+        "fieldRequired" : true,
+        "requiredValue" : "res/"
+      }
+    },
+    {
+      "IIIFListContainer" : {
+        "fieldRequired" : true,
+        "requiredValue" : "list/"
+      }
+    },
+    {
+      "IIIFLayerContainer" : {
+        "fieldRequired" : true,
+        "requiredValue" : "layer/"
+      }
     }
   ]
 }

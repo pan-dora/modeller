@@ -22,6 +22,7 @@ jar.baseName="modeller"
 dependencies {
     compile project(':modeller-core'),
             project(':modeller-business'),
+            project(':modeller-fedora'),
             'org.springframework.boot:spring-boot-starter-logging:1.3.2.RELEASE',
             'com.vlsolutions:vldocking:2.1.4',
             'com.jgoodies:forms:1.0.7',
