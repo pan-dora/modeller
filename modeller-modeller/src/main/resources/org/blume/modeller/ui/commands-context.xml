@@ -17,10 +17,11 @@
                 <value>removeDataCommand</value>
                 <value>saveBagCommand</value>
                 <value>saveBagAsCommand</value>
-                <value>createDefaultContainersCommand</value>
-                <value>uploadBagCommand</value>
                 <value>addTagFileCommand</value>
                 <value>removeTagFileCommand</value>
+                <value>createDefaultContainersCommand</value>
+                <value>uploadBagCommand</value>
+                <value>patchResourceCommand</value>
             </list>
         </property>
     </bean>
@@ -61,6 +62,7 @@
                 <value>saveBagAsCommand</value>
                 <value>createDefaultContainersCommand</value>
                 <value>uploadBagCommand</value>
+                <value>patchResourceCommand</value>
             </list>
         </property>
     </bean>
@@ -87,6 +89,7 @@
             <list>
                 <value>createDefaultContainersCommand</value>
                 <value>uploadBagCommand</value>
+                <value>patchResourceCommand</value>
             </list>
         </property>
     </bean>

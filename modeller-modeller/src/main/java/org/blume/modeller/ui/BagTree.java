@@ -18,12 +18,13 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
+import org.blume.modeller.ui.jpanel.BagView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.blume.modeller.bag.BaggerFileEntity;
 import org.blume.modeller.bag.impl.DefaultBag;
-import org.blume.modeller.ui.handlers.BagTreeTransferHandler;
+import org.blume.modeller.ui.handlers.base.BagTreeTransferHandler;
 import gov.loc.repository.bagit.impl.AbstractBagConstants;
 
 public class BagTree extends JTree {

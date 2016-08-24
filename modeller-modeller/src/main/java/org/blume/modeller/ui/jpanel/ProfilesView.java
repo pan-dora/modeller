@@ -1,28 +1,23 @@
-package org.blume.modeller.ui;
+package org.blume.modeller.ui.jpanel;
+
+import java.awt.BorderLayout;
 
 import javax.swing.JComponent;
+import javax.swing.JPanel;
 
-import org.blume.modeller.ui.jpanel.ConsolePane;
-import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.richclient.application.Application;
 import org.springframework.richclient.application.PageComponentContext;
 import org.springframework.richclient.application.support.AbstractView;
 
 import org.blume.modeller.ui.util.ApplicationContextUtil;
 
-
-public class ConsoleView extends AbstractView {
-
-  private ConsolePane consolePane;
-
-  public ConsoleView() {
-    ((ConfigurableApplicationContext)Application.instance().getApplicationContext()).getBeanFactory().registerSingleton("myConsoleView", this);
-  }
+public class ProfilesView extends AbstractView {
 
   @Override
   protected JComponent createControl() {
-    consolePane = new ConsolePane(getInitialConsoleMsg());
-    return consolePane;
+    JPanel bagViewPanel = new JPanel(new BorderLayout(2, 2));
+    InfoFormsPane infoPanel = ApplicationContextUtil.getBagView().infoInputPane;
+    bagViewPanel.add(infoPanel);
+    return bagViewPanel;
   }
 
   @Override
@@ -36,22 +31,5 @@ public class ConsoleView extends AbstractView {
     context.register("addDataCommand", ApplicationContextUtil.getBagView().addDataExecutor);
     context.register("saveBagCommand", ApplicationContextUtil.getBagView().saveBagExecutor);
     context.register("saveBagAsCommand", ApplicationContextUtil.getBagView().saveBagAsExecutor);
-  }
-
-  public void addConsoleMessages(String messages) {
-    consolePane.addConsoleMessages(messages);
-  }
-
-  public void clearConsoleMessages() {
-    consolePane.clearConsoleMessages();
-  }
-
-  private String getInitialConsoleMsg() {
-    StringBuffer buffer = new StringBuffer();
-    buffer.append(getMessage("consolepane.msg.help"));
-    buffer.append("\n\n");
-    buffer.append(getMessage("consolepane.status.help"));
-    buffer.append("\n\n");
-    return buffer.toString();
   }
 }

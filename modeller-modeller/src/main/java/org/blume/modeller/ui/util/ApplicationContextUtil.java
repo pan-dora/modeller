@@ -9,7 +9,7 @@ import org.springframework.richclient.application.Application;
 import org.springframework.richclient.application.ApplicationServicesLocator;
 import org.springframework.richclient.image.ImageSource;
 
-import org.blume.modeller.ui.BagView;
+import org.blume.modeller.ui.jpanel.BagView;
 import org.blume.modeller.ui.ConsoleView;
 
 public class ApplicationContextUtil {

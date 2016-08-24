@@ -4,6 +4,8 @@ import org.apache.commons.io.IOUtils;
 import org.fcrepo.client.FcrepoClient;
 import org.fcrepo.client.FcrepoOperationFailedException;
 import org.fcrepo.client.FcrepoResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,7 +14,7 @@ import java.net.URI;
 import static java.net.URI.create;
 
 public class ModellerClient {
-
+    protected static final Logger log = LoggerFactory.getLogger(ModellerClient.class);
     public ModellerClient() {}
 
     public void doBinaryPut(String destinationURI, File bagResource) {
@@ -24,7 +26,7 @@ public class ModellerClient {
                     .body(bagResource, "image/jpg")
                     .perform();
             try {
-                System.out.println(IOUtils.toString(response.getBody()));
+                log.info(IOUtils.toString(response.getBody()));
             } catch (IOException e){
                 System.out.println(e);
             }
@@ -43,7 +45,7 @@ public class ModellerClient {
             FcrepoResponse response = testClient.put(uri)
                     .perform();
             try {
-                System.out.println(IOUtils.toString(response.getBody()));
+                log.info(IOUtils.toString(response.getBody()));
             } catch (IOException e){
                 System.out.println(e);
             }

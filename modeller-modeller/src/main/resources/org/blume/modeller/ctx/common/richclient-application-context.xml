@@ -234,7 +234,7 @@
   </bean>
 
   <bean id="bagView" class="org.springframework.richclient.application.docking.vldocking.VLDockingViewDescriptor">
-    <property name="viewClass" value="org.blume.modeller.ui.BagView" />
+    <property name="viewClass" value="org.blume.modeller.ui.jpanel.BagView" />
     <property name="autoHideEnabled" value="true" />
      <property name="floatEnabled" value="true" />
      <property name="maximizeEnabled" value="true"/>
@@ -249,7 +249,7 @@
   
   <bean id="profilesView" 
      class="org.springframework.richclient.application.docking.vldocking.VLDockingViewDescriptor" depends-on="bagView">
-    <property name="viewClass" value="org.blume.modeller.ui.ProfilesView" />
+    <property name="viewClass" value="org.blume.modeller.ui.jpanel.ProfilesView" />
     <property name="autoHideEnabled" value="true" />
     <property name="floatEnabled" value="true" />
     <property name="maximizeEnabled" value="true"/>

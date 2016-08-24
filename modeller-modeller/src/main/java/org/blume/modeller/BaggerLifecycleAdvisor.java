@@ -47,7 +47,9 @@ public class BaggerLifecycleAdvisor extends DefaultApplicationLifecycleAdvisor {
         super.onPreWindowOpen(configurer);
         // comment out to hide the menubar, or reduce window size...
         // configurer.setShowMenuBar(false);
-        configurer.setInitialSize(new Dimension(1024, 768));
+        Rectangle rect = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds();
+        configurer.setInitialSize(new Dimension(rect.width, rect.height));
+        //configurer.setInitialSize(new Dimension(1024, 768));
     }
 
     /**

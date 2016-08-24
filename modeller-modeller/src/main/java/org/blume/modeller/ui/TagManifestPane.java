@@ -13,6 +13,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import org.blume.modeller.ui.jpanel.BagView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
