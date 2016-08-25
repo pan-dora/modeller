@@ -1,4 +1,4 @@
-package org.blume.modeller;
+package org.blume.modeller.templates;
 
 import com.github.mustachejava.DefaultMustacheFactory;
 import com.github.mustachejava.Mustache;
@@ -31,8 +31,8 @@ public class TestTemplate {
         String serviceURI;
     }
 
-    static class Prefix {
-        Prefix(String prefix) {
+    public static class Prefix {
+        public Prefix(String prefix) {
             this.prefix = prefix;
         }
 

@@ -1,4 +1,4 @@
-package org.blume.modeller;
+package org.blume.modeller.templates;
 
 import org.apache.commons.io.IOUtils;
 
