@@ -14,13 +14,13 @@ Current maintainers:
 The workflow:
 
 1. select a directory of file resources.
-2. PUT file resources into Fedora.
-3. create a sparql-update request body for each resource with variable 
-metadata entered into a UI form.
-4. PATCH fcr:metadata to file resources
-5. Create XML descriptors for each file resource and store them to binary
+2. enter metadata parameters for resource "Bag"
+3. save "Bag" to filesystem
+4. Create IIIF model containers (PUT)
+5. PUT "bag" resources into Fedora.
+6. PATCH fcr:metadata to file resources
+7. Create XML descriptors for each file resource and store them to binary
 serialization directory.
-6. Create IIIF model containers (PUT)
-7. Create list, canvas sequence, and manifest sparql-update request bodies 
+8. Create list, canvas sequence, and manifest sparql-update request bodies 
 using UI form
-8. PATCH IIIF model containers with metadata.
+9. PATCH IIIF model containers with metadata.

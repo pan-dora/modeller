@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
 
 import static java.net.URI.create;
@@ -25,11 +26,7 @@ public class ModellerClient {
             FcrepoResponse response = testClient.put(uri)
                     .body(bagResource, "image/jpg")
                     .perform();
-            try {
-                log.info(IOUtils.toString(response.getBody()));
-            } catch (IOException e){
-                System.out.println(e);
-            }
+            log.info(String.valueOf(response.getStatusCode()));
         } catch (FcrepoOperationFailedException e) {
             System.out.println(e);
         } catch (IOException e) {
@@ -49,6 +46,20 @@ public class ModellerClient {
             } catch (IOException e){
                 System.out.println(e);
             }
+        } catch (FcrepoOperationFailedException e) {
+            System.out.println(e);
+        }
+    }
+
+    public void doPatch(String destinationURI, InputStream rdfBody) {
+        final URI uri = create(destinationURI);
+        FcrepoClient testClient;
+        testClient = FcrepoClient.client().throwExceptionOnFailure().build();
+        try {
+            FcrepoResponse response = testClient.patch(uri)
+                    .body(rdfBody)
+                    .perform();
+            log.info(String.valueOf(response.getStatusCode()));
         } catch (FcrepoOperationFailedException e) {
             System.out.println(e);
         }
