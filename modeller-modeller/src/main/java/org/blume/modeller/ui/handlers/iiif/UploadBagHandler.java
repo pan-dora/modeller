@@ -12,6 +12,7 @@ import javax.swing.AbstractAction;
 import gov.loc.repository.bagit.impl.AbstractBagConstants;
 import org.blume.modeller.bag.BagInfoField;
 import org.blume.modeller.bag.BaggerFileEntity;
+import org.blume.modeller.ui.util.ImageIOUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,6 +22,7 @@ import org.blume.modeller.ui.Progress;
 import org.blume.modeller.ui.util.ApplicationContextUtil;
 import org.blume.modeller.ui.jpanel.UploadBagFrame;
 import org.blume.modeller.ModellerClient;
+
 
 public class UploadBagHandler extends AbstractAction implements Progress {
     protected static final Logger log = LoggerFactory.getLogger(UploadBagHandler.class);
@@ -52,16 +54,20 @@ public class UploadBagHandler extends AbstractAction implements Progress {
         map = bag.getInfo().getFieldMap();
         String resourceContainer = getResourceContainer(map);
         ModellerClient client = new ModellerClient();
+        ImageIOUtil imageioutil = new ImageIOUtil();
         String basePath = AbstractBagConstants.DATA_DIRECTORY;
         Path rootDir = bagView.getBagRootPath().toPath();
-        for (Iterator<String> it = payload.iterator(); it.hasNext();) {
-            String filePath = it.next();
+        for (String filePath : payload) {
             String normalPath = BaggerFileEntity.removeBasePath(basePath, filePath);
             String destinationURI = getDestinationURI(resourceContainer, normalPath);
             Path absoluteFilePath = rootDir.resolve(filePath);
-            File bagResource = absoluteFilePath.toFile();
-            client.doBinaryPut(destinationURI, bagResource);
-            ApplicationContextUtil.addConsoleMessage(message + " " + destinationURI);
+            File resourceFile = absoluteFilePath.toFile();
+            String contentType = imageioutil.getImageMIMEType(resourceFile);
+            try {
+                client.doBinaryPut(destinationURI, resourceFile, contentType);
+            } finally {
+                ApplicationContextUtil.addConsoleMessage(message + " " + destinationURI);
+            }
         }
         bagView.getControl().invalidate();
     }
@@ -74,10 +80,8 @@ public class UploadBagHandler extends AbstractAction implements Progress {
     }
 
     public String getDestinationURI(String resourceContainer, String normalPath) {
-        String destinationURI = new StringBuilder(resourceContainer)
-                .append(normalPath)
-                .toString();
-        return destinationURI;
+        return resourceContainer +
+                normalPath;
     }
 
     public String getResourceContainer(HashMap<String, BagInfoField> map) {
@@ -85,11 +89,9 @@ public class UploadBagHandler extends AbstractAction implements Progress {
         collectionRoot = map.get("CollectionRoot");
         objektID = map.get("ObjektID");
         IIIFResourceContainer = map.get("IIIFResourceContainer");
-        String resourceContainer = new StringBuilder(baseURI.getValue())
-                .append(collectionRoot.getValue())
-                .append(objektID.getValue())
-                .append(IIIFResourceContainer.getValue())
-                .toString();
-        return resourceContainer;
+        return baseURI.getValue() +
+                collectionRoot.getValue() +
+                objektID.getValue() +
+                IIIFResourceContainer.getValue();
     }
 }

@@ -18,13 +18,13 @@ public class ModellerClient {
     protected static final Logger log = LoggerFactory.getLogger(ModellerClient.class);
     public ModellerClient() {}
 
-    public void doBinaryPut(String destinationURI, File bagResource) {
+    public void doBinaryPut(String destinationURI, File resourceFile, String contentType) {
         final URI uri = create(destinationURI);
         FcrepoClient testClient;
         testClient = FcrepoClient.client().throwExceptionOnFailure().build();
         try {
             FcrepoResponse response = testClient.put(uri)
-                    .body(bagResource, "image/jpg")
+                    .body(resourceFile, contentType)
                     .perform();
             log.info(String.valueOf(response.getStatusCode()));
         } catch (FcrepoOperationFailedException e) {
