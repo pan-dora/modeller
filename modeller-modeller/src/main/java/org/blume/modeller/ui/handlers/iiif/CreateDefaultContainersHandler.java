@@ -1,9 +1,7 @@
 package org.blume.modeller.ui.handlers.iiif;
 
 import java.awt.event.ActionEvent;
-import java.io.File;
 import java.util.HashMap;
-import java.util.List;
 
 import javax.swing.AbstractAction;
 
@@ -22,15 +20,7 @@ import org.blume.modeller.ModellerClient;
 public class CreateDefaultContainersHandler extends AbstractAction implements Progress {
     protected static final Logger log = LoggerFactory.getLogger(SaveBagHandler.class);
     private static final long serialVersionUID = 1L;
-    private CreateDefaultContainersFrame createDefaultContainersFrame;
-    DefaultBag bag;
     private BagView bagView;
-    List<String> payload = null;
-    HashMap<String, BagInfoField> map;
-    BagInfoField baseURI, collectionRoot, objektID, IIIFResourceContainer;
-    private File tmpRootPath;
-    private boolean clearAfterSaving = false;
-    private String messages;
 
     public CreateDefaultContainersHandler(BagView bagView) {
         super();
@@ -45,8 +35,7 @@ public class CreateDefaultContainersHandler extends AbstractAction implements Pr
     public void execute() {
         String message = ApplicationContextUtil.getMessage("bag.message.containercreated");
         DefaultBag bag = bagView.getBag();
-        payload = bag.getPayloadPaths();
-        map = bag.getInfo().getFieldMap();
+        HashMap<String, BagInfoField> map = bag.getInfo().getFieldMap();
 
         ModellerClient client = new ModellerClient();
         String objektURI = getObjektURI(map);
@@ -71,34 +60,28 @@ public class CreateDefaultContainersHandler extends AbstractAction implements Pr
     }
 
     public void openCreateDefaultContainersFrame() {
-        bag = bagView.getBag();
-        createDefaultContainersFrame = new CreateDefaultContainersFrame(bagView, bagView.getPropertyMessage("bag.frame.put"));
+        DefaultBag bag = bagView.getBag();
+        CreateDefaultContainersFrame createDefaultContainersFrame = new CreateDefaultContainersFrame(bagView, bagView.getPropertyMessage("bag.frame.put"));
         createDefaultContainersFrame.setBag(bag);
         createDefaultContainersFrame.setVisible(true);
     }
 
     public String getObjektURI(HashMap<String, BagInfoField> map) {
-        baseURI = map.get("FedoraBaseURI");
-        collectionRoot = map.get("CollectionRoot");
-        objektID = map.get("ObjektID");
-        String objektURI = new StringBuilder(baseURI.getValue())
-                .append(collectionRoot.getValue())
-                .append(objektID.getValue())
-                .toString();
-        return objektURI;
+        BagInfoField baseURI = map.get("FedoraBaseURI");
+        BagInfoField collectionRoot = map.get("CollectionRoot");
+        BagInfoField objektID = map.get("ObjektID");
+        return baseURI.getValue() +
+                collectionRoot.getValue() +
+                objektID.getValue();
     }
 
     public String getMapValue(HashMap<String, BagInfoField> map, String key) {
-        IIIFResourceContainer = map.get(key);
-        String resourceContainer = new StringBuilder(IIIFResourceContainer.getValue())
-                .toString();
-        return resourceContainer;
+        BagInfoField IIIFResourceContainer = map.get(key);
+        return IIIFResourceContainer.getValue();
     }
 
     public String buildContainerURI(String objektURI, String container) {
-        String containerURI = new StringBuilder(objektURI)
-                .append(container)
-                .toString();
-        return containerURI;
+        return objektURI +
+                container;
     }
 }

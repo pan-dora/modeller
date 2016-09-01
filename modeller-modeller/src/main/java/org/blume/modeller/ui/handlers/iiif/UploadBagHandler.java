@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 import java.io.File;
 import java.nio.file.Path;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.AbstractAction;
@@ -27,15 +26,7 @@ import org.blume.modeller.ModellerClient;
 public class UploadBagHandler extends AbstractAction implements Progress {
     protected static final Logger log = LoggerFactory.getLogger(UploadBagHandler.class);
     private static final long serialVersionUID = 1L;
-    private UploadBagFrame uploadBagFrame;
-    DefaultBag bag;
     private BagView bagView;
-    List<String> payload = null;
-    HashMap<String, BagInfoField> map;
-    BagInfoField baseURI, collectionRoot, objektID, IIIFResourceContainer;
-    private File tmpRootPath;
-    private boolean clearAfterSaving = false;
-    private String messages;
 
     public UploadBagHandler(BagView bagView) {
         super();
@@ -50,8 +41,8 @@ public class UploadBagHandler extends AbstractAction implements Progress {
     public void execute() {
         String message = ApplicationContextUtil.getMessage("bag.message.fileuploaded");
         DefaultBag bag = bagView.getBag();
-        payload = bag.getPayloadPaths();
-        map = bag.getInfo().getFieldMap();
+        List<String> payload = bag.getPayloadPaths();
+        HashMap<String, BagInfoField> map = bag.getInfo().getFieldMap();
         String resourceContainer = getResourceContainer(map);
         ModellerClient client = new ModellerClient();
         ImageIOUtil imageioutil = new ImageIOUtil();
@@ -73,8 +64,8 @@ public class UploadBagHandler extends AbstractAction implements Progress {
     }
 
     public void openUploadBagFrame() {
-        bag = bagView.getBag();
-        uploadBagFrame = new UploadBagFrame(bagView, bagView.getPropertyMessage("bag.frame.upload"));
+        DefaultBag bag = bagView.getBag();
+        UploadBagFrame uploadBagFrame = new UploadBagFrame(bagView, bagView.getPropertyMessage("bag.frame.upload"));
         uploadBagFrame.setBag(bag);
         uploadBagFrame.setVisible(true);
     }
@@ -85,10 +76,10 @@ public class UploadBagHandler extends AbstractAction implements Progress {
     }
 
     public String getResourceContainer(HashMap<String, BagInfoField> map) {
-        baseURI = map.get("FedoraBaseURI");
-        collectionRoot = map.get("CollectionRoot");
-        objektID = map.get("ObjektID");
-        IIIFResourceContainer = map.get("IIIFResourceContainer");
+        BagInfoField baseURI = map.get("FedoraBaseURI");
+        BagInfoField collectionRoot = map.get("CollectionRoot");
+        BagInfoField objektID = map.get("ObjektID");
+        BagInfoField IIIFResourceContainer = map.get("IIIFResourceContainer");
         return baseURI.getValue() +
                 collectionRoot.getValue() +
                 objektID.getValue() +

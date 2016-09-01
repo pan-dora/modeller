@@ -90,6 +90,8 @@ public class DefaultBag {
   private String versionString = null;
   private File bagFile = null;
 
+  private String listID;
+
   public DefaultBag() {
     this(null, Version.V0_96.versionString);
   }
@@ -232,6 +234,10 @@ public class DefaultBag {
   public String getName() {
     return this.name;
   }
+
+  public void setListID(String listID) { this.listID = listID; }
+
+  public String getListID() {return this.listID; }
 
   public void setSize(long size) {
     this.size = size;

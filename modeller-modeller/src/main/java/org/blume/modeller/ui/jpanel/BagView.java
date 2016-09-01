@@ -32,6 +32,7 @@ import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.TreePath;
 
 import org.blume.modeller.ui.*;
+import org.blume.modeller.ui.handlers.iiif.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationEvent;
@@ -72,12 +73,6 @@ import org.blume.modeller.ui.handlers.base.StartExecutor;
 import org.blume.modeller.ui.handlers.base.StartNewBagHandler;
 import org.blume.modeller.ui.handlers.base.ValidateBagHandler;
 import org.blume.modeller.ui.handlers.base.ValidateExecutor;
-import org.blume.modeller.ui.handlers.iiif.CreateDefaultContainersExecutor;
-import org.blume.modeller.ui.handlers.iiif.CreateDefaultContainersHandler;
-import org.blume.modeller.ui.handlers.iiif.UploadBagExecutor;
-import org.blume.modeller.ui.handlers.iiif.UploadBagHandler;
-import org.blume.modeller.ui.handlers.iiif.PatchResourceExecutor;
-import org.blume.modeller.ui.handlers.iiif.PatchResourceHandler;
 import org.blume.modeller.ui.util.LayoutUtil;
 import gov.loc.repository.bagit.BagFile;
 import gov.loc.repository.bagit.Cancellable;
@@ -141,6 +136,8 @@ public class BagView extends AbstractView implements ApplicationListener {
     public UploadBagExecutor uploadBagExecutor = new UploadBagExecutor(this);
     public PatchResourceHandler patchResourceHandler;
     public PatchResourceExecutor patchResourceExecutor = new PatchResourceExecutor(this);
+    public CreateListsHandler createListsHandler;
+    public CreateListsExecutor createListsExecutor = new CreateListsExecutor(this);
 
     private JLabel addDataToolBarAction;
     private JLabel removeDataToolBarAction;
@@ -256,9 +253,10 @@ public class BagView extends AbstractView implements ApplicationListener {
         createBagInPlaceHandler = new CreateBagInPlaceHandler(this);
         saveBagHandler = new SaveBagHandler(this);
         saveBagAsHandler = new SaveBagAsHandler(this);
+        createDefaultContainersHandler = new CreateDefaultContainersHandler(this);
         uploadBagHandler = new UploadBagHandler(this);
         patchResourceHandler = new PatchResourceHandler(this);
-        createDefaultContainersHandler = new CreateDefaultContainersHandler(this);
+        createListsHandler = new CreateListsHandler(this);
         completeBagHandler = new CompleteBagHandler(this);
         validateBagHandler = new ValidateBagHandler(this);
         clearBagHandler = new ClearBagHandler(this);
@@ -556,6 +554,7 @@ public class BagView extends AbstractView implements ApplicationListener {
         saveBagAsExecutor.setEnabled(false);
         uploadBagExecutor.setEnabled(false);
         patchResourceExecutor.setEnabled(false);
+        createListsExecutor.setEnabled(false);
     }
 
     public void updateClearBag() {
@@ -568,6 +567,7 @@ public class BagView extends AbstractView implements ApplicationListener {
         saveBagExecutor.setEnabled(false);
         saveBagAsExecutor.setEnabled(false);
         uploadBagExecutor.setEnabled(false);
+        createListsExecutor.setEnabled(false);
         viewTagFilesToolbarAction.setEnabled(false);
         addTagFileToolBarAction.setEnabled(false);
         removeTagFileToolbarAction.setEnabled(false);
@@ -596,6 +596,7 @@ public class BagView extends AbstractView implements ApplicationListener {
         saveBagAsExecutor.setEnabled(true);
         uploadBagExecutor.setEnabled(true);
         patchResourceExecutor.setEnabled(true);
+        createListsExecutor.setEnabled(true);
         bagButtonPanel.invalidate();
         clearExecutor.setEnabled(true);
         setCompleteExecutor(); // Disables the Is Complete Bag Button for Holey Bags
@@ -610,6 +611,7 @@ public class BagView extends AbstractView implements ApplicationListener {
         saveBagAsExecutor.setEnabled(true);
         uploadBagExecutor.setEnabled(true);
         patchResourceExecutor.setEnabled(true);
+        createListsExecutor.setEnabled(true);
         addTagFileToolBarAction.setEnabled(true);
         viewTagFilesToolbarAction.setEnabled(true);
         bagButtonPanel.invalidate();
@@ -628,6 +630,7 @@ public class BagView extends AbstractView implements ApplicationListener {
         saveBagAsExecutor.setEnabled(true);
         uploadBagExecutor.setEnabled(true);
         patchResourceExecutor.setEnabled(true);
+        createListsExecutor.setEnabled(true);
         bagButtonPanel.invalidate();
         clearExecutor.setEnabled(true);
         setCompleteExecutor(); // Disables the Is Complete Bag Button for Holey Bags
@@ -639,6 +642,7 @@ public class BagView extends AbstractView implements ApplicationListener {
         saveBagAsExecutor.setEnabled(true);
         uploadBagExecutor.setEnabled(true);
         patchResourceExecutor.setEnabled(true);
+        createListsExecutor.setEnabled(true);
         bagButtonPanel.invalidate();
         topButtonPanel.invalidate();
     }
@@ -667,6 +671,7 @@ public class BagView extends AbstractView implements ApplicationListener {
         context.register("createDefaultContainersCommand", createDefaultContainersExecutor);
         context.register("uploadBagCommand", uploadBagExecutor);
         context.register("patchResourceCommand", patchResourceExecutor);
+        context.register("createListsCommand", createListsExecutor);
     }
 
     @Override

@@ -22,6 +22,7 @@
                 <value>createDefaultContainersCommand</value>
                 <value>uploadBagCommand</value>
                 <value>patchResourceCommand</value>
+                <value>createListsCommand</value>
             </list>
         </property>
     </bean>
@@ -63,6 +64,7 @@
                 <value>createDefaultContainersCommand</value>
                 <value>uploadBagCommand</value>
                 <value>patchResourceCommand</value>
+                <value>createListsCommand</value>
             </list>
         </property>
     </bean>
@@ -90,6 +92,7 @@
                 <value>createDefaultContainersCommand</value>
                 <value>uploadBagCommand</value>
                 <value>patchResourceCommand</value>
+                <value>createListsCommand</value>
             </list>
         </property>
     </bean>

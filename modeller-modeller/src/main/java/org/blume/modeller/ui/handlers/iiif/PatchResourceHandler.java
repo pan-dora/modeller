@@ -11,14 +11,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.io.IOException;
 
-import javax.imageio.ImageIO;
-import javax.imageio.ImageReader;
-import javax.imageio.spi.IIORegistry;
-import javax.imageio.spi.ImageWriterSpi;
-import javax.imageio.stream.FileImageInputStream;
-import com.twelvemonkeys.imageio.plugins.tiff.TIFFImageWriterSpi;
-
-import javax.imageio.stream.ImageInputStream;
 import javax.swing.AbstractAction;
 
 import gov.loc.repository.bagit.impl.AbstractBagConstants;
@@ -43,12 +35,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 public class PatchResourceHandler extends AbstractAction implements Progress {
     protected static final Logger log = LoggerFactory.getLogger(PatchResourceHandler.class);
     private static final long serialVersionUID = 1L;
-    private PatchResourceFrame PatchResourcesFrame;
-    DefaultBag bag;
     private BagView bagView;
-    List<String> payload = null;
-    HashMap<String, BagInfoField> map;
-    BagInfoField IIIFProfileKey;
 
     public PatchResourceHandler(BagView bagView) {
         super();
@@ -63,8 +50,8 @@ public class PatchResourceHandler extends AbstractAction implements Progress {
     public void execute() {
         String message = ApplicationContextUtil.getMessage("bag.message.resourcepatched");
         DefaultBag bag = bagView.getBag();
-        payload = bag.getPayloadPaths();
-        map = bag.getInfo().getFieldMap();
+        List<String> payload = bag.getPayloadPaths();
+        HashMap<String, BagInfoField> map = bag.getInfo().getFieldMap();
         String resourceContainer = getResourceContainer(map);
         ModellerClient client = new ModellerClient();
         ImageIOUtil imageioutil = new ImageIOUtil();
@@ -112,10 +99,10 @@ public class PatchResourceHandler extends AbstractAction implements Progress {
     }
 
     public void openPatchResourceFrame() {
-        bag = bagView.getBag();
-        PatchResourcesFrame = new PatchResourceFrame(bagView, bagView.getPropertyMessage("bag.frame.upload"));
-        PatchResourcesFrame.setBag(bag);
-        PatchResourcesFrame.setVisible(true);
+        DefaultBag bag = bagView.getBag();
+        PatchResourceFrame patchResourcesFrame = new PatchResourceFrame(bagView, bagView.getPropertyMessage("bag.frame.patch"));
+        patchResourcesFrame.setBag(bag);
+        patchResourcesFrame.setVisible(true);
     }
 
     public String getDestinationURI(String resourceContainer, String filename) {
@@ -138,7 +125,6 @@ public class PatchResourceHandler extends AbstractAction implements Progress {
     public InputStream getResourceMetadata(HashMap<String, BagInfoField> map, String filename, String formatName,
                                            double imgWidth,
                                            double imgHeight) {
-        String serviceURI = getMapValue(map, "IIIFServiceBaseURI");
         ResourceTemplate resourceTemplate;
         List<ResourceTemplate.Scope.Prefix> prefixes = Arrays.asList(
                 new ResourceTemplate.Scope.Prefix(FedoraPrefixes.RDFS),
@@ -147,7 +133,7 @@ public class PatchResourceHandler extends AbstractAction implements Progress {
         ResourceTemplate.Scope scope = new ResourceTemplate.Scope()
                 .fedoraPrefixes(prefixes)
                 .filename(filename)
-                .serviceURI(getServiceURI(serviceURI, filename))
+                .serviceURI(getServiceURI(map, filename))
                 .formatName(formatName)
                 .imgHeight(imgHeight)
                 .imgWidth(imgWidth);
@@ -162,13 +148,16 @@ public class PatchResourceHandler extends AbstractAction implements Progress {
         return IOUtils.toInputStream(metadata, UTF_8 );
     }
 
-    public String getServiceURI(String serviceURI, String filename) {
-        return serviceURI +
+    public String getServiceURI(HashMap<String, BagInfoField> map, String filename) {
+        String serviceURI = getMapValue(map, "IIIFServiceBaseURI");
+        String objektID = getMapValue(map, "ObjektID");
+        String[] idParts = objektID.split("/");
+        return serviceURI + idParts[0] + "." + idParts[1] + "." +
                 filename;
     }
 
     public String getMapValue(HashMap<String, BagInfoField> map, String key) {
-        IIIFProfileKey = map.get(key);
+        BagInfoField IIIFProfileKey = map.get(key);
         return IIIFProfileKey.getValue();
     }
 
