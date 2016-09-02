@@ -12,12 +12,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.awt.event.ActionEvent;
-import java.io.File;
 import java.util.HashMap;
-import java.util.List;
 
 import javax.swing.*;
-
+import static org.blume.modeller.common.uri.FedoraResources.LISTPREFIX;
 
 public class CreateListsHandler extends AbstractAction implements Progress {
     protected static final Logger log = LoggerFactory.getLogger(SaveBagHandler.class);
@@ -58,18 +56,8 @@ public class CreateListsHandler extends AbstractAction implements Progress {
     }
 
     public String getListObjectURI(String ListContainerURI, String ListID) {
-        return ListContainerURI +
+        return ListContainerURI + LISTPREFIX +
                 ListID;
-    }
-
-    public String getMapValue(HashMap<String, BagInfoField> map, String key) {
-        BagInfoField IIIFResourceContainer = map.get(key);
-        return IIIFResourceContainer.getValue();
-    }
-
-    public String buildContainerURI(String objektURI, String container) {
-        return objektURI +
-                container;
     }
 
     public String getListContainerURI(HashMap<String, BagInfoField> map) {

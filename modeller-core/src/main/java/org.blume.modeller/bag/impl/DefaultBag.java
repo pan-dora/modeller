@@ -485,8 +485,7 @@ public class DefaultBag {
     ArrayList<String> pathList = new ArrayList<String>();
     Collection<BagFile> payload = this.bilBag.getPayload();
     if (payload != null) {
-      for (Iterator<BagFile> it = payload.iterator(); it.hasNext();) {
-        BagFile bf = it.next();
+      for (BagFile bf : payload) {
         pathList.add(bf.getFilepath());
       }
     }

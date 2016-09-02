@@ -143,6 +143,13 @@ public class BaggerFileEntity {
     return filenameWithoutBasePath;
   }
 
+  public static String removeFileExtension(String filename) throws RuntimeException {
+    if (filename == null) {
+      throw new RuntimeException("Cannot remove file extension from null");
+    }
+    return filename.split("\\.[^\\.]*$")[0];
+  }
+
   public static String normalize(String filename) {
     return FilenameHelper.normalizePathSeparators(filename);
   }

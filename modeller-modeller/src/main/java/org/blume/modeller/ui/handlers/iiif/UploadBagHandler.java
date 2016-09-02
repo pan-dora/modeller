@@ -49,8 +49,8 @@ public class UploadBagHandler extends AbstractAction implements Progress {
         String basePath = AbstractBagConstants.DATA_DIRECTORY;
         Path rootDir = bagView.getBagRootPath().toPath();
         for (String filePath : payload) {
-            String normalPath = BaggerFileEntity.removeBasePath(basePath, filePath);
-            String destinationURI = getDestinationURI(resourceContainer, normalPath);
+            String filename = BaggerFileEntity.removeBasePath(basePath, filePath);
+            String destinationURI = getDestinationURI(resourceContainer, filename);
             Path absoluteFilePath = rootDir.resolve(filePath);
             File resourceFile = absoluteFilePath.toFile();
             String contentType = imageioutil.getImageMIMEType(resourceFile);
@@ -70,9 +70,9 @@ public class UploadBagHandler extends AbstractAction implements Progress {
         uploadBagFrame.setVisible(true);
     }
 
-    public String getDestinationURI(String resourceContainer, String normalPath) {
+    public String getDestinationURI(String resourceContainer, String filename) {
         return resourceContainer +
-                normalPath;
+                filename;
     }
 
     public String getResourceContainer(HashMap<String, BagInfoField> map) {

@@ -138,6 +138,8 @@ public class BagView extends AbstractView implements ApplicationListener {
     public PatchResourceExecutor patchResourceExecutor = new PatchResourceExecutor(this);
     public CreateListsHandler createListsHandler;
     public CreateListsExecutor createListsExecutor = new CreateListsExecutor(this);
+    public CreateCanvasesHandler createCanvasesHandler;
+    public CreateCanvasesExecutor createCanvasesExecutor = new CreateCanvasesExecutor(this);
 
     private JLabel addDataToolBarAction;
     private JLabel removeDataToolBarAction;
@@ -253,13 +255,14 @@ public class BagView extends AbstractView implements ApplicationListener {
         createBagInPlaceHandler = new CreateBagInPlaceHandler(this);
         saveBagHandler = new SaveBagHandler(this);
         saveBagAsHandler = new SaveBagAsHandler(this);
+        completeBagHandler = new CompleteBagHandler(this);
+        validateBagHandler = new ValidateBagHandler(this);
+        clearBagHandler = new ClearBagHandler(this);
         createDefaultContainersHandler = new CreateDefaultContainersHandler(this);
         uploadBagHandler = new UploadBagHandler(this);
         patchResourceHandler = new PatchResourceHandler(this);
         createListsHandler = new CreateListsHandler(this);
-        completeBagHandler = new CompleteBagHandler(this);
-        validateBagHandler = new ValidateBagHandler(this);
-        clearBagHandler = new ClearBagHandler(this);
+        createCanvasesHandler = new CreateCanvasesHandler(this);
         return buttonPanel;
     }
 
@@ -555,6 +558,7 @@ public class BagView extends AbstractView implements ApplicationListener {
         uploadBagExecutor.setEnabled(false);
         patchResourceExecutor.setEnabled(false);
         createListsExecutor.setEnabled(false);
+        createCanvasesExecutor.setEnabled(false);
     }
 
     public void updateClearBag() {
@@ -566,8 +570,6 @@ public class BagView extends AbstractView implements ApplicationListener {
         addDataExecutor.setEnabled(false);
         saveBagExecutor.setEnabled(false);
         saveBagAsExecutor.setEnabled(false);
-        uploadBagExecutor.setEnabled(false);
-        createListsExecutor.setEnabled(false);
         viewTagFilesToolbarAction.setEnabled(false);
         addTagFileToolBarAction.setEnabled(false);
         removeTagFileToolbarAction.setEnabled(false);
@@ -576,6 +578,9 @@ public class BagView extends AbstractView implements ApplicationListener {
         completeExecutor.setEnabled(false);
         bagButtonPanel.invalidate();
         topButtonPanel.invalidate();
+        uploadBagExecutor.setEnabled(false);
+        createListsExecutor.setEnabled(false);
+        createCanvasesExecutor.setEnabled(false);
     }
 
     public void updateNewBag() {
@@ -594,14 +599,15 @@ public class BagView extends AbstractView implements ApplicationListener {
         addTagFileToolBarAction.setEnabled(true);
         viewTagFilesToolbarAction.setEnabled(true);
         saveBagAsExecutor.setEnabled(true);
-        uploadBagExecutor.setEnabled(true);
-        patchResourceExecutor.setEnabled(true);
-        createListsExecutor.setEnabled(true);
         bagButtonPanel.invalidate();
         clearExecutor.setEnabled(true);
         setCompleteExecutor(); // Disables the Is Complete Bag Button for Holey Bags
         setValidateExecutor(); // Disables the Validate Bag Button for Holey Bags
         topButtonPanel.invalidate();
+        uploadBagExecutor.setEnabled(true);
+        patchResourceExecutor.setEnabled(true);
+        createListsExecutor.setEnabled(true);
+        createCanvasesExecutor.setEnabled(true);
     }
 
     public void updateBagInPlace() {
@@ -609,9 +615,6 @@ public class BagView extends AbstractView implements ApplicationListener {
         addDataExecutor.setEnabled(true);
         saveBagExecutor.setEnabled(false);
         saveBagAsExecutor.setEnabled(true);
-        uploadBagExecutor.setEnabled(true);
-        patchResourceExecutor.setEnabled(true);
-        createListsExecutor.setEnabled(true);
         addTagFileToolBarAction.setEnabled(true);
         viewTagFilesToolbarAction.setEnabled(true);
         bagButtonPanel.invalidate();
@@ -619,6 +622,10 @@ public class BagView extends AbstractView implements ApplicationListener {
         validateExecutor.setEnabled(true);
         bagButtonPanel.invalidate();
         topButtonPanel.invalidate();
+        uploadBagExecutor.setEnabled(true);
+        patchResourceExecutor.setEnabled(true);
+        createListsExecutor.setEnabled(true);
+        createCanvasesExecutor.setEnabled(true);
     }
 
     public void updateSaveBag() {
@@ -627,24 +634,28 @@ public class BagView extends AbstractView implements ApplicationListener {
         saveBagExecutor.setEnabled(true);
         addTagFileToolBarAction.setEnabled(true);
         viewTagFilesToolbarAction.setEnabled(true);
-        saveBagAsExecutor.setEnabled(true);
-        uploadBagExecutor.setEnabled(true);
-        patchResourceExecutor.setEnabled(true);
         createListsExecutor.setEnabled(true);
         bagButtonPanel.invalidate();
         clearExecutor.setEnabled(true);
         setCompleteExecutor(); // Disables the Is Complete Bag Button for Holey Bags
         setValidateExecutor(); // Disables the Validate Bag Button for Holey Bags
         topButtonPanel.invalidate();
-    }
-
-    public void updateAddData() {
         saveBagAsExecutor.setEnabled(true);
         uploadBagExecutor.setEnabled(true);
         patchResourceExecutor.setEnabled(true);
         createListsExecutor.setEnabled(true);
+        createCanvasesExecutor.setEnabled(true);
+    }
+
+    public void updateAddData() {
+        saveBagAsExecutor.setEnabled(true);
+        createListsExecutor.setEnabled(true);
         bagButtonPanel.invalidate();
         topButtonPanel.invalidate();
+        uploadBagExecutor.setEnabled(true);
+        patchResourceExecutor.setEnabled(true);
+        createListsExecutor.setEnabled(true);
+        createCanvasesExecutor.setEnabled(true);
     }
 
     public void updateManifestPane() {
@@ -672,6 +683,7 @@ public class BagView extends AbstractView implements ApplicationListener {
         context.register("uploadBagCommand", uploadBagExecutor);
         context.register("patchResourceCommand", patchResourceExecutor);
         context.register("createListsCommand", createListsExecutor);
+        context.register("createCanvasesCommand", createCanvasesExecutor);
     }
 
     @Override

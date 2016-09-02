@@ -23,6 +23,7 @@
                 <value>uploadBagCommand</value>
                 <value>patchResourceCommand</value>
                 <value>createListsCommand</value>
+                <value>createCanvasesCommand</value>
             </list>
         </property>
     </bean>
@@ -65,6 +66,7 @@
                 <value>uploadBagCommand</value>
                 <value>patchResourceCommand</value>
                 <value>createListsCommand</value>
+                <value>createCanvasesCommand</value>
             </list>
         </property>
     </bean>
@@ -93,6 +95,7 @@
                 <value>uploadBagCommand</value>
                 <value>patchResourceCommand</value>
                 <value>createListsCommand</value>
+                <value>createCanvasesCommand</value>
             </list>
         </property>
     </bean>
