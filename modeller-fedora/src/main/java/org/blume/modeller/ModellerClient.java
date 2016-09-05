@@ -11,7 +11,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
-
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.net.URI.create;
 
 public class ModellerClient {
@@ -42,7 +42,7 @@ public class ModellerClient {
             FcrepoResponse response = testClient.put(uri)
                     .perform();
             try {
-                log.info(IOUtils.toString(response.getBody()));
+                log.info(IOUtils.toString(response.getBody(), UTF_8));
             } catch (IOException e){
                 System.out.println(e);
             }

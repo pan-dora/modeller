@@ -11,7 +11,7 @@ import javax.swing.AbstractAction;
 import gov.loc.repository.bagit.impl.AbstractBagConstants;
 import org.blume.modeller.bag.BagInfoField;
 import org.blume.modeller.bag.BaggerFileEntity;
-import org.blume.modeller.ui.util.ImageIOUtil;
+import org.blume.modeller.util.ImageIOUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

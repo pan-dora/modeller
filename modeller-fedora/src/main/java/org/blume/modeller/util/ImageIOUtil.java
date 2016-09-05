@@ -1,4 +1,4 @@
-package org.blume.modeller.ui.util;
+package org.blume.modeller.util;
 
 
 import com.twelvemonkeys.imageio.plugins.tiff.TIFFImageWriterSpi;

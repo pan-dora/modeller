@@ -8,11 +8,19 @@ import java.io.StringWriter;
 
 public class TemplateBuilder {
     private String template;
-    private ResourceTemplate.Scope scope;
+    private Scope scope;
 
-    public TemplateBuilder(String template, ResourceTemplate.Scope scope) {
-        this.template = template;
+    public TemplateBuilder() {
+    }
+
+    public TemplateBuilder scope(Scope scope) {
         this.scope = scope;
+        return this;
+    }
+
+    public TemplateBuilder template(String template) {
+        this.template = template;
+        return this;
     }
 
     public String build() {

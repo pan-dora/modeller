@@ -1,6 +1,8 @@
-package org.blume.modeller.templates;
+package org.blume.modeller;
 
 import org.blume.modeller.common.uri.FedoraPrefixes;
+import org.blume.modeller.templates.ResourceScope;
+import org.blume.modeller.templates.ResourceTemplate;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -10,11 +12,11 @@ public class buildTemplate {
 
     public static void main(String[] args) throws IOException {
         ResourceTemplate resourceTemplate;
-        List<ResourceTemplate.Scope.Prefix> prefixes = Arrays.asList(
-                new ResourceTemplate.Scope.Prefix(FedoraPrefixes.RDFS),
-                new ResourceTemplate.Scope.Prefix(FedoraPrefixes.MODE));
+        List<ResourceScope.Prefix> prefixes = Arrays.asList(
+                new ResourceScope.Prefix(FedoraPrefixes.RDFS),
+                new ResourceScope.Prefix(FedoraPrefixes.MODE));
 
-        ResourceTemplate.Scope scope = new ResourceTemplate.Scope()
+        ResourceScope scope = new ResourceScope()
                 .fedoraPrefixes(prefixes)
                 .serviceURI("http://localhost:8888/iiif/");
 

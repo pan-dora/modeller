@@ -1,0 +1,6 @@
+# Created by .ignore support plugin (hsz.mobi)
+.idea
+modeller-business/build/
+modeller-core/build/
+modeller-fedora/build/
+modeller-modeller/build/

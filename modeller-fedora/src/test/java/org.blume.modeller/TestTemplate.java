@@ -1,4 +1,4 @@
-package org.blume.modeller.templates;
+package org.blume.modeller;
 
 import com.github.mustachejava.DefaultMustacheFactory;
 import com.github.mustachejava.Mustache;
@@ -8,12 +8,13 @@ import org.blume.modeller.common.uri.FedoraPrefixes;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class TestTemplate {
 
     List<Item> items() {
-        return Arrays.asList(
+        return Collections.singletonList(
                 new Item(Arrays.asList(
                         new Prefix(FedoraPrefixes.RDFS),
                         new Prefix(FedoraPrefixes.MODE)),

@@ -16,8 +16,9 @@ import org.apache.commons.io.IOUtils;
 import org.blume.modeller.bag.BagInfoField;
 import org.blume.modeller.bag.BaggerFileEntity;
 import org.blume.modeller.common.uri.FedoraPrefixes;
+import org.blume.modeller.templates.ResourceScope;
 import org.blume.modeller.templates.ResourceTemplate;
-import org.blume.modeller.ui.util.ImageIOUtil;
+import org.blume.modeller.util.ImageIOUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -124,11 +125,11 @@ public class PatchResourceHandler extends AbstractAction implements Progress {
                                            double imgWidth,
                                            double imgHeight) {
         ResourceTemplate resourceTemplate;
-        List<ResourceTemplate.Scope.Prefix> prefixes = Arrays.asList(
-                new ResourceTemplate.Scope.Prefix(FedoraPrefixes.RDFS),
-                new ResourceTemplate.Scope.Prefix(FedoraPrefixes.MODE));
+        List<ResourceScope.Prefix> prefixes = Arrays.asList(
+                new ResourceScope.Prefix(FedoraPrefixes.RDFS),
+                new ResourceScope.Prefix(FedoraPrefixes.MODE));
 
-        ResourceTemplate.Scope scope = new ResourceTemplate.Scope()
+        ResourceScope scope = new ResourceScope()
                 .fedoraPrefixes(prefixes)
                 .filename(filename)
                 .serviceURI(getServiceURI(map, filename))
@@ -137,7 +138,7 @@ public class PatchResourceHandler extends AbstractAction implements Progress {
                 .imgWidth(imgWidth);
 
         resourceTemplate = ResourceTemplate.template()
-                .template("template/sparql-update.mustache")
+                .template("template/sparql-update-res.mustache")
                 .scope(scope)
                 .throwExceptionOnFailure()
                 .build();
