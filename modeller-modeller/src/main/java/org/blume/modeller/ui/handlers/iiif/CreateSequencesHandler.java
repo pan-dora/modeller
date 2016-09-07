@@ -6,7 +6,7 @@ import org.blume.modeller.bag.impl.DefaultBag;
 import org.blume.modeller.ui.Progress;
 import org.blume.modeller.ui.handlers.base.SaveBagHandler;
 import org.blume.modeller.ui.jpanel.BagView;
-import org.blume.modeller.ui.jpanel.CreateListsFrame;
+import org.blume.modeller.ui.jpanel.CreateSequencesFrame;
 import org.blume.modeller.ui.util.ApplicationContextUtil;
 import org.blume.modeller.ui.util.ContainerIRIResolver;
 import org.slf4j.Logger;
@@ -16,52 +16,52 @@ import java.awt.event.ActionEvent;
 import java.util.HashMap;
 
 import javax.swing.*;
-import static org.blume.modeller.common.uri.FedoraResources.LISTPREFIX;
+import static org.blume.modeller.common.uri.FedoraResources.SEQPREFIX;
 
-public class CreateListsHandler extends AbstractAction implements Progress {
+public class CreateSequencesHandler extends AbstractAction implements Progress {
     protected static final Logger log = LoggerFactory.getLogger(SaveBagHandler.class);
     private static final long serialVersionUID = 1L;
     private BagView bagView;
 
-    public CreateListsHandler(BagView bagView) {
+    public CreateSequencesHandler(BagView bagView) {
         super();
         this.bagView = bagView;
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) { openCreateListsFrame(); }
+    public void actionPerformed(ActionEvent e) { openCreateSequencesFrame(); }
 
     @Override
     public void execute() {
-        String message = ApplicationContextUtil.getMessage("bag.message.listcreated");
+        String message = ApplicationContextUtil.getMessage("bag.message.sequencecreated");
         DefaultBag bag = bagView.getBag();
         HashMap<String, BagInfoField> map = bag.getInfo().getFieldMap();
 
         ModellerClient client = new ModellerClient();
-        String listContainerURI = getListContainerURI(map);
-        String listID = bag.getListID();
-        String listObjectURI = getListObjectURI(listContainerURI, listID );
+        String sequenceContainerURI = getSequenceContainerURI(map);
+        String sequenceID = bag.getSequenceID();
+        String sequenceObjectURI = getSequenceObjectURI(sequenceContainerURI, sequenceID );
         try {
-            client.doPut(listObjectURI);
+            client.doPut(sequenceObjectURI);
         } finally {
-            ApplicationContextUtil.addConsoleMessage(message + " " + listObjectURI);
+            ApplicationContextUtil.addConsoleMessage(message + " " + sequenceObjectURI);
         }
         bagView.getControl().invalidate();
     }
 
-    public void openCreateListsFrame() {
+    public void openCreateSequencesFrame() {
         DefaultBag bag = bagView.getBag();
-        CreateListsFrame createListsFrame = new CreateListsFrame(bagView, bagView.getPropertyMessage("bag.frame.list"));
-        createListsFrame.setBag(bag);
-        createListsFrame.setVisible(true);
+        CreateSequencesFrame createSequencesFrame = new CreateSequencesFrame(bagView, bagView.getPropertyMessage("bag.frame.sequence"));
+        createSequencesFrame.setBag(bag);
+        createSequencesFrame.setVisible(true);
     }
 
-    public String getListObjectURI(String ListContainerURI, String ListID) {
-        return ListContainerURI + LISTPREFIX +
-                ListID;
+    public String getSequenceObjectURI(String SequenceContainerURI, String SequenceID) {
+        return SequenceContainerURI + SEQPREFIX +
+                SequenceID;
     }
 
-    public String getListContainerURI(HashMap<String, BagInfoField> map) {
+    public String getSequenceContainerURI(HashMap<String, BagInfoField> map) {
         ContainerIRIResolver containerIRIResolver;
         containerIRIResolver = ContainerIRIResolver.resolve()
                 .map(map)
@@ -69,7 +69,7 @@ public class CreateListsHandler extends AbstractAction implements Progress {
                 .collectionRootKey("CollectionRoot")
                 .collectionKey("CollectionID")
                 .objektIDKey("ObjektID")
-                .containerKey("IIIFListContainer")
+                .containerKey("IIIFSequenceContainer")
                 .build();
         return containerIRIResolver.render();
     }

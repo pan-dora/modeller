@@ -69,9 +69,11 @@ public class CreateDefaultContainersHandler extends AbstractAction implements Pr
     public String getObjektURI(HashMap<String, BagInfoField> map) {
         BagInfoField baseURI = map.get("FedoraBaseURI");
         BagInfoField collectionRoot = map.get("CollectionRoot");
+        BagInfoField collectionID = map.get("CollectionID");
         BagInfoField objektID = map.get("ObjektID");
         return baseURI.getValue() +
                 collectionRoot.getValue() +
+                collectionID.getValue() +
                 objektID.getValue();
     }
 

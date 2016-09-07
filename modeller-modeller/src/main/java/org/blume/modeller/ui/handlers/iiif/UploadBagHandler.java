@@ -11,6 +11,7 @@ import javax.swing.AbstractAction;
 import gov.loc.repository.bagit.impl.AbstractBagConstants;
 import org.blume.modeller.bag.BagInfoField;
 import org.blume.modeller.bag.BaggerFileEntity;
+import org.blume.modeller.ui.util.ContainerIRIResolver;
 import org.blume.modeller.util.ImageIOUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -76,13 +77,15 @@ public class UploadBagHandler extends AbstractAction implements Progress {
     }
 
     public String getResourceContainer(HashMap<String, BagInfoField> map) {
-        BagInfoField baseURI = map.get("FedoraBaseURI");
-        BagInfoField collectionRoot = map.get("CollectionRoot");
-        BagInfoField objektID = map.get("ObjektID");
-        BagInfoField IIIFResourceContainer = map.get("IIIFResourceContainer");
-        return baseURI.getValue() +
-                collectionRoot.getValue() +
-                objektID.getValue() +
-                IIIFResourceContainer.getValue();
+        ContainerIRIResolver containerIRIResolver;
+        containerIRIResolver = ContainerIRIResolver.resolve()
+                .map(map)
+                .baseURIKey("FedoraBaseURI")
+                .collectionRootKey("CollectionRoot")
+                .collectionKey("CollectionID")
+                .objektIDKey("ObjektID")
+                .containerKey("IIIFResourceContainer")
+                .build();
+        return containerIRIResolver.render();
     }
 }

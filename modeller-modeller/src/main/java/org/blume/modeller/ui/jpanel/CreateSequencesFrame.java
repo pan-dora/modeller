@@ -45,18 +45,15 @@ import org.springframework.richclient.util.GuiStandardUtils;
 import org.blume.modeller.bag.impl.DefaultBag;
 import org.blume.modeller.bag.BagInfoField;
 
-public class PatchResourceFrame extends JFrame implements ActionListener {
-    protected static final Logger log = LoggerFactory.getLogger(PatchResourceFrame.class);
+public class CreateSequencesFrame extends JFrame implements ActionListener {
+    protected static final Logger log = LoggerFactory.getLogger(CreateDefaultContainersFrame.class);
     private static final long serialVersionUID = 1L;
     transient BagView bagView;
-    String bagFileName = "";
-    HashMap<String, BagInfoField> map;
-    private Dimension preferredDimension = new Dimension(600, 400);
-    JPanel savePanel;
-    JLabel urlLabel;
-    JTextField urlField;
+    private HashMap<String, BagInfoField> map;
+    private JPanel savePanel;
+    JTextField sequenceIDField;
 
-    public PatchResourceFrame(BagView bagView, String title) {
+    public  CreateSequencesFrame(BagView bagView, String title) {
         super(title);
         this.bagView = bagView;
         if (bagView != null) {
@@ -66,19 +63,20 @@ public class PatchResourceFrame extends JFrame implements ActionListener {
             savePanel = new JPanel();
         }
         getContentPane().add(savePanel, BorderLayout.CENTER);
+        Dimension preferredDimension = new Dimension(600, 400);
         setPreferredSize(preferredDimension);
         this.setBounds(300, 200, 600, 400);
         pack();
     }
 
-    protected JComponent createButtonBar() {
+    private JComponent createButtonBar() {
         CommandGroup dialogCommandGroup = CommandGroup.createCommandGroup(null, getCommandGroupMembers());
         JComponent buttonBar = dialogCommandGroup.createButtonBar();
         GuiStandardUtils.attachDialogBorder(buttonBar);
         return buttonBar;
     }
 
-    protected Object[] getCommandGroupMembers() {
+    private Object[] getCommandGroupMembers() {
         return new AbstractCommand[]{finishCommand, cancelCommand};
     }
 
@@ -90,7 +88,7 @@ public class PatchResourceFrame extends JFrame implements ActionListener {
             @Override
             public void doExecuteCommand() {
 
-                new OkCreateDefaultContainersHandler().actionPerformed(null);
+                new OkCreateSequencesHandler().actionPerformed(null);
 
             }
         };
@@ -99,22 +97,22 @@ public class PatchResourceFrame extends JFrame implements ActionListener {
 
             @Override
             public void doExecuteCommand() {
-                new CancelCreateDefaultContainersHandler().actionPerformed(null);
+                new CancelCreateSequencesHandler().actionPerformed(null);
             }
         };
     }
 
-    protected String getFinishCommandId() {
+    private String getFinishCommandId() {
         return DEFAULT_FINISH_COMMAND_ID;
     }
 
-    protected String getCancelCommandId() {
+    private String getCancelCommandId() {
         return DEFAULT_CANCEL_COMMAND_ID;
     }
 
-    protected static final String DEFAULT_FINISH_COMMAND_ID = "okCommand";
+    private static final String DEFAULT_FINISH_COMMAND_ID = "okCommand";
 
-    protected static final String DEFAULT_CANCEL_COMMAND_ID = "cancelCommand";
+    private static final String DEFAULT_CANCEL_COMMAND_ID = "cancelCommand";
 
     private transient ActionCommand finishCommand;
 
@@ -127,8 +125,8 @@ public class PatchResourceFrame extends JFrame implements ActionListener {
         initStandardCommands();
         JPanel pageControl = new JPanel(new BorderLayout());
         JPanel titlePaneContainer = new JPanel(new BorderLayout());
-        titlePane.setTitle(bagView.getPropertyMessage("PatchResourceFrame.title"));
-        titlePane.setMessage(new DefaultMessage(bagView.getPropertyMessage("Patch Resources")));
+        titlePane.setTitle(bagView.getPropertyMessage("CreateSequencesFrame.title"));
+        titlePane.setMessage(new DefaultMessage(bagView.getPropertyMessage("Create Sequence in:")));
         titlePaneContainer.add(titlePane.getControl());
         titlePaneContainer.add(new JSeparator(), BorderLayout.SOUTH);
         pageControl.add(titlePaneContainer, BorderLayout.NORTH);
@@ -139,16 +137,19 @@ public class PatchResourceFrame extends JFrame implements ActionListener {
             map = bag.getInfo().getFieldMap();
         }
 
-        urlLabel = new JLabel(bagView.getPropertyMessage("baseURL.label"));
+        JLabel urlLabel = new JLabel(bagView.getPropertyMessage("baseURL.label"));
         urlLabel.setToolTipText(bagView.getPropertyMessage("baseURL.description"));
-        urlField = new JTextField("");
-        String uri = bagView.patchResourceHandler.getResourceContainer(map);
+        JTextField urlField = new JTextField("");
+        String uri = bagView.createSequencesHandler.getSequenceContainerURI(map);
         try {
             urlField.setText(uri);
         } catch (Exception e) {
             log.error("Failed to set url label", e);
         }
 
+        JLabel sequenceIDLabel = new JLabel(bagView.getPropertyMessage("sequenceID.label"));
+        sequenceIDLabel.setToolTipText(bagView.getPropertyMessage("sequenceID.description"));
+        sequenceIDField = new JTextField("");
         GridBagLayout layout = new GridBagLayout();
         GridBagConstraints glbc = new GridBagConstraints();
         JPanel panel = new JPanel(layout);
@@ -165,11 +166,11 @@ public class PatchResourceFrame extends JFrame implements ActionListener {
         panel.add(urlField);
         row++;
         buildConstraints(glbc, 0, row, 1, 1, 1, 50, GridBagConstraints.NONE, GridBagConstraints.WEST);
-        layout.setConstraints(urlLabel, glbc);
-        panel.add(urlLabel);
+        layout.setConstraints(sequenceIDLabel, glbc);
+        panel.add(sequenceIDLabel);
         buildConstraints(glbc, 1, row, 1, 1, 80, 50, GridBagConstraints.HORIZONTAL, GridBagConstraints.CENTER);
-        layout.setConstraints(urlField, glbc);
-        panel.add(urlField);
+        layout.setConstraints(sequenceIDField, glbc);
+        panel.add(sequenceIDField);
         row++;
         buildConstraints(glbc, 0, row, 1, 1, 1, 50, GridBagConstraints.NONE, GridBagConstraints.WEST);
         buildConstraints(glbc, 1, row, 2, 1, 80, 50, GridBagConstraints.HORIZONTAL, GridBagConstraints.CENTER);
@@ -194,18 +195,19 @@ public class PatchResourceFrame extends JFrame implements ActionListener {
         repaint();
     }
 
-    private class OkCreateDefaultContainersHandler extends AbstractAction {
+    private class OkCreateSequencesHandler extends AbstractAction {
         private static final long serialVersionUID = 1L;
 
         @Override
         public void actionPerformed(ActionEvent e) {
             setVisible(false);
-            bagView.getBag().setName(bagFileName);
-            bagView.patchResourceHandler.execute();
+            String sequenceID = sequenceIDField.getText().trim();
+            bagView.getBag().setSequenceID(sequenceID);
+            bagView.createSequencesHandler.execute();
         }
     }
 
-    private class CancelCreateDefaultContainersHandler extends AbstractAction {
+    private class CancelCreateSequencesHandler extends AbstractAction {
         private static final long serialVersionUID = 1L;
 
         @Override
@@ -228,4 +230,6 @@ public class PatchResourceFrame extends JFrame implements ActionListener {
     private String getMessage(String property) {
         return bagView.getPropertyMessage(property);
     }
+
 }
+

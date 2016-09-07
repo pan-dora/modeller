@@ -11,6 +11,7 @@ public class RDFCollectionWriterTest {
         collectionWriter = RDFCollectionWriter.collection()
                 .idList(getMockSequence())
                 .collectionPredicate("http://iiif.io/api/presentation/2#hasCanvases")
+                .resourceContainerIRI("http://localhost:8080/fcrepo/rest/collection/AIG/")
                 .build();
         String collection = collectionWriter.render();
         System.out.println(collection);

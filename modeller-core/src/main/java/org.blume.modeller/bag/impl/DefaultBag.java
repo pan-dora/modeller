@@ -91,6 +91,7 @@ public class DefaultBag {
   private File bagFile = null;
 
   private String listID;
+  private String sequenceID;
 
   public DefaultBag() {
     this(null, Version.V0_96.versionString);
@@ -238,6 +239,10 @@ public class DefaultBag {
   public void setListID(String listID) { this.listID = listID; }
 
   public String getListID() {return this.listID; }
+
+  public void setSequenceID(String sequenceID) { this.sequenceID = sequenceID; }
+
+  public String getSequenceID() {return this.sequenceID; }
 
   public void setSize(long size) {
     this.size = size;

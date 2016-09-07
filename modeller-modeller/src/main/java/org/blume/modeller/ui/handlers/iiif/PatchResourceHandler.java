@@ -8,6 +8,7 @@ import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.AbstractAction;
 
@@ -18,6 +19,7 @@ import org.blume.modeller.bag.BaggerFileEntity;
 import org.blume.modeller.common.uri.FedoraPrefixes;
 import org.blume.modeller.templates.ResourceScope;
 import org.blume.modeller.templates.ResourceTemplate;
+import org.blume.modeller.ui.util.ContainerIRIResolver;
 import org.blume.modeller.util.ImageIOUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,7 +52,7 @@ public class PatchResourceHandler extends AbstractAction implements Progress {
         String message = ApplicationContextUtil.getMessage("bag.message.resourcepatched");
         DefaultBag bag = bagView.getBag();
         List<String> payload = bag.getPayloadPaths();
-        HashMap<String, BagInfoField> map = bag.getInfo().getFieldMap();
+        Map<String, BagInfoField> map = bag.getInfo().getFieldMap();
         String resourceContainer = getResourceContainer(map);
         ModellerClient client = new ModellerClient();
         ImageIOUtil imageioutil = new ImageIOUtil();
@@ -110,18 +112,20 @@ public class PatchResourceHandler extends AbstractAction implements Progress {
                 FCRMETADATA;
     }
 
-    public String getResourceContainer(HashMap<String, BagInfoField> map) {
-        String baseURI = getMapValue(map, "FedoraBaseURI");
-        String collectionRoot = getMapValue(map, "CollectionRoot");
-        String objektID = getMapValue(map, "ObjektID");
-        String IIIFResourceContainer = getMapValue(map, "IIIFResourceContainer");
-        return baseURI +
-                collectionRoot +
-                objektID +
-                IIIFResourceContainer;
+    public String getResourceContainer(Map<String, BagInfoField> map) {
+        ContainerIRIResolver containerIRIResolver;
+        containerIRIResolver = ContainerIRIResolver.resolve()
+                .map(map)
+                .baseURIKey("FedoraBaseURI")
+                .collectionRootKey("CollectionRoot")
+                .collectionKey("CollectionID")
+                .objektIDKey("ObjektID")
+                .containerKey("IIIFResourceContainer")
+                .build();
+        return containerIRIResolver.render();
     }
 
-    public InputStream getResourceMetadata(HashMap<String, BagInfoField> map, String filename, String formatName,
+    public InputStream getResourceMetadata(Map<String, BagInfoField> map, String filename, String formatName,
                                            double imgWidth,
                                            double imgHeight) {
         ResourceTemplate resourceTemplate;
@@ -147,17 +151,32 @@ public class PatchResourceHandler extends AbstractAction implements Progress {
         return IOUtils.toInputStream(metadata, UTF_8 );
     }
 
-    public String getServiceURI(HashMap<String, BagInfoField> map, String filename) {
+    public String getServiceURI(Map<String, BagInfoField> map, String filename) {
         String serviceURI = getMapValue(map, "IIIFServiceBaseURI");
-        String objektID = getMapValue(map, "ObjektID");
-        String[] idParts = objektID.split("/");
-        return serviceURI + idParts[0] + "." + idParts[1] + "." +
+        String collectionID = substringBeforeLast(getMapValue(map, "CollectionID"), "/");
+        String objektID = substringBeforeLast(getMapValue(map, "ObjektID"), "/");
+        return serviceURI + collectionID + "." + objektID + "." +
                 filename;
     }
 
-    public String getMapValue(HashMap<String, BagInfoField> map, String key) {
+    public String getMapValue(Map<String, BagInfoField> map, String key) {
         BagInfoField IIIFProfileKey = map.get(key);
         return IIIFProfileKey.getValue();
+    }
+
+    public static String substringBeforeLast(String str, String separator) {
+        if (isEmpty(str) || isEmpty(separator)) {
+            return str;
+        }
+        int pos = str.lastIndexOf(separator);
+        if (pos == -1) {
+            return str;
+        }
+        return str.substring(0, pos);
+    }
+
+    public static boolean isEmpty(String str) {
+        return str == null || str.length() == 0;
     }
 
 }

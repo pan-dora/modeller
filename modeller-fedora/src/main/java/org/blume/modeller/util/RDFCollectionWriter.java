@@ -31,7 +31,8 @@ public class RDFCollectionWriter {
         return this.rdfCollection.toString();
     }
 
-    protected RDFCollectionWriter(ArrayList<Integer> idList, String collectionPredicate) {
+    protected RDFCollectionWriter(final ArrayList<Integer> idList, final String collectionPredicate,
+                                  final String resourceContainerIRI) {
         Model model = ModelFactory.createDefaultModel();
         Map<String, Node> bNodeMap = getBNodeKeyMap(idList);
 
@@ -47,7 +48,7 @@ public class RDFCollectionWriter {
             if (pos == 0) {
                 Node subjNode = getSubjNodeForCurrentIndex(pos, bNodeMap);
                 Node objNode = getObjNodeForCurrentIndex(pos, bNodeMap);
-                String objectURI = getResourceURI(id);
+                String objectURI = getResourceURI(resourceContainerIRI, id);
 
                 Resource s1 = model.createResource(String.valueOf(subjNode));
                 Property p1 = model.createProperty(String.valueOf(RDF_First));
@@ -60,7 +61,7 @@ public class RDFCollectionWriter {
                 model.add(s2, p2, o2);
             } else if (id == lastId ) {
                 Node subjNode = getObjNodeFromPrevIndex(pos, bNodeMap);
-                String objectURI = getResourceURI(id);
+                String objectURI = getResourceURI(resourceContainerIRI, id);
                 Resource s1 = model.createResource(String.valueOf(subjNode));
                 Property p1 = model.createProperty(String.valueOf(RDF_First));
                 Resource o1 = model.createResource(objectURI);
@@ -73,7 +74,7 @@ public class RDFCollectionWriter {
             } else {
                 Node subjNode = getObjNodeFromPrevIndex(pos, bNodeMap);
                 Node objNode = getObjNodeForCurrentIndex(pos, bNodeMap);
-                String objectURI = getResourceURI(id);
+                String objectURI = getResourceURI(resourceContainerIRI, id);
 
                 Resource s1 = model.createResource(String.valueOf(subjNode));
                 Property p1 = model.createProperty(String.valueOf(RDF_First));
@@ -143,10 +144,8 @@ public class RDFCollectionWriter {
         return createBlankNode(bnodeLabel);
     }
 
-    public String getResourceURI(int resourceID) {
-        /** TODO Make an ResourceURI Generator Class */
-        String baseURI = "http://localhost:8080/fcrepo/rest/collection/AIG/1011/canvas/c";
-        return baseURI +
+    public String getResourceURI(String resourceContainerIRI, int resourceID) {
+        return resourceContainerIRI +
                 resourceID;
     }
 
@@ -154,6 +153,7 @@ public class RDFCollectionWriter {
 
         private ArrayList<Integer> idList;
         private String collectionPredicate;
+        private String resourceContainerIRI;
 
         public RDFCollectionWriter.RDFCollectionBuilder idList(ArrayList<Integer> idList) {
             this.idList = idList;
@@ -165,8 +165,13 @@ public class RDFCollectionWriter {
             return this;
         }
 
+        public RDFCollectionWriter.RDFCollectionBuilder resourceContainerIRI(String resourceContainerIRI ) {
+            this.resourceContainerIRI = resourceContainerIRI;
+            return this;
+        }
+
         public RDFCollectionWriter build() {
-            return new RDFCollectionWriter(this.idList, this.collectionPredicate);
+            return new RDFCollectionWriter(this.idList, this.collectionPredicate, this.resourceContainerIRI);
         }
 
         public interface Factory {

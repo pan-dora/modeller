@@ -8,6 +8,7 @@ import org.blume.modeller.ui.handlers.base.SaveBagHandler;
 import org.blume.modeller.ui.jpanel.BagView;
 import org.blume.modeller.ui.jpanel.CreateCanvasesFrame;
 import org.blume.modeller.ui.util.ApplicationContextUtil;
+import org.blume.modeller.ui.util.ContainerIRIResolver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -64,13 +65,15 @@ public class CreateCanvasesHandler extends AbstractAction implements Progress {
     }
 
     public String getCanvasContainerURI(HashMap<String, BagInfoField> map) {
-        BagInfoField baseURI = map.get("FedoraBaseURI");
-        BagInfoField collectionRoot = map.get("CollectionRoot");
-        BagInfoField objektID = map.get("ObjektID");
-        BagInfoField IIIFCanvasContainer = map.get("IIIFCanvasContainer");
-        return baseURI.getValue() +
-                collectionRoot.getValue() +
-                objektID.getValue() +
-                IIIFCanvasContainer.getValue();
+        ContainerIRIResolver containerIRIResolver;
+        containerIRIResolver = ContainerIRIResolver.resolve()
+                .map(map)
+                .baseURIKey("FedoraBaseURI")
+                .collectionRootKey("CollectionRoot")
+                .collectionKey("CollectionID")
+                .objektIDKey("ObjektID")
+                .containerKey("IIIFCanvasContainer")
+                .build();
+        return containerIRIResolver.render();
     }
 }

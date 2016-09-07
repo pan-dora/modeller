@@ -12,6 +12,11 @@
       }
     },
     {
+      "CollectionID" : {
+        "fieldRequired" : true
+      }
+    },
+    {
       "ObjektID" : {
         "fieldRequired" : true
       }

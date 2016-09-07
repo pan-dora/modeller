@@ -5,5 +5,6 @@ public final class FedoraResources {
     public static final String IMAGE = "image/";
     public static final String LISTPREFIX = "l";
     public static final String CANVASPREFIX = "c";
+    public static final String SEQPREFIX = "";
 }
 
