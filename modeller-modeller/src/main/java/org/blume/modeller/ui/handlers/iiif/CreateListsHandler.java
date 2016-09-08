@@ -13,7 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.awt.event.ActionEvent;
-import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.*;
 import static org.blume.modeller.common.uri.FedoraResources.LISTPREFIX;
@@ -35,7 +35,7 @@ public class CreateListsHandler extends AbstractAction implements Progress {
     public void execute() {
         String message = ApplicationContextUtil.getMessage("bag.message.listcreated");
         DefaultBag bag = bagView.getBag();
-        HashMap<String, BagInfoField> map = bag.getInfo().getFieldMap();
+        Map<String, BagInfoField> map = bag.getInfo().getFieldMap();
 
         ModellerClient client = new ModellerClient();
         String listContainerURI = getListContainerURI(map);
@@ -61,7 +61,7 @@ public class CreateListsHandler extends AbstractAction implements Progress {
                 ListID;
     }
 
-    public String getListContainerURI(HashMap<String, BagInfoField> map) {
+    public String getListContainerURI(Map<String, BagInfoField> map) {
         ContainerIRIResolver containerIRIResolver;
         containerIRIResolver = ContainerIRIResolver.resolve()
                 .map(map)

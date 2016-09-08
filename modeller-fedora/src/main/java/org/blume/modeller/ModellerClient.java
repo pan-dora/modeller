@@ -15,7 +15,9 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.net.URI.create;
 
 public class ModellerClient {
+
     protected static final Logger log = LoggerFactory.getLogger(ModellerClient.class);
+
     public ModellerClient() {}
 
     public void doBinaryPut(String destinationURI, File resourceFile, String contentType) {

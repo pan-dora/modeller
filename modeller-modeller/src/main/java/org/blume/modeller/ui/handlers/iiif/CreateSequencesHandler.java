@@ -13,7 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.awt.event.ActionEvent;
-import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.*;
 import static org.blume.modeller.common.uri.FedoraResources.SEQPREFIX;
@@ -35,7 +35,7 @@ public class CreateSequencesHandler extends AbstractAction implements Progress {
     public void execute() {
         String message = ApplicationContextUtil.getMessage("bag.message.sequencecreated");
         DefaultBag bag = bagView.getBag();
-        HashMap<String, BagInfoField> map = bag.getInfo().getFieldMap();
+        Map<String, BagInfoField> map = bag.getInfo().getFieldMap();
 
         ModellerClient client = new ModellerClient();
         String sequenceContainerURI = getSequenceContainerURI(map);
@@ -61,7 +61,7 @@ public class CreateSequencesHandler extends AbstractAction implements Progress {
                 SequenceID;
     }
 
-    public String getSequenceContainerURI(HashMap<String, BagInfoField> map) {
+    public String getSequenceContainerURI(Map<String, BagInfoField> map) {
         ContainerIRIResolver containerIRIResolver;
         containerIRIResolver = ContainerIRIResolver.resolve()
                 .map(map)

@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.*;
 import static org.blume.modeller.common.uri.FedoraResources.CANVASPREFIX;
@@ -36,7 +36,7 @@ public class CreateCanvasesHandler extends AbstractAction implements Progress {
     public void execute() {
         String message = ApplicationContextUtil.getMessage("bag.message.canvascreated");
         DefaultBag bag = bagView.getBag();
-        HashMap<String, BagInfoField> map = bag.getInfo().getFieldMap();
+        Map<String, BagInfoField> map = bag.getInfo().getFieldMap();
         ResourceIdentifierList idList = new ResourceIdentifierList(bagView);
         ArrayList<String> resourceIDList = idList.getResourceIdentifierList();
         ModellerClient client = new ModellerClient();
@@ -64,7 +64,7 @@ public class CreateCanvasesHandler extends AbstractAction implements Progress {
                 resourceID;
     }
 
-    public String getCanvasContainerURI(HashMap<String, BagInfoField> map) {
+    public String getCanvasContainerURI(Map<String, BagInfoField> map) {
         ContainerIRIResolver containerIRIResolver;
         containerIRIResolver = ContainerIRIResolver.resolve()
                 .map(map)

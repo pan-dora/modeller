@@ -88,8 +88,7 @@ public class BagTree extends JTree {
         payload = bag.getPayloadPaths(); // bag.getFetchPayload();
         // basePath = bag.getFetch().getBaseURL();
       }
-      for (Iterator<String> it = payload.iterator(); it.hasNext();) {
-        String filePath = it.next();
+      for (String filePath : payload) {
         try {
           String normalPath;
           if (bag.isHoley()) {

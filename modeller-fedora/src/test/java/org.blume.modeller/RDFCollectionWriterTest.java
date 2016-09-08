@@ -18,7 +18,7 @@ public class RDFCollectionWriterTest {
     }
 
     public static ArrayList<String> getMockSequence() {
-        int numOfValues = 6;
+        int numOfValues = 2;
         int[] array = IntStream.range(1, numOfValues + 1).toArray();
         ArrayList<String> idList = new ArrayList<>(array.length);
         for (int anArray : array) idList.add(String.valueOf(anArray));

@@ -4,6 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import org.apache.jena.graph.Node;
 import org.apache.jena.query.Dataset;
@@ -33,6 +34,7 @@ public class RDFCollectionWriter {
 
     protected RDFCollectionWriter(final ArrayList<String> idList, final String collectionPredicate,
                                   final String resourceContainerIRI) {
+
         Model model = ModelFactory.createDefaultModel();
         Map<String, Node> bNodeMap = getBNodeKeyMap(idList);
 
@@ -45,7 +47,21 @@ public class RDFCollectionWriter {
         for (String id : idList) {
             int pos = getIDPos(idList, id);
             String lastId = idList.get(idList.size() - 1);
-            if (pos == 0) {
+            //singleton list
+            if (pos == 0  && (Objects.equals(id, lastId))) {
+                Node subjNode = getSubjNodeForCurrentIndex(pos, bNodeMap);
+                String objectURI = getResourceURI(resourceContainerIRI, id);
+
+                Resource s1 = model.createResource(String.valueOf(subjNode));
+                Property p1 = model.createProperty(String.valueOf(RDF_First));
+                Resource o1 = model.createResource(objectURI);
+                model.add(s1, p1, o1);
+
+                Resource s2 = model.createResource(String.valueOf(subjNode));
+                Property p2 = model.createProperty(String.valueOf(RDF_Rest));
+                Resource o2 = model.createResource(String.valueOf(RDF_Nil));
+                model.add(s2, p2, o2);
+            } else  if (pos == 0) {
                 Node subjNode = getSubjNodeForCurrentIndex(pos, bNodeMap);
                 Node objNode = getObjNodeForCurrentIndex(pos, bNodeMap);
                 String objectURI = getResourceURI(resourceContainerIRI, id);
@@ -59,9 +75,10 @@ public class RDFCollectionWriter {
                 Property p2 = model.createProperty(String.valueOf(RDF_Rest));
                 Resource o2 = model.createResource(String.valueOf(objNode));
                 model.add(s2, p2, o2);
-            } else if (id == lastId ) {
+            } else if (Objects.equals(id, lastId)) {
                 Node subjNode = getObjNodeFromPrevIndex(pos, bNodeMap);
                 String objectURI = getResourceURI(resourceContainerIRI, id);
+
                 Resource s1 = model.createResource(String.valueOf(subjNode));
                 Property p1 = model.createProperty(String.valueOf(RDF_First));
                 Resource o1 = model.createResource(objectURI);
@@ -144,7 +161,7 @@ public class RDFCollectionWriter {
         return createBlankNode(bnodeLabel);
     }
 
-    public String getResourceURI(String resourceContainerIRI, String resourceID) {
+    private String getResourceURI(String resourceContainerIRI, String resourceID) {
         return resourceContainerIRI +
                 resourceID;
     }

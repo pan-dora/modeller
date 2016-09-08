@@ -64,13 +64,7 @@
                 <value>clearCommand</value>
                 <value>saveBagCommand</value>
                 <value>saveBagAsCommand</value>
-                <value>createDefaultContainersCommand</value>
-                <value>uploadBagCommand</value>
-                <value>patchResourceCommand</value>
-                <value>createListsCommand</value>
-                <value>createCanvasesCommand</value>
-                <value>createSequencesCommand</value>
-                <value>patchSequenceCommand</value>
+                <value>buildMenu</value>
             </list>
         </property>
     </bean>

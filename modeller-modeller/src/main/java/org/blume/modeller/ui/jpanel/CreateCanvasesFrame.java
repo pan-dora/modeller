@@ -21,8 +21,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.HashMap;
-
+import java.util.Map;
 import javax.swing.AbstractAction;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -49,7 +48,7 @@ public class CreateCanvasesFrame extends JFrame implements ActionListener {
     protected static final Logger log = LoggerFactory.getLogger(CreateDefaultContainersFrame.class);
     private static final long serialVersionUID = 1L;
     transient BagView bagView;
-    private HashMap<String, BagInfoField> map;
+    private Map<String, BagInfoField> map;
     private JPanel savePanel;
     JTextField listIDField;
 

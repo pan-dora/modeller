@@ -22,7 +22,7 @@ import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.AbstractAction;
 import javax.swing.JComponent;
@@ -35,8 +35,6 @@ import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
-import org.blume.modeller.ui.jpanel.BagView;
-import org.blume.modeller.ui.jpanel.SaveBagFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.richclient.command.AbstractCommand;
@@ -54,12 +52,8 @@ public class UploadBagFrame extends JFrame implements ActionListener {
     private static final long serialVersionUID = 1L;
     transient BagView bagView;
     File bagFile;
-    String bagFileName = "";
-    HashMap<String, BagInfoField> map;
-    private Dimension preferredDimension = new Dimension(600, 400);
-    JPanel savePanel;
-    JLabel urlLabel;
-    JTextField urlField;
+    private Map<String, BagInfoField> map;
+    private JPanel savePanel;
     JRadioButton noneButton;
     JRadioButton zipButton;
 
@@ -73,6 +67,7 @@ public class UploadBagFrame extends JFrame implements ActionListener {
             savePanel = new JPanel();
         }
         getContentPane().add(savePanel, BorderLayout.CENTER);
+        Dimension preferredDimension = new Dimension(600, 400);
         setPreferredSize(preferredDimension);
         this.setBounds(300, 200, 600, 400);
         pack();
@@ -146,9 +141,9 @@ public class UploadBagFrame extends JFrame implements ActionListener {
             map = bag.getInfo().getFieldMap();
         }
 
-        urlLabel = new JLabel(bagView.getPropertyMessage("baseURL.label"));
+        JLabel urlLabel = new JLabel(bagView.getPropertyMessage("baseURL.label"));
         urlLabel.setToolTipText(bagView.getPropertyMessage("baseURL.description"));
-        urlField = new JTextField("");
+        JTextField urlField = new JTextField("");
         String uri = bagView.uploadBagHandler.getResourceContainer(map);
         try {
             urlField.setText(uri);
@@ -206,6 +201,7 @@ public class UploadBagFrame extends JFrame implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             setVisible(false);
+            String bagFileName = "";
             bagView.getBag().setName(bagFileName);
             bagView.uploadBagHandler.execute();
         }

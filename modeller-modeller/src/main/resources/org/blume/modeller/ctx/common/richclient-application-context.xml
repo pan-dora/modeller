@@ -173,7 +173,7 @@
     <property name="theme">
       <bean class="com.jgoodies.looks.plastic.theme.ExperienceBlue" />
     </property>
-    <property name="3DEnabled"   value="true"/>
+    <property name="3DEnabled" value="true"/>
   </bean>
   
 <!-- 
@@ -281,7 +281,7 @@
  --> 
  
  <bean id="commandServices" class="org.springframework.richclient.command.support.DefaultCommandServices">
- <property name="toolBarButtonConfigurer"> <ref bean="toolBarButtonConfigurer"/> </property>
+ <property name="toolBarButtonConfigurer" ref="toolBarButtonConfigurer"/>
  </bean> 
 
  <bean id="toolBarButtonConfigurer" class="org.blume.modeller.BbToolBarCommandButtonConfigurer">

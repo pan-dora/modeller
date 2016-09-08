@@ -21,7 +21,7 @@
             "fieldRequired" : false
         },
     "Ship-Date" : {
-            "fieldRequired" : false,
+            "fieldRequired" : false
         },
     "Ship-Method" : {
             "fieldRequired" : false

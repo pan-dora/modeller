@@ -3,8 +3,8 @@ package org.blume.modeller.ui.handlers.iiif;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.nio.file.Path;
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.AbstractAction;
 
@@ -43,7 +43,7 @@ public class UploadBagHandler extends AbstractAction implements Progress {
         String message = ApplicationContextUtil.getMessage("bag.message.fileuploaded");
         DefaultBag bag = bagView.getBag();
         List<String> payload = bag.getPayloadPaths();
-        HashMap<String, BagInfoField> map = bag.getInfo().getFieldMap();
+        Map<String, BagInfoField> map = bag.getInfo().getFieldMap();
         String resourceContainer = getResourceContainer(map);
         ModellerClient client = new ModellerClient();
         ImageIOUtil imageioutil = new ImageIOUtil();
@@ -76,7 +76,7 @@ public class UploadBagHandler extends AbstractAction implements Progress {
                 filename;
     }
 
-    public String getResourceContainer(HashMap<String, BagInfoField> map) {
+    public String getResourceContainer(Map<String, BagInfoField> map) {
         ContainerIRIResolver containerIRIResolver;
         containerIRIResolver = ContainerIRIResolver.resolve()
                 .map(map)

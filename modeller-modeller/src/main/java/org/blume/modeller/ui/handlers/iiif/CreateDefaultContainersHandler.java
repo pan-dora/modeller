@@ -1,7 +1,7 @@
 package org.blume.modeller.ui.handlers.iiif;
 
 import java.awt.event.ActionEvent;
-import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.AbstractAction;
 
@@ -35,9 +35,11 @@ public class CreateDefaultContainersHandler extends AbstractAction implements Pr
     public void execute() {
         String message = ApplicationContextUtil.getMessage("bag.message.containercreated");
         DefaultBag bag = bagView.getBag();
-        HashMap<String, BagInfoField> map = bag.getInfo().getFieldMap();
+        Map<String, BagInfoField> map = bag.getInfo().getFieldMap();
 
         ModellerClient client = new ModellerClient();
+        String collectionIDURI = getCollectionIDURI(map);
+        client.doPut(collectionIDURI);
         String objektURI = getObjektURI(map);
         client.doPut(objektURI);
 
@@ -66,7 +68,7 @@ public class CreateDefaultContainersHandler extends AbstractAction implements Pr
         createDefaultContainersFrame.setVisible(true);
     }
 
-    public String getObjektURI(HashMap<String, BagInfoField> map) {
+    public String getObjektURI(Map<String, BagInfoField> map) {
         BagInfoField baseURI = map.get("FedoraBaseURI");
         BagInfoField collectionRoot = map.get("CollectionRoot");
         BagInfoField collectionID = map.get("CollectionID");
@@ -77,7 +79,16 @@ public class CreateDefaultContainersHandler extends AbstractAction implements Pr
                 objektID.getValue();
     }
 
-    private String getMapValue(HashMap<String, BagInfoField> map, String key) {
+    public String getCollectionIDURI(Map<String, BagInfoField> map) {
+        BagInfoField baseURI = map.get("FedoraBaseURI");
+        BagInfoField collectionRoot = map.get("CollectionRoot");
+        BagInfoField collectionID = map.get("CollectionID");
+        return baseURI.getValue() +
+                collectionRoot.getValue() +
+                collectionID.getValue();
+    }
+
+    private String getMapValue(Map<String, BagInfoField> map, String key) {
         BagInfoField IIIFResourceContainer = map.get(key);
         return IIIFResourceContainer.getValue();
     }

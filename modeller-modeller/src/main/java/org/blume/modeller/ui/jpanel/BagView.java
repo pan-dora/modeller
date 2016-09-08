@@ -560,6 +560,7 @@ public class BagView extends AbstractView implements ApplicationListener {
         addDataExecutor.setEnabled(false);
         saveBagExecutor.setEnabled(false);
         saveBagAsExecutor.setEnabled(false);
+        createDefaultContainersExecutor.setEnabled(false);
         uploadBagExecutor.setEnabled(false);
         patchResourceExecutor.setEnabled(false);
         createListsExecutor.setEnabled(false);
@@ -585,6 +586,7 @@ public class BagView extends AbstractView implements ApplicationListener {
         completeExecutor.setEnabled(false);
         bagButtonPanel.invalidate();
         topButtonPanel.invalidate();
+        createDefaultContainersExecutor.setEnabled(false);
         uploadBagExecutor.setEnabled(false);
         createListsExecutor.setEnabled(false);
         createCanvasesExecutor.setEnabled(false);
@@ -599,6 +601,12 @@ public class BagView extends AbstractView implements ApplicationListener {
         addDataExecutor.setEnabled(true);
         addTagFileToolBarAction.setEnabled(true);
         bagButtonPanel.invalidate();
+        createDefaultContainersExecutor.setEnabled(false);
+        uploadBagExecutor.setEnabled(false);
+        createListsExecutor.setEnabled(false);
+        createCanvasesExecutor.setEnabled(false);
+        createSequencesExecutor.setEnabled(false);
+        patchSequenceExecutor.setEnabled(false);
     }
 
     public void updateOpenBag() {
@@ -613,6 +621,7 @@ public class BagView extends AbstractView implements ApplicationListener {
         setCompleteExecutor(); // Disables the Is Complete Bag Button for Holey Bags
         setValidateExecutor(); // Disables the Validate Bag Button for Holey Bags
         topButtonPanel.invalidate();
+        createDefaultContainersExecutor.setEnabled(true);
         uploadBagExecutor.setEnabled(true);
         patchResourceExecutor.setEnabled(true);
         createListsExecutor.setEnabled(true);
@@ -633,6 +642,7 @@ public class BagView extends AbstractView implements ApplicationListener {
         validateExecutor.setEnabled(true);
         bagButtonPanel.invalidate();
         topButtonPanel.invalidate();
+        createDefaultContainersExecutor.setEnabled(true);
         uploadBagExecutor.setEnabled(true);
         patchResourceExecutor.setEnabled(true);
         createListsExecutor.setEnabled(true);
@@ -654,6 +664,7 @@ public class BagView extends AbstractView implements ApplicationListener {
         setValidateExecutor(); // Disables the Validate Bag Button for Holey Bags
         topButtonPanel.invalidate();
         saveBagAsExecutor.setEnabled(true);
+        createDefaultContainersExecutor.setEnabled(true);
         uploadBagExecutor.setEnabled(true);
         patchResourceExecutor.setEnabled(true);
         createListsExecutor.setEnabled(true);
@@ -667,6 +678,7 @@ public class BagView extends AbstractView implements ApplicationListener {
         createListsExecutor.setEnabled(true);
         bagButtonPanel.invalidate();
         topButtonPanel.invalidate();
+        createDefaultContainersExecutor.setEnabled(true);
         uploadBagExecutor.setEnabled(true);
         patchResourceExecutor.setEnabled(true);
         createListsExecutor.setEnabled(true);
@@ -678,8 +690,7 @@ public class BagView extends AbstractView implements ApplicationListener {
     public void updateManifestPane() {
         bagTagFileTree = new BagTree(this, bag.getName());
         Collection<BagFile> tags = bag.getTags();
-        for (Iterator<BagFile> it = tags.iterator(); it.hasNext(); ) {
-            BagFile bf = it.next();
+        for (BagFile bf : tags) {
             bagTagFileTree.addNode(bf.getFilepath());
         }
         bagTagFileTreePanel.refresh(bagTagFileTree);
@@ -761,46 +772,38 @@ public class BagView extends AbstractView implements ApplicationListener {
 
     public void registerTreeListener(String label, final JTree tree) {
         if (AbstractBagConstants.DATA_DIRECTORY.equals(label)) {
-            tree.addTreeSelectionListener(new TreeSelectionListener() {
+            tree.addTreeSelectionListener(e -> {
 
-                @Override
-                public void valueChanged(TreeSelectionEvent e) {
+                TreePath[] paths = tree.getSelectionPaths();
+                if (paths == null || paths.length == 0) {
+                    return;
+                }
 
-                    TreePath[] paths = tree.getSelectionPaths();
-                    if (paths == null || paths.length == 0) {
+                for (TreePath path : paths) {
+                    if (path.getPathCount() == 1) {
+                        removeDataToolBarAction.setEnabled(false);
                         return;
                     }
-
-                    for (TreePath path : paths) {
-                        if (path.getPathCount() == 1) {
-                            removeDataToolBarAction.setEnabled(false);
-                            return;
-                        }
-                    }
-
-                    removeDataToolBarAction.setEnabled(true);
                 }
+
+                removeDataToolBarAction.setEnabled(true);
             });
         } else {
-            tree.addTreeSelectionListener(new TreeSelectionListener() {
+            tree.addTreeSelectionListener(e -> {
 
-                @Override
-                public void valueChanged(TreeSelectionEvent e) {
+                TreePath[] paths = tree.getSelectionPaths();
+                if (paths == null || paths.length == 0) {
+                    return;
+                }
 
-                    TreePath[] paths = tree.getSelectionPaths();
-                    if (paths == null || paths.length == 0) {
+                for (TreePath path : paths) {
+                    if (path.getPathCount() == 1) {
+                        removeTagFileToolbarAction.setEnabled(false);
                         return;
                     }
-
-                    for (TreePath path : paths) {
-                        if (path.getPathCount() == 1) {
-                            removeTagFileToolbarAction.setEnabled(false);
-                            return;
-                        }
-                    }
-
-                    removeTagFileToolbarAction.setEnabled(true);
                 }
+
+                removeTagFileToolbarAction.setEnabled(true);
             });
         }
     }

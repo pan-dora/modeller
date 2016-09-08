@@ -9,7 +9,7 @@ public class ContainerIRIResolver {
 
     public ContainerIRIResolver(String resolvedIRI) {
         this.resolvedIRI = resolvedIRI;
-    };
+    }
 
     public static ContainerIRIResolver.ContainerIRIResolverNormal resolve() {
         return new ContainerIRIResolver.ContainerIRIResolverNormal();
