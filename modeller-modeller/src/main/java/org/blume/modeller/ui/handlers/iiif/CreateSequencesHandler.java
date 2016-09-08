@@ -49,14 +49,14 @@ public class CreateSequencesHandler extends AbstractAction implements Progress {
         bagView.getControl().invalidate();
     }
 
-    public void openCreateSequencesFrame() {
+    void openCreateSequencesFrame() {
         DefaultBag bag = bagView.getBag();
         CreateSequencesFrame createSequencesFrame = new CreateSequencesFrame(bagView, bagView.getPropertyMessage("bag.frame.sequence"));
         createSequencesFrame.setBag(bag);
         createSequencesFrame.setVisible(true);
     }
 
-    public String getSequenceObjectURI(String SequenceContainerURI, String SequenceID) {
+    private String getSequenceObjectURI(String SequenceContainerURI, String SequenceID) {
         return SequenceContainerURI + SEQPREFIX +
                 SequenceID;
     }

@@ -52,14 +52,14 @@ public class CreateCanvasesHandler extends AbstractAction implements Progress {
         bagView.getControl().invalidate();
     }
 
-    public void openCreateCanvasesFrame() {
+    void openCreateCanvasesFrame() {
         DefaultBag bag = bagView.getBag();
         CreateCanvasesFrame createCanvasesFrame = new CreateCanvasesFrame(bagView, bagView.getPropertyMessage("bag.frame.list"));
         createCanvasesFrame.setBag(bag);
         createCanvasesFrame.setVisible(true);
     }
 
-    public String getCanvasObjectURI(String canvasContainerURI, String resourceID) {
+    private String getCanvasObjectURI(String canvasContainerURI, String resourceID) {
         return canvasContainerURI + CANVASPREFIX +
                 resourceID;
     }

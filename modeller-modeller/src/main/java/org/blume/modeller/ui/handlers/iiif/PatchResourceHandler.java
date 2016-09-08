@@ -102,14 +102,14 @@ public class PatchResourceHandler extends AbstractAction implements Progress {
         bagView.getControl().invalidate();
     }
 
-    public void openPatchResourceFrame() {
+    void openPatchResourceFrame() {
         DefaultBag bag = bagView.getBag();
         PatchResourceFrame patchResourcesFrame = new PatchResourceFrame(bagView, bagView.getPropertyMessage("bag.frame.patch"));
         patchResourcesFrame.setBag(bag);
         patchResourcesFrame.setVisible(true);
     }
 
-    public String getDestinationURI(String resourceContainer, String filename) {
+    private String getDestinationURI(String resourceContainer, String filename) {
         return resourceContainer +
                 filename +
                 FCRMETADATA;
@@ -128,9 +128,9 @@ public class PatchResourceHandler extends AbstractAction implements Progress {
         return containerIRIResolver.render();
     }
 
-    public InputStream getResourceMetadata(Map<String, BagInfoField> map, String filename, String formatName,
-                                           double imgWidth,
-                                           double imgHeight) {
+    private InputStream getResourceMetadata(Map<String, BagInfoField> map, String filename, String formatName,
+                                            double imgWidth,
+                                            double imgHeight) {
         ResourceTemplate resourceTemplate;
         List<ResourceScope.Prefix> prefixes = Arrays.asList(
                 new ResourceScope.Prefix(FedoraPrefixes.RDFS),
@@ -154,20 +154,20 @@ public class PatchResourceHandler extends AbstractAction implements Progress {
         return IOUtils.toInputStream(metadata, UTF_8 );
     }
 
-    public String getServiceURI(Map<String, BagInfoField> map, String filename) {
+    private String getServiceURI(Map<String, BagInfoField> map, String filename) {
         String serviceURI = getMapValue(map, "IIIFServiceBaseURI");
         String collectionID = substringBeforeLast(getMapValue(map, "CollectionID"), "/");
         String objektID = substringBeforeLast(getMapValue(map, "ObjektID"), "/");
         return serviceURI + collectionID + "." + objektID + "." +
-                filename;
+                BaggerFileEntity.removeFileExtension(filename);
     }
 
-    public String getMapValue(Map<String, BagInfoField> map, String key) {
+    private String getMapValue(Map<String, BagInfoField> map, String key) {
         BagInfoField IIIFProfileKey = map.get(key);
         return IIIFProfileKey.getValue();
     }
 
-    public static String substringBeforeLast(String str, String separator) {
+    private static String substringBeforeLast(String str, String separator) {
         if (isEmpty(str) || isEmpty(separator)) {
             return str;
         }
@@ -178,7 +178,7 @@ public class PatchResourceHandler extends AbstractAction implements Progress {
         return str.substring(0, pos);
     }
 
-    public static boolean isEmpty(String str) {
+    private static boolean isEmpty(String str) {
         return str == null || str.length() == 0;
     }
 

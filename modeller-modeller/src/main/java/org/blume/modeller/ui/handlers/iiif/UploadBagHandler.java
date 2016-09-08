@@ -64,14 +64,14 @@ public class UploadBagHandler extends AbstractAction implements Progress {
         bagView.getControl().invalidate();
     }
 
-    public void openUploadBagFrame() {
+    void openUploadBagFrame() {
         DefaultBag bag = bagView.getBag();
         UploadBagFrame uploadBagFrame = new UploadBagFrame(bagView, bagView.getPropertyMessage("bag.frame.upload"));
         uploadBagFrame.setBag(bag);
         uploadBagFrame.setVisible(true);
     }
 
-    public String getDestinationURI(String resourceContainer, String filename) {
+    private String getDestinationURI(String resourceContainer, String filename) {
         return resourceContainer +
                 filename;
     }

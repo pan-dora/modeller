@@ -30,7 +30,6 @@ import org.blume.modeller.ModellerClient;
 import static org.apache.commons.lang3.StringEscapeUtils.unescapeXml;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.apache.commons.lang3.exception.ExceptionUtils.getMessage;
-import static org.apache.commons.lang3.exception.ExceptionUtils.getStackTrace;
 
 public class PatchSequenceHandler extends AbstractAction implements Progress {
     protected static final Logger log = LoggerFactory.getLogger(PatchSequenceHandler.class);
@@ -72,14 +71,14 @@ public class PatchSequenceHandler extends AbstractAction implements Progress {
         bagView.getControl().invalidate();
     }
 
-    public void openPatchSequenceFrame() {
+    void openPatchSequenceFrame() {
         DefaultBag bag = bagView.getBag();
         PatchSequenceFrame patchSequencesFrame = new PatchSequenceFrame(bagView, bagView.getPropertyMessage("bag.frame.patch.sequence"));
         patchSequencesFrame.setBag(bag);
         patchSequencesFrame.setVisible(true);
     }
 
-    public String getDestinationURI(String sequenceContainer, String sequenceID) {
+    private String getDestinationURI(String sequenceContainer, String sequenceID) {
         return sequenceContainer +
                 sequenceID;
     }
@@ -97,7 +96,7 @@ public class PatchSequenceHandler extends AbstractAction implements Progress {
         return containerIRIResolver.render();
     }
 
-    public String getCanvasContainer(Map<String, BagInfoField> map) {
+    private String getCanvasContainer(Map<String, BagInfoField> map) {
         ContainerIRIResolver containerIRIResolver;
         containerIRIResolver = ContainerIRIResolver.resolve()
                 .map(map)
@@ -110,8 +109,8 @@ public class PatchSequenceHandler extends AbstractAction implements Progress {
         return containerIRIResolver.render();
     }
 
-    public InputStream getSequenceMetadata(ArrayList<String> resourceIDList, String collectionPredicate,
-                                           String resourceContainerIRI) {
+    private InputStream getSequenceMetadata(ArrayList<String> resourceIDList, String collectionPredicate,
+                                            String resourceContainerIRI) {
         RDFCollectionWriter collectionWriter;
         collectionWriter = RDFCollectionWriter.collection()
                 .idList(resourceIDList)
@@ -137,34 +136,6 @@ public class PatchSequenceHandler extends AbstractAction implements Progress {
 
         String metadata = unescapeXml(collectionTemplate.render());
         return IOUtils.toInputStream(metadata, UTF_8 );
-    }
-
-    public String getServiceURI(Map<String, BagInfoField> map, String filename) {
-        String serviceURI = getMapValue(map, "IIIFServiceBaseURI");
-        String collectionID = substringBeforeLast(getMapValue(map, "CollectionID"), "/");
-        String objektID = substringBeforeLast(getMapValue(map, "ObjektID"), "/");
-        return serviceURI + collectionID + "." + objektID + "." +
-                filename;
-    }
-
-    public String getMapValue(Map<String, BagInfoField> map, String key) {
-        BagInfoField IIIFProfileKey = map.get(key);
-        return IIIFProfileKey.getValue();
-    }
-
-    public static String substringBeforeLast(String str, String separator) {
-        if (isEmpty(str) || isEmpty(separator)) {
-            return str;
-        }
-        int pos = str.lastIndexOf(separator);
-        if (pos == -1) {
-            return str;
-        }
-        return str.substring(0, pos);
-    }
-
-    public static boolean isEmpty(String str) {
-        return str == null || str.length() == 0;
     }
 
 }

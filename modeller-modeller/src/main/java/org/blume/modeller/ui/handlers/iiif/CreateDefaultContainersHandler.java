@@ -77,12 +77,12 @@ public class CreateDefaultContainersHandler extends AbstractAction implements Pr
                 objektID.getValue();
     }
 
-    public String getMapValue(HashMap<String, BagInfoField> map, String key) {
+    private String getMapValue(HashMap<String, BagInfoField> map, String key) {
         BagInfoField IIIFResourceContainer = map.get(key);
         return IIIFResourceContainer.getValue();
     }
 
-    public String buildContainerURI(String objektURI, String container) {
+    private String buildContainerURI(String objektURI, String container) {
         return objektURI +
                 container;
     }

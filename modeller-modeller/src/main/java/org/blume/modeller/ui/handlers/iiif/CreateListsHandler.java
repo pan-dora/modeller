@@ -49,14 +49,14 @@ public class CreateListsHandler extends AbstractAction implements Progress {
         bagView.getControl().invalidate();
     }
 
-    public void openCreateListsFrame() {
+    void openCreateListsFrame() {
         DefaultBag bag = bagView.getBag();
         CreateListsFrame createListsFrame = new CreateListsFrame(bagView, bagView.getPropertyMessage("bag.frame.list"));
         createListsFrame.setBag(bag);
         createListsFrame.setVisible(true);
     }
 
-    public String getListObjectURI(String ListContainerURI, String ListID) {
+    private String getListObjectURI(String ListContainerURI, String ListID) {
         return ListContainerURI + LISTPREFIX +
                 ListID;
     }
