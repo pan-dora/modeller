@@ -51,7 +51,7 @@ public class CreateSequencesFrame extends JFrame implements ActionListener {
     transient BagView bagView;
     private HashMap<String, BagInfoField> map;
     private JPanel savePanel;
-    JTextField sequenceIDField;
+    private JTextField sequenceIDField;
 
     public  CreateSequencesFrame(BagView bagView, String title) {
         super(title);

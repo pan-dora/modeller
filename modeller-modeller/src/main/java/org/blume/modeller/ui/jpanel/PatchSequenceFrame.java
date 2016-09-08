@@ -45,15 +45,18 @@ import org.springframework.richclient.util.GuiStandardUtils;
 import org.blume.modeller.bag.impl.DefaultBag;
 import org.blume.modeller.bag.BagInfoField;
 
-public class CreateListsFrame extends JFrame implements ActionListener {
-    protected static final Logger log = LoggerFactory.getLogger(CreateDefaultContainersFrame.class);
+public class PatchSequenceFrame extends JFrame implements ActionListener {
+    protected static final Logger log = LoggerFactory.getLogger(PatchSequenceFrame.class);
     private static final long serialVersionUID = 1L;
     transient BagView bagView;
-    private HashMap<String, BagInfoField> map;
-    private JPanel savePanel;
-    private JTextField listIDField;
+    String bagFileName = "";
+    HashMap<String, BagInfoField> map;
+    private Dimension preferredDimension = new Dimension(600, 400);
+    JPanel savePanel;
+    JLabel urlLabel;
+    JTextField urlField;
 
-    public  CreateListsFrame(BagView bagView, String title) {
+    public PatchSequenceFrame(BagView bagView, String title) {
         super(title);
         this.bagView = bagView;
         if (bagView != null) {
@@ -63,20 +66,19 @@ public class CreateListsFrame extends JFrame implements ActionListener {
             savePanel = new JPanel();
         }
         getContentPane().add(savePanel, BorderLayout.CENTER);
-        Dimension preferredDimension = new Dimension(600, 400);
         setPreferredSize(preferredDimension);
         this.setBounds(300, 200, 600, 400);
         pack();
     }
 
-    private JComponent createButtonBar() {
+    protected JComponent createButtonBar() {
         CommandGroup dialogCommandGroup = CommandGroup.createCommandGroup(null, getCommandGroupMembers());
         JComponent buttonBar = dialogCommandGroup.createButtonBar();
         GuiStandardUtils.attachDialogBorder(buttonBar);
         return buttonBar;
     }
 
-    private Object[] getCommandGroupMembers() {
+    protected Object[] getCommandGroupMembers() {
         return new AbstractCommand[]{finishCommand, cancelCommand};
     }
 
@@ -88,7 +90,7 @@ public class CreateListsFrame extends JFrame implements ActionListener {
             @Override
             public void doExecuteCommand() {
 
-                new OkCreateListsHandler().actionPerformed(null);
+                new OkCreateDefaultContainersHandler().actionPerformed(null);
 
             }
         };
@@ -97,22 +99,22 @@ public class CreateListsFrame extends JFrame implements ActionListener {
 
             @Override
             public void doExecuteCommand() {
-                new CancelCreateListsHandler().actionPerformed(null);
+                new CancelCreateDefaultContainersHandler().actionPerformed(null);
             }
         };
     }
 
-    private String getFinishCommandId() {
+    protected String getFinishCommandId() {
         return DEFAULT_FINISH_COMMAND_ID;
     }
 
-    private String getCancelCommandId() {
+    protected String getCancelCommandId() {
         return DEFAULT_CANCEL_COMMAND_ID;
     }
 
-    private static final String DEFAULT_FINISH_COMMAND_ID = "okCommand";
+    protected static final String DEFAULT_FINISH_COMMAND_ID = "okCommand";
 
-    private static final String DEFAULT_CANCEL_COMMAND_ID = "cancelCommand";
+    protected static final String DEFAULT_CANCEL_COMMAND_ID = "cancelCommand";
 
     private transient ActionCommand finishCommand;
 
@@ -125,8 +127,8 @@ public class CreateListsFrame extends JFrame implements ActionListener {
         initStandardCommands();
         JPanel pageControl = new JPanel(new BorderLayout());
         JPanel titlePaneContainer = new JPanel(new BorderLayout());
-        titlePane.setTitle(bagView.getPropertyMessage("CreateListsFrame.title"));
-        titlePane.setMessage(new DefaultMessage(bagView.getPropertyMessage("Create List in:")));
+        titlePane.setTitle(bagView.getPropertyMessage("PatchSequenceFrame.title"));
+        titlePane.setMessage(new DefaultMessage(bagView.getPropertyMessage("Patch Sequences")));
         titlePaneContainer.add(titlePane.getControl());
         titlePaneContainer.add(new JSeparator(), BorderLayout.SOUTH);
         pageControl.add(titlePaneContainer, BorderLayout.NORTH);
@@ -137,19 +139,16 @@ public class CreateListsFrame extends JFrame implements ActionListener {
             map = bag.getInfo().getFieldMap();
         }
 
-        JLabel urlLabel = new JLabel(bagView.getPropertyMessage("baseURL.label"));
+        urlLabel = new JLabel(bagView.getPropertyMessage("baseURL.label"));
         urlLabel.setToolTipText(bagView.getPropertyMessage("baseURL.description"));
-        JTextField urlField = new JTextField("");
-        String uri = bagView.createListsHandler.getListContainerURI(map);
+        urlField = new JTextField("");
+        String uri = bagView.patchSequenceHandler.getSequenceContainer(map);
         try {
             urlField.setText(uri);
         } catch (Exception e) {
             log.error("Failed to set url label", e);
         }
 
-        JLabel listIDLabel = new JLabel(bagView.getPropertyMessage("listID.label"));
-        listIDLabel.setToolTipText(bagView.getPropertyMessage("listID.description"));
-        listIDField = new JTextField("");
         GridBagLayout layout = new GridBagLayout();
         GridBagConstraints glbc = new GridBagConstraints();
         JPanel panel = new JPanel(layout);
@@ -166,11 +165,11 @@ public class CreateListsFrame extends JFrame implements ActionListener {
         panel.add(urlField);
         row++;
         buildConstraints(glbc, 0, row, 1, 1, 1, 50, GridBagConstraints.NONE, GridBagConstraints.WEST);
-        layout.setConstraints(listIDLabel, glbc);
-        panel.add(listIDLabel);
+        layout.setConstraints(urlLabel, glbc);
+        panel.add(urlLabel);
         buildConstraints(glbc, 1, row, 1, 1, 80, 50, GridBagConstraints.HORIZONTAL, GridBagConstraints.CENTER);
-        layout.setConstraints(listIDField, glbc);
-        panel.add(listIDField);
+        layout.setConstraints(urlField, glbc);
+        panel.add(urlField);
         row++;
         buildConstraints(glbc, 0, row, 1, 1, 1, 50, GridBagConstraints.NONE, GridBagConstraints.WEST);
         buildConstraints(glbc, 1, row, 2, 1, 80, 50, GridBagConstraints.HORIZONTAL, GridBagConstraints.CENTER);
@@ -195,19 +194,18 @@ public class CreateListsFrame extends JFrame implements ActionListener {
         repaint();
     }
 
-    private class OkCreateListsHandler extends AbstractAction {
+    private class OkCreateDefaultContainersHandler extends AbstractAction {
         private static final long serialVersionUID = 1L;
 
         @Override
         public void actionPerformed(ActionEvent e) {
             setVisible(false);
-            String listID = listIDField.getText().trim();
-            bagView.getBag().setListID(listID);
-            bagView.createListsHandler.execute();
+            bagView.getBag().setName(bagFileName);
+            bagView.patchSequenceHandler.execute();
         }
     }
 
-    private class CancelCreateListsHandler extends AbstractAction {
+    private class CancelCreateDefaultContainersHandler extends AbstractAction {
         private static final long serialVersionUID = 1L;
 
         @Override
@@ -230,6 +228,4 @@ public class CreateListsFrame extends JFrame implements ActionListener {
     private String getMessage(String property) {
         return bagView.getPropertyMessage(property);
     }
-
 }
-

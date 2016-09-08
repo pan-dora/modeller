@@ -8,7 +8,7 @@ public class CollectionTemplate {
         return new CollectionTemplate.CollectionTemplateBuilder();
     }
 
-    private CollectionTemplate(String template, ResourceScope scope) {
+    private CollectionTemplate(String template, CollectionScope scope) {
         TemplateBuilder mb = new TemplateBuilder()
                 .scope(scope)
                 .template(template);
@@ -38,7 +38,7 @@ public class CollectionTemplate {
         }
 
         public CollectionTemplate build() {
-            return new CollectionTemplate(this.template, (ResourceScope) this.scope);
+            return new CollectionTemplate(this.template, (CollectionScope) this.scope);
         }
 
         public CollectionTemplate.CollectionTemplateBuilder throwExceptionOnFailure() {

@@ -17,11 +17,11 @@ public class RDFCollectionWriterTest {
         System.out.println(collection);
     }
 
-    public static ArrayList<Integer> getMockSequence() {
+    public static ArrayList<String> getMockSequence() {
         int numOfValues = 6;
         int[] array = IntStream.range(1, numOfValues + 1).toArray();
-        ArrayList<Integer> idList = new ArrayList<>(array.length);
-        for (int anArray : array) idList.add(anArray);
+        ArrayList<String> idList = new ArrayList<>(array.length);
+        for (int anArray : array) idList.add(String.valueOf(anArray));
         return idList;
     }
 }

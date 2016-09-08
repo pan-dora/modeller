@@ -31,7 +31,7 @@ public class RDFCollectionWriter {
         return this.rdfCollection.toString();
     }
 
-    protected RDFCollectionWriter(final ArrayList<Integer> idList, final String collectionPredicate,
+    protected RDFCollectionWriter(final ArrayList<String> idList, final String collectionPredicate,
                                   final String resourceContainerIRI) {
         Model model = ModelFactory.createDefaultModel();
         Map<String, Node> bNodeMap = getBNodeKeyMap(idList);
@@ -42,9 +42,9 @@ public class RDFCollectionWriter {
         Resource o = model.createResource(String.valueOf(firstBNode));
         model.add(s, p, o);
 
-        for (int id : idList) {
+        for (String id : idList) {
             int pos = getIDPos(idList, id);
-            int lastId = idList.get(idList.size() - 1);
+            String lastId = idList.get(idList.size() - 1);
             if (pos == 0) {
                 Node subjNode = getSubjNodeForCurrentIndex(pos, bNodeMap);
                 Node objNode = getObjNodeForCurrentIndex(pos, bNodeMap);
@@ -94,14 +94,14 @@ public class RDFCollectionWriter {
         RDFDataMgr.write(this.rdfCollection, model, Lang.NTRIPLES);
     }
 
-    private int getIDPos(ArrayList<Integer> idList, int id) {
+    private int getIDPos(ArrayList<String> idList, String id) {
         return idList.indexOf(id);
     }
 
-    private Map<String, Node> getBNodeKeyMap(ArrayList<Integer> idList) {
+    private Map<String, Node> getBNodeKeyMap(ArrayList<String> idList) {
         Map<String, Node> bNodeMap = new HashMap <>();
 
-        for (int id : idList) {
+        for (String id : idList) {
             int pos = getIDPos(idList, id);
             Node sNode = getNewBNode();
             Node oNode = getNewBNode();
@@ -144,18 +144,18 @@ public class RDFCollectionWriter {
         return createBlankNode(bnodeLabel);
     }
 
-    public String getResourceURI(String resourceContainerIRI, int resourceID) {
+    public String getResourceURI(String resourceContainerIRI, String resourceID) {
         return resourceContainerIRI +
                 resourceID;
     }
 
     public static class RDFCollectionBuilder {
 
-        private ArrayList<Integer> idList;
+        private ArrayList<String> idList;
         private String collectionPredicate;
         private String resourceContainerIRI;
 
-        public RDFCollectionWriter.RDFCollectionBuilder idList(ArrayList<Integer> idList) {
+        public RDFCollectionWriter.RDFCollectionBuilder idList(ArrayList<String> idList) {
             this.idList = idList;
             return this;
         }

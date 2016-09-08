@@ -25,6 +25,7 @@
                 <value>createListsCommand</value>
                 <value>createCanvasesCommand</value>
                 <value>createSequencesCommand</value>
+                <value>patchSequenceCommand</value>
             </list>
         </property>
     </bean>
@@ -69,6 +70,7 @@
                 <value>createListsCommand</value>
                 <value>createCanvasesCommand</value>
                 <value>createSequencesCommand</value>
+                <value>patchSequenceCommand</value>
             </list>
         </property>
     </bean>
@@ -99,6 +101,7 @@
                 <value>createListsCommand</value>
                 <value>createCanvasesCommand</value>
                 <value>createSequencesCommand</value>
+                <value>patchSequenceCommand</value>
             </list>
         </property>
     </bean>
