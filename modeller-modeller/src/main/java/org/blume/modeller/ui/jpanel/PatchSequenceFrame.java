@@ -49,12 +49,8 @@ public class PatchSequenceFrame extends JFrame implements ActionListener {
     protected static final Logger log = LoggerFactory.getLogger(PatchSequenceFrame.class);
     private static final long serialVersionUID = 1L;
     transient BagView bagView;
-    String bagFileName = "";
-    HashMap<String, BagInfoField> map;
-    private Dimension preferredDimension = new Dimension(600, 400);
-    JPanel savePanel;
-    JLabel urlLabel;
-    JTextField urlField;
+    private HashMap<String, BagInfoField> map;
+    private JPanel savePanel;
 
     public PatchSequenceFrame(BagView bagView, String title) {
         super(title);
@@ -66,6 +62,7 @@ public class PatchSequenceFrame extends JFrame implements ActionListener {
             savePanel = new JPanel();
         }
         getContentPane().add(savePanel, BorderLayout.CENTER);
+        Dimension preferredDimension = new Dimension(600, 400);
         setPreferredSize(preferredDimension);
         this.setBounds(300, 200, 600, 400);
         pack();
@@ -139,9 +136,9 @@ public class PatchSequenceFrame extends JFrame implements ActionListener {
             map = bag.getInfo().getFieldMap();
         }
 
-        urlLabel = new JLabel(bagView.getPropertyMessage("baseURL.label"));
+        JLabel urlLabel = new JLabel(bagView.getPropertyMessage("baseURL.label"));
         urlLabel.setToolTipText(bagView.getPropertyMessage("baseURL.description"));
-        urlField = new JTextField("");
+        JTextField urlField = new JTextField("");
         String uri = bagView.patchSequenceHandler.getSequenceContainer(map);
         try {
             urlField.setText(uri);
@@ -200,6 +197,7 @@ public class PatchSequenceFrame extends JFrame implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             setVisible(false);
+            String bagFileName = "";
             bagView.getBag().setName(bagFileName);
             bagView.patchSequenceHandler.execute();
         }

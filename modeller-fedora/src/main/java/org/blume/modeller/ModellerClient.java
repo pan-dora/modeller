@@ -51,7 +51,7 @@ public class ModellerClient {
         }
     }
 
-    public void doPatch(String destinationURI, InputStream rdfBody) {
+    public void doPatch(String destinationURI, InputStream rdfBody) throws ModellerClientFailedException {
         final URI uri = create(destinationURI);
         FcrepoClient testClient;
         testClient = FcrepoClient.client().throwExceptionOnFailure().build();
@@ -62,6 +62,7 @@ public class ModellerClient {
             log.info(String.valueOf(response.getStatusCode()));
         } catch (FcrepoOperationFailedException e) {
             System.out.println(e);
+            throw new ModellerClientFailedException(e);
         }
     }
 }

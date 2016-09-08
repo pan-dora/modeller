@@ -6,7 +6,6 @@ import java.io.File;
 import java.io.InputStream;
 import java.nio.file.Path;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,6 +13,7 @@ import javax.swing.AbstractAction;
 
 import gov.loc.repository.bagit.impl.AbstractBagConstants;
 import org.apache.commons.io.IOUtils;
+import org.blume.modeller.ModellerClientFailedException;
 import org.blume.modeller.bag.BagInfoField;
 import org.blume.modeller.bag.BaggerFileEntity;
 import org.blume.modeller.common.uri.FedoraPrefixes;
@@ -30,6 +30,8 @@ import org.blume.modeller.ui.Progress;
 import org.blume.modeller.ui.util.ApplicationContextUtil;
 import org.blume.modeller.ui.jpanel.PatchResourceFrame;
 import org.blume.modeller.ModellerClient;
+
+import static org.apache.commons.lang3.exception.ExceptionUtils.getMessage;
 import static org.blume.modeller.common.uri.FedoraResources.FCRMETADATA;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
@@ -92,8 +94,9 @@ public class PatchResourceHandler extends AbstractAction implements Progress {
 
             try {
                 client.doPatch(destinationURI, rdfBody);
-            } finally {
                 ApplicationContextUtil.addConsoleMessage(message + " " + destinationURI);
+            } catch (ModellerClientFailedException e) {
+                ApplicationContextUtil.addConsoleMessage(getMessage(e));
             }
         }
         bagView.getControl().invalidate();
