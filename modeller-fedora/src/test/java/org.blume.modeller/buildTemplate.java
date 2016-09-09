@@ -1,8 +1,9 @@
 package org.blume.modeller;
 
 import org.blume.modeller.common.uri.FedoraPrefixes;
+import org.blume.modeller.templates.CanvasScope;
 import org.blume.modeller.templates.ResourceScope;
-import org.blume.modeller.templates.ResourceTemplate;
+import org.blume.modeller.templates.MetadataTemplate;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -11,22 +12,26 @@ import java.util.List;
 public class buildTemplate {
 
     public static void main(String[] args) throws IOException {
-        ResourceTemplate resourceTemplate;
-        List<ResourceScope.Prefix> prefixes = Arrays.asList(
-                new ResourceScope.Prefix(FedoraPrefixes.RDFS),
-                new ResourceScope.Prefix(FedoraPrefixes.MODE));
+        MetadataTemplate metadataTemplate;
+        List<CanvasScope.Prefix> prefixes = Arrays.asList(
+                new CanvasScope.Prefix(FedoraPrefixes.RDFS),
+                new CanvasScope.Prefix(FedoraPrefixes.MODE));
 
-        ResourceScope scope = new ResourceScope()
+        CanvasScope scope = new CanvasScope()
                 .fedoraPrefixes(prefixes)
-                .serviceURI("http://localhost:8888/iiif/");
+                .resourceURI("http://localhost:8080/fcrepo/rest/collection/test/001/res/001.tif")
+                .listURI("http://localhost:8080/fcrepo/rest/collection/test/001/list/001")
+                .canvasLabel("test")
+                .canvasHeight(3000)
+                .canvasWidth(2000);
 
-        resourceTemplate = ResourceTemplate.template()
-                .template("template/sparql-update.mustache")
+        metadataTemplate = MetadataTemplate.template()
+                .template("template/sparql-update-canvas.mustache")
                 .scope(scope)
                 .throwExceptionOnFailure()
                 .build();
 
-        String template = resourceTemplate.render();
+        String template = metadataTemplate.render();
         System.out.println(template);
     }
 }

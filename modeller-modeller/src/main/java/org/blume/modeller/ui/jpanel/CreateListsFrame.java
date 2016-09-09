@@ -147,9 +147,6 @@ public class CreateListsFrame extends JFrame implements ActionListener {
             log.error("Failed to set url label", e);
         }
 
-        JLabel listIDLabel = new JLabel(bagView.getPropertyMessage("listID.label"));
-        listIDLabel.setToolTipText(bagView.getPropertyMessage("listID.description"));
-        listIDField = new JTextField("");
         GridBagLayout layout = new GridBagLayout();
         GridBagConstraints glbc = new GridBagConstraints();
         JPanel panel = new JPanel(layout);
@@ -164,13 +161,6 @@ public class CreateListsFrame extends JFrame implements ActionListener {
         buildConstraints(glbc, 1, row, 1, 1, 80, 50, GridBagConstraints.HORIZONTAL, GridBagConstraints.CENTER);
         layout.setConstraints(urlField, glbc);
         panel.add(urlField);
-        row++;
-        buildConstraints(glbc, 0, row, 1, 1, 1, 50, GridBagConstraints.NONE, GridBagConstraints.WEST);
-        layout.setConstraints(listIDLabel, glbc);
-        panel.add(listIDLabel);
-        buildConstraints(glbc, 1, row, 1, 1, 80, 50, GridBagConstraints.HORIZONTAL, GridBagConstraints.CENTER);
-        layout.setConstraints(listIDField, glbc);
-        panel.add(listIDField);
         row++;
         buildConstraints(glbc, 0, row, 1, 1, 1, 50, GridBagConstraints.NONE, GridBagConstraints.WEST);
         buildConstraints(glbc, 1, row, 2, 1, 80, 50, GridBagConstraints.HORIZONTAL, GridBagConstraints.CENTER);
@@ -201,8 +191,6 @@ public class CreateListsFrame extends JFrame implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             setVisible(false);
-            String listID = listIDField.getText().trim();
-            bagView.getBag().setListID(listID);
             bagView.createListsHandler.execute();
         }
     }

@@ -15,7 +15,7 @@ import org.blume.modeller.ProfileOptions;
 import org.blume.modeller.bag.BagInfoField;
 import org.blume.modeller.common.uri.FedoraPrefixes;
 import org.blume.modeller.templates.CollectionScope;
-import org.blume.modeller.templates.CollectionTemplate;
+import org.blume.modeller.templates.MetadataTemplate;
 import org.blume.modeller.ui.jpanel.PatchSequenceFrame;
 import org.blume.modeller.ui.util.ContainerIRIResolver;
 import org.blume.modeller.util.RDFCollectionWriter;
@@ -120,7 +120,7 @@ public class PatchSequenceHandler extends AbstractAction implements Progress {
                 .build();
 
         String collection = collectionWriter.render();
-        CollectionTemplate collectionTemplate;
+        MetadataTemplate metadataTemplate;
         List<CollectionScope.Prefix> prefixes = Arrays.asList(
                 new CollectionScope.Prefix(FedoraPrefixes.RDFS),
                 new CollectionScope.Prefix(FedoraPrefixes.MODE));
@@ -129,13 +129,13 @@ public class PatchSequenceHandler extends AbstractAction implements Progress {
                 .fedoraPrefixes(prefixes)
                 .sequenceGraph(collection);
 
-        collectionTemplate = CollectionTemplate.template()
+        metadataTemplate = MetadataTemplate.template()
                 .template("template/sparql-update-seq.mustache")
                 .scope(scope)
                 .throwExceptionOnFailure()
                 .build();
 
-        String metadata = unescapeXml(collectionTemplate.render());
+        String metadata = unescapeXml(metadataTemplate.render());
         return IOUtils.toInputStream(metadata, UTF_8 );
     }
 

@@ -1,7 +1,6 @@
 package org.blume.modeller;
 
 import org.apache.jena.rdf.model.*;
-import org.blume.modeller.ui.util.ApplicationContextUtil;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -20,7 +19,7 @@ public class getContainer {
             model.write(System.out, "TTL");
             System.out.println(children);
         } catch (ModellerClientFailedException e) {
-            ApplicationContextUtil.addConsoleMessage(getMessage(e));
+            System.out.println(getMessage(e));
         }
     }
 

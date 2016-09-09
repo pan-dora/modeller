@@ -19,7 +19,7 @@ import org.blume.modeller.bag.BagInfoField;
 import org.blume.modeller.bag.BaggerFileEntity;
 import org.blume.modeller.common.uri.FedoraPrefixes;
 import org.blume.modeller.templates.ResourceScope;
-import org.blume.modeller.templates.ResourceTemplate;
+import org.blume.modeller.templates.MetadataTemplate;
 import org.blume.modeller.ui.util.ContainerIRIResolver;
 import org.blume.modeller.util.ImageIOUtil;
 import org.slf4j.Logger;
@@ -132,7 +132,7 @@ public class PatchResourceHandler extends AbstractAction implements Progress {
     private InputStream getResourceMetadata(Map<String, BagInfoField> map, String filename, String formatName,
                                             double imgWidth,
                                             double imgHeight) {
-        ResourceTemplate resourceTemplate;
+        MetadataTemplate metadataTemplate;
         List<ResourceScope.Prefix> prefixes = Arrays.asList(
                 new ResourceScope.Prefix(FedoraPrefixes.RDFS),
                 new ResourceScope.Prefix(FedoraPrefixes.MODE));
@@ -145,18 +145,18 @@ public class PatchResourceHandler extends AbstractAction implements Progress {
                 .imgHeight(imgHeight)
                 .imgWidth(imgWidth);
 
-        resourceTemplate = ResourceTemplate.template()
+        metadataTemplate = MetadataTemplate.template()
                 .template("template/sparql-update-res.mustache")
                 .scope(scope)
                 .throwExceptionOnFailure()
                 .build();
 
-        String metadata = resourceTemplate.render();
+        String metadata = metadataTemplate.render();
         return IOUtils.toInputStream(metadata, UTF_8 );
     }
 
     private String getServiceURI(Map<String, BagInfoField> map, String filename) {
-        String serviceURI = getMapValue(map, "IIIFServiceBaseURI");
+        String serviceURI = getMapValue(map, ProfileOptions.IIIF_SERVICE_KEY);
         String collectionID = substringBeforeLast(getMapValue(map, ProfileOptions.COLLECTION_ID_KEY), "/");
         String objektID = substringBeforeLast(getMapValue(map, ProfileOptions.OBJEKT_ID_KEY), "/");
         return serviceURI + collectionID + "." + objektID + "." +

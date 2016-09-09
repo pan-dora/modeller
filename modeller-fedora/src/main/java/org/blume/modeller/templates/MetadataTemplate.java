@@ -1,14 +1,14 @@
 package org.blume.modeller.templates;
 
-public class ResourceTemplate {
+public class MetadataTemplate {
 
     private String renderedTemplate;
 
-    public static ResourceTemplate.ResourceTemplateBuilder template() {
-        return new ResourceTemplate.ResourceTemplateBuilder();
+    public static MetadataTemplate.MetadataTemplateBuilder template() {
+        return new MetadataTemplate.MetadataTemplateBuilder();
     }
 
-    private ResourceTemplate(String template, ResourceScope scope) {
+    private MetadataTemplate(String template, Scope scope) {
         TemplateBuilder mb = new TemplateBuilder()
                 .scope(scope)
                 .template(template);
@@ -19,29 +19,29 @@ public class ResourceTemplate {
         return this.renderedTemplate;
     }
 
-    public static class ResourceTemplateBuilder {
+    public static class MetadataTemplateBuilder {
         private String template;
         private Scope scope;
         private boolean throwExceptionOnFailure;
 
-        ResourceTemplateBuilder() {
+        MetadataTemplateBuilder() {
         }
 
-        public ResourceTemplate.ResourceTemplateBuilder scope(Scope scope) {
+        public MetadataTemplate.MetadataTemplateBuilder scope(Scope scope) {
             this.scope = scope;
             return this;
         }
 
-        public ResourceTemplate.ResourceTemplateBuilder template(String template) {
+        public MetadataTemplate.MetadataTemplateBuilder template(String template) {
             this.template = template;
             return this;
         }
 
-        public ResourceTemplate build() {
-            return new ResourceTemplate(this.template, (ResourceScope) this.scope);
+        public MetadataTemplate build() {
+            return new MetadataTemplate(this.template, this.scope);
         }
 
-        public ResourceTemplate.ResourceTemplateBuilder throwExceptionOnFailure() {
+        public MetadataTemplate.MetadataTemplateBuilder throwExceptionOnFailure() {
             this.throwExceptionOnFailure = true;
             return this;
         }

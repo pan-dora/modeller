@@ -15,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 import java.util.Map;
 
 import javax.swing.*;
@@ -40,16 +41,18 @@ public class CreateListsHandler extends AbstractAction implements Progress {
         String message = ApplicationContextUtil.getMessage("bag.message.listcreated");
         DefaultBag bag = bagView.getBag();
         Map<String, BagInfoField> map = bag.getInfo().getFieldMap();
-
+        ResourceIdentifierList idList = new ResourceIdentifierList(bagView);
+        ArrayList<String> resourceIDList = idList.getResourceIdentifierList();
         ModellerClient client = new ModellerClient();
         String listContainerURI = getListContainerURI(map);
-        String listID = bag.getListID();
-        String listObjectURI = getListObjectURI(listContainerURI, listID );
-        try {
-            client.doPut(listObjectURI);
-            ApplicationContextUtil.addConsoleMessage(message + " " + listObjectURI);
-        } catch (ModellerClientFailedException e) {
-            ApplicationContextUtil.addConsoleMessage(getMessage(e));
+        for (String resourceID : resourceIDList) {
+            String listObjectURI = getListObjectURI(listContainerURI, resourceID);
+            try {
+                client.doPut(listObjectURI);
+                ApplicationContextUtil.addConsoleMessage(message + " " + listObjectURI);
+            } catch (ModellerClientFailedException e) {
+                ApplicationContextUtil.addConsoleMessage(getMessage(e));
+            }
         }
         bagView.getControl().invalidate();
     }
@@ -61,9 +64,9 @@ public class CreateListsHandler extends AbstractAction implements Progress {
         createListsFrame.setVisible(true);
     }
 
-    private String getListObjectURI(String ListContainerURI, String ListID) {
-        return ListContainerURI + LISTPREFIX +
-                ListID;
+    private String getListObjectURI(String listContainerURI, String resourceID) {
+        return listContainerURI + LISTPREFIX +
+                resourceID;
     }
 
     public String getListContainerURI(Map<String, BagInfoField> map) {
