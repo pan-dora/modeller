@@ -11,8 +11,10 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
+
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.net.URI.create;
+import static org.apache.commons.lang3.exception.ExceptionUtils.getMessage;
 
 public class ModellerClient {
 
@@ -30,7 +32,7 @@ public class ModellerClient {
                     .perform();
             log.info(String.valueOf(response.getStatusCode()));
         } catch (FcrepoOperationFailedException e) {
-            System.out.println(e);
+            log.info(getMessage(e));
             throw new ModellerClientFailedException(e);
         } catch (IOException e) {
             e.printStackTrace();
@@ -47,10 +49,10 @@ public class ModellerClient {
             try {
                 log.info(IOUtils.toString(response.getBody(), UTF_8));
             } catch (IOException e){
-                System.out.println(e);
+                log.info(getMessage(e));
             }
         } catch (FcrepoOperationFailedException e) {
-            System.out.println(e);
+            log.info(getMessage(e));
             throw new ModellerClientFailedException(e);
         }
     }
@@ -65,8 +67,26 @@ public class ModellerClient {
                     .perform();
             log.info(String.valueOf(response.getStatusCode()));
         } catch (FcrepoOperationFailedException e) {
-            System.out.println(e);
+            log.info(getMessage(e));
             throw new ModellerClientFailedException(e);
         }
+    }
+
+    public String doGetContainerResources(String containerURI) throws ModellerClientFailedException {
+        final URI uri = create(containerURI);
+        FcrepoClient testClient;
+        testClient = FcrepoClient.client().throwExceptionOnFailure().build();
+        try (FcrepoResponse response = testClient.get(uri)
+                    .accept("text/turtle")
+                    .perform()) {
+            String resource = IOUtils.toString(response.getBody(), "UTF-8");
+            return resource;
+        } catch (FcrepoOperationFailedException e) {
+            log.info(getMessage(e));
+            throw new ModellerClientFailedException(e);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
