@@ -20,7 +20,7 @@ public class ModellerClient {
 
     public ModellerClient() {}
 
-    public void doBinaryPut(String destinationURI, File resourceFile, String contentType) {
+    public void doBinaryPut(String destinationURI, File resourceFile, String contentType) throws ModellerClientFailedException {
         final URI uri = create(destinationURI);
         FcrepoClient testClient;
         testClient = FcrepoClient.client().throwExceptionOnFailure().build();
@@ -31,12 +31,13 @@ public class ModellerClient {
             log.info(String.valueOf(response.getStatusCode()));
         } catch (FcrepoOperationFailedException e) {
             System.out.println(e);
+            throw new ModellerClientFailedException(e);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void doPut(String destinationURI) {
+    public void doPut(String destinationURI) throws ModellerClientFailedException {
         final URI uri = create(destinationURI);
         FcrepoClient testClient;
         testClient = FcrepoClient.client().throwExceptionOnFailure().build();
@@ -50,6 +51,7 @@ public class ModellerClient {
             }
         } catch (FcrepoOperationFailedException e) {
             System.out.println(e);
+            throw new ModellerClientFailedException(e);
         }
     }
 

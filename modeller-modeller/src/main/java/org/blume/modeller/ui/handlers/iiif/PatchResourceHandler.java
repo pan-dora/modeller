@@ -14,6 +14,7 @@ import javax.swing.AbstractAction;
 import gov.loc.repository.bagit.impl.AbstractBagConstants;
 import org.apache.commons.io.IOUtils;
 import org.blume.modeller.ModellerClientFailedException;
+import org.blume.modeller.ProfileOptions;
 import org.blume.modeller.bag.BagInfoField;
 import org.blume.modeller.bag.BaggerFileEntity;
 import org.blume.modeller.common.uri.FedoraPrefixes;
@@ -119,11 +120,11 @@ public class PatchResourceHandler extends AbstractAction implements Progress {
         ContainerIRIResolver containerIRIResolver;
         containerIRIResolver = ContainerIRIResolver.resolve()
                 .map(map)
-                .baseURIKey("FedoraBaseURI")
-                .collectionRootKey("CollectionRoot")
-                .collectionKey("CollectionID")
-                .objektIDKey("ObjektID")
-                .containerKey("IIIFResourceContainer")
+                .baseURIKey(ProfileOptions.FEDORA_BASE_KEY)
+                .collectionRootKey(ProfileOptions.COLLECTION_ROOT_KEY)
+                .collectionKey(ProfileOptions.COLLECTION_ID_KEY)
+                .objektIDKey(ProfileOptions.OBJEKT_ID_KEY)
+                .containerKey(ProfileOptions.RESOURCE_CONTAINER_KEY)
                 .build();
         return containerIRIResolver.render();
     }
@@ -156,8 +157,8 @@ public class PatchResourceHandler extends AbstractAction implements Progress {
 
     private String getServiceURI(Map<String, BagInfoField> map, String filename) {
         String serviceURI = getMapValue(map, "IIIFServiceBaseURI");
-        String collectionID = substringBeforeLast(getMapValue(map, "CollectionID"), "/");
-        String objektID = substringBeforeLast(getMapValue(map, "ObjektID"), "/");
+        String collectionID = substringBeforeLast(getMapValue(map, ProfileOptions.COLLECTION_ID_KEY), "/");
+        String objektID = substringBeforeLast(getMapValue(map, ProfileOptions.OBJEKT_ID_KEY), "/");
         return serviceURI + collectionID + "." + objektID + "." +
                 BaggerFileEntity.removeFileExtension(filename);
     }

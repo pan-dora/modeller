@@ -106,7 +106,7 @@ public class BagInfoForm extends AbstractForm implements FocusListener {
         removeButton.setContentAreaFilled(false);
         removeButton.addActionListener(new RemoveFieldHandler());
         logger.debug("OrganizationInfoForm add: " + field);
-        if (field.getValue() != null && field.getValue().length() > 30) {
+        if (field.getValue() != null && field.getValue().length() > 60) {
           field.setComponentType(BagInfoField.TEXTAREA_COMPONENT);
         }
         if (field.isRequired()) {
@@ -214,8 +214,7 @@ public class BagInfoForm extends AbstractForm implements FocusListener {
     BagInfoField field = null;
     Set<String> keys = fieldMap.keySet();
     if (keys != null) {
-      for (Iterator<String> iter = keys.iterator(); iter.hasNext();) {
-        String keySet = iter.next();
+      for (String keySet : keys) {
         if (keySet.equalsIgnoreCase(key)) {
           field = fieldMap.get(key);
           return field;

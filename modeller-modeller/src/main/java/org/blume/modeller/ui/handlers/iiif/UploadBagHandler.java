@@ -9,6 +9,8 @@ import java.util.Map;
 import javax.swing.AbstractAction;
 
 import gov.loc.repository.bagit.impl.AbstractBagConstants;
+import org.blume.modeller.ModellerClientFailedException;
+import org.blume.modeller.ProfileOptions;
 import org.blume.modeller.bag.BagInfoField;
 import org.blume.modeller.bag.BaggerFileEntity;
 import org.blume.modeller.ui.util.ContainerIRIResolver;
@@ -22,6 +24,8 @@ import org.blume.modeller.ui.Progress;
 import org.blume.modeller.ui.util.ApplicationContextUtil;
 import org.blume.modeller.ui.jpanel.UploadBagFrame;
 import org.blume.modeller.ModellerClient;
+
+import static org.apache.commons.lang3.exception.ExceptionUtils.getMessage;
 
 
 public class UploadBagHandler extends AbstractAction implements Progress {
@@ -57,8 +61,9 @@ public class UploadBagHandler extends AbstractAction implements Progress {
             String contentType = imageioutil.getImageMIMEType(resourceFile);
             try {
                 client.doBinaryPut(destinationURI, resourceFile, contentType);
-            } finally {
                 ApplicationContextUtil.addConsoleMessage(message + " " + destinationURI);
+            } catch (ModellerClientFailedException e) {
+                ApplicationContextUtil.addConsoleMessage(getMessage(e));
             }
         }
         bagView.getControl().invalidate();
@@ -80,11 +85,11 @@ public class UploadBagHandler extends AbstractAction implements Progress {
         ContainerIRIResolver containerIRIResolver;
         containerIRIResolver = ContainerIRIResolver.resolve()
                 .map(map)
-                .baseURIKey("FedoraBaseURI")
-                .collectionRootKey("CollectionRoot")
-                .collectionKey("CollectionID")
-                .objektIDKey("ObjektID")
-                .containerKey("IIIFResourceContainer")
+                .baseURIKey(ProfileOptions.FEDORA_BASE_KEY)
+                .collectionRootKey(ProfileOptions.COLLECTION_ROOT_KEY)
+                .collectionKey(ProfileOptions.COLLECTION_ID_KEY)
+                .objektIDKey(ProfileOptions.OBJEKT_ID_KEY)
+                .containerKey(ProfileOptions.RESOURCE_CONTAINER_KEY)
                 .build();
         return containerIRIResolver.render();
     }

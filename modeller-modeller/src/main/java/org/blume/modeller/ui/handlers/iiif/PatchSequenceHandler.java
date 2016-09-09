@@ -11,6 +11,7 @@ import javax.swing.AbstractAction;
 
 import org.apache.commons.io.IOUtils;
 import org.blume.modeller.ModellerClientFailedException;
+import org.blume.modeller.ProfileOptions;
 import org.blume.modeller.bag.BagInfoField;
 import org.blume.modeller.common.uri.FedoraPrefixes;
 import org.blume.modeller.templates.CollectionScope;
@@ -87,11 +88,11 @@ public class PatchSequenceHandler extends AbstractAction implements Progress {
         ContainerIRIResolver containerIRIResolver;
         containerIRIResolver = ContainerIRIResolver.resolve()
                 .map(map)
-                .baseURIKey("FedoraBaseURI")
-                .collectionRootKey("CollectionRoot")
-                .collectionKey("CollectionID")
-                .objektIDKey("ObjektID")
-                .containerKey("IIIFSequenceContainer")
+                .baseURIKey(ProfileOptions.FEDORA_BASE_KEY)
+                .collectionRootKey(ProfileOptions.COLLECTION_ROOT_KEY)
+                .collectionKey(ProfileOptions.COLLECTION_ID_KEY)
+                .objektIDKey(ProfileOptions.OBJEKT_ID_KEY)
+                .containerKey(ProfileOptions.SEQUENCE_CONTAINER_KEY)
                 .build();
         return containerIRIResolver.render();
     }
@@ -100,11 +101,11 @@ public class PatchSequenceHandler extends AbstractAction implements Progress {
         ContainerIRIResolver containerIRIResolver;
         containerIRIResolver = ContainerIRIResolver.resolve()
                 .map(map)
-                .baseURIKey("FedoraBaseURI")
-                .collectionRootKey("CollectionRoot")
-                .collectionKey("CollectionID")
-                .objektIDKey("ObjektID")
-                .containerKey("IIIFCanvasContainer")
+                .baseURIKey(ProfileOptions.FEDORA_BASE_KEY)
+                .collectionRootKey(ProfileOptions.COLLECTION_ROOT_KEY)
+                .collectionKey(ProfileOptions.COLLECTION_ID_KEY)
+                .objektIDKey(ProfileOptions.OBJEKT_ID_KEY)
+                .containerKey(ProfileOptions.CANVAS_CONTAINER_KEY)
                 .build();
         return containerIRIResolver.render();
     }
