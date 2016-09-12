@@ -10,11 +10,13 @@ import org.blume.modeller.ui.handlers.base.SaveBagHandler;
 import org.blume.modeller.ui.jpanel.BagView;
 import org.blume.modeller.ui.jpanel.CreateListsFrame;
 import org.blume.modeller.ui.util.ApplicationContextUtil;
-import org.blume.modeller.ui.util.ContainerIRIResolver;
+import org.blume.modeller.ui.util.URIResolver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.awt.event.ActionEvent;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -44,9 +46,8 @@ public class CreateListsHandler extends AbstractAction implements Progress {
         ResourceIdentifierList idList = new ResourceIdentifierList(bagView);
         ArrayList<String> resourceIDList = idList.getResourceIdentifierList();
         ModellerClient client = new ModellerClient();
-        String listContainerURI = getListContainerURI(map);
         for (String resourceID : resourceIDList) {
-            String listObjectURI = getListObjectURI(listContainerURI, resourceID);
+            URI listObjectURI = getListObjectURI(map, resourceID);
             try {
                 client.doPut(listObjectURI);
                 ApplicationContextUtil.addConsoleMessage(message + " " + listObjectURI);
@@ -64,21 +65,35 @@ public class CreateListsHandler extends AbstractAction implements Progress {
         createListsFrame.setVisible(true);
     }
 
-    private String getListObjectURI(String listContainerURI, String resourceID) {
-        return listContainerURI + LISTPREFIX +
-                resourceID;
+    public URI getListContainerURI(Map<String, BagInfoField> map) {
+        URIResolver uriResolver;
+        try {
+            uriResolver = URIResolver.resolve()
+                    .map(map)
+                    .containerKey(ProfileOptions.LIST_CONTAINER_KEY)
+                    .pathType(4)
+                    .build();
+            return uriResolver.render();
+        } catch (URISyntaxException e) {
+            log.debug(e.getMessage());
+        }
+        return null;
     }
 
-    public String getListContainerURI(Map<String, BagInfoField> map) {
-        ContainerIRIResolver containerIRIResolver;
-        containerIRIResolver = ContainerIRIResolver.resolve()
-                .map(map)
-                .baseURIKey(ProfileOptions.FEDORA_BASE_KEY)
-                .collectionRootKey(ProfileOptions.COLLECTION_ROOT_KEY)
-                .collectionKey(ProfileOptions.COLLECTION_ID_KEY)
-                .objektIDKey(ProfileOptions.OBJEKT_ID_KEY)
-                .containerKey(ProfileOptions.LIST_CONTAINER_KEY)
-                .build();
-        return containerIRIResolver.render();
+    private URI getListObjectURI(Map<String, BagInfoField> map, String resourceID) {
+        URIResolver uriResolver;
+        try {
+            uriResolver = URIResolver.resolve()
+                    .map(map)
+                    .containerKey(ProfileOptions.LIST_CONTAINER_KEY)
+                    .resource(resourceID)
+                    .pathType(5)
+                    .build();
+            return uriResolver.render();
+        } catch (URISyntaxException e) {
+            log.debug(e.getMessage());
+        }
+        return null;
     }
 }
+

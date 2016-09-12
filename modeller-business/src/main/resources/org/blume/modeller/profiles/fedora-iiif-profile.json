@@ -1,15 +1,33 @@
 {
   "ordered": [
     {
-      "FedoraBaseURI" : {
+      "FedoraHostName" : {
         "fieldRequired" : true,
-        "defaultValue" : "http://localhost:8080/fcrepo/rest/"
+        "defaultValue" : "localhost"
+      }
+    },
+    {
+      "Port" : {
+        "fieldRequired" : false,
+        "defaultValue" : "8080"
+      }
+    },
+    {
+      "FedoraAppRoot" : {
+        "fieldRequired" : true,
+        "defaultValue" : "fcrepo"
+      }
+    },
+    {
+      "RestServlet" : {
+        "fieldRequired" : true,
+        "defaultValue" : "rest"
       }
     },
     {
       "CollectionRoot" : {
         "fieldRequired" : true,
-        "defaultValue" : "collection/"
+        "defaultValue" : "collection"
       }
     },
     {
@@ -31,43 +49,43 @@
     {
       "IIIFManifestContainer" : {
         "fieldRequired" : true,
-        "defaultValue" : "manifest/"
+        "defaultValue" : "manifest"
       }
     },
     {
       "IIIFSequenceContainer" : {
         "fieldRequired" : true,
-        "defaultValue" : "sequence/"
+        "defaultValue" : "sequence"
       }
     },
     {
       "IIIFRangeContainer" : {
         "fieldRequired" : true,
-        "defaultValue" : "range/"
+        "defaultValue" : "range"
       }
     },
     {
       "IIIFCanvasContainer" : {
         "fieldRequired" : true,
-        "defaultValue" : "canvas/"
+        "defaultValue" : "canvas"
       }
     },
     {
       "IIIFResourceContainer" : {
         "fieldRequired" : true,
-        "defaultValue" : "res/"
+        "defaultValue" : "res"
       }
     },
     {
       "IIIFListContainer" : {
         "fieldRequired" : true,
-        "defaultValue" : "list/"
+        "defaultValue" : "list"
       }
     },
     {
       "IIIFLayerContainer" : {
         "fieldRequired" : true,
-        "defaultValue" : "layer/"
+        "defaultValue" : "layer"
       }
     }
   ]

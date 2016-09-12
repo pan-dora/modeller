@@ -2,6 +2,8 @@ package org.blume.modeller.ui.handlers.iiif;
 
 import java.awt.event.ActionEvent;
 import java.io.File;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
@@ -13,7 +15,7 @@ import org.blume.modeller.ModellerClientFailedException;
 import org.blume.modeller.ProfileOptions;
 import org.blume.modeller.bag.BagInfoField;
 import org.blume.modeller.bag.BaggerFileEntity;
-import org.blume.modeller.ui.util.ContainerIRIResolver;
+import org.blume.modeller.ui.util.URIResolver;
 import org.blume.modeller.util.ImageIOUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,14 +50,13 @@ public class UploadBagHandler extends AbstractAction implements Progress {
         DefaultBag bag = bagView.getBag();
         List<String> payload = bag.getPayloadPaths();
         Map<String, BagInfoField> map = bag.getInfo().getFieldMap();
-        String resourceContainer = getResourceContainer(map);
         ModellerClient client = new ModellerClient();
         ImageIOUtil imageioutil = new ImageIOUtil();
         String basePath = AbstractBagConstants.DATA_DIRECTORY;
         Path rootDir = bagView.getBagRootPath().toPath();
         for (String filePath : payload) {
             String filename = BaggerFileEntity.removeBasePath(basePath, filePath);
-            String destinationURI = getDestinationURI(resourceContainer, filename);
+            URI destinationURI = getDestinationURI(map, filename);
             Path absoluteFilePath = rootDir.resolve(filePath);
             File resourceFile = absoluteFilePath.toFile();
             String contentType = imageioutil.getImageMIMEType(resourceFile);
@@ -76,21 +77,34 @@ public class UploadBagHandler extends AbstractAction implements Progress {
         uploadBagFrame.setVisible(true);
     }
 
-    private String getDestinationURI(String resourceContainer, String filename) {
-        return resourceContainer +
-                filename;
+    public URI getResourceContainerURI(Map<String, BagInfoField> map) {
+        URIResolver uriResolver;
+        try {
+            uriResolver = URIResolver.resolve()
+                    .map(map)
+                    .containerKey(ProfileOptions.RESOURCE_CONTAINER_KEY)
+                    .pathType(4)
+                    .build();
+            return uriResolver.render();
+        } catch (URISyntaxException e) {
+            log.debug(e.getMessage());
+        }
+        return null;
     }
 
-    public String getResourceContainer(Map<String, BagInfoField> map) {
-        ContainerIRIResolver containerIRIResolver;
-        containerIRIResolver = ContainerIRIResolver.resolve()
-                .map(map)
-                .baseURIKey(ProfileOptions.FEDORA_BASE_KEY)
-                .collectionRootKey(ProfileOptions.COLLECTION_ROOT_KEY)
-                .collectionKey(ProfileOptions.COLLECTION_ID_KEY)
-                .objektIDKey(ProfileOptions.OBJEKT_ID_KEY)
-                .containerKey(ProfileOptions.RESOURCE_CONTAINER_KEY)
-                .build();
-        return containerIRIResolver.render();
+    private URI getDestinationURI(Map<String, BagInfoField> map, String filename) {
+        URIResolver uriResolver;
+        try {
+            uriResolver = URIResolver.resolve()
+                    .map(map)
+                    .containerKey(ProfileOptions.RESOURCE_CONTAINER_KEY)
+                    .resource(filename)
+                    .pathType(5)
+                    .build();
+            return uriResolver.render();
+        } catch (URISyntaxException e) {
+            log.debug(e.getMessage());
+        }
+        return null;
     }
 }

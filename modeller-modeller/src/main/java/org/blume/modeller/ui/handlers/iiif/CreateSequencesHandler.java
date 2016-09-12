@@ -10,11 +10,13 @@ import org.blume.modeller.ui.handlers.base.SaveBagHandler;
 import org.blume.modeller.ui.jpanel.BagView;
 import org.blume.modeller.ui.jpanel.CreateSequencesFrame;
 import org.blume.modeller.ui.util.ApplicationContextUtil;
-import org.blume.modeller.ui.util.ContainerIRIResolver;
+import org.blume.modeller.ui.util.URIResolver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.awt.event.ActionEvent;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Map;
 
 import javax.swing.*;
@@ -42,9 +44,8 @@ public class CreateSequencesHandler extends AbstractAction implements Progress {
         Map<String, BagInfoField> map = bag.getInfo().getFieldMap();
 
         ModellerClient client = new ModellerClient();
-        String sequenceContainerURI = getSequenceContainerURI(map);
         String sequenceID = bag.getSequenceID();
-        String sequenceObjectURI = getSequenceObjectURI(sequenceContainerURI, sequenceID );
+        URI sequenceObjectURI = getSequenceObjectURI(map, sequenceID );
         try {
             client.doPut(sequenceObjectURI);
             ApplicationContextUtil.addConsoleMessage(message + " " + sequenceObjectURI);
@@ -57,26 +58,40 @@ public class CreateSequencesHandler extends AbstractAction implements Progress {
 
     void openCreateSequencesFrame() {
         DefaultBag bag = bagView.getBag();
-        CreateSequencesFrame createSequencesFrame = new CreateSequencesFrame(bagView, bagView.getPropertyMessage("bag.frame.sequence"));
+        CreateSequencesFrame createSequencesFrame = new CreateSequencesFrame(bagView,
+                bagView.getPropertyMessage("bag.frame.sequence"));
         createSequencesFrame.setBag(bag);
         createSequencesFrame.setVisible(true);
     }
 
-    private String getSequenceObjectURI(String SequenceContainerURI, String SequenceID) {
-        return SequenceContainerURI + SEQPREFIX +
-                SequenceID;
+    public URI getSequenceContainerURI(Map<String, BagInfoField> map) {
+        URIResolver uriResolver;
+        try {
+            uriResolver = URIResolver.resolve()
+                    .map(map)
+                    .containerKey(ProfileOptions.SEQUENCE_CONTAINER_KEY)
+                    .pathType(4)
+                    .build();
+            return uriResolver.render();
+        } catch (URISyntaxException e) {
+            log.debug(e.getMessage());
+        }
+        return null;
     }
 
-    public String getSequenceContainerURI(Map<String, BagInfoField> map) {
-        ContainerIRIResolver containerIRIResolver;
-        containerIRIResolver = ContainerIRIResolver.resolve()
-                .map(map)
-                .baseURIKey(ProfileOptions.FEDORA_BASE_KEY)
-                .collectionRootKey(ProfileOptions.COLLECTION_ROOT_KEY)
-                .collectionKey(ProfileOptions.COLLECTION_ID_KEY)
-                .objektIDKey(ProfileOptions.OBJEKT_ID_KEY)
-                .containerKey(ProfileOptions.SEQUENCE_CONTAINER_KEY)
-                .build();
-        return containerIRIResolver.render();
+    private URI getSequenceObjectURI(Map<String, BagInfoField> map, String sequenceID) {
+        URIResolver uriResolver;
+        try {
+            uriResolver = URIResolver.resolve()
+                    .map(map)
+                    .containerKey(ProfileOptions.SEQUENCE_CONTAINER_KEY)
+                    .resource(sequenceID)
+                    .pathType(5)
+                    .build();
+            return uriResolver.render();
+        } catch (URISyntaxException e) {
+            log.debug(e.getMessage());
+        }
+        return null;
     }
 }

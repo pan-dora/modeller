@@ -2,6 +2,8 @@ package org.blume.modeller.ui.handlers.iiif;
 
 import java.awt.event.ActionEvent;
 import java.io.InputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -17,7 +19,7 @@ import org.blume.modeller.common.uri.FedoraPrefixes;
 import org.blume.modeller.templates.CollectionScope;
 import org.blume.modeller.templates.MetadataTemplate;
 import org.blume.modeller.ui.jpanel.PatchSequenceFrame;
-import org.blume.modeller.ui.util.ContainerIRIResolver;
+import org.blume.modeller.ui.util.URIResolver;
 import org.blume.modeller.util.RDFCollectionWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,13 +57,12 @@ public class PatchSequenceHandler extends AbstractAction implements Progress {
         ArrayList<String> resourceIDList = idList.getResourceIdentifierList();
         InputStream rdfBody;
         String collectionPredicate = "http://iiif.io/api/presentation/2#hasCanvases";
-        String sequenceContainerIRI = getSequenceContainer(map);
-        String canvasContainerIRI = getCanvasContainer(map);
+        URI canvasContainerIRI = getCanvasContainer(map);
         //TODO Lookup IDs from Created Sequences and provide selection box in Frame
         String sequenceID = bag.getSequenceID();
         rdfBody = getSequenceMetadata(resourceIDList, collectionPredicate, canvasContainerIRI);
         // "normal" is static sequence ID value for testing
-        String destinationURI = getDestinationURI(sequenceContainerIRI, "normal");
+        URI destinationURI = getDestinationURI(map, "normal");
         ModellerClient client = new ModellerClient();
             try {
                 client.doPatch(destinationURI, rdfBody);
@@ -74,49 +75,65 @@ public class PatchSequenceHandler extends AbstractAction implements Progress {
 
     void openPatchSequenceFrame() {
         DefaultBag bag = bagView.getBag();
-        PatchSequenceFrame patchSequencesFrame = new PatchSequenceFrame(bagView, bagView.getPropertyMessage("bag.frame.patch.sequence"));
+        PatchSequenceFrame patchSequencesFrame = new PatchSequenceFrame(bagView,
+                bagView.getPropertyMessage("bag.frame.patch.sequence"));
         patchSequencesFrame.setBag(bag);
         patchSequencesFrame.setVisible(true);
     }
 
-    private String getDestinationURI(String sequenceContainer, String sequenceID) {
-        return sequenceContainer +
-                sequenceID;
+    private URI getDestinationURI(Map<String, BagInfoField> map, String sequenceID) {
+        URIResolver uriResolver;
+        try {
+            uriResolver = URIResolver.resolve()
+                    .map(map)
+                    .containerKey(ProfileOptions.SEQUENCE_CONTAINER_KEY)
+                    .resource(sequenceID)
+                    .pathType(5)
+                    .build();
+            return uriResolver.render();
+        } catch (URISyntaxException e) {
+            log.debug(e.getMessage());
+        }
+        return null;
     }
 
-    public String getSequenceContainer(Map<String, BagInfoField> map) {
-        ContainerIRIResolver containerIRIResolver;
-        containerIRIResolver = ContainerIRIResolver.resolve()
-                .map(map)
-                .baseURIKey(ProfileOptions.FEDORA_BASE_KEY)
-                .collectionRootKey(ProfileOptions.COLLECTION_ROOT_KEY)
-                .collectionKey(ProfileOptions.COLLECTION_ID_KEY)
-                .objektIDKey(ProfileOptions.OBJEKT_ID_KEY)
-                .containerKey(ProfileOptions.SEQUENCE_CONTAINER_KEY)
-                .build();
-        return containerIRIResolver.render();
+    public URI getSequenceContainer(Map<String, BagInfoField> map) {
+        URIResolver uriResolver;
+        try {
+            uriResolver = URIResolver.resolve()
+                    .map(map)
+                    .containerKey(ProfileOptions.SEQUENCE_CONTAINER_KEY)
+                    .pathType(4)
+                    .build();
+            return uriResolver.render();
+        } catch (URISyntaxException e) {
+            log.debug(e.getMessage());
+        }
+        return null;
     }
 
-    private String getCanvasContainer(Map<String, BagInfoField> map) {
-        ContainerIRIResolver containerIRIResolver;
-        containerIRIResolver = ContainerIRIResolver.resolve()
+    private URI getCanvasContainer(Map<String, BagInfoField> map)  {
+        URIResolver uriResolver;
+        try {
+        uriResolver = URIResolver.resolve()
                 .map(map)
-                .baseURIKey(ProfileOptions.FEDORA_BASE_KEY)
-                .collectionRootKey(ProfileOptions.COLLECTION_ROOT_KEY)
-                .collectionKey(ProfileOptions.COLLECTION_ID_KEY)
-                .objektIDKey(ProfileOptions.OBJEKT_ID_KEY)
                 .containerKey(ProfileOptions.CANVAS_CONTAINER_KEY)
+                .pathType(4)
                 .build();
-        return containerIRIResolver.render();
+        return uriResolver.render();
+        } catch (URISyntaxException e) {
+            log.debug(e.getMessage());
+        }
+        return null;
     }
 
     private InputStream getSequenceMetadata(ArrayList<String> resourceIDList, String collectionPredicate,
-                                            String resourceContainerIRI) {
+                                            URI resourceContainerIRI) {
         RDFCollectionWriter collectionWriter;
         collectionWriter = RDFCollectionWriter.collection()
                 .idList(resourceIDList)
                 .collectionPredicate(collectionPredicate)
-                .resourceContainerIRI(resourceContainerIRI)
+                .resourceContainerIRI(resourceContainerIRI.toString())
                 .build();
 
         String collection = collectionWriter.render();

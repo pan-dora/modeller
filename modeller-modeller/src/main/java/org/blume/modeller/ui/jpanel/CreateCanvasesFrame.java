@@ -21,6 +21,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.URI;
 import java.util.Map;
 import javax.swing.AbstractAction;
 import javax.swing.JComponent;
@@ -139,9 +140,9 @@ public class CreateCanvasesFrame extends JFrame implements ActionListener {
         JLabel urlLabel = new JLabel(bagView.getPropertyMessage("baseURL.label"));
         urlLabel.setToolTipText(bagView.getPropertyMessage("baseURL.description"));
         JTextField urlField = new JTextField("");
-        String uri = bagView.createCanvasesHandler.getCanvasContainerURI(map);
+        URI uri = bagView.createCanvasesHandler.getCanvasContainerURI(map);
         try {
-            urlField.setText(uri);
+            urlField.setText(uri.toString());
         } catch (Exception e) {
             log.error("Failed to set url label", e);
         }

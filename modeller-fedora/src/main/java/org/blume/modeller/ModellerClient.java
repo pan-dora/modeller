@@ -22,12 +22,11 @@ public class ModellerClient {
 
     public ModellerClient() {}
 
-    public void doBinaryPut(String destinationURI, File resourceFile, String contentType) throws ModellerClientFailedException {
-        final URI uri = create(destinationURI);
+    public void doBinaryPut(URI destinationURI, File resourceFile, String contentType) throws ModellerClientFailedException {
         FcrepoClient testClient;
         testClient = FcrepoClient.client().throwExceptionOnFailure().build();
         try {
-            FcrepoResponse response = testClient.put(uri)
+            FcrepoResponse response = testClient.put(destinationURI)
                     .body(resourceFile, contentType)
                     .perform();
             log.info(String.valueOf(response.getStatusCode()));
@@ -39,12 +38,11 @@ public class ModellerClient {
         }
     }
 
-    public void doPut(String destinationURI) throws ModellerClientFailedException {
-        final URI uri = create(destinationURI);
+    public void doPut(URI destinationURI) throws ModellerClientFailedException {
         FcrepoClient testClient;
         testClient = FcrepoClient.client().throwExceptionOnFailure().build();
         try {
-            FcrepoResponse response = testClient.put(uri)
+            FcrepoResponse response = testClient.put(destinationURI)
                     .perform();
             try {
                 log.info(IOUtils.toString(response.getBody(), UTF_8));
@@ -57,12 +55,11 @@ public class ModellerClient {
         }
     }
 
-    public void doPatch(String destinationURI, InputStream rdfBody) throws ModellerClientFailedException {
-        final URI uri = create(destinationURI);
+    public void doPatch(URI destinationURI, InputStream rdfBody) throws ModellerClientFailedException {
         FcrepoClient testClient;
         testClient = FcrepoClient.client().throwExceptionOnFailure().build();
         try {
-            FcrepoResponse response = testClient.patch(uri)
+            FcrepoResponse response = testClient.patch(destinationURI)
                     .body(rdfBody)
                     .perform();
             log.info(String.valueOf(response.getStatusCode()));
@@ -72,15 +69,13 @@ public class ModellerClient {
         }
     }
 
-    public String doGetContainerResources(String containerURI) throws ModellerClientFailedException {
-        final URI uri = create(containerURI);
+    public String doGetContainerResources(URI containerURI) throws ModellerClientFailedException {
         FcrepoClient testClient;
         testClient = FcrepoClient.client().throwExceptionOnFailure().build();
-        try (FcrepoResponse response = testClient.get(uri)
+        try (FcrepoResponse response = testClient.get(containerURI)
                     .accept("text/turtle")
                     .perform()) {
-            String resource = IOUtils.toString(response.getBody(), "UTF-8");
-            return resource;
+            return IOUtils.toString(response.getBody(), "UTF-8");
         } catch (FcrepoOperationFailedException e) {
             log.info(getMessage(e));
             throw new ModellerClientFailedException(e);

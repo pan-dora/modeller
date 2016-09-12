@@ -3,7 +3,10 @@ package org.blume.modeller;
 
 public final class ProfileOptions {
 
-    public static final String FEDORA_BASE_KEY = "FedoraBaseURI";
+    public static final String FEDORA_HOSTNAME_KEY = "FedoraHostName";
+    public static final String PORT_KEY = "Port";
+    public static final String FEDORA_APP_KEY = "FedoraAppRoot";
+    public static final String REST_SERVLET_KEY = "RestServlet";
     public static final String COLLECTION_ROOT_KEY = "CollectionRoot";
     public static final String COLLECTION_ID_KEY = "CollectionID";
     public static final String OBJEKT_ID_KEY = "ObjektID";

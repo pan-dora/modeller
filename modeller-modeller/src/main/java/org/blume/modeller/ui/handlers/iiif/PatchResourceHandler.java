@@ -4,6 +4,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.InputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
@@ -20,7 +22,7 @@ import org.blume.modeller.bag.BaggerFileEntity;
 import org.blume.modeller.common.uri.FedoraPrefixes;
 import org.blume.modeller.templates.ResourceScope;
 import org.blume.modeller.templates.MetadataTemplate;
-import org.blume.modeller.ui.util.ContainerIRIResolver;
+import org.blume.modeller.ui.util.URIResolver;
 import org.blume.modeller.util.ImageIOUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -56,7 +58,7 @@ public class PatchResourceHandler extends AbstractAction implements Progress {
         DefaultBag bag = bagView.getBag();
         List<String> payload = bag.getPayloadPaths();
         Map<String, BagInfoField> map = bag.getInfo().getFieldMap();
-        String resourceContainer = getResourceContainer(map);
+        URI resourceContainer = getResourceContainer(map);
         ModellerClient client = new ModellerClient();
         ImageIOUtil imageioutil = new ImageIOUtil();
         String basePath = AbstractBagConstants.DATA_DIRECTORY;
@@ -70,7 +72,7 @@ public class PatchResourceHandler extends AbstractAction implements Progress {
             String formatName = null;
             Dimension dim = null;
             InputStream rdfBody = null;
-
+            final URI uri = URI.create(destinationURI);
             try {
                 formatName = imageioutil.getImageMIMEType(resourceFile);
             } catch (Exception e) {
@@ -94,7 +96,7 @@ public class PatchResourceHandler extends AbstractAction implements Progress {
             }
 
             try {
-                client.doPatch(destinationURI, rdfBody);
+                client.doPatch(uri, rdfBody);
                 ApplicationContextUtil.addConsoleMessage(message + " " + destinationURI);
             } catch (ModellerClientFailedException e) {
                 ApplicationContextUtil.addConsoleMessage(getMessage(e));
@@ -110,23 +112,25 @@ public class PatchResourceHandler extends AbstractAction implements Progress {
         patchResourcesFrame.setVisible(true);
     }
 
-    private String getDestinationURI(String resourceContainer, String filename) {
-        return resourceContainer +
+    private String getDestinationURI(URI resourceContainer, String filename) {
+        return resourceContainer.toString() +
                 filename +
                 FCRMETADATA;
     }
 
-    public String getResourceContainer(Map<String, BagInfoField> map) {
-        ContainerIRIResolver containerIRIResolver;
-        containerIRIResolver = ContainerIRIResolver.resolve()
-                .map(map)
-                .baseURIKey(ProfileOptions.FEDORA_BASE_KEY)
-                .collectionRootKey(ProfileOptions.COLLECTION_ROOT_KEY)
-                .collectionKey(ProfileOptions.COLLECTION_ID_KEY)
-                .objektIDKey(ProfileOptions.OBJEKT_ID_KEY)
-                .containerKey(ProfileOptions.RESOURCE_CONTAINER_KEY)
-                .build();
-        return containerIRIResolver.render();
+    public URI getResourceContainer(Map<String, BagInfoField> map)  {
+        URIResolver uriResolver;
+        try {
+            uriResolver = URIResolver.resolve()
+                    .map(map)
+                    .containerKey(ProfileOptions.RESOURCE_CONTAINER_KEY)
+                    .pathType(4)
+                    .build();
+            return uriResolver.render();
+        } catch (URISyntaxException e) {
+            log.debug(e.getMessage());
+        }
+        return null;
     }
 
     private InputStream getResourceMetadata(Map<String, BagInfoField> map, String filename, String formatName,

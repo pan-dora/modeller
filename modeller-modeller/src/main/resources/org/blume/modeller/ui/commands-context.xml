@@ -26,6 +26,7 @@
                 <value>createCanvasesCommand</value>
                 <value>createSequencesCommand</value>
                 <value>patchSequenceCommand</value>
+                <value>patchCanvasCommand</value>
             </list>
         </property>
     </bean>
@@ -94,6 +95,7 @@
                 <value>patchResourceCommand</value>
                 <value>createListsCommand</value>
                 <value>createCanvasesCommand</value>
+                <value>patchCanvasCommand</value>
                 <value>createSequencesCommand</value>
                 <value>patchSequenceCommand</value>
             </list>
