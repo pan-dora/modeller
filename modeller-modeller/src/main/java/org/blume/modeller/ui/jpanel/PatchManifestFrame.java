@@ -46,14 +46,14 @@ import org.springframework.richclient.util.GuiStandardUtils;
 import org.blume.modeller.bag.impl.DefaultBag;
 import org.blume.modeller.bag.BagInfoField;
 
-public class PatchSequenceFrame extends JFrame implements ActionListener {
-    protected static final Logger log = LoggerFactory.getLogger(PatchSequenceFrame.class);
+public class PatchManifestFrame extends JFrame implements ActionListener {
+    protected static final Logger log = LoggerFactory.getLogger(PatchManifestFrame.class);
     private static final long serialVersionUID = 1L;
     transient BagView bagView;
     private Map<String, BagInfoField> map;
     private JPanel savePanel;
 
-    public PatchSequenceFrame(BagView bagView, String title) {
+    public PatchManifestFrame(BagView bagView, String title) {
         super(title);
         this.bagView = bagView;
         if (bagView != null) {
@@ -88,7 +88,7 @@ public class PatchSequenceFrame extends JFrame implements ActionListener {
             @Override
             public void doExecuteCommand() {
 
-                new OkPatchSequenceHandler().actionPerformed(null);
+                new OkPatchManifestHandler().actionPerformed(null);
 
             }
         };
@@ -97,7 +97,7 @@ public class PatchSequenceFrame extends JFrame implements ActionListener {
 
             @Override
             public void doExecuteCommand() {
-                new CancelPatchSequenceHandler().actionPerformed(null);
+                new CancelPatchManifestHandler().actionPerformed(null);
             }
         };
     }
@@ -125,8 +125,8 @@ public class PatchSequenceFrame extends JFrame implements ActionListener {
         initStandardCommands();
         JPanel pageControl = new JPanel(new BorderLayout());
         JPanel titlePaneContainer = new JPanel(new BorderLayout());
-        titlePane.setTitle(bagView.getPropertyMessage("PatchSequenceFrame.title"));
-        titlePane.setMessage(new DefaultMessage(bagView.getPropertyMessage("Patch Sequences")));
+        titlePane.setTitle(bagView.getPropertyMessage("PatchManifestFrame.title"));
+        titlePane.setMessage(new DefaultMessage(bagView.getPropertyMessage("Patch Manifest")));
         titlePaneContainer.add(titlePane.getControl());
         titlePaneContainer.add(new JSeparator(), BorderLayout.SOUTH);
         pageControl.add(titlePaneContainer, BorderLayout.NORTH);
@@ -140,7 +140,7 @@ public class PatchSequenceFrame extends JFrame implements ActionListener {
         JLabel urlLabel = new JLabel(bagView.getPropertyMessage("baseURL.label"));
         urlLabel.setToolTipText(bagView.getPropertyMessage("baseURL.description"));
         JTextField urlField = new JTextField("");
-        URI uri = bagView.patchSequenceHandler.getSequenceContainer(map);
+        URI uri = bagView.patchManifestHandler.getManifestResource(map);
         try {
             urlField.setText(uri.toString());
         } catch (Exception e) {
@@ -192,7 +192,7 @@ public class PatchSequenceFrame extends JFrame implements ActionListener {
         repaint();
     }
 
-    private class OkPatchSequenceHandler extends AbstractAction {
+    private class OkPatchManifestHandler extends AbstractAction {
         private static final long serialVersionUID = 1L;
 
         @Override
@@ -200,11 +200,11 @@ public class PatchSequenceFrame extends JFrame implements ActionListener {
             setVisible(false);
             String bagFileName = "";
             bagView.getBag().setName(bagFileName);
-            bagView.patchSequenceHandler.execute();
+            bagView.patchManifestHandler.execute();
         }
     }
 
-    private class CancelPatchSequenceHandler extends AbstractAction {
+    private class CancelPatchManifestHandler extends AbstractAction {
         private static final long serialVersionUID = 1L;
 
         @Override
@@ -228,3 +228,4 @@ public class PatchSequenceFrame extends JFrame implements ActionListener {
         return bagView.getPropertyMessage(property);
     }
 }
+

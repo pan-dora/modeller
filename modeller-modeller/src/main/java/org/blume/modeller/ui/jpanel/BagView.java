@@ -146,6 +146,8 @@ public class BagView extends AbstractView implements ApplicationListener {
     public PatchSequenceExecutor patchSequenceExecutor = new PatchSequenceExecutor(this);
     public PatchCanvasHandler patchCanvasHandler;
     public PatchCanvasExecutor patchCanvasExecutor = new PatchCanvasExecutor(this);
+    public PatchManifestHandler patchManifestHandler;
+    public PatchManifestExecutor patchManifestExecutor = new PatchManifestExecutor(this);
 
     private JLabel addDataToolBarAction;
     private JLabel removeDataToolBarAction;
@@ -271,6 +273,7 @@ public class BagView extends AbstractView implements ApplicationListener {
         createSequencesHandler = new CreateSequencesHandler(this);
         patchSequenceHandler = new PatchSequenceHandler(this);
         patchCanvasHandler = new PatchCanvasHandler(this);
+        patchManifestHandler = new PatchManifestHandler(this);
         return buttonPanel;
     }
 
@@ -571,6 +574,7 @@ public class BagView extends AbstractView implements ApplicationListener {
         createSequencesExecutor.setEnabled(false);
         patchSequenceExecutor.setEnabled(false);
         patchCanvasExecutor.setEnabled(false);
+        patchManifestExecutor.setEnabled(false);
     }
 
     public void updateClearBag() {
@@ -597,6 +601,7 @@ public class BagView extends AbstractView implements ApplicationListener {
         createSequencesExecutor.setEnabled(false);
         patchSequenceExecutor.setEnabled(false);
         patchCanvasExecutor.setEnabled(false);
+        patchManifestExecutor.setEnabled(false);
     }
 
     public void updateNewBag() {
@@ -613,6 +618,7 @@ public class BagView extends AbstractView implements ApplicationListener {
         createSequencesExecutor.setEnabled(false);
         patchSequenceExecutor.setEnabled(false);
         patchCanvasExecutor.setEnabled(false);
+        patchManifestExecutor.setEnabled(false);
     }
 
     public void updateOpenBag() {
@@ -635,6 +641,7 @@ public class BagView extends AbstractView implements ApplicationListener {
         createSequencesExecutor.setEnabled(true);
         patchSequenceExecutor.setEnabled(true);
         patchCanvasExecutor.setEnabled(true);
+        patchManifestExecutor.setEnabled(true);
     }
 
     public void updateBagInPlace() {
@@ -657,6 +664,7 @@ public class BagView extends AbstractView implements ApplicationListener {
         createSequencesExecutor.setEnabled(true);
         patchSequenceExecutor.setEnabled(true);
         patchCanvasExecutor.setEnabled(true);
+        patchManifestExecutor.setEnabled(true);
     }
 
     public void updateSaveBag() {
@@ -680,6 +688,7 @@ public class BagView extends AbstractView implements ApplicationListener {
         createSequencesExecutor.setEnabled(true);
         patchSequenceExecutor.setEnabled(true);
         patchCanvasExecutor.setEnabled(true);
+        patchManifestExecutor.setEnabled(true);
     }
 
     public void updateAddData() {
@@ -695,6 +704,7 @@ public class BagView extends AbstractView implements ApplicationListener {
         createSequencesExecutor.setEnabled(true);
         patchSequenceExecutor.setEnabled(true);
         patchCanvasExecutor.setEnabled(true);
+        patchManifestExecutor.setEnabled(true);
     }
 
     public void updateManifestPane() {
@@ -725,6 +735,7 @@ public class BagView extends AbstractView implements ApplicationListener {
         context.register("createSequencesCommand", createSequencesExecutor);
         context.register("patchSequenceCommand", patchSequenceExecutor);
         context.register("patchCanvasCommand", patchCanvasExecutor);
+        context.register("patchManifestCommand", patchManifestExecutor);
     }
 
     @Override

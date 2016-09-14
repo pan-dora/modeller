@@ -5,7 +5,7 @@ import org.blume.modeller.util.RDFCollectionWriter;
 import java.util.ArrayList;
 import java.util.stream.IntStream;
 
-public class RDFCollectionWriterTest {
+public class rdfCollectionWriterTest {
     public static void main(String[] args) {
         RDFCollectionWriter collectionWriter;
         collectionWriter = RDFCollectionWriter.collection()

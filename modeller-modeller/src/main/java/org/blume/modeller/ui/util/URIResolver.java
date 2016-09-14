@@ -72,6 +72,7 @@ public class URIResolver {
             String collectionRoot = getMapValue(map, ProfileOptions.COLLECTION_ROOT_KEY);
             String collection = getMapValue(map, ProfileOptions.COLLECTION_ID_KEY);
             String objektID = getMapValue(map, ProfileOptions.OBJEKT_ID_KEY);
+            String manifestLabel = getMapValue(map, ProfileOptions.MANIFEST_RESOURCE_LABEL);
             Type path = getObjectIDPath(pathType);
             UriBuilder builder = UriBuilder.fromPath(path.toString());
             switch (pathType) {
@@ -113,6 +114,12 @@ public class URIResolver {
                             .host(hostname)
                             .port(port)
                             .build(appKey, restKey, collectionRoot, collection, objektID, container, resource);
+                case(6):
+                    return builder
+                            .scheme("http")
+                            .host(hostname)
+                            .port(port)
+                            .build(appKey, restKey, collectionRoot, collection, objektID, manifestLabel);
             }
           return null;
         }

@@ -1,0 +1,12 @@
+<> <http://iiif.io/api/presentation/2#attributionLabel> "{{attributionLabel}}"  .
+<> <http://iiif.io/api/presentation/2#hasSequences> _:c14n10 .
+_:c14n10 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> <{{sequenceURI}}> .
+_:c14n10 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> <http://www.w3.org/1999/02/22-rdf-syntax-ns#nil> .
+{{> manifest-metadata.mustache}}
+<> <http://purl.org/dc/elements/1.1/description> "First Manifest Test" .
+<> <http://purl.org/dc/terms/hasFormat> <http://example.org/iiif/book1.pdf> .
+<> <http://purl.org/dc/terms/isPartOf> <{{collectionURI}}> .
+<> <http://purl.org/dc/terms/rights> <{{license}}> .
+<> <http://rdfs.org/sioc/services#has_service> <http://www.w3.org/1999/02/22-rdf-syntax-ns#nil>.
+<> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Manifest> .
+<> <http://www.w3.org/2000/01/rdf-schema#label> "{{label}}" .

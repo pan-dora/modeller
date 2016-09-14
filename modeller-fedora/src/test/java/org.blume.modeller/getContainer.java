@@ -4,6 +4,7 @@ import org.apache.jena.rdf.model.*;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.net.URI;
 import java.util.ArrayList;
 
 import static org.apache.commons.lang3.exception.ExceptionUtils.getMessage;
@@ -12,7 +13,7 @@ public class getContainer {
     public static void main(String[] args) throws IOException {
         ModellerClient client = new ModellerClient();
         try {
-            String resource = client.doGetContainerResources("http://localhost:8080/fcrepo/rest/collection/test/001/res");
+            String resource = client.doGetContainerResources(URI.create("http://localhost:8080/fcrepo/rest/collection/test/001/res"));
             final Model model = ModelFactory.createDefaultModel();
             model.read(new ByteArrayInputStream(resource.getBytes()), null, "TTL");
             ArrayList<String> children = getChilden(model);

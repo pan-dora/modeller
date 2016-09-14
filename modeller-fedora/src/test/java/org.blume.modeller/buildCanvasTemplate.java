@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
-public class buildTemplate {
+public class buildCanvasTemplate {
 
     public static void main(String[] args) throws IOException {
         MetadataTemplate metadataTemplate;

@@ -7,13 +7,13 @@ import java.io.InputStream;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
-public class ModellerSparqlUpdateReader
+public class modellerSparqlUpdateReaderTest
 {
     public static void main(String[] args)
     {
         //Model model = RDFDataMgr.loadModel("data/res.n3") ;
 
-        InputStream requestBodyStream = ModellerSparqlUpdateReader.class.getResourceAsStream("/data/res.update");
+        InputStream requestBodyStream = modellerSparqlUpdateReaderTest.class.getResourceAsStream("/data/res.update");
 
         try {
             final String requestBody = IOUtils.toString(requestBodyStream, UTF_8);

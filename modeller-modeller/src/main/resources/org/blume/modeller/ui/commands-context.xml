@@ -27,6 +27,7 @@
                 <value>createSequencesCommand</value>
                 <value>patchSequenceCommand</value>
                 <value>patchCanvasCommand</value>
+                <value>patchManifestCommand</value>
             </list>
         </property>
     </bean>
@@ -98,6 +99,7 @@
                 <value>patchCanvasCommand</value>
                 <value>createSequencesCommand</value>
                 <value>patchSequenceCommand</value>
+                <value>patchManifestCommand</value>
             </list>
         </property>
     </bean>
