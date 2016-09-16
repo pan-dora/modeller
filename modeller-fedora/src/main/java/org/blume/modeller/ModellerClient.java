@@ -7,6 +7,7 @@ import org.fcrepo.client.FcrepoResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -35,6 +36,20 @@ public class ModellerClient {
             throw new ModellerClientFailedException(e);
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void doStreamPut(URI destinationURI, ByteArrayInputStream resourceFile, String contentType) throws ModellerClientFailedException {
+        FcrepoClient testClient;
+        testClient = FcrepoClient.client().throwExceptionOnFailure().build();
+        try {
+            FcrepoResponse response = testClient.put(destinationURI)
+                    .body(resourceFile, contentType)
+                    .perform();
+            log.info(String.valueOf(response.getStatusCode()));
+        } catch (FcrepoOperationFailedException e) {
+            log.info(getMessage(e));
+            throw new ModellerClientFailedException(e);
         }
     }
 

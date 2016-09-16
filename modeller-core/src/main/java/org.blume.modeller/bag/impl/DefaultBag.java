@@ -165,8 +165,7 @@ public class DefaultBag {
       bagInfoTxt = bilBag.getBagPartFactory().createBagInfoTxt();
       /* */
       Set<String> keys = bagInfoTxt.keySet();
-      for (Iterator<String> iter = keys.iterator(); iter.hasNext();) {
-        String key = iter.next();
+      for (String key : keys) {
         bagInfoTxt.remove(key);
       }
       /* */

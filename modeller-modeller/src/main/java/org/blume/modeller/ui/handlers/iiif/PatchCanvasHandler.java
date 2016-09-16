@@ -151,8 +151,8 @@ public class PatchCanvasHandler extends AbstractAction implements Progress {
                 .resourceURI(resourceURI)
                 .listURI(listURI)
                 .canvasLabel("test")
-                .canvasHeight(3000)
-                .canvasWidth(2000);
+                .canvasHeight(3293)
+                .canvasWidth(2138);
 
         metadataTemplate = MetadataTemplate.template()
                 .template("template/sparql-update-canvas.mustache")
