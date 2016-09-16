@@ -60,7 +60,7 @@ public class CreateCanvasesHandler extends AbstractAction implements Progress {
 
     void openCreateCanvasesFrame() {
         DefaultBag bag = bagView.getBag();
-        CreateCanvasesFrame createCanvasesFrame = new CreateCanvasesFrame(bagView, bagView.getPropertyMessage("bag.frame.list"));
+        CreateCanvasesFrame createCanvasesFrame = new CreateCanvasesFrame(bagView, bagView.getPropertyMessage("bag.frame.canvas"));
         createCanvasesFrame.setBag(bag);
         createCanvasesFrame.setVisible(true);
     }
