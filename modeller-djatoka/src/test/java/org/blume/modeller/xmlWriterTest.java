@@ -1,15 +1,17 @@
 package org.blume.modeller;
 
+
+import javax.xml.bind.JAXBException;
+import java.io.ByteArrayOutputStream;
+
 public class xmlWriterTest {
-    public static void main(String[] args) {
-            XMLWriter.write()
-                .collectionRoot("collection")
+    public static void main(String[] args) throws JAXBException {
+            ByteArrayOutputStream out = XmlFileWriter.write()
                 .collectionId("test10")
                 .objektId("001")
-                .resourceContainer("res")
                 .resourceId("004")
-                .serializationDirectoryPath("/mnt/fcrepo/binaries/")
                 .build();
+            System.out.println(out);
     }
 }
 

@@ -15,7 +15,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.util.Collection;
-import java.util.Iterator;
 
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
@@ -27,8 +26,6 @@ import javax.swing.ProgressMonitor;
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
 import javax.swing.border.LineBorder;
-import javax.swing.event.TreeSelectionEvent;
-import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.TreePath;
 
 import org.blume.modeller.ui.*;
@@ -148,6 +145,8 @@ public class BagView extends AbstractView implements ApplicationListener {
     public PatchCanvasExecutor patchCanvasExecutor = new PatchCanvasExecutor(this);
     public PatchManifestHandler patchManifestHandler;
     public PatchManifestExecutor patchManifestExecutor = new PatchManifestExecutor(this);
+    public CreateXmlFilesHandler createXmlFilesHandler;
+    public CreateXmlFilesExecutor createXmlFilesExecutor = new CreateXmlFilesExecutor(this);
 
     private JLabel addDataToolBarAction;
     private JLabel removeDataToolBarAction;
@@ -274,6 +273,7 @@ public class BagView extends AbstractView implements ApplicationListener {
         patchSequenceHandler = new PatchSequenceHandler(this);
         patchCanvasHandler = new PatchCanvasHandler(this);
         patchManifestHandler = new PatchManifestHandler(this);
+        createXmlFilesHandler = new CreateXmlFilesHandler(this);
         return buttonPanel;
     }
 
@@ -736,6 +736,7 @@ public class BagView extends AbstractView implements ApplicationListener {
         context.register("patchSequenceCommand", patchSequenceExecutor);
         context.register("patchCanvasCommand", patchCanvasExecutor);
         context.register("patchManifestCommand", patchManifestExecutor);
+        context.register("createXmlFilesCommand", createXmlFilesExecutor);
     }
 
     @Override

@@ -54,7 +54,7 @@ public class URIResolver {
             return this;
         }
 
-        private static String getMapValue(Map<String, BagInfoField> map, String key) {
+        public static String getMapValue(Map<String, BagInfoField> map, String key) {
             BagInfoField IIIFProfileKey = map.get(key);
             return IIIFProfileKey.getValue();
         }
@@ -66,7 +66,10 @@ public class URIResolver {
 
         static URI resolveURI(Map<String, BagInfoField> map, String containerKey, String resource, int pathType) {
             String hostname = getMapValue(map, ProfileOptions.FEDORA_HOSTNAME_KEY);
-            int port = Integer.parseInt(getMapValue(map, ProfileOptions.PORT_KEY));
+            Integer port = Integer.parseInt(getMapValue(map, ProfileOptions.PORT_KEY));
+            if (port == 80) {
+                port = -1;
+            }
             String appKey =  getMapValue(map, ProfileOptions.FEDORA_APP_KEY);
             String restKey = getMapValue(map, ProfileOptions.REST_SERVLET_KEY);
             String collectionRoot = getMapValue(map, ProfileOptions.COLLECTION_ROOT_KEY);

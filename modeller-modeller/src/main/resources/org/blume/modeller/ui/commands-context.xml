@@ -28,6 +28,7 @@
                 <value>patchSequenceCommand</value>
                 <value>patchCanvasCommand</value>
                 <value>patchManifestCommand</value>
+                <value>createXmlFilesCommand</value>
             </list>
         </property>
     </bean>
@@ -100,6 +101,7 @@
                 <value>createSequencesCommand</value>
                 <value>patchSequenceCommand</value>
                 <value>patchManifestCommand</value>
+                <value>createXmlFilesCommand</value>
             </list>
         </property>
     </bean>
