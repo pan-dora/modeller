@@ -1,0 +1,21 @@
+package org.blume.modeller;
+
+import org.xmlbeam.annotation.XBDocURL;
+import org.xmlbeam.annotation.XBRead;
+import org.xmlbeam.annotation.XBWrite;
+
+import java.util.List;
+
+public interface hOCRData {
+    @XBRead("//*[local-name()='div'][@class='ocr_page']/@id")
+    String getPageNodeId();
+
+    @XBRead("//*[local-name()='div'][@class='ocr_carea']/@id")
+    List<String> getCAreaNodeId();
+
+    @XBRead("//*[local-name()='span'][@class='ocr_line']/@id")
+    List<String> getLineNodeId();
+
+    @XBRead("//*[local-name()='span'][@class='ocrx_word']/@id")
+    List<String> getWordNodeId();
+}
