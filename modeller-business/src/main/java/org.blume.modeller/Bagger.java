@@ -4,12 +4,12 @@ import java.util.List;
 
 public interface Bagger {
 
-  public List<Profile> loadProfiles();
+  List<Profile> loadProfiles();
 
-  public void loadProfile(String profileName);
+  void loadProfile(String profileName);
 
-  public void saveProfile(Profile profile);
+  void saveProfile(Profile profile);
 
-  public void removeProfile(Profile profile);
+  void removeProfile(Profile profile);
 
 }

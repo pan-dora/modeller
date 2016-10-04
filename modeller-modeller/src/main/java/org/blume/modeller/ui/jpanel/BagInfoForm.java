@@ -122,7 +122,7 @@ public class BagInfoForm extends AbstractForm implements FocusListener {
           textarea.setEnabled(field.isEnabled());
           textarea.addFocusListener(this);
           ((NoTabTextArea) textarea).setText(field.getValue());
-          ((NoTabTextArea) textarea).setBorder(new EmptyBorder(1, 1, 1, 1));
+          textarea.setBorder(new EmptyBorder(1, 1, 1, 1));
           ((NoTabTextArea) textarea).setLineWrap(true);
           if (rowCount == 1){
             focusField = textarea;

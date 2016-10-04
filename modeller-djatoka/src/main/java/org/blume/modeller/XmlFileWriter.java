@@ -23,12 +23,9 @@ public class XmlFileWriter extends ByteArrayOutputStream {
     }
 
     public static class XMLWriterBuilder {
-        private String collectionRoot;
         private String collectionId;
         private String objektId;
-        private String resourceContainer;
         private String resourceId;
-        private String serializationDirectoryPath;
 
         public XmlFileWriter.XMLWriterBuilder collectionId(String collectionId) {
             this.collectionId = collectionId;
@@ -44,12 +41,6 @@ public class XmlFileWriter extends ByteArrayOutputStream {
             this.resourceId = resourceId;
             return this;
         }
-
-        public XmlFileWriter.XMLWriterBuilder serializationDirectoryPath(String serializationDirectoryPath ) {
-            this.serializationDirectoryPath = serializationDirectoryPath;
-            return this;
-        }
-
 
         public ByteArrayOutputStream build() throws JAXBException {
             String descriptor = this.collectionId + "." + this.objektId + "." + this.resourceId;
