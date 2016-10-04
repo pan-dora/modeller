@@ -1,10 +1,7 @@
 package org.blume.modeller.util;
 
 import java.io.ByteArrayOutputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 import org.apache.jena.graph.Node;
 import org.apache.jena.query.Dataset;
@@ -32,7 +29,7 @@ public class RDFCollectionWriter {
         return this.rdfCollection.toString();
     }
 
-    protected RDFCollectionWriter(final ArrayList<String> idList, final String collectionPredicate,
+    protected RDFCollectionWriter(final List<String> idList, final String collectionPredicate,
                                   final String resourceContainerIRI) {
 
         Model model = ModelFactory.createDefaultModel();
@@ -111,11 +108,11 @@ public class RDFCollectionWriter {
         RDFDataMgr.write(this.rdfCollection, model, Lang.NTRIPLES);
     }
 
-    private int getIDPos(ArrayList<String> idList, String id) {
+    private int getIDPos(List<String> idList, String id) {
         return idList.indexOf(id);
     }
 
-    private Map<String, Node> getBNodeKeyMap(ArrayList<String> idList) {
+    private Map<String, Node> getBNodeKeyMap(List<String> idList) {
         Map<String, Node> bNodeMap = new HashMap <>();
 
         for (String id : idList) {
@@ -168,11 +165,11 @@ public class RDFCollectionWriter {
 
     public static class RDFCollectionBuilder {
 
-        private ArrayList<String> idList;
+        private List<String> idList;
         private String collectionPredicate;
         private String resourceContainerIRI;
 
-        public RDFCollectionWriter.RDFCollectionBuilder idList(ArrayList<String> idList) {
+        public RDFCollectionWriter.RDFCollectionBuilder idList(List<String> idList) {
             this.idList = idList;
             return this;
         }

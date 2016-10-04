@@ -23,6 +23,7 @@ dependencies {
     compile project(':modeller-core'),
             project(':modeller-business'),
             project(':modeller-fedora'),
+            project(':modeller-djatoka'),
             'com.vlsolutions:vldocking:2.1.4',
             'net.sf.nachocalendar:nachocalendar:0.23',
             'org.springframework.richclient:spring-richclient-resources:1.1.0',

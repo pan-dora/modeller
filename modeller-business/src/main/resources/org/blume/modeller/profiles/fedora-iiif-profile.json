@@ -87,6 +87,30 @@
         "fieldRequired" : true,
         "defaultValue" : "layer"
       }
+    },
+    {
+      "TextManifestContainer" : {
+        "fieldRequired" : true,
+        "defaultValue" : "text"
+      }
+    },
+    {
+      "TextAreaContainer" : {
+        "fieldRequired" : true,
+        "defaultValue" : "area"
+      }
+    },
+    {
+      "TextLineContainer" : {
+        "fieldRequired" : true,
+        "defaultValue" : "line"
+      }
+    },
+    {
+      "TextWordContainer" : {
+        "fieldRequired" : true,
+        "defaultValue" : "word"
+      }
     }
-  ]
+    ]
 }
