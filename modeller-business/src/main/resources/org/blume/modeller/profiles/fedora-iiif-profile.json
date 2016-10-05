@@ -89,9 +89,9 @@
       }
     },
     {
-      "TextManifestContainer" : {
+      "TextPageContainer" : {
         "fieldRequired" : true,
-        "defaultValue" : "text"
+        "defaultValue" : "page"
       }
     },
     {

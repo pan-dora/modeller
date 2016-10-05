@@ -13,19 +13,10 @@ import org.xmlbeam.XBProjector;
 
 public class DocManifestBuilder {
 
-    public static void main(String[] args) throws IOException {
-        String url = "resource://data/001.hocr";
-        hOCRData hocr = gethOCRProjectionFromURL(url);
-        String resourceURI = "http://localhost:8080/fcrepo/rest/collection/test/001/text/area/";
-        String rdfseq = getAreaRDFSequenceForhOCRResource(hocr, resourceURI);
-        System.out.println(rdfseq);
+    public DocManifestBuilder() {}
 
-        //Map map = getAreaMapForhOCRResource(hocr);
-        //System.out.println(map);
-    }
-
-    private static hOCRData gethOCRProjectionFromURL(String url) throws IOException {
-        return new XBProjector().io().url(url).read(hOCRData.class);
+    public static hOCRData gethOCRProjectionFromURL(String url) throws IOException {
+        return new XBProjector(new OmitDTDXMLFactoriesConfig()).io().url(url).read(hOCRData.class);
     }
 
     private static Map<String, Object> buildValueMap(List<String> descList, hOCRData hocr) {
@@ -59,11 +50,15 @@ public class DocManifestBuilder {
         return collectionWriter.render();
     }
 
-    private List<String> getAreaIdList(hOCRData hocr) {
+    public static List<String> getPageIdList(hOCRData hocr) {
+        return hocr.getPageNodeId();
+    }
+
+    public static List<String> getAreaIdList(hOCRData hocr) {
         return hocr.getCAreaNodeId();
     }
 
-    private static ByteArrayOutputStream marshal(File hocr) throws JAXBException {
+      private static ByteArrayOutputStream marshal(File hocr) throws JAXBException {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         JAXBContext jaxbContext = JAXBContext.newInstance(File.class);
         Marshaller jaxbMarshaller = jaxbContext.createMarshaller();

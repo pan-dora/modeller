@@ -59,6 +59,7 @@ public class CreateXmlFilesHandler extends AbstractAction implements Progress {
             } catch (JAXBException e) {
                 e.printStackTrace();
             }
+            assert resourceFile != null;
             ByteArrayInputStream in = new ByteArrayInputStream(resourceFile.toByteArray());
             String filename = resourceId + ".xml";
             String contentType = "application/xml";

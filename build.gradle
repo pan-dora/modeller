@@ -3,7 +3,6 @@ subprojects{
     apply plugin: 'maven'
     apply plugin: 'findbugs'
     apply plugin: 'pmd'
-    apply from: '../eclipse.gradle'
 
     group = 'org.blume'
 

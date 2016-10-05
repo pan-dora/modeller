@@ -15,25 +15,9 @@
  */
 package org.blume.modeller.ui.jpanel;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.net.URI;
-import java.util.Map;
-
-import javax.swing.AbstractAction;
-import javax.swing.JComponent;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JSeparator;
-import javax.swing.JTextField;
-import javax.swing.border.Border;
-import javax.swing.border.EmptyBorder;
-
+import org.blume.modeller.bag.BagInfoField;
+import org.blume.modeller.bag.impl.DefaultBag;
+import org.blume.modeller.bag.impl.hOCRBag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.richclient.command.AbstractCommand;
@@ -43,18 +27,24 @@ import org.springframework.richclient.core.DefaultMessage;
 import org.springframework.richclient.dialog.TitlePane;
 import org.springframework.richclient.util.GuiStandardUtils;
 
-import org.blume.modeller.bag.impl.DefaultBag;
-import org.blume.modeller.bag.BagInfoField;
+import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.net.URI;
+import java.util.Map;
 
-public class CreateSequencesFrame extends JFrame implements ActionListener {
-    protected static final Logger log = LoggerFactory.getLogger(CreateDefaultContainersFrame.class);
+public class CreatePagesFrame extends JFrame implements ActionListener {
+    protected static final Logger log = LoggerFactory.getLogger(CreatePagesFrame.class);
     private static final long serialVersionUID = 1L;
     transient BagView bagView;
     private Map<String, BagInfoField> map;
     private JPanel savePanel;
-    private JTextField sequenceIDField;
+    private JTextField hocrResourceField;
 
-    public  CreateSequencesFrame(BagView bagView, String title) {
+    public CreatePagesFrame(BagView bagView, String title) {
         super(title);
         this.bagView = bagView;
         if (bagView != null) {
@@ -89,7 +79,7 @@ public class CreateSequencesFrame extends JFrame implements ActionListener {
             @Override
             public void doExecuteCommand() {
 
-                new OkCreateSequencesHandler().actionPerformed(null);
+                new OkCreatePagesHandler().actionPerformed(null);
 
             }
         };
@@ -98,7 +88,7 @@ public class CreateSequencesFrame extends JFrame implements ActionListener {
 
             @Override
             public void doExecuteCommand() {
-                new CancelCreateSequencesHandler().actionPerformed(null);
+                new CancelCreatePagesHandler().actionPerformed(null);
             }
         };
     }
@@ -126,8 +116,8 @@ public class CreateSequencesFrame extends JFrame implements ActionListener {
         initStandardCommands();
         JPanel pageControl = new JPanel(new BorderLayout());
         JPanel titlePaneContainer = new JPanel(new BorderLayout());
-        titlePane.setTitle(bagView.getPropertyMessage("CreateSequencesFrame.title"));
-        titlePane.setMessage(new DefaultMessage(bagView.getPropertyMessage("Create Sequence in:")));
+        titlePane.setTitle(bagView.getPropertyMessage("CreatePagesFrame.title"));
+        titlePane.setMessage(new DefaultMessage(bagView.getPropertyMessage("Create Pages in:")));
         titlePaneContainer.add(titlePane.getControl());
         titlePaneContainer.add(new JSeparator(), BorderLayout.SOUTH);
         pageControl.add(titlePaneContainer, BorderLayout.NORTH);
@@ -141,16 +131,17 @@ public class CreateSequencesFrame extends JFrame implements ActionListener {
         JLabel urlLabel = new JLabel(bagView.getPropertyMessage("baseURL.label"));
         urlLabel.setToolTipText(bagView.getPropertyMessage("baseURL.description"));
         JTextField urlField = new JTextField("");
-        URI uri = bagView.createSequencesHandler.getSequenceContainerURI(map);
+        URI uri = bagView.createPagesHandler.getPageContainerURI(map);
         try {
             urlField.setText(uri.toString());
         } catch (Exception e) {
             log.error("Failed to set url label", e);
         }
 
-        JLabel sequenceIDLabel = new JLabel(bagView.getPropertyMessage("h"));
-        sequenceIDLabel.setToolTipText(bagView.getPropertyMessage("sequenceID.description"));
-        sequenceIDField = new JTextField("");
+        JLabel hocrResourceLabel = new JLabel(bagView.getPropertyMessage("hocrResource.label"));
+        hocrResourceLabel.setToolTipText(bagView.getPropertyMessage("hocrResource.description"));
+        hocrResourceField = new JTextField("");
+
         GridBagLayout layout = new GridBagLayout();
         GridBagConstraints glbc = new GridBagConstraints();
         JPanel panel = new JPanel(layout);
@@ -167,11 +158,11 @@ public class CreateSequencesFrame extends JFrame implements ActionListener {
         panel.add(urlField);
         row++;
         buildConstraints(glbc, 0, row, 1, 1, 1, 50, GridBagConstraints.NONE, GridBagConstraints.WEST);
-        layout.setConstraints(sequenceIDLabel, glbc);
-        panel.add(sequenceIDLabel);
+        layout.setConstraints(hocrResourceLabel, glbc);
+        panel.add(hocrResourceLabel);
         buildConstraints(glbc, 1, row, 1, 1, 80, 50, GridBagConstraints.HORIZONTAL, GridBagConstraints.CENTER);
-        layout.setConstraints(sequenceIDField, glbc);
-        panel.add(sequenceIDField);
+        layout.setConstraints(hocrResourceField, glbc);
+        panel.add(hocrResourceField);
         row++;
         buildConstraints(glbc, 0, row, 1, 1, 1, 50, GridBagConstraints.NONE, GridBagConstraints.WEST);
         buildConstraints(glbc, 1, row, 2, 1, 80, 50, GridBagConstraints.HORIZONTAL, GridBagConstraints.CENTER);
@@ -196,19 +187,19 @@ public class CreateSequencesFrame extends JFrame implements ActionListener {
         repaint();
     }
 
-    private class OkCreateSequencesHandler extends AbstractAction {
+    private class OkCreatePagesHandler extends AbstractAction {
         private static final long serialVersionUID = 1L;
 
         @Override
         public void actionPerformed(ActionEvent e) {
             setVisible(false);
-            String sequenceID = sequenceIDField.getText().trim();
-            bagView.getBag().setSequenceID(sequenceID);
-            bagView.createSequencesHandler.execute();
+            String hocrFile = hocrResourceField.getText().trim();
+            bagView.getBag().sethOCRResource(hocrFile);
+            bagView.createPagesHandler.execute();
         }
     }
 
-    private class CancelCreateSequencesHandler extends AbstractAction {
+    private class CancelCreatePagesHandler extends AbstractAction {
         private static final long serialVersionUID = 1L;
 
         @Override
@@ -233,4 +224,3 @@ public class CreateSequencesFrame extends JFrame implements ActionListener {
     }
 
 }
-

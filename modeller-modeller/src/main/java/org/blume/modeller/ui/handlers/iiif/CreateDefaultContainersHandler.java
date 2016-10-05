@@ -62,7 +62,10 @@ public class CreateDefaultContainersHandler extends AbstractAction implements Pr
         String[] IIIFContainers = new String[]{ProfileOptions.RESOURCE_CONTAINER_KEY,
                 ProfileOptions.MANIFEST_RESOURCE_LABEL, ProfileOptions.SEQUENCE_CONTAINER_KEY,
                 ProfileOptions.RANGE_CONTAINER_KEY, ProfileOptions.CANVAS_CONTAINER_KEY,
-                ProfileOptions.LIST_CONTAINER_KEY, ProfileOptions.LAYER_CONTAINER_KEY};
+                ProfileOptions.LIST_CONTAINER_KEY, ProfileOptions.LAYER_CONTAINER_KEY,
+                ProfileOptions.TEXT_PAGE_CONTAINER_KEY,
+                ProfileOptions.TEXT_AREA_CONTAINER_KEY, ProfileOptions.TEXT_LINE_CONTAINER_KEY,
+                ProfileOptions.TEXT_WORD_CONTAINER_KEY};
         for (String containerKey: IIIFContainers) {
             URI containerURI = buildContainerURI(map, containerKey);
             try {

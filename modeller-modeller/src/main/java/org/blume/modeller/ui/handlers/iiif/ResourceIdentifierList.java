@@ -9,15 +9,15 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-class ResourceIdentifierList {
+public class ResourceIdentifierList {
     private BagView bagView;
 
-    ResourceIdentifierList(BagView bagView) {
+    public ResourceIdentifierList(BagView bagView) {
         super();
         this.bagView = bagView;
     }
 
-    ArrayList<String> getResourceIdentifierList() {
+    public ArrayList<String> getResourceIdentifierList() {
         DefaultBag bag = bagView.getBag();
         List<String> payload = bag.getPayloadPaths();
         ArrayList<String> identifierList = new ArrayList<>();

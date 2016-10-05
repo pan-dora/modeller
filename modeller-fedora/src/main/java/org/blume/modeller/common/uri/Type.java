@@ -22,45 +22,45 @@ public class Type implements Serializable {
         return path;
     }
 
-  private static final Hashtable types = new Hashtable();
+    private static final Hashtable types = new Hashtable<>();
 
-   private void storeType(Type type) {
-       String className = type.getClass().getName();
+    private void storeType(Type type) {
+        String className = type.getClass().getName();
 
-       Hashtable values;
+        Hashtable values;
 
-       synchronized(types) {
-           values = (Hashtable) types.get(className);
+        synchronized (types) {
+            values = (Hashtable) types.get(className);
 
-           if (values == null) {
-               values = new Hashtable<>();
-               types.put(className, values);
-           }
-       }
+            if (values == null) {
+                values = new Hashtable<>();
+                types.put(className, values);
+            }
+        }
 
-       values.put(type.getValue(), type);
-   }
+        values.put(type.getValue(), type);
+    }
 
-   public static Type getByValue(Class classRef, int value) {
-       Type type = null;
-       String className = classRef.getName();
-       Hashtable values = (Hashtable)types.get(className);
+    public static Type getByValue(Class classRef, int value) {
+        Type type = null;
+        String className = classRef.getName();
+        Hashtable values = (Hashtable) types.get(className);
 
-       if (values != null) {
-           type = (Type)values.get(value);
-       }
+        if (values != null) {
+            type = (Type) values.get(value);
+        }
 
-       return (type);
-   }
+        return (type);
+    }
 
-   public static Enumeration elements(Class classRef) {
-       String className = classRef.getName();
+    public static Enumeration elements(Class classRef) {
+        String className = classRef.getName();
 
-       Hashtable values = (Hashtable)types.get(className);
-       if (values != null){
-           return (values.elements());
-       } else {
-           return null;
-       }
-   }
+        Hashtable values = (Hashtable) types.get(className);
+        if (values != null) {
+            return (values.elements());
+        } else {
+            return null;
+        }
+    }
 }

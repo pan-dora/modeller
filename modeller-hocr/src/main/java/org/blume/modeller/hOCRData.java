@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface hOCRData {
     @XBRead("//*[local-name()='div'][@class='ocr_page']/@id")
-    String getPageNodeId();
+    List<String> getPageNodeId();
 
     @XBRead("//*[local-name()='div'][@class='ocr_carea']/@id")
     List<String> getCAreaNodeId();

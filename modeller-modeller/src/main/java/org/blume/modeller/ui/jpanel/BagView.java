@@ -30,6 +30,10 @@ import javax.swing.tree.TreePath;
 
 import org.blume.modeller.ui.*;
 import org.blume.modeller.ui.handlers.iiif.*;
+import org.blume.modeller.ui.handlers.text.CreateAreasExecutor;
+import org.blume.modeller.ui.handlers.text.CreateAreasHandler;
+import org.blume.modeller.ui.handlers.text.CreatePagesExecutor;
+import org.blume.modeller.ui.handlers.text.CreatePagesHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationEvent;
@@ -95,7 +99,6 @@ public class BagView extends AbstractView implements ApplicationListener {
     public BagTree bagTagFileTree;
 
     private File bagRootPath;
-    private String userHomeDir;
 
     public TagManifestPane tagManifestPane;
     public InfoFormsPane infoInputPane;
@@ -103,7 +106,6 @@ public class BagView extends AbstractView implements ApplicationListener {
     public BagTreePanel bagTagFileTreePanel;
 
     private JPanel bagButtonPanel;
-    private JPanel bagTagButtonPanel;
     private JPanel topButtonPanel;
 
     public StartNewBagHandler startNewBagHandler;
@@ -147,6 +149,10 @@ public class BagView extends AbstractView implements ApplicationListener {
     public PatchManifestExecutor patchManifestExecutor = new PatchManifestExecutor(this);
     public CreateXmlFilesHandler createXmlFilesHandler;
     public CreateXmlFilesExecutor createXmlFilesExecutor = new CreateXmlFilesExecutor(this);
+    public CreatePagesHandler createPagesHandler;
+    public CreatePagesExecutor createPagesExecutor = new CreatePagesExecutor(this);
+    public CreateAreasHandler createAreasHandler;
+    public CreateAreasExecutor createAreasExecutor = new CreateAreasExecutor(this);
 
     private JLabel addDataToolBarAction;
     private JLabel removeDataToolBarAction;
@@ -223,7 +229,7 @@ public class BagView extends AbstractView implements ApplicationListener {
     protected JComponent createControl() {
         bag = new DefaultBag();
 
-        this.userHomeDir = System.getProperty("user.home");
+        String userHomeDir = System.getProperty("user.home");
         display("createControl - User Home Path: " + userHomeDir);
 
         initializeCommands();
@@ -274,6 +280,8 @@ public class BagView extends AbstractView implements ApplicationListener {
         patchCanvasHandler = new PatchCanvasHandler(this);
         patchManifestHandler = new PatchManifestHandler(this);
         createXmlFilesHandler = new CreateXmlFilesHandler(this);
+        createPagesHandler = new CreatePagesHandler(this);
+        createAreasHandler = new CreateAreasHandler(this);
         return buttonPanel;
     }
 
@@ -283,7 +291,7 @@ public class BagView extends AbstractView implements ApplicationListener {
 
         bagButtonPanel = createBagButtonPanel();
 
-        bagTagButtonPanel = createBagTagButtonPanel();
+        JPanel bagTagButtonPanel = createBagTagButtonPanel();
 
         bagPayloadTree = new BagTree(this, AbstractBagConstants.DATA_DIRECTORY);
         bagPayloadTree.setEnabled(false);
@@ -575,6 +583,9 @@ public class BagView extends AbstractView implements ApplicationListener {
         patchSequenceExecutor.setEnabled(false);
         patchCanvasExecutor.setEnabled(false);
         patchManifestExecutor.setEnabled(false);
+        createXmlFilesExecutor.setEnabled(false);
+        createPagesExecutor.setEnabled(false);
+        createAreasExecutor.setEnabled(false);
     }
 
     public void updateClearBag() {
@@ -602,6 +613,9 @@ public class BagView extends AbstractView implements ApplicationListener {
         patchSequenceExecutor.setEnabled(false);
         patchCanvasExecutor.setEnabled(false);
         patchManifestExecutor.setEnabled(false);
+        createXmlFilesExecutor.setEnabled(false);
+        createPagesExecutor.setEnabled(false);
+        createAreasExecutor.setEnabled(false);
     }
 
     public void updateNewBag() {
@@ -619,6 +633,9 @@ public class BagView extends AbstractView implements ApplicationListener {
         patchSequenceExecutor.setEnabled(false);
         patchCanvasExecutor.setEnabled(false);
         patchManifestExecutor.setEnabled(false);
+        createXmlFilesExecutor.setEnabled(false);
+        createPagesExecutor.setEnabled(false);
+        createAreasExecutor.setEnabled(false);
     }
 
     public void updateOpenBag() {
@@ -642,6 +659,9 @@ public class BagView extends AbstractView implements ApplicationListener {
         patchSequenceExecutor.setEnabled(true);
         patchCanvasExecutor.setEnabled(true);
         patchManifestExecutor.setEnabled(true);
+        createXmlFilesExecutor.setEnabled(true);
+        createPagesExecutor.setEnabled(true);
+        createAreasExecutor.setEnabled(true);
     }
 
     public void updateBagInPlace() {
@@ -665,6 +685,9 @@ public class BagView extends AbstractView implements ApplicationListener {
         patchSequenceExecutor.setEnabled(true);
         patchCanvasExecutor.setEnabled(true);
         patchManifestExecutor.setEnabled(true);
+        createXmlFilesExecutor.setEnabled(true);
+        createPagesExecutor.setEnabled(true);
+        createAreasExecutor.setEnabled(true);
     }
 
     public void updateSaveBag() {
@@ -689,6 +712,9 @@ public class BagView extends AbstractView implements ApplicationListener {
         patchSequenceExecutor.setEnabled(true);
         patchCanvasExecutor.setEnabled(true);
         patchManifestExecutor.setEnabled(true);
+        createXmlFilesExecutor.setEnabled(true);
+        createPagesExecutor.setEnabled(true);
+        createAreasExecutor.setEnabled(true);
     }
 
     public void updateAddData() {
@@ -705,6 +731,9 @@ public class BagView extends AbstractView implements ApplicationListener {
         patchSequenceExecutor.setEnabled(true);
         patchCanvasExecutor.setEnabled(true);
         patchManifestExecutor.setEnabled(true);
+        createXmlFilesExecutor.setEnabled(true);
+        createPagesExecutor.setEnabled(true);
+        createAreasExecutor.setEnabled(true);
     }
 
     public void updateManifestPane() {
@@ -737,6 +766,8 @@ public class BagView extends AbstractView implements ApplicationListener {
         context.register("patchCanvasCommand", patchCanvasExecutor);
         context.register("patchManifestCommand", patchManifestExecutor);
         context.register("createXmlFilesCommand", createXmlFilesExecutor);
+        context.register("createPagesCommand", createPagesExecutor);
+        context.register("createAreasCommand", createAreasExecutor);
     }
 
     @Override

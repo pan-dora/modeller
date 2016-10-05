@@ -29,6 +29,8 @@
                 <value>patchCanvasCommand</value>
                 <value>patchManifestCommand</value>
                 <value>createXmlFilesCommand</value>
+                <value>createPagesCommand</value>
+                <value>createAreasCommand</value>
             </list>
         </property>
     </bean>
@@ -38,6 +40,7 @@
             <list>
                 <ref bean="fileMenu"/>
                 <ref bean="buildMenu"/>
+                <ref bean="textMenu"/>
                 <ref bean="windowMenu"/>
                 <ref bean="helpMenu"/>
             </list>
@@ -68,6 +71,7 @@
                 <value>saveBagCommand</value>
                 <value>saveBagAsCommand</value>
                 <value>buildMenu</value>
+                <value>textMenu</value>
             </list>
         </property>
     </bean>
@@ -102,6 +106,15 @@
                 <value>patchSequenceCommand</value>
                 <value>patchManifestCommand</value>
                 <value>createXmlFilesCommand</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="textMenu" class="org.springframework.richclient.command.CommandGroupFactoryBean">
+        <property name="members">
+            <list>
+                <value>createPagesCommand</value>
+                <value>createAreasCommand</value>
             </list>
         </property>
     </bean>

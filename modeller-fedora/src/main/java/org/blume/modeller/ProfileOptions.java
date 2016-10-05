@@ -19,6 +19,7 @@ public final class ProfileOptions {
     public static final String LIST_CONTAINER_KEY = "IIIFListContainer";
     public static final String LAYER_CONTAINER_KEY = "IIIFLayerContainer";
     public static final String TEXT_MANIFEST_CONTAINER_KEY = "TextManifestContainer";
+    public static final String TEXT_PAGE_CONTAINER_KEY = "TextPageContainer";
     public static final String TEXT_AREA_CONTAINER_KEY = "TextAreaContainer";
     public static final String TEXT_LINE_CONTAINER_KEY = "TextLineContainer";
     public static final String TEXT_WORD_CONTAINER_KEY = "TextWordContainer";
