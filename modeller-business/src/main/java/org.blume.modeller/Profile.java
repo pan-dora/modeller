@@ -73,8 +73,7 @@ public class Profile {
 
   @Override
   public String toString() {
-    StringBuffer sb = new StringBuffer();
-    return sb.toString();
+    return "";
   }
 
   public static Profile createProfile(JSONObject profileJson, String profileName) throws JSONException {
@@ -168,8 +167,8 @@ public class Profile {
     String toContact = getSendToContact().serialize();
     String localCustomFields = seralizeFields(this.getCustomFields().values());
     String localStandardFields = seralizeFields(this.getStandardFields().values());
-    writer.key(FIELD_ORGANIZATION).value(new JSONObject(new JSONTokener(orgStringer.toString())));
-    writer.key(FIELD_SENDFROM).value(new JSONObject(new JSONTokener(fromContact.toString())));
+    writer.key(FIELD_ORGANIZATION).value(new JSONObject(new JSONTokener(orgStringer)));
+    writer.key(FIELD_SENDFROM).value(new JSONObject(new JSONTokener(fromContact)));
     writer.key(FIELD_SENDTO).value(new JSONObject(new JSONTokener(toContact)));
     writer.key(FIELD_CUSTOM_INFO).value(new JSONObject(new JSONTokener(localCustomFields)));
     writer.key(FIELD_STANDARD_INFO).value(new JSONObject(new JSONTokener(localStandardFields)));
@@ -181,7 +180,7 @@ public class Profile {
     JSONWriter filedWriter = new JSONWriter(writer);
     filedWriter.object();
     for (ProfileField field : profileFields) {
-      String fieldStringer = field.seralize();
+      String fieldStringer = field.serialize();
       filedWriter.key(field.getFieldName()).value(new JSONObject(new JSONTokener(fieldStringer)));
     }
     filedWriter.endObject();

@@ -186,6 +186,7 @@ public class SaveBagFrame extends JFrame implements ActionListener {
     urlLabel.setToolTipText(bagView.getPropertyMessage("baseURL.description"));
     urlField = new JTextField("");
     try {
+      assert bag != null;
       urlField.setText(bag.getFetch().getBaseURL());
     }
     catch (Exception e) {

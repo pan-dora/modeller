@@ -96,19 +96,18 @@ public class BaggerSourceOrganization implements Serializable{
   @Override
   public String toString() {
     log.info("SourceOrganization.toString");
-    StringBuffer sb = new StringBuffer();
-    sb.append(this.organizationName);
-    sb.append('\n');
-    sb.append(this.organizationAddress);
-    sb.append('\n');
-    sb.append(this.contact.getContactName());
-    sb.append('\n');
-    sb.append(this.contact.getTelephone());
-    sb.append('\n');
-    sb.append(this.contact.getEmail());
-    sb.append('\n');
+    String sb = this.organizationName +
+            '\n' +
+            this.organizationAddress +
+            '\n' +
+            this.contact.getContactName() +
+            '\n' +
+            this.contact.getTelephone() +
+            '\n' +
+            this.contact.getEmail() +
+            '\n';
 
-    return sb.toString();
+    return sb;
   }
 
 }

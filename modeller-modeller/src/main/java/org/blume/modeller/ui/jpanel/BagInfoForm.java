@@ -92,73 +92,71 @@ public class BagInfoForm extends AbstractForm implements FocusListener {
     int index = 2;
     
     Set<String> keys = fieldMap.keySet();
-    if (keys != null) {
-      for(BagInfoField field : fieldMap.values()){
-        formBuilder.row();
-        rowCount++;
-        ImageIcon imageIcon = bagView.getPropertyImage("bag.delete.image");
-        JButton removeButton = new JButton(imageIcon);
-        Dimension dimension = removeButton.getPreferredSize();
-        dimension.width = imageIcon.getIconWidth();
-        removeButton.setMaximumSize(dimension);
+    for(BagInfoField field : fieldMap.values()){
+      formBuilder.row();
+      rowCount++;
+      ImageIcon imageIcon = bagView.getPropertyImage("bag.delete.image");
+      JButton removeButton = new JButton(imageIcon);
+      Dimension dimension = removeButton.getPreferredSize();
+      dimension.width = imageIcon.getIconWidth();
+      removeButton.setMaximumSize(dimension);
+      removeButton.setOpaque(false);
+      removeButton.setBorderPainted(false);
+      removeButton.setContentAreaFilled(false);
+      removeButton.addActionListener(new RemoveFieldHandler());
+      logger.debug("OrganizationInfoForm add: " + field);
+      if (field.getValue() != null && field.getValue().length() > 60) {
+        field.setComponentType(BagInfoField.TEXTAREA_COMPONENT);
+      }
+      if (field.isRequired()) {
+        removeButton = new JButton();
         removeButton.setOpaque(false);
         removeButton.setBorderPainted(false);
         removeButton.setContentAreaFilled(false);
-        removeButton.addActionListener(new RemoveFieldHandler());
-        logger.debug("OrganizationInfoForm add: " + field);
-        if (field.getValue() != null && field.getValue().length() > 60) {
-          field.setComponentType(BagInfoField.TEXTAREA_COMPONENT);
-        }
-        if (field.isRequired()) {
-          removeButton = new JButton();
-          removeButton.setOpaque(false);
-          removeButton.setBorderPainted(false);
-          removeButton.setContentAreaFilled(false);
-        }
-        switch (field.getComponentType()) {
-        case BagInfoField.TEXTAREA_COMPONENT:
-          JComponent[] tlist = formBuilder.addTextArea(field.isRequired(), field.getLabel(), removeButton);
-          JComponent textarea = tlist[index];
-          textarea.setEnabled(field.isEnabled());
-          textarea.addFocusListener(this);
-          ((NoTabTextArea) textarea).setText(field.getValue());
-          textarea.setBorder(new EmptyBorder(1, 1, 1, 1));
-          ((NoTabTextArea) textarea).setLineWrap(true);
-          if (rowCount == 1){
-            focusField = textarea;
-          }
-          break;
-        case BagInfoField.TEXTFIELD_COMPONENT:
-          JComponent[] flist = formBuilder.add(field.isRequired(), field.getLabel(), removeButton);
-          JComponent comp = flist[index];
-          comp.setEnabled(field.isEnabled());
-          comp.addFocusListener(this);
-          ((JTextField) comp).setText(field.getValue());
-          if (rowCount == 1){
-            focusField = comp;
-          }
-          break;
-        case BagInfoField.LIST_COMPONENT:
-          List<String> elements = field.getElements();
-          JComponent[] llist = formBuilder.addList(field.isRequired(), field.getLabel(), elements, field.getValue(), removeButton);
-          JComponent lcomp = llist[index];
-          lcomp.setEnabled(field.isEnabled());
-          lcomp.addFocusListener(this);
-          if (field.getValue() != null) {
-            ((JComboBox<?>) lcomp).setSelectedItem(field.getValue().trim());
-          }
-          if (rowCount == 1){
-            focusField = lcomp;
-          }
-          break;
-        default:
-        }
       }
-      if (focusField != null) {
-        focusField.requestFocus();
+      switch (field.getComponentType()) {
+      case BagInfoField.TEXTAREA_COMPONENT:
+        JComponent[] tlist = formBuilder.addTextArea(field.isRequired(), field.getLabel(), removeButton);
+        JComponent textarea = tlist[index];
+        textarea.setEnabled(field.isEnabled());
+        textarea.addFocusListener(this);
+        ((NoTabTextArea) textarea).setText(field.getValue());
+        textarea.setBorder(new EmptyBorder(1, 1, 1, 1));
+        ((NoTabTextArea) textarea).setLineWrap(true);
+        if (rowCount == 1){
+          focusField = textarea;
+        }
+        break;
+      case BagInfoField.TEXTFIELD_COMPONENT:
+        JComponent[] flist = formBuilder.add(field.isRequired(), field.getLabel(), removeButton);
+        JComponent comp = flist[index];
+        comp.setEnabled(field.isEnabled());
+        comp.addFocusListener(this);
+        ((JTextField) comp).setText(field.getValue());
+        if (rowCount == 1){
+          focusField = comp;
+        }
+        break;
+      case BagInfoField.LIST_COMPONENT:
+        List<String> elements = field.getElements();
+        JComponent[] llist = formBuilder.addList(field.isRequired(), field.getLabel(), elements, field.getValue(), removeButton);
+        JComponent lcomp = llist[index];
+        lcomp.setEnabled(field.isEnabled());
+        lcomp.addFocusListener(this);
+        if (field.getValue() != null) {
+          ((JComboBox<?>) lcomp).setSelectedItem(field.getValue().trim());
+        }
+        if (rowCount == 1){
+          focusField = lcomp;
+        }
+        break;
+      default:
       }
     }
-  
+    if (focusField != null) {
+      focusField.requestFocus();
+    }
+
   }
 
   @Override
@@ -211,17 +209,15 @@ public class BagInfoForm extends AbstractForm implements FocusListener {
   }
 
   private BagInfoField getField(String key) {
-    BagInfoField field = null;
+    BagInfoField field;
     Set<String> keys = fieldMap.keySet();
-    if (keys != null) {
-      for (String keySet : keys) {
-        if (keySet.equalsIgnoreCase(key)) {
-          field = fieldMap.get(key);
-          return field;
-        }
+    for (String keySet : keys) {
+      if (keySet.equalsIgnoreCase(key)) {
+        field = fieldMap.get(key);
+        return field;
       }
     }
-    return field;
+    return null;
   }
 
   public HashMap<String, String> getBagInfoMap() {

@@ -78,10 +78,8 @@ public class ProfileField implements Serializable{
 
   @Override
   public String toString() {
-    StringBuffer sb = new StringBuffer();
-    sb.append(this.fieldName + '=' + this.fieldValue);
-    sb.append('\n');
-    return sb.toString();
+    return (this.fieldName + '=' + this.fieldValue) +
+            '\n';
   }
 
   public void setReadOnly(boolean isReadOnly) {
@@ -142,7 +140,7 @@ public class ProfileField implements Serializable{
     return profileField;
   }
 
-  public String seralize() throws JSONException {
+  public String serialize() throws JSONException {
     StringWriter writer = new StringWriter();
     JSONWriter profileWriter = new JSONWriter(writer);
     profileWriter.object().key(FIELD_REQUIRED_VALUE).value(this.getFieldValue());

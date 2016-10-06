@@ -135,7 +135,7 @@ public class BagTree extends JTree {
     String node = aNode.toString();
     boolean isNodeChild = parentNode.isNodeChild(aNode);
     if (isNodeChild){
-      return isNodeChild;
+      return true;
     }
     for (int i = 0; i < parentNode.getChildCount(); i++) {
       DefaultMutableTreeNode childNode = (DefaultMutableTreeNode) parentNode.getChildAt(i);

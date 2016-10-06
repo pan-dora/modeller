@@ -79,7 +79,6 @@ public class Contact implements Serializable{
 
   @Override
   public String toString() {
-    StringBuffer sb = new StringBuffer();
     // sb.append(this.getContactName());
     // sb.append('\n');
     // sb.append(this.getTelephone());
@@ -87,7 +86,7 @@ public class Contact implements Serializable{
     // sb.append(this.getEmail());
     // sb.append('\n');
 
-    return sb.toString();
+    return "";
   }
 
   public static Contact createContact(JSONObject contactSendToJson, boolean sendTo) throws JSONException {
@@ -150,9 +149,9 @@ public class Contact implements Serializable{
     StringWriter writer = new StringWriter();
     JSONWriter contactWriter = new JSONWriter(writer);
 
-    contactWriter.object().key(FIELD_JSON_NAME).value(new JSONObject(new JSONTokener(getContactName().seralize())));
-    contactWriter.key(FIELD_JSON_PHONE).value(new JSONObject(new JSONTokener(getTelephone().seralize())));
-    contactWriter.key(FIELD_JSON_EMAIL).value(new JSONObject(new JSONTokener(getEmail().seralize().toString())));
+    contactWriter.object().key(FIELD_JSON_NAME).value(new JSONObject(new JSONTokener(getContactName().serialize())));
+    contactWriter.key(FIELD_JSON_PHONE).value(new JSONObject(new JSONTokener(getTelephone().serialize())));
+    contactWriter.key(FIELD_JSON_EMAIL).value(new JSONObject(new JSONTokener(getEmail().serialize())));
     contactWriter.endObject();
 
     return writer.toString();

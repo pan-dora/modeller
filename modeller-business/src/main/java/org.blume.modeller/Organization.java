@@ -50,12 +50,10 @@ public class Organization {
     else{
       delim = "\n";
     }
-    StringBuffer sb = new StringBuffer();
-    sb.append(this.getName());
-    sb.append(delim);
-    sb.append(this.getAddress());
 
-    return sb.toString();
+    return String.valueOf(this.getName()) +
+            delim +
+            this.getAddress();
   }
 
   public static Organization createOrganization(JSONObject organizationJson) throws JSONException {
@@ -95,8 +93,8 @@ public class Organization {
     StringWriter writer = new StringWriter();
     JSONWriter orgStringer = new JSONWriter(writer);
 
-    orgStringer.object().key(FIELD_ORGANIZATION_ADDRESS).value(new JSONObject(new JSONTokener(this.getAddress().seralize())));
-    orgStringer.key(FIELD_SOURCE_ORGANIZATION).value(new JSONObject(new JSONTokener(getName().seralize().toString())));
+    orgStringer.object().key(FIELD_ORGANIZATION_ADDRESS).value(new JSONObject(new JSONTokener(this.getAddress().serialize())));
+    orgStringer.key(FIELD_SOURCE_ORGANIZATION).value(new JSONObject(new JSONTokener(getName().serialize())));
     orgStringer.endObject();
     return writer.toString();
   }

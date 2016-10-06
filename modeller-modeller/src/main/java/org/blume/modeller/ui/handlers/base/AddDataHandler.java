@@ -79,7 +79,7 @@ public class AddDataHandler extends AbstractAction implements Progress {
       stringBuff.append(files[i].getAbsolutePath());
     }
     if (totalFileCount > displayCount) {
-      stringBuff.append("\n" + (totalFileCount - displayCount) + " more...");
+      stringBuff.append("\n").append(totalFileCount - displayCount).append(" more...");
     }
     return stringBuff.toString();
   }

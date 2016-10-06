@@ -221,7 +221,7 @@ public class DefaultBag {
 
     public void setName(String name) {
         String[] list = name.split("\\.");
-        if (list != null && list.length > 0) {
+        if (list.length > 0) {
             name = list[0];
         }
         this.name = name;
@@ -444,7 +444,7 @@ public class DefaultBag {
     public String getDataContent() {
         totalSize = 0;
         StringBuilder dcontent = new StringBuilder();
-        dcontent.append(this.getDataDirectory() + "/");
+        dcontent.append(this.getDataDirectory()).append("/");
         dcontent.append('\n');
         Collection<BagFile> files = this.bilBag.getPayload();
         if (files != null) {
@@ -726,7 +726,7 @@ public class DefaultBag {
             // write successful
             this.isSerialized(true);
         }
-        return messages;
+        return null;
     }
 
     public void updateStrategy() {

@@ -47,11 +47,9 @@ public class ConsoleView extends AbstractView {
   }
 
   private String getInitialConsoleMsg() {
-    StringBuffer buffer = new StringBuffer();
-    buffer.append(getMessage("consolepane.msg.help"));
-    buffer.append("\n\n");
-    buffer.append(getMessage("consolepane.status.help"));
-    buffer.append("\n\n");
-    return buffer.toString();
+    return getMessage("consolepane.msg.help") +
+            "\n\n" +
+            getMessage("consolepane.status.help") +
+            "\n\n";
   }
 }

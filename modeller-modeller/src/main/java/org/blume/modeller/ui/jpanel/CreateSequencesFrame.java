@@ -148,7 +148,7 @@ public class CreateSequencesFrame extends JFrame implements ActionListener {
             log.error("Failed to set url label", e);
         }
 
-        JLabel sequenceIDLabel = new JLabel(bagView.getPropertyMessage("h"));
+        JLabel sequenceIDLabel = new JLabel(bagView.getPropertyMessage("sequenceID.label"));
         sequenceIDLabel.setToolTipText(bagView.getPropertyMessage("sequenceID.description"));
         sequenceIDField = new JTextField("");
         GridBagLayout layout = new GridBagLayout();

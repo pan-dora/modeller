@@ -142,18 +142,16 @@ public class BagInfoField implements Serializable {
 
   @Override
   public String toString() {
-    StringBuffer sb = new StringBuffer();
-    sb.append("\n");
-    sb.append("Label: " + getLabel() + "\n");
-    sb.append("Name: " + getName() + "\n");
-    sb.append("Value: " + getValue() + "\n");
-    sb.append("Type: " + getComponentType() + "\n");
-    sb.append("Elements: " + getElements() + "\n");
-    sb.append("isRequired: " + isRequired() + "\n");
-    sb.append("isRequiredvalue: " + isRequiredvalue() + "\n");
-    sb.append("isEnabled: " + isEnabled() + "\n");
-    sb.append("isEditable: " + isEditable() + "\n");
-    return sb.toString();
+    return "\n" +
+            "Label: " + getLabel() + "\n" +
+            "Name: " + getName() + "\n" +
+            "Value: " + getValue() + "\n" +
+            "Type: " + getComponentType() + "\n" +
+            "Elements: " + getElements() + "\n" +
+            "isRequired: " + isRequired() + "\n" +
+            "isRequiredvalue: " + isRequiredvalue() + "\n" +
+            "isEnabled: " + isEnabled() + "\n" +
+            "isEditable: " + isEditable() + "\n";
   }
 
 }
