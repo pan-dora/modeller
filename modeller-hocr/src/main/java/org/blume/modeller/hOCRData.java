@@ -14,6 +14,9 @@ public interface hOCRData {
     @XBRead("//*[local-name()='div'][@class='ocr_carea']/@id")
     List<String> getCAreaNodeId();
 
+    @XBRead("//*[local-name()='div'][@class='ocr_page'][@id='{0}']/descendant::node()[@class='ocr_carea']/@id")
+    List<String> getCAreasforPage(String id);
+
     @XBRead("//*[local-name()='div'][@class='ocr_carea'][@id='{0}']/descendant::node()/@id")
     List<String> getCAreaIdDescIds(String id);
 

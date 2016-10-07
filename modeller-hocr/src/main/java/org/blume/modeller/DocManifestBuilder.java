@@ -58,6 +58,10 @@ public class DocManifestBuilder {
         return hocr.getCAreaNodeId();
     }
 
+    public static List<String> getAreaIdListforPage(hOCRData hocr, String id) {
+        return hocr.getCAreasforPage(id);
+    }
+
       private static ByteArrayOutputStream marshal(File hocr) throws JAXBException {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         JAXBContext jaxbContext = JAXBContext.newInstance(File.class);
