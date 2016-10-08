@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.ws.rs.core.UriBuilder;
 
+import com.sun.istack.internal.Nullable;
 import org.blume.modeller.ProfileOptions;
 import org.blume.modeller.bag.BagInfoField;
 import org.blume.modeller.common.uri.IIIFPathTemplate;
@@ -123,7 +124,7 @@ public class URIResolver {
                             .host(hostname)
                             .port(port)
                             .build(appKey, restKey, collectionRoot, collection, objektID, manifestLabel);
-            }
+             }
           return null;
         }
 

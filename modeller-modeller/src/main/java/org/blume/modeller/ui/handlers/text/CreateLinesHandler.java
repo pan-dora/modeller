@@ -6,7 +6,7 @@ import org.blume.modeller.bag.BagInfoField;
 import org.blume.modeller.bag.impl.DefaultBag;
 import org.blume.modeller.ui.Progress;
 import org.blume.modeller.ui.jpanel.BagView;
-import org.blume.modeller.ui.jpanel.CreatePagesFrame;
+import org.blume.modeller.ui.jpanel.CreateLinesFrame;
 import org.blume.modeller.ui.util.ApplicationContextUtil;
 import org.blume.modeller.ui.util.URIResolver;
 import org.slf4j.Logger;
@@ -21,42 +21,42 @@ import java.util.List;
 import java.util.Map;
 
 import static org.apache.commons.lang3.exception.ExceptionUtils.getMessage;
-import static org.blume.modeller.DocManifestBuilder.getPageIdList;
+import static org.blume.modeller.DocManifestBuilder.getLineIdList;
 
-public class CreatePagesHandler extends AbstractAction implements Progress {
-    protected static final Logger log = LoggerFactory.getLogger(CreatePagesHandler.class);
+public class CreateLinesHandler extends AbstractAction implements Progress {
+    protected static final Logger log = LoggerFactory.getLogger(CreateLinesHandler.class);
     private static final long serialVersionUID = 1L;
     private BagView bagView;
 
-    public CreatePagesHandler(BagView bagView) {
+    public CreateLinesHandler(BagView bagView) {
         super();
         this.bagView = bagView;
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) { openCreatePagesFrame(); }
+    public void actionPerformed(ActionEvent e) { openCreateLinesFrame(); }
 
     @Override
     public void execute() {
-        String message = ApplicationContextUtil.getMessage("bag.message.pagecreated");
+        String message = ApplicationContextUtil.getMessage("bag.message.linecreated");
         DefaultBag bag = bagView.getBag();
         Map<String, BagInfoField> map = bag.getInfo().getFieldMap();
         ModellerClient client = new ModellerClient();
         String url = bag.gethOCRResource();
-        List<String> pageIdList = null;
+        List<String> lineIdList = null;
         try {
             hOCRData hocr = DocManifestBuilder.gethOCRProjectionFromURL(url);
-            pageIdList = getPageIdList(hocr);
+            lineIdList = getLineIdList(hocr);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        assert pageIdList != null;
-        for (String resourceID : pageIdList) {
+        assert lineIdList != null;
+        for (String resourceID : lineIdList) {
             resourceID = StringUtils.substringAfter(resourceID,"_");
-            URI pageObjectURI = getPageObjectURI(map, resourceID);
+            URI lineObjectURI = getLineObjectURI(map, resourceID);
             try {
-                client.doPut(pageObjectURI);
-                ApplicationContextUtil.addConsoleMessage(message + " " + pageObjectURI);
+                client.doPut(lineObjectURI);
+                ApplicationContextUtil.addConsoleMessage(message + " " + lineObjectURI);
             } catch (ModellerClientFailedException e) {
                     ApplicationContextUtil.addConsoleMessage(getMessage(e));
             }
@@ -64,19 +64,19 @@ public class CreatePagesHandler extends AbstractAction implements Progress {
         bagView.getControl().invalidate();
     }
 
-    void openCreatePagesFrame() {
+    void openCreateLinesFrame() {
         DefaultBag bag = bagView.getBag();
-        CreatePagesFrame createPagesFrame = new CreatePagesFrame(bagView, bagView.getPropertyMessage("bag.frame.pages"));
-        createPagesFrame.setBag(bag);
-        createPagesFrame.setVisible(true);
+        CreateLinesFrame createLinesFrame = new CreateLinesFrame(bagView, bagView.getPropertyMessage("bag.frame.lines"));
+        createLinesFrame.setBag(bag);
+        createLinesFrame.setVisible(true);
     }
 
-    public URI getPageContainerURI(Map<String, BagInfoField> map) {
+    public URI getLineContainerURI(Map<String, BagInfoField> map) {
         URIResolver uriResolver;
         try {
             uriResolver = URIResolver.resolve()
                     .map(map)
-                    .containerKey(ProfileOptions.TEXT_PAGE_CONTAINER_KEY)
+                    .containerKey(ProfileOptions.TEXT_LINE_CONTAINER_KEY)
                     .pathType(4)
                     .build();
             return uriResolver.render();
@@ -86,12 +86,12 @@ public class CreatePagesHandler extends AbstractAction implements Progress {
         return null;
     }
 
-    private URI getPageObjectURI(Map<String, BagInfoField> map, String resourceID) {
+    private URI getLineObjectURI(Map<String, BagInfoField> map, String resourceID) {
         URIResolver uriResolver;
         try {
             uriResolver = URIResolver.resolve()
                     .map(map)
-                    .containerKey(ProfileOptions.TEXT_PAGE_CONTAINER_KEY)
+                    .containerKey(ProfileOptions.TEXT_LINE_CONTAINER_KEY)
                     .resource(resourceID)
                     .pathType(5)
                     .build();

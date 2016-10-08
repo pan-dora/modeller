@@ -9,9 +9,7 @@ import org.blume.modeller.common.uri.FedoraPrefixes;
 import org.blume.modeller.templates.CollectionScope;
 import org.blume.modeller.templates.MetadataTemplate;
 import org.blume.modeller.ui.Progress;
-import org.blume.modeller.ui.handlers.base.SaveBagHandler;
 import org.blume.modeller.ui.jpanel.BagView;
-import org.blume.modeller.ui.jpanel.PatchAreasFrame;
 import org.blume.modeller.ui.jpanel.PatchPagesFrame;
 import org.blume.modeller.ui.util.ApplicationContextUtil;
 import org.blume.modeller.ui.util.URIResolver;
@@ -26,17 +24,15 @@ import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.*;
-import java.util.stream.Collectors;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.apache.commons.lang3.StringEscapeUtils.unescapeXml;
 import static org.apache.commons.lang3.exception.ExceptionUtils.getMessage;
-import static org.blume.modeller.DocManifestBuilder.getAreaIdList;
 import static org.blume.modeller.DocManifestBuilder.getAreaIdListforPage;
 import static org.blume.modeller.DocManifestBuilder.getPageIdList;
 
 public class PatchPagesHandler extends AbstractAction implements Progress {
-    protected static final Logger log = LoggerFactory.getLogger(SaveBagHandler.class);
+    protected static final Logger log = LoggerFactory.getLogger(PatchPagesHandler.class);
     private static final long serialVersionUID = 1L;
     private BagView bagView;
 

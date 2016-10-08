@@ -17,6 +17,7 @@ package org.blume.modeller.ui.jpanel;
 
 import org.blume.modeller.bag.BagInfoField;
 import org.blume.modeller.bag.impl.DefaultBag;
+import org.blume.modeller.ui.handlers.common.TextObjectURI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.richclient.command.AbstractCommand;
@@ -140,6 +141,12 @@ public class CreateAreasFrame extends JFrame implements ActionListener {
         JLabel hocrResourceLabel = new JLabel(bagView.getPropertyMessage("hocrResource.label"));
         hocrResourceLabel.setToolTipText(bagView.getPropertyMessage("hocrResource.description"));
         hocrResourceField = new JTextField("");
+        String hocrResource = TextObjectURI.gethOCRResourceURI(map);
+        try {
+            hocrResourceField.setText(hocrResource);
+        } catch (Exception e) {
+            log.error("Failed to set hocrResource label", e);
+        }
 
         GridBagLayout layout = new GridBagLayout();
         GridBagConstraints glbc = new GridBagConstraints();

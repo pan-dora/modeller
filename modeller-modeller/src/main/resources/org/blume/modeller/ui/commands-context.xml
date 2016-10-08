@@ -31,6 +31,7 @@
                 <value>createXmlFilesCommand</value>
                 <value>createPagesCommand</value>
                 <value>createAreasCommand</value>
+                <value>createLinesCommand</value>
                 <value>patchPagesCommand</value>
                 <value>patchAreasCommand</value>
             </list>
@@ -117,6 +118,7 @@
             <list>
                 <value>createPagesCommand</value>
                 <value>createAreasCommand</value>
+                <value>createLinesCommand</value>
                 <value>patchPagesCommand</value>
                 <value>patchAreasCommand</value>
             </list>

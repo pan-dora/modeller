@@ -89,6 +89,11 @@
       }
     },
     {
+      "TexthOCRResource" : {
+        "fieldRequired" : false
+      }
+    },
+    {
       "TextPageContainer" : {
         "fieldRequired" : true,
         "defaultValue" : "page"

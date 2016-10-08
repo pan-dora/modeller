@@ -13,14 +13,15 @@ import org.xmlbeam.XBProjector;
 
 public class DocManifestBuilder {
 
-    public DocManifestBuilder() {}
+    public DocManifestBuilder() {
+    }
 
     public static hOCRData gethOCRProjectionFromURL(String url) throws IOException {
         return new XBProjector(new OmitDTDXMLFactoriesConfig()).io().url(url).read(hOCRData.class);
     }
 
     private static Map<String, Object> buildValueMap(List<String> descList, hOCRData hocr) {
-        Map<String, Object> valueMap = new HashMap <>();
+        Map<String, Object> valueMap = new HashMap<>();
         for (String descId : descList) {
             Object oNode = hocr.getTitleForId(descId);
             valueMap.put(descId, oNode);
@@ -30,7 +31,7 @@ public class DocManifestBuilder {
 
     public static Map getAreaMapForhOCRResource(hOCRData hocr) {
         List<String> cAreaIdList = hocr.getCAreaNodeId();
-        Map<String, Object> areaMap = new HashMap <>();
+        Map<String, Object> areaMap = new HashMap<>();
         for (String cAreaId : cAreaIdList) {
             List<String> descList = hocr.getCAreaIdDescIds(cAreaId);
             areaMap.put(cAreaId, buildValueMap(descList, hocr));
@@ -58,11 +59,19 @@ public class DocManifestBuilder {
         return hocr.getCAreaNodeId();
     }
 
+    public static List<String> getLineIdList(hOCRData hocr) {
+        return hocr.getLineNodeId();
+    }
+
     public static List<String> getAreaIdListforPage(hOCRData hocr, String id) {
         return hocr.getCAreasforPage(id);
     }
 
-      private static ByteArrayOutputStream marshal(File hocr) throws JAXBException {
+    public static List<String> getLineIdListforArea(hOCRData hocr, String id) {
+        return hocr.getLinesforArea(id);
+    }
+
+    private static ByteArrayOutputStream marshal(File hocr) throws JAXBException {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         JAXBContext jaxbContext = JAXBContext.newInstance(File.class);
         Marshaller jaxbMarshaller = jaxbContext.createMarshaller();

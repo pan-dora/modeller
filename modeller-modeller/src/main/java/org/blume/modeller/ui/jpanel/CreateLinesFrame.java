@@ -36,15 +36,15 @@ import java.awt.event.ActionListener;
 import java.net.URI;
 import java.util.Map;
 
-public class PatchAreasFrame extends JFrame implements ActionListener {
-    protected static final Logger log = LoggerFactory.getLogger(PatchAreasFrame.class);
+public class CreateLinesFrame extends JFrame implements ActionListener {
+    protected static final Logger log = LoggerFactory.getLogger(CreateLinesFrame.class);
     private static final long serialVersionUID = 1L;
     transient BagView bagView;
     private Map<String, BagInfoField> map;
     private JPanel savePanel;
     private JTextField hocrResourceField;
 
-    public PatchAreasFrame(BagView bagView, String title) {
+    public CreateLinesFrame(BagView bagView, String title) {
         super(title);
         this.bagView = bagView;
         if (bagView != null) {
@@ -79,7 +79,7 @@ public class PatchAreasFrame extends JFrame implements ActionListener {
             @Override
             public void doExecuteCommand() {
 
-                new OkPatchAreasHandler().actionPerformed(null);
+                new OkCreateLinesHandler().actionPerformed(null);
 
             }
         };
@@ -88,7 +88,7 @@ public class PatchAreasFrame extends JFrame implements ActionListener {
 
             @Override
             public void doExecuteCommand() {
-                new CancelPatchAreasHandler().actionPerformed(null);
+                new CancelCreateLinesHandler().actionPerformed(null);
             }
         };
     }
@@ -116,8 +116,8 @@ public class PatchAreasFrame extends JFrame implements ActionListener {
         initStandardCommands();
         JPanel pageControl = new JPanel(new BorderLayout());
         JPanel titlePaneContainer = new JPanel(new BorderLayout());
-        titlePane.setTitle(bagView.getPropertyMessage("PatchAreasFrame.title"));
-        titlePane.setMessage(new DefaultMessage(bagView.getPropertyMessage("Patch Areas in:")));
+        titlePane.setTitle(bagView.getPropertyMessage("CreateLinesFrame.title"));
+        titlePane.setMessage(new DefaultMessage(bagView.getPropertyMessage("Create Lines in:")));
         titlePaneContainer.add(titlePane.getControl());
         titlePaneContainer.add(new JSeparator(), BorderLayout.SOUTH);
         pageControl.add(titlePaneContainer, BorderLayout.NORTH);
@@ -131,7 +131,7 @@ public class PatchAreasFrame extends JFrame implements ActionListener {
         JLabel urlLabel = new JLabel(bagView.getPropertyMessage("baseURL.label"));
         urlLabel.setToolTipText(bagView.getPropertyMessage("baseURL.description"));
         JTextField urlField = new JTextField("");
-        URI uri = bagView.patchAreasHandler.getLineContainerURI(map);
+        URI uri = bagView.createLinesHandler.getLineContainerURI(map);
         try {
             urlField.setText(uri.toString());
         } catch (Exception e) {
@@ -193,7 +193,7 @@ public class PatchAreasFrame extends JFrame implements ActionListener {
         repaint();
     }
 
-    private class OkPatchAreasHandler extends AbstractAction {
+    private class OkCreateLinesHandler extends AbstractAction {
         private static final long serialVersionUID = 1L;
 
         @Override
@@ -201,11 +201,11 @@ public class PatchAreasFrame extends JFrame implements ActionListener {
             setVisible(false);
             String hocrFile = hocrResourceField.getText().trim();
             bagView.getBag().sethOCRResource(hocrFile);
-            bagView.patchAreasHandler.execute();
+            bagView.createLinesHandler.execute();
         }
     }
 
-    private class CancelPatchAreasHandler extends AbstractAction {
+    private class CancelCreateLinesHandler extends AbstractAction {
         private static final long serialVersionUID = 1L;
 
         @Override
