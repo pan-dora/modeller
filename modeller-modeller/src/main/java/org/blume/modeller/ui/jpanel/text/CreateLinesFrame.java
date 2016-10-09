@@ -13,26 +13,12 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.blume.modeller.ui.jpanel;
+package org.blume.modeller.ui.jpanel.text;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.net.URI;
-import java.util.Map;
-import javax.swing.AbstractAction;
-import javax.swing.JComponent;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JSeparator;
-import javax.swing.JTextField;
-import javax.swing.border.Border;
-import javax.swing.border.EmptyBorder;
-
+import org.blume.modeller.bag.BagInfoField;
+import org.blume.modeller.bag.impl.DefaultBag;
+import org.blume.modeller.ui.handlers.common.TextObjectURI;
+import org.blume.modeller.ui.jpanel.base.BagView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.richclient.command.AbstractCommand;
@@ -42,18 +28,24 @@ import org.springframework.richclient.core.DefaultMessage;
 import org.springframework.richclient.dialog.TitlePane;
 import org.springframework.richclient.util.GuiStandardUtils;
 
-import org.blume.modeller.bag.impl.DefaultBag;
-import org.blume.modeller.bag.BagInfoField;
+import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.net.URI;
+import java.util.Map;
 
-public class CreateCanvasesFrame extends JFrame implements ActionListener {
-    protected static final Logger log = LoggerFactory.getLogger(CreateDefaultContainersFrame.class);
+public class CreateLinesFrame extends JFrame implements ActionListener {
+    protected static final Logger log = LoggerFactory.getLogger(CreateLinesFrame.class);
     private static final long serialVersionUID = 1L;
     transient BagView bagView;
     private Map<String, BagInfoField> map;
     private JPanel savePanel;
-    JTextField listIDField;
+    private JTextField hocrResourceField;
 
-    public  CreateCanvasesFrame(BagView bagView, String title) {
+    public CreateLinesFrame(BagView bagView, String title) {
         super(title);
         this.bagView = bagView;
         if (bagView != null) {
@@ -88,7 +80,7 @@ public class CreateCanvasesFrame extends JFrame implements ActionListener {
             @Override
             public void doExecuteCommand() {
 
-                new OkCreateCanvasesHandler().actionPerformed(null);
+                new OkCreateLinesHandler().actionPerformed(null);
 
             }
         };
@@ -97,7 +89,7 @@ public class CreateCanvasesFrame extends JFrame implements ActionListener {
 
             @Override
             public void doExecuteCommand() {
-                new CancelCreateCanvasesHandler().actionPerformed(null);
+                new CancelCreateLinesHandler().actionPerformed(null);
             }
         };
     }
@@ -125,8 +117,8 @@ public class CreateCanvasesFrame extends JFrame implements ActionListener {
         initStandardCommands();
         JPanel pageControl = new JPanel(new BorderLayout());
         JPanel titlePaneContainer = new JPanel(new BorderLayout());
-        titlePane.setTitle(bagView.getPropertyMessage("CreateCanvasesFrame.title"));
-        titlePane.setMessage(new DefaultMessage(bagView.getPropertyMessage("Create Canvases in:")));
+        titlePane.setTitle(bagView.getPropertyMessage("CreateLinesFrame.title"));
+        titlePane.setMessage(new DefaultMessage(bagView.getPropertyMessage("Create Lines in:")));
         titlePaneContainer.add(titlePane.getControl());
         titlePaneContainer.add(new JSeparator(), BorderLayout.SOUTH);
         pageControl.add(titlePaneContainer, BorderLayout.NORTH);
@@ -140,11 +132,22 @@ public class CreateCanvasesFrame extends JFrame implements ActionListener {
         JLabel urlLabel = new JLabel(bagView.getPropertyMessage("baseURL.label"));
         urlLabel.setToolTipText(bagView.getPropertyMessage("baseURL.description"));
         JTextField urlField = new JTextField("");
-        URI uri = bagView.createCanvasesHandler.getCanvasContainerURI(map);
+        URI uri = TextObjectURI.getLineContainerURI(map);
         try {
+            assert uri != null;
             urlField.setText(uri.toString());
         } catch (Exception e) {
             log.error("Failed to set url label", e);
+        }
+
+        JLabel hocrResourceLabel = new JLabel(bagView.getPropertyMessage("hocrResource.label"));
+        hocrResourceLabel.setToolTipText(bagView.getPropertyMessage("hocrResource.description"));
+        hocrResourceField = new JTextField("");
+        String hocrResource = TextObjectURI.gethOCRResourceURI(map);
+        try {
+            hocrResourceField.setText(hocrResource);
+        } catch (Exception e) {
+            log.error("Failed to set hocrResource label", e);
         }
 
         GridBagLayout layout = new GridBagLayout();
@@ -161,6 +164,13 @@ public class CreateCanvasesFrame extends JFrame implements ActionListener {
         buildConstraints(glbc, 1, row, 1, 1, 80, 50, GridBagConstraints.HORIZONTAL, GridBagConstraints.CENTER);
         layout.setConstraints(urlField, glbc);
         panel.add(urlField);
+        row++;
+        buildConstraints(glbc, 0, row, 1, 1, 1, 50, GridBagConstraints.NONE, GridBagConstraints.WEST);
+        layout.setConstraints(hocrResourceLabel, glbc);
+        panel.add(hocrResourceLabel);
+        buildConstraints(glbc, 1, row, 1, 1, 80, 50, GridBagConstraints.HORIZONTAL, GridBagConstraints.CENTER);
+        layout.setConstraints(hocrResourceField, glbc);
+        panel.add(hocrResourceField);
         row++;
         buildConstraints(glbc, 0, row, 1, 1, 1, 50, GridBagConstraints.NONE, GridBagConstraints.WEST);
         buildConstraints(glbc, 1, row, 2, 1, 80, 50, GridBagConstraints.HORIZONTAL, GridBagConstraints.CENTER);
@@ -185,17 +195,19 @@ public class CreateCanvasesFrame extends JFrame implements ActionListener {
         repaint();
     }
 
-    private class OkCreateCanvasesHandler extends AbstractAction {
+    private class OkCreateLinesHandler extends AbstractAction {
         private static final long serialVersionUID = 1L;
 
         @Override
         public void actionPerformed(ActionEvent e) {
             setVisible(false);
-            bagView.createCanvasesHandler.execute();
+            String hocrFile = hocrResourceField.getText().trim();
+            bagView.getBag().sethOCRResource(hocrFile);
+            bagView.createLinesHandler.execute();
         }
     }
 
-    private class CancelCreateCanvasesHandler extends AbstractAction {
+    private class CancelCreateLinesHandler extends AbstractAction {
         private static final long serialVersionUID = 1L;
 
         @Override

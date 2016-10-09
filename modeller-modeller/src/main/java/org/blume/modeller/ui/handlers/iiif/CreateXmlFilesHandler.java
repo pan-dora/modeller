@@ -7,9 +7,8 @@ import org.blume.modeller.XmlFileWriter;
 import org.blume.modeller.bag.BagInfoField;
 import org.blume.modeller.bag.impl.DefaultBag;
 import org.blume.modeller.ui.Progress;
-import org.blume.modeller.ui.handlers.base.SaveBagHandler;
-import org.blume.modeller.ui.jpanel.BagView;
-import org.blume.modeller.ui.jpanel.CreateXmlFilesFrame;
+import org.blume.modeller.ui.jpanel.base.BagView;
+import org.blume.modeller.ui.jpanel.iiif.CreateXmlFilesFrame;
 import org.blume.modeller.ui.util.ApplicationContextUtil;
 import org.blume.modeller.ui.util.URIResolver;
 import org.slf4j.Logger;
@@ -28,7 +27,7 @@ import javax.xml.bind.JAXBException;
 import static org.apache.commons.lang3.exception.ExceptionUtils.getMessage;
 
 public class CreateXmlFilesHandler extends AbstractAction implements Progress {
-    protected static final Logger log = LoggerFactory.getLogger(SaveBagHandler.class);
+    protected static final Logger log = LoggerFactory.getLogger(CreateXmlFilesHandler.class);
     private static final long serialVersionUID = 1L;
     private BagView bagView;
 

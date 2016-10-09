@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.blume.modeller.ui.jpanel;
+package org.blume.modeller.ui.jpanel.iiif;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -34,6 +34,7 @@ import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
+import org.blume.modeller.ui.jpanel.base.BagView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.richclient.command.AbstractCommand;
@@ -46,14 +47,14 @@ import org.springframework.richclient.util.GuiStandardUtils;
 import org.blume.modeller.bag.impl.DefaultBag;
 import org.blume.modeller.bag.BagInfoField;
 
-public class CreateDefaultContainersFrame extends JFrame implements ActionListener {
-    protected static final Logger log = LoggerFactory.getLogger(CreateDefaultContainersFrame.class);
+public class PatchCanvasFrame extends JFrame implements ActionListener {
+    protected static final Logger log = LoggerFactory.getLogger(PatchCanvasFrame.class);
     private static final long serialVersionUID = 1L;
     transient BagView bagView;
     private Map<String, BagInfoField> map;
     private JPanel savePanel;
 
-    public CreateDefaultContainersFrame(BagView bagView, String title) {
+    public PatchCanvasFrame(BagView bagView, String title) {
         super(title);
         this.bagView = bagView;
         if (bagView != null) {
@@ -88,7 +89,7 @@ public class CreateDefaultContainersFrame extends JFrame implements ActionListen
             @Override
             public void doExecuteCommand() {
 
-                new OkCreateDefaultContainersHandler().actionPerformed(null);
+                new OkPatchCanvasHandler().actionPerformed(null);
 
             }
         };
@@ -97,7 +98,7 @@ public class CreateDefaultContainersFrame extends JFrame implements ActionListen
 
             @Override
             public void doExecuteCommand() {
-                new CancelCreateDefaultContainersHandler().actionPerformed(null);
+                new CancelPatchCanvasHandler().actionPerformed(null);
             }
         };
     }
@@ -125,8 +126,8 @@ public class CreateDefaultContainersFrame extends JFrame implements ActionListen
         initStandardCommands();
         JPanel pageControl = new JPanel(new BorderLayout());
         JPanel titlePaneContainer = new JPanel(new BorderLayout());
-        titlePane.setTitle(bagView.getPropertyMessage("CreateContainersFrame.title"));
-        titlePane.setMessage(new DefaultMessage(bagView.getPropertyMessage("Create the default IIIF Containers")));
+        titlePane.setTitle(bagView.getPropertyMessage("PatchCanvasFrame.title"));
+        titlePane.setMessage(new DefaultMessage(bagView.getPropertyMessage("Patch Canvases")));
         titlePaneContainer.add(titlePane.getControl());
         titlePaneContainer.add(new JSeparator(), BorderLayout.SOUTH);
         pageControl.add(titlePaneContainer, BorderLayout.NORTH);
@@ -140,7 +141,7 @@ public class CreateDefaultContainersFrame extends JFrame implements ActionListen
         JLabel urlLabel = new JLabel(bagView.getPropertyMessage("baseURL.label"));
         urlLabel.setToolTipText(bagView.getPropertyMessage("baseURL.description"));
         JTextField urlField = new JTextField("");
-        URI uri = bagView.createDefaultContainersHandler.getObjektURI(map);
+        URI uri = bagView.patchCanvasHandler.getCanvasContainerURI(map);
         try {
             urlField.setText(uri.toString());
         } catch (Exception e) {
@@ -192,7 +193,7 @@ public class CreateDefaultContainersFrame extends JFrame implements ActionListen
         repaint();
     }
 
-    private class OkCreateDefaultContainersHandler extends AbstractAction {
+    private class OkPatchCanvasHandler extends AbstractAction {
         private static final long serialVersionUID = 1L;
 
         @Override
@@ -200,11 +201,11 @@ public class CreateDefaultContainersFrame extends JFrame implements ActionListen
             setVisible(false);
             String bagFileName = "";
             bagView.getBag().setName(bagFileName);
-            bagView.createDefaultContainersHandler.execute();
+            bagView.patchCanvasHandler.execute();
         }
     }
 
-    private class CancelCreateDefaultContainersHandler extends AbstractAction {
+    private class CancelPatchCanvasHandler extends AbstractAction {
         private static final long serialVersionUID = 1L;
 
         @Override

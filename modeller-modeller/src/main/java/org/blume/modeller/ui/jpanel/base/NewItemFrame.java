@@ -13,10 +13,9 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.blume.modeller.ui.jpanel;
+package org.blume.modeller.ui.jpanel.base;
 
 import org.blume.modeller.bag.impl.DefaultBag;
-import org.blume.modeller.ui.jpanel.BagView;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;

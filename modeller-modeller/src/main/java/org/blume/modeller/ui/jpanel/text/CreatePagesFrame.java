@@ -13,12 +13,12 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.blume.modeller.ui.jpanel;
+package org.blume.modeller.ui.jpanel.text;
 
 import org.blume.modeller.bag.BagInfoField;
 import org.blume.modeller.bag.impl.DefaultBag;
-import org.blume.modeller.bag.impl.hOCRBag;
 import org.blume.modeller.ui.handlers.common.TextObjectURI;
+import org.blume.modeller.ui.jpanel.base.BagView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.richclient.command.AbstractCommand;
@@ -132,8 +132,9 @@ public class CreatePagesFrame extends JFrame implements ActionListener {
         JLabel urlLabel = new JLabel(bagView.getPropertyMessage("baseURL.label"));
         urlLabel.setToolTipText(bagView.getPropertyMessage("baseURL.description"));
         JTextField urlField = new JTextField("");
-        URI uri = bagView.createPagesHandler.getPageContainerURI(map);
+        URI uri = TextObjectURI.getPageContainerURI(map);
         try {
+            assert uri != null;
             urlField.setText(uri.toString());
         } catch (Exception e) {
             log.error("Failed to set url label", e);

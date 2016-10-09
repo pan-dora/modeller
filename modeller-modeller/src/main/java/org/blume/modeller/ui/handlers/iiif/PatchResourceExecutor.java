@@ -2,7 +2,7 @@ package org.blume.modeller.ui.handlers.iiif;
 
 import org.springframework.richclient.command.support.AbstractActionCommandExecutor;
 
-import org.blume.modeller.ui.jpanel.BagView;
+import org.blume.modeller.ui.jpanel.base.BagView;
 
 public class PatchResourceExecutor extends AbstractActionCommandExecutor {
     BagView bagView;

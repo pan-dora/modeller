@@ -13,27 +13,12 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.blume.modeller.ui.jpanel;
+package org.blume.modeller.ui.jpanel.text;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.net.URI;
-import java.util.Map;
-
-import javax.swing.AbstractAction;
-import javax.swing.JComponent;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JSeparator;
-import javax.swing.JTextField;
-import javax.swing.border.Border;
-import javax.swing.border.EmptyBorder;
-
+import org.blume.modeller.bag.BagInfoField;
+import org.blume.modeller.bag.impl.DefaultBag;
+import org.blume.modeller.ui.handlers.common.TextObjectURI;
+import org.blume.modeller.ui.jpanel.base.BagView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.richclient.command.AbstractCommand;
@@ -43,17 +28,24 @@ import org.springframework.richclient.core.DefaultMessage;
 import org.springframework.richclient.dialog.TitlePane;
 import org.springframework.richclient.util.GuiStandardUtils;
 
-import org.blume.modeller.bag.impl.DefaultBag;
-import org.blume.modeller.bag.BagInfoField;
+import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.net.URI;
+import java.util.Map;
 
-public class PatchCanvasFrame extends JFrame implements ActionListener {
-    protected static final Logger log = LoggerFactory.getLogger(PatchCanvasFrame.class);
+public class CreateAreasFrame extends JFrame implements ActionListener {
+    protected static final Logger log = LoggerFactory.getLogger(CreateAreasFrame.class);
     private static final long serialVersionUID = 1L;
     transient BagView bagView;
     private Map<String, BagInfoField> map;
     private JPanel savePanel;
+    private JTextField hocrResourceField;
 
-    public PatchCanvasFrame(BagView bagView, String title) {
+    public CreateAreasFrame(BagView bagView, String title) {
         super(title);
         this.bagView = bagView;
         if (bagView != null) {
@@ -69,14 +61,14 @@ public class PatchCanvasFrame extends JFrame implements ActionListener {
         pack();
     }
 
-    protected JComponent createButtonBar() {
+    private JComponent createButtonBar() {
         CommandGroup dialogCommandGroup = CommandGroup.createCommandGroup(null, getCommandGroupMembers());
         JComponent buttonBar = dialogCommandGroup.createButtonBar();
         GuiStandardUtils.attachDialogBorder(buttonBar);
         return buttonBar;
     }
 
-    protected Object[] getCommandGroupMembers() {
+    private Object[] getCommandGroupMembers() {
         return new AbstractCommand[]{finishCommand, cancelCommand};
     }
 
@@ -88,7 +80,7 @@ public class PatchCanvasFrame extends JFrame implements ActionListener {
             @Override
             public void doExecuteCommand() {
 
-                new OkPatchCanvasHandler().actionPerformed(null);
+                new OkCreateAreasHandler().actionPerformed(null);
 
             }
         };
@@ -97,22 +89,22 @@ public class PatchCanvasFrame extends JFrame implements ActionListener {
 
             @Override
             public void doExecuteCommand() {
-                new CancelPatchCanvasHandler().actionPerformed(null);
+                new CancelCreateAreasHandler().actionPerformed(null);
             }
         };
     }
 
-    protected String getFinishCommandId() {
+    private String getFinishCommandId() {
         return DEFAULT_FINISH_COMMAND_ID;
     }
 
-    protected String getCancelCommandId() {
+    private String getCancelCommandId() {
         return DEFAULT_CANCEL_COMMAND_ID;
     }
 
-    protected static final String DEFAULT_FINISH_COMMAND_ID = "okCommand";
+    private static final String DEFAULT_FINISH_COMMAND_ID = "okCommand";
 
-    protected static final String DEFAULT_CANCEL_COMMAND_ID = "cancelCommand";
+    private static final String DEFAULT_CANCEL_COMMAND_ID = "cancelCommand";
 
     private transient ActionCommand finishCommand;
 
@@ -125,8 +117,8 @@ public class PatchCanvasFrame extends JFrame implements ActionListener {
         initStandardCommands();
         JPanel pageControl = new JPanel(new BorderLayout());
         JPanel titlePaneContainer = new JPanel(new BorderLayout());
-        titlePane.setTitle(bagView.getPropertyMessage("PatchCanvasFrame.title"));
-        titlePane.setMessage(new DefaultMessage(bagView.getPropertyMessage("Patch Canvases")));
+        titlePane.setTitle(bagView.getPropertyMessage("CreateAreasFrame.title"));
+        titlePane.setMessage(new DefaultMessage(bagView.getPropertyMessage("Create Areas in:")));
         titlePaneContainer.add(titlePane.getControl());
         titlePaneContainer.add(new JSeparator(), BorderLayout.SOUTH);
         pageControl.add(titlePaneContainer, BorderLayout.NORTH);
@@ -140,11 +132,22 @@ public class PatchCanvasFrame extends JFrame implements ActionListener {
         JLabel urlLabel = new JLabel(bagView.getPropertyMessage("baseURL.label"));
         urlLabel.setToolTipText(bagView.getPropertyMessage("baseURL.description"));
         JTextField urlField = new JTextField("");
-        URI uri = bagView.patchCanvasHandler.getCanvasContainerURI(map);
+        URI uri = TextObjectURI.getAreaContainerURI(map);
         try {
+            assert uri != null;
             urlField.setText(uri.toString());
         } catch (Exception e) {
             log.error("Failed to set url label", e);
+        }
+
+        JLabel hocrResourceLabel = new JLabel(bagView.getPropertyMessage("hocrResource.label"));
+        hocrResourceLabel.setToolTipText(bagView.getPropertyMessage("hocrResource.description"));
+        hocrResourceField = new JTextField("");
+        String hocrResource = TextObjectURI.gethOCRResourceURI(map);
+        try {
+            hocrResourceField.setText(hocrResource);
+        } catch (Exception e) {
+            log.error("Failed to set hocrResource label", e);
         }
 
         GridBagLayout layout = new GridBagLayout();
@@ -163,11 +166,11 @@ public class PatchCanvasFrame extends JFrame implements ActionListener {
         panel.add(urlField);
         row++;
         buildConstraints(glbc, 0, row, 1, 1, 1, 50, GridBagConstraints.NONE, GridBagConstraints.WEST);
-        layout.setConstraints(urlLabel, glbc);
-        panel.add(urlLabel);
+        layout.setConstraints(hocrResourceLabel, glbc);
+        panel.add(hocrResourceLabel);
         buildConstraints(glbc, 1, row, 1, 1, 80, 50, GridBagConstraints.HORIZONTAL, GridBagConstraints.CENTER);
-        layout.setConstraints(urlField, glbc);
-        panel.add(urlField);
+        layout.setConstraints(hocrResourceField, glbc);
+        panel.add(hocrResourceField);
         row++;
         buildConstraints(glbc, 0, row, 1, 1, 1, 50, GridBagConstraints.NONE, GridBagConstraints.WEST);
         buildConstraints(glbc, 1, row, 2, 1, 80, 50, GridBagConstraints.HORIZONTAL, GridBagConstraints.CENTER);
@@ -192,19 +195,19 @@ public class PatchCanvasFrame extends JFrame implements ActionListener {
         repaint();
     }
 
-    private class OkPatchCanvasHandler extends AbstractAction {
+    private class OkCreateAreasHandler extends AbstractAction {
         private static final long serialVersionUID = 1L;
 
         @Override
         public void actionPerformed(ActionEvent e) {
             setVisible(false);
-            String bagFileName = "";
-            bagView.getBag().setName(bagFileName);
-            bagView.patchCanvasHandler.execute();
+            String hocrFile = hocrResourceField.getText().trim();
+            bagView.getBag().sethOCRResource(hocrFile);
+            bagView.createAreasHandler.execute();
         }
     }
 
-    private class CancelPatchCanvasHandler extends AbstractAction {
+    private class CancelCreateAreasHandler extends AbstractAction {
         private static final long serialVersionUID = 1L;
 
         @Override
@@ -227,4 +230,5 @@ public class PatchCanvasFrame extends JFrame implements ActionListener {
     private String getMessage(String property) {
         return bagView.getPropertyMessage(property);
     }
+
 }

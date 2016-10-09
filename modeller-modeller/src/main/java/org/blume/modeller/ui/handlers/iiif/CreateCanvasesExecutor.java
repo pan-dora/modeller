@@ -1,6 +1,6 @@
 package org.blume.modeller.ui.handlers.iiif;
 
-import org.blume.modeller.ui.jpanel.BagView;
+import org.blume.modeller.ui.jpanel.base.BagView;
 import org.springframework.richclient.command.support.AbstractActionCommandExecutor;
 
 public class CreateCanvasesExecutor extends AbstractActionCommandExecutor {

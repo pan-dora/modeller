@@ -32,8 +32,10 @@
                 <value>createPagesCommand</value>
                 <value>createAreasCommand</value>
                 <value>createLinesCommand</value>
+                <value>createWordsCommand</value>
                 <value>patchPagesCommand</value>
                 <value>patchAreasCommand</value>
+                <value>patchLinesCommand</value>
             </list>
         </property>
     </bean>
@@ -119,8 +121,10 @@
                 <value>createPagesCommand</value>
                 <value>createAreasCommand</value>
                 <value>createLinesCommand</value>
+                <value>createWordsCommand</value>
                 <value>patchPagesCommand</value>
                 <value>patchAreasCommand</value>
+                <value>patchLinesCommand</value>
             </list>
         </property>
     </bean>

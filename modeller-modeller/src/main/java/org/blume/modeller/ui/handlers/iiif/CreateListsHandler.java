@@ -7,8 +7,8 @@ import org.blume.modeller.bag.BagInfoField;
 import org.blume.modeller.bag.impl.DefaultBag;
 import org.blume.modeller.ui.Progress;
 import org.blume.modeller.ui.handlers.base.SaveBagHandler;
-import org.blume.modeller.ui.jpanel.BagView;
-import org.blume.modeller.ui.jpanel.CreateListsFrame;
+import org.blume.modeller.ui.jpanel.base.BagView;
+import org.blume.modeller.ui.jpanel.iiif.CreateListsFrame;
 import org.blume.modeller.ui.util.ApplicationContextUtil;
 import org.blume.modeller.ui.util.URIResolver;
 import org.slf4j.Logger;
@@ -23,7 +23,6 @@ import java.util.Map;
 import javax.swing.*;
 
 import static org.apache.commons.lang3.exception.ExceptionUtils.getMessage;
-import static org.blume.modeller.common.uri.FedoraResources.LISTPREFIX;
 
 public class CreateListsHandler extends AbstractAction implements Progress {
     protected static final Logger log = LoggerFactory.getLogger(SaveBagHandler.class);

@@ -9,8 +9,9 @@ import org.blume.modeller.common.uri.FedoraPrefixes;
 import org.blume.modeller.templates.CollectionScope;
 import org.blume.modeller.templates.MetadataTemplate;
 import org.blume.modeller.ui.Progress;
-import org.blume.modeller.ui.jpanel.BagView;
-import org.blume.modeller.ui.jpanel.PatchAreasFrame;
+import org.blume.modeller.ui.handlers.common.TextObjectURI;
+import org.blume.modeller.ui.jpanel.base.BagView;
+import org.blume.modeller.ui.jpanel.text.PatchAreasFrame;
 import org.blume.modeller.ui.util.ApplicationContextUtil;
 import org.blume.modeller.ui.util.URIResolver;
 import org.blume.modeller.util.RDFCollectionWriter;
@@ -49,7 +50,7 @@ public class PatchAreasHandler extends AbstractAction implements Progress {
         DefaultBag bag = bagView.getBag();
         Map<String, BagInfoField> map = bag.getInfo().getFieldMap();
         ModellerClient client = new ModellerClient();
-        URI lineContainerIRI = getLineContainerURI(map);
+        URI lineContainerIRI = TextObjectURI.getLineContainerURI(map);
         String collectionPredicate = "http://iiif.io/api/text#hasLines";
 
         String url = bag.gethOCRResource();
@@ -70,7 +71,7 @@ public class PatchAreasHandler extends AbstractAction implements Progress {
         List<String> areaKeyList = new ArrayList<>(nodemap.keySet());
 
         for (String areaId : areaKeyList) {
-            URI areaObjectURI = getAreaObjectURI(map, areaId);
+            URI areaObjectURI = TextObjectURI.getAreaObjectURI(map, areaId);
             rdfBody = getLineSequenceMetadata(nodemap, areaId, collectionPredicate, lineContainerIRI);
             try {
                 client.doPatch(areaObjectURI, rdfBody);
@@ -104,40 +105,9 @@ public class PatchAreasHandler extends AbstractAction implements Progress {
         patchAreasFrame.setVisible(true);
     }
 
-    public URI getLineContainerURI(Map<String, BagInfoField> map) {
-        URIResolver uriResolver;
-        try {
-            uriResolver = URIResolver.resolve()
-                    .map(map)
-                    .containerKey(ProfileOptions.TEXT_LINE_CONTAINER_KEY)
-                    .pathType(4)
-                    .build();
-            return uriResolver.render();
-        } catch (URISyntaxException e) {
-            log.debug(e.getMessage());
-        }
-        return null;
-    }
-
-    private URI getAreaObjectURI(Map<String, BagInfoField> map, String resourceID) {
-        URIResolver uriResolver;
-        try {
-            uriResolver = URIResolver.resolve()
-                    .map(map)
-                    .containerKey(ProfileOptions.TEXT_AREA_CONTAINER_KEY)
-                    .resource(resourceID)
-                    .pathType(5)
-                    .build();
-            return uriResolver.render();
-        } catch (URISyntaxException e) {
-            log.debug(e.getMessage());
-        }
-        return null;
-    }
-
     private InputStream getLineSequenceMetadata(Map<String, List<String>> resourceIDList, String pageId, String collectionPredicate,
                                                 URI resourceContainerIRI) {
-        ArrayList idList = new ArrayList<>(resourceIDList.get(pageId));
+        ArrayList<String> idList = new ArrayList<>(resourceIDList.get(pageId));
         RDFCollectionWriter collectionWriter;
         collectionWriter = RDFCollectionWriter.collection()
                 .idList(idList)

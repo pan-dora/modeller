@@ -17,13 +17,13 @@ import org.blume.modeller.bag.BagInfoField;
 import org.blume.modeller.common.uri.FedoraPrefixes;
 import org.blume.modeller.templates.ManifestScope;
 import org.blume.modeller.templates.MetadataTemplate;
-import org.blume.modeller.ui.jpanel.PatchManifestFrame;
+import org.blume.modeller.ui.jpanel.iiif.PatchManifestFrame;
 import org.blume.modeller.ui.util.URIResolver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.blume.modeller.bag.impl.DefaultBag;
-import org.blume.modeller.ui.jpanel.BagView;
+import org.blume.modeller.ui.jpanel.base.BagView;
 import org.blume.modeller.ui.Progress;
 import org.blume.modeller.ui.util.ApplicationContextUtil;
 import org.blume.modeller.ModellerClient;

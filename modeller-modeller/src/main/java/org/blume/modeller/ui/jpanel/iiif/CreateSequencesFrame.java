@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.blume.modeller.ui.jpanel;
+package org.blume.modeller.ui.jpanel.iiif;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -21,7 +21,6 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.net.URI;
 import java.util.Map;
 
@@ -30,12 +29,12 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
+import org.blume.modeller.ui.jpanel.base.BagView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.richclient.command.AbstractCommand;
@@ -48,17 +47,15 @@ import org.springframework.richclient.util.GuiStandardUtils;
 import org.blume.modeller.bag.impl.DefaultBag;
 import org.blume.modeller.bag.BagInfoField;
 
-public class UploadBagFrame extends JFrame implements ActionListener {
-    protected static final Logger log = LoggerFactory.getLogger(SaveBagFrame.class);
+public class CreateSequencesFrame extends JFrame implements ActionListener {
+    protected static final Logger log = LoggerFactory.getLogger(CreateDefaultContainersFrame.class);
     private static final long serialVersionUID = 1L;
     transient BagView bagView;
-    File bagFile;
     private Map<String, BagInfoField> map;
     private JPanel savePanel;
-    JRadioButton noneButton;
-    JRadioButton zipButton;
+    private JTextField sequenceIDField;
 
-    public UploadBagFrame(BagView bagView, String title) {
+    public  CreateSequencesFrame(BagView bagView, String title) {
         super(title);
         this.bagView = bagView;
         if (bagView != null) {
@@ -74,14 +71,14 @@ public class UploadBagFrame extends JFrame implements ActionListener {
         pack();
     }
 
-    protected JComponent createButtonBar() {
+    private JComponent createButtonBar() {
         CommandGroup dialogCommandGroup = CommandGroup.createCommandGroup(null, getCommandGroupMembers());
         JComponent buttonBar = dialogCommandGroup.createButtonBar();
         GuiStandardUtils.attachDialogBorder(buttonBar);
         return buttonBar;
     }
 
-    protected Object[] getCommandGroupMembers() {
+    private Object[] getCommandGroupMembers() {
         return new AbstractCommand[]{finishCommand, cancelCommand};
     }
 
@@ -93,7 +90,7 @@ public class UploadBagFrame extends JFrame implements ActionListener {
             @Override
             public void doExecuteCommand() {
 
-                new OkUploadBagHandler().actionPerformed(null);
+                new OkCreateSequencesHandler().actionPerformed(null);
 
             }
         };
@@ -102,22 +99,22 @@ public class UploadBagFrame extends JFrame implements ActionListener {
 
             @Override
             public void doExecuteCommand() {
-                new CancelUploadBagHandler().actionPerformed(null);
+                new CancelCreateSequencesHandler().actionPerformed(null);
             }
         };
     }
 
-    protected String getFinishCommandId() {
+    private String getFinishCommandId() {
         return DEFAULT_FINISH_COMMAND_ID;
     }
 
-    protected String getCancelCommandId() {
+    private String getCancelCommandId() {
         return DEFAULT_CANCEL_COMMAND_ID;
     }
 
-    protected static final String DEFAULT_FINISH_COMMAND_ID = "okCommand";
+    private static final String DEFAULT_FINISH_COMMAND_ID = "okCommand";
 
-    protected static final String DEFAULT_CANCEL_COMMAND_ID = "cancelCommand";
+    private static final String DEFAULT_CANCEL_COMMAND_ID = "cancelCommand";
 
     private transient ActionCommand finishCommand;
 
@@ -130,14 +127,14 @@ public class UploadBagFrame extends JFrame implements ActionListener {
         initStandardCommands();
         JPanel pageControl = new JPanel(new BorderLayout());
         JPanel titlePaneContainer = new JPanel(new BorderLayout());
-        titlePane.setTitle(bagView.getPropertyMessage("UploadBagFrame.title"));
-        titlePane.setMessage(new DefaultMessage(bagView.getPropertyMessage("Upload Resources to:")));
+        titlePane.setTitle(bagView.getPropertyMessage("CreateSequencesFrame.title"));
+        titlePane.setMessage(new DefaultMessage(bagView.getPropertyMessage("Create Sequence in:")));
         titlePaneContainer.add(titlePane.getControl());
         titlePaneContainer.add(new JSeparator(), BorderLayout.SOUTH);
         pageControl.add(titlePaneContainer, BorderLayout.NORTH);
         JPanel contentPane = new JPanel();
-        DefaultBag bag = bagView.getBag();
 
+        DefaultBag bag = bagView.getBag();
         if (bag != null) {
             map = bag.getInfo().getFieldMap();
         }
@@ -145,19 +142,16 @@ public class UploadBagFrame extends JFrame implements ActionListener {
         JLabel urlLabel = new JLabel(bagView.getPropertyMessage("baseURL.label"));
         urlLabel.setToolTipText(bagView.getPropertyMessage("baseURL.description"));
         JTextField urlField = new JTextField("");
-        URI uri = bagView.uploadBagHandler.getResourceContainerURI(map);
+        URI uri = bagView.createSequencesHandler.getSequenceContainerURI(map);
         try {
             urlField.setText(uri.toString());
         } catch (Exception e) {
             log.error("Failed to set url label", e);
         }
-        urlField.setEnabled(false);
 
-        //only if bag is not null
-        if (bag != null) {
-            urlLabel.setEnabled(true);
-        }
-
+        JLabel sequenceIDLabel = new JLabel(bagView.getPropertyMessage("sequenceID.label"));
+        sequenceIDLabel.setToolTipText(bagView.getPropertyMessage("sequenceID.description"));
+        sequenceIDField = new JTextField("");
         GridBagLayout layout = new GridBagLayout();
         GridBagConstraints glbc = new GridBagConstraints();
         JPanel panel = new JPanel(layout);
@@ -172,6 +166,13 @@ public class UploadBagFrame extends JFrame implements ActionListener {
         buildConstraints(glbc, 1, row, 1, 1, 80, 50, GridBagConstraints.HORIZONTAL, GridBagConstraints.CENTER);
         layout.setConstraints(urlField, glbc);
         panel.add(urlField);
+        row++;
+        buildConstraints(glbc, 0, row, 1, 1, 1, 50, GridBagConstraints.NONE, GridBagConstraints.WEST);
+        layout.setConstraints(sequenceIDLabel, glbc);
+        panel.add(sequenceIDLabel);
+        buildConstraints(glbc, 1, row, 1, 1, 80, 50, GridBagConstraints.HORIZONTAL, GridBagConstraints.CENTER);
+        layout.setConstraints(sequenceIDField, glbc);
+        panel.add(sequenceIDField);
         row++;
         buildConstraints(glbc, 0, row, 1, 1, 1, 50, GridBagConstraints.NONE, GridBagConstraints.WEST);
         buildConstraints(glbc, 1, row, 2, 1, 80, 50, GridBagConstraints.HORIZONTAL, GridBagConstraints.CENTER);
@@ -196,19 +197,19 @@ public class UploadBagFrame extends JFrame implements ActionListener {
         repaint();
     }
 
-    private class OkUploadBagHandler extends AbstractAction {
+    private class OkCreateSequencesHandler extends AbstractAction {
         private static final long serialVersionUID = 1L;
 
         @Override
         public void actionPerformed(ActionEvent e) {
             setVisible(false);
-            String bagFileName = "";
-            bagView.getBag().setName(bagFileName);
-            bagView.uploadBagHandler.execute();
+            String sequenceID = sequenceIDField.getText().trim();
+            bagView.getBag().setSequenceID(sequenceID);
+            bagView.createSequencesHandler.execute();
         }
     }
 
-    private class CancelUploadBagHandler extends AbstractAction {
+    private class CancelCreateSequencesHandler extends AbstractAction {
         private static final long serialVersionUID = 1L;
 
         @Override
@@ -231,4 +232,6 @@ public class UploadBagFrame extends JFrame implements ActionListener {
     private String getMessage(String property) {
         return bagView.getPropertyMessage(property);
     }
+
 }
+

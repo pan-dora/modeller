@@ -13,8 +13,8 @@ import org.slf4j.LoggerFactory;
 import org.blume.modeller.Profile;
 import org.blume.modeller.bag.impl.DefaultBag;
 import org.blume.modeller.bag.impl.DefaultBagInfo;
-import org.blume.modeller.ui.jpanel.BagView;
-import org.blume.modeller.ui.jpanel.NewBagInPlaceFrame;
+import org.blume.modeller.ui.jpanel.base.BagView;
+import org.blume.modeller.ui.jpanel.base.NewBagInPlaceFrame;
 import org.blume.modeller.ui.Progress;
 import gov.loc.repository.bagit.BagFactory;
 

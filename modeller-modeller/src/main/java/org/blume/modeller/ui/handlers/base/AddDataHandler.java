@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.richclient.application.Application;
 import org.springframework.richclient.progress.BusyIndicator;
 
-import org.blume.modeller.ui.jpanel.BagView;
+import org.blume.modeller.ui.jpanel.base.BagView;
 import org.blume.modeller.ui.Progress;
 import org.blume.modeller.ui.util.ApplicationContextUtil;
 

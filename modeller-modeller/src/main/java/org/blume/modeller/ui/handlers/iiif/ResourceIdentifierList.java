@@ -3,7 +3,7 @@ package org.blume.modeller.ui.handlers.iiif;
 import gov.loc.repository.bagit.impl.AbstractBagConstants;
 import org.blume.modeller.bag.BaggerFileEntity;
 import org.blume.modeller.bag.impl.DefaultBag;
-import org.blume.modeller.ui.jpanel.BagView;
+import org.blume.modeller.ui.jpanel.base.BagView;
 
 import java.util.ArrayList;
 import java.util.Collections;

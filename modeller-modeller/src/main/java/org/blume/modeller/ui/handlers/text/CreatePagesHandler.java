@@ -5,10 +5,10 @@ import org.blume.modeller.*;
 import org.blume.modeller.bag.BagInfoField;
 import org.blume.modeller.bag.impl.DefaultBag;
 import org.blume.modeller.ui.Progress;
-import org.blume.modeller.ui.jpanel.BagView;
-import org.blume.modeller.ui.jpanel.CreatePagesFrame;
+import org.blume.modeller.ui.handlers.common.TextObjectURI;
+import org.blume.modeller.ui.jpanel.base.BagView;
+import org.blume.modeller.ui.jpanel.text.CreatePagesFrame;
 import org.blume.modeller.ui.util.ApplicationContextUtil;
-import org.blume.modeller.ui.util.URIResolver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,7 +16,6 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Map;
 
@@ -53,7 +52,7 @@ public class CreatePagesHandler extends AbstractAction implements Progress {
         assert pageIdList != null;
         for (String resourceID : pageIdList) {
             resourceID = StringUtils.substringAfter(resourceID,"_");
-            URI pageObjectURI = getPageObjectURI(map, resourceID);
+            URI pageObjectURI = TextObjectURI.getPageObjectURI(map, resourceID);
             try {
                 client.doPut(pageObjectURI);
                 ApplicationContextUtil.addConsoleMessage(message + " " + pageObjectURI);
@@ -69,36 +68,5 @@ public class CreatePagesHandler extends AbstractAction implements Progress {
         CreatePagesFrame createPagesFrame = new CreatePagesFrame(bagView, bagView.getPropertyMessage("bag.frame.pages"));
         createPagesFrame.setBag(bag);
         createPagesFrame.setVisible(true);
-    }
-
-    public URI getPageContainerURI(Map<String, BagInfoField> map) {
-        URIResolver uriResolver;
-        try {
-            uriResolver = URIResolver.resolve()
-                    .map(map)
-                    .containerKey(ProfileOptions.TEXT_PAGE_CONTAINER_KEY)
-                    .pathType(4)
-                    .build();
-            return uriResolver.render();
-        } catch (URISyntaxException e) {
-            log.debug(e.getMessage());
-        }
-        return null;
-    }
-
-    private URI getPageObjectURI(Map<String, BagInfoField> map, String resourceID) {
-        URIResolver uriResolver;
-        try {
-            uriResolver = URIResolver.resolve()
-                    .map(map)
-                    .containerKey(ProfileOptions.TEXT_PAGE_CONTAINER_KEY)
-                    .resource(resourceID)
-                    .pathType(5)
-                    .build();
-            return uriResolver.render();
-        } catch (URISyntaxException e) {
-            log.debug(e.getMessage());
-        }
-        return null;
     }
 }

@@ -1,4 +1,4 @@
-package org.blume.modeller.ui.jpanel;
+package org.blume.modeller.ui.jpanel.base;
 
 import java.awt.BorderLayout;
 import java.awt.event.FocusEvent;
@@ -8,7 +8,6 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 
 import org.blume.modeller.ui.BagTableFormBuilder;
-import org.blume.modeller.ui.jpanel.BagView;
 import org.springframework.binding.form.FormModel;
 import org.springframework.richclient.form.AbstractForm;
 

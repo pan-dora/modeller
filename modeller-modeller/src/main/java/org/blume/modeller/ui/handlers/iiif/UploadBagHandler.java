@@ -21,10 +21,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.blume.modeller.bag.impl.DefaultBag;
-import org.blume.modeller.ui.jpanel.BagView;
+import org.blume.modeller.ui.jpanel.base.BagView;
 import org.blume.modeller.ui.Progress;
 import org.blume.modeller.ui.util.ApplicationContextUtil;
-import org.blume.modeller.ui.jpanel.UploadBagFrame;
+import org.blume.modeller.ui.jpanel.base.UploadBagFrame;
 import org.blume.modeller.ModellerClient;
 
 import static org.apache.commons.lang3.exception.ExceptionUtils.getMessage;

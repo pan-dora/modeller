@@ -1,4 +1,4 @@
-package org.blume.modeller.ui.jpanel;
+package org.blume.modeller.ui.jpanel.base;
 
 import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;

@@ -2,7 +2,7 @@ package org.blume.modeller.ui;
 
 import javax.swing.JComponent;
 
-import org.blume.modeller.ui.jpanel.ConsolePane;
+import org.blume.modeller.ui.jpanel.base.ConsolePane;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.richclient.application.Application;
 import org.springframework.richclient.application.PageComponentContext;

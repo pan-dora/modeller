@@ -63,12 +63,20 @@ public class DocManifestBuilder {
         return hocr.getLineNodeId();
     }
 
+    public static List<String> getWordIdList(hOCRData hocr) {
+        return hocr.getWordNodeId();
+    }
+
     public static List<String> getAreaIdListforPage(hOCRData hocr, String id) {
         return hocr.getCAreasforPage(id);
     }
 
     public static List<String> getLineIdListforArea(hOCRData hocr, String id) {
         return hocr.getLinesforArea(id);
+    }
+
+    public static List<String> getWordIdListforLine(hOCRData hocr, String id) {
+        return hocr.getWordsforLine(id);
     }
 
     private static ByteArrayOutputStream marshal(File hocr) throws JAXBException {

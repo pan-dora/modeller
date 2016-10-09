@@ -3,10 +3,10 @@ package org.blume.modeller.ui.handlers.text;
 import org.blume.modeller.ui.jpanel.base.BagView;
 import org.springframework.richclient.command.support.AbstractActionCommandExecutor;
 
-public class CreateLinesExecutor extends AbstractActionCommandExecutor {
+public class CreateWordsExecutor extends AbstractActionCommandExecutor {
     private BagView bagView;
 
-    public CreateLinesExecutor(BagView bagView) {
+    public CreateWordsExecutor(BagView bagView) {
         super();
         setEnabled(true);
         this.bagView = bagView;
@@ -14,7 +14,7 @@ public class CreateLinesExecutor extends AbstractActionCommandExecutor {
 
     @Override
     public void execute() {
-        bagView.createLinesHandler.openCreateLinesFrame();
+        bagView.createWordsHandler.openCreateWordsFrame();
     }
 
 }

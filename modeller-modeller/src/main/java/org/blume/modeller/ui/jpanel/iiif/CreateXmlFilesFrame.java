@@ -13,11 +13,27 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.blume.modeller.ui.jpanel;
+package org.blume.modeller.ui.jpanel.iiif;
 
-import org.blume.modeller.bag.BagInfoField;
-import org.blume.modeller.bag.impl.DefaultBag;
-import org.blume.modeller.ui.handlers.common.TextObjectURI;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.net.URI;
+import java.util.Map;
+import javax.swing.AbstractAction;
+import javax.swing.JComponent;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JSeparator;
+import javax.swing.JTextField;
+import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
+
+import org.blume.modeller.ui.jpanel.base.BagView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.richclient.command.AbstractCommand;
@@ -27,24 +43,17 @@ import org.springframework.richclient.core.DefaultMessage;
 import org.springframework.richclient.dialog.TitlePane;
 import org.springframework.richclient.util.GuiStandardUtils;
 
-import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.border.EmptyBorder;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.net.URI;
-import java.util.Map;
+import org.blume.modeller.bag.impl.DefaultBag;
+import org.blume.modeller.bag.BagInfoField;
 
-public class PatchAreasFrame extends JFrame implements ActionListener {
-    protected static final Logger log = LoggerFactory.getLogger(PatchAreasFrame.class);
+public class CreateXmlFilesFrame extends JFrame implements ActionListener {
+    protected static final Logger log = LoggerFactory.getLogger(CreateXmlFilesFrame.class);
     private static final long serialVersionUID = 1L;
     transient BagView bagView;
     private Map<String, BagInfoField> map;
     private JPanel savePanel;
-    private JTextField hocrResourceField;
 
-    public PatchAreasFrame(BagView bagView, String title) {
+    public  CreateXmlFilesFrame(BagView bagView, String title) {
         super(title);
         this.bagView = bagView;
         if (bagView != null) {
@@ -79,7 +88,7 @@ public class PatchAreasFrame extends JFrame implements ActionListener {
             @Override
             public void doExecuteCommand() {
 
-                new OkPatchAreasHandler().actionPerformed(null);
+                new OkCreateXmlFilesHandler().actionPerformed(null);
 
             }
         };
@@ -88,7 +97,7 @@ public class PatchAreasFrame extends JFrame implements ActionListener {
 
             @Override
             public void doExecuteCommand() {
-                new CancelPatchAreasHandler().actionPerformed(null);
+                new CancelCreateXmlFilesHandler().actionPerformed(null);
             }
         };
     }
@@ -116,8 +125,8 @@ public class PatchAreasFrame extends JFrame implements ActionListener {
         initStandardCommands();
         JPanel pageControl = new JPanel(new BorderLayout());
         JPanel titlePaneContainer = new JPanel(new BorderLayout());
-        titlePane.setTitle(bagView.getPropertyMessage("PatchAreasFrame.title"));
-        titlePane.setMessage(new DefaultMessage(bagView.getPropertyMessage("Patch Areas in:")));
+        titlePane.setTitle(bagView.getPropertyMessage("CreateXmlFilesFrame.title"));
+        titlePane.setMessage(new DefaultMessage(bagView.getPropertyMessage("Create Xml Files in:")));
         titlePaneContainer.add(titlePane.getControl());
         titlePaneContainer.add(new JSeparator(), BorderLayout.SOUTH);
         pageControl.add(titlePaneContainer, BorderLayout.NORTH);
@@ -131,21 +140,11 @@ public class PatchAreasFrame extends JFrame implements ActionListener {
         JLabel urlLabel = new JLabel(bagView.getPropertyMessage("baseURL.label"));
         urlLabel.setToolTipText(bagView.getPropertyMessage("baseURL.description"));
         JTextField urlField = new JTextField("");
-        URI uri = bagView.patchAreasHandler.getLineContainerURI(map);
+        URI uri = bagView.createXmlFilesHandler.getResourceContainerURI(map);
         try {
             urlField.setText(uri.toString());
         } catch (Exception e) {
             log.error("Failed to set url label", e);
-        }
-
-        JLabel hocrResourceLabel = new JLabel(bagView.getPropertyMessage("hocrResource.label"));
-        hocrResourceLabel.setToolTipText(bagView.getPropertyMessage("hocrResource.description"));
-        hocrResourceField = new JTextField("");
-        String hocrResource = TextObjectURI.gethOCRResourceURI(map);
-        try {
-            hocrResourceField.setText(hocrResource);
-        } catch (Exception e) {
-            log.error("Failed to set hocrResource label", e);
         }
 
         GridBagLayout layout = new GridBagLayout();
@@ -162,13 +161,6 @@ public class PatchAreasFrame extends JFrame implements ActionListener {
         buildConstraints(glbc, 1, row, 1, 1, 80, 50, GridBagConstraints.HORIZONTAL, GridBagConstraints.CENTER);
         layout.setConstraints(urlField, glbc);
         panel.add(urlField);
-        row++;
-        buildConstraints(glbc, 0, row, 1, 1, 1, 50, GridBagConstraints.NONE, GridBagConstraints.WEST);
-        layout.setConstraints(hocrResourceLabel, glbc);
-        panel.add(hocrResourceLabel);
-        buildConstraints(glbc, 1, row, 1, 1, 80, 50, GridBagConstraints.HORIZONTAL, GridBagConstraints.CENTER);
-        layout.setConstraints(hocrResourceField, glbc);
-        panel.add(hocrResourceField);
         row++;
         buildConstraints(glbc, 0, row, 1, 1, 1, 50, GridBagConstraints.NONE, GridBagConstraints.WEST);
         buildConstraints(glbc, 1, row, 2, 1, 80, 50, GridBagConstraints.HORIZONTAL, GridBagConstraints.CENTER);
@@ -193,19 +185,17 @@ public class PatchAreasFrame extends JFrame implements ActionListener {
         repaint();
     }
 
-    private class OkPatchAreasHandler extends AbstractAction {
+    private class OkCreateXmlFilesHandler extends AbstractAction {
         private static final long serialVersionUID = 1L;
 
         @Override
         public void actionPerformed(ActionEvent e) {
             setVisible(false);
-            String hocrFile = hocrResourceField.getText().trim();
-            bagView.getBag().sethOCRResource(hocrFile);
-            bagView.patchAreasHandler.execute();
+            bagView.createXmlFilesHandler.execute();
         }
     }
 
-    private class CancelPatchAreasHandler extends AbstractAction {
+    private class CancelCreateXmlFilesHandler extends AbstractAction {
         private static final long serialVersionUID = 1L;
 
         @Override

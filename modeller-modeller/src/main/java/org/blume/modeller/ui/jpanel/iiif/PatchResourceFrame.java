@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.blume.modeller.ui.jpanel;
+package org.blume.modeller.ui.jpanel.iiif;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -34,6 +34,7 @@ import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
+import org.blume.modeller.ui.jpanel.base.BagView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.richclient.command.AbstractCommand;
@@ -46,15 +47,14 @@ import org.springframework.richclient.util.GuiStandardUtils;
 import org.blume.modeller.bag.impl.DefaultBag;
 import org.blume.modeller.bag.BagInfoField;
 
-public class CreateListsFrame extends JFrame implements ActionListener {
-    protected static final Logger log = LoggerFactory.getLogger(CreateDefaultContainersFrame.class);
+public class PatchResourceFrame extends JFrame implements ActionListener {
+    protected static final Logger log = LoggerFactory.getLogger(PatchResourceFrame.class);
     private static final long serialVersionUID = 1L;
     transient BagView bagView;
     private Map<String, BagInfoField> map;
     private JPanel savePanel;
-    private JTextField listIDField;
 
-    public  CreateListsFrame(BagView bagView, String title) {
+    public PatchResourceFrame(BagView bagView, String title) {
         super(title);
         this.bagView = bagView;
         if (bagView != null) {
@@ -70,14 +70,14 @@ public class CreateListsFrame extends JFrame implements ActionListener {
         pack();
     }
 
-    private JComponent createButtonBar() {
+    protected JComponent createButtonBar() {
         CommandGroup dialogCommandGroup = CommandGroup.createCommandGroup(null, getCommandGroupMembers());
         JComponent buttonBar = dialogCommandGroup.createButtonBar();
         GuiStandardUtils.attachDialogBorder(buttonBar);
         return buttonBar;
     }
 
-    private Object[] getCommandGroupMembers() {
+    protected Object[] getCommandGroupMembers() {
         return new AbstractCommand[]{finishCommand, cancelCommand};
     }
 
@@ -89,7 +89,7 @@ public class CreateListsFrame extends JFrame implements ActionListener {
             @Override
             public void doExecuteCommand() {
 
-                new OkCreateListsHandler().actionPerformed(null);
+                new OkCreateDefaultContainersHandler().actionPerformed(null);
 
             }
         };
@@ -98,22 +98,22 @@ public class CreateListsFrame extends JFrame implements ActionListener {
 
             @Override
             public void doExecuteCommand() {
-                new CancelCreateListsHandler().actionPerformed(null);
+                new CancelCreateDefaultContainersHandler().actionPerformed(null);
             }
         };
     }
 
-    private String getFinishCommandId() {
+    protected String getFinishCommandId() {
         return DEFAULT_FINISH_COMMAND_ID;
     }
 
-    private String getCancelCommandId() {
+    protected String getCancelCommandId() {
         return DEFAULT_CANCEL_COMMAND_ID;
     }
 
-    private static final String DEFAULT_FINISH_COMMAND_ID = "okCommand";
+    protected static final String DEFAULT_FINISH_COMMAND_ID = "okCommand";
 
-    private static final String DEFAULT_CANCEL_COMMAND_ID = "cancelCommand";
+    protected static final String DEFAULT_CANCEL_COMMAND_ID = "cancelCommand";
 
     private transient ActionCommand finishCommand;
 
@@ -126,8 +126,8 @@ public class CreateListsFrame extends JFrame implements ActionListener {
         initStandardCommands();
         JPanel pageControl = new JPanel(new BorderLayout());
         JPanel titlePaneContainer = new JPanel(new BorderLayout());
-        titlePane.setTitle(bagView.getPropertyMessage("CreateListsFrame.title"));
-        titlePane.setMessage(new DefaultMessage(bagView.getPropertyMessage("Create List in:")));
+        titlePane.setTitle(bagView.getPropertyMessage("PatchResourceFrame.title"));
+        titlePane.setMessage(new DefaultMessage(bagView.getPropertyMessage("Patch Resources")));
         titlePaneContainer.add(titlePane.getControl());
         titlePaneContainer.add(new JSeparator(), BorderLayout.SOUTH);
         pageControl.add(titlePaneContainer, BorderLayout.NORTH);
@@ -141,7 +141,7 @@ public class CreateListsFrame extends JFrame implements ActionListener {
         JLabel urlLabel = new JLabel(bagView.getPropertyMessage("baseURL.label"));
         urlLabel.setToolTipText(bagView.getPropertyMessage("baseURL.description"));
         JTextField urlField = new JTextField("");
-        URI uri = bagView.createListsHandler.getListContainerURI(map);
+        URI uri = bagView.patchResourceHandler.getResourceContainer(map);
         try {
             urlField.setText(uri.toString());
         } catch (Exception e) {
@@ -155,6 +155,13 @@ public class CreateListsFrame extends JFrame implements ActionListener {
 
         int row = 0;
 
+        row++;
+        buildConstraints(glbc, 0, row, 1, 1, 1, 50, GridBagConstraints.NONE, GridBagConstraints.WEST);
+        layout.setConstraints(urlLabel, glbc);
+        panel.add(urlLabel);
+        buildConstraints(glbc, 1, row, 1, 1, 80, 50, GridBagConstraints.HORIZONTAL, GridBagConstraints.CENTER);
+        layout.setConstraints(urlField, glbc);
+        panel.add(urlField);
         row++;
         buildConstraints(glbc, 0, row, 1, 1, 1, 50, GridBagConstraints.NONE, GridBagConstraints.WEST);
         layout.setConstraints(urlLabel, glbc);
@@ -186,17 +193,19 @@ public class CreateListsFrame extends JFrame implements ActionListener {
         repaint();
     }
 
-    private class OkCreateListsHandler extends AbstractAction {
+    private class OkCreateDefaultContainersHandler extends AbstractAction {
         private static final long serialVersionUID = 1L;
 
         @Override
         public void actionPerformed(ActionEvent e) {
             setVisible(false);
-            bagView.createListsHandler.execute();
+            String bagFileName = "";
+            bagView.getBag().setName(bagFileName);
+            bagView.patchResourceHandler.execute();
         }
     }
 
-    private class CancelCreateListsHandler extends AbstractAction {
+    private class CancelCreateDefaultContainersHandler extends AbstractAction {
         private static final long serialVersionUID = 1L;
 
         @Override
@@ -219,6 +228,4 @@ public class CreateListsFrame extends JFrame implements ActionListener {
     private String getMessage(String property) {
         return bagView.getPropertyMessage(property);
     }
-
 }
-

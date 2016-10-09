@@ -5,7 +5,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 
 import org.blume.modeller.bag.impl.DefaultBag;
-import org.blume.modeller.ui.jpanel.BagView;
+import org.blume.modeller.ui.jpanel.base.BagView;
 import org.blume.modeller.ui.TagFilesFrame;
 
 public class ShowTagFilesHandler extends AbstractAction {

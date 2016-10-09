@@ -11,7 +11,7 @@ import org.blume.modeller.templates.MetadataTemplate;
 import org.blume.modeller.ui.Progress;
 import org.blume.modeller.ui.handlers.common.TextObjectURI;
 import org.blume.modeller.ui.jpanel.base.BagView;
-import org.blume.modeller.ui.jpanel.text.PatchPagesFrame;
+import org.blume.modeller.ui.jpanel.text.PatchLinesFrame;
 import org.blume.modeller.ui.util.ApplicationContextUtil;
 import org.blume.modeller.util.RDFCollectionWriter;
 import org.slf4j.Logger;
@@ -22,90 +22,92 @@ import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.*;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.apache.commons.lang3.StringEscapeUtils.unescapeXml;
 import static org.apache.commons.lang3.exception.ExceptionUtils.getMessage;
-import static org.blume.modeller.DocManifestBuilder.getAreaIdListforPage;
-import static org.blume.modeller.DocManifestBuilder.getPageIdList;
+import static org.blume.modeller.DocManifestBuilder.*;
 
-public class PatchPagesHandler extends AbstractAction implements Progress {
-    protected static final Logger log = LoggerFactory.getLogger(PatchPagesHandler.class);
+public class PatchLinesHandler extends AbstractAction implements Progress {
+    protected static final Logger log = LoggerFactory.getLogger(PatchLinesHandler.class);
     private static final long serialVersionUID = 1L;
     private BagView bagView;
 
-    public PatchPagesHandler(BagView bagView) {
+    public PatchLinesHandler(BagView bagView) {
         super();
         this.bagView = bagView;
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) { openPatchPagesFrame(); }
+    public void actionPerformed(ActionEvent e) {
+        openPatchLinesFrame();
+    }
 
     @Override
     public void execute() {
-        String message = ApplicationContextUtil.getMessage("bag.message.pagepatched");
+        String message = ApplicationContextUtil.getMessage("bag.message.linepatched");
         DefaultBag bag = bagView.getBag();
         Map<String, BagInfoField> map = bag.getInfo().getFieldMap();
         ModellerClient client = new ModellerClient();
-        URI areaContainerIRI = TextObjectURI.getAreaContainerURI(map);
-        String collectionPredicate = "http://iiif.io/api/text#hasAreas";
+        URI wordContainerIRI = TextObjectURI.getWordContainerURI(map);
+        String collectionPredicate = "http://iiif.io/api/text#hasWords";
 
         String url = bag.gethOCRResource();
 
-        List<String> pageIdList;
-        Map <String, List<String>> nodemap = null;
+        List<String> lineIdList;
+        Map<String, List<String>> nodemap = null;
         InputStream rdfBody;
 
         try {
             hOCRData hocr = DocManifestBuilder.gethOCRProjectionFromURL(url);
-            pageIdList = getPageIdList(hocr);
-            nodemap = getAreaIdMap(hocr, pageIdList);
+            lineIdList = getLineIdList(hocr);
+            nodemap = getLineIdMap(hocr, lineIdList);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         assert nodemap != null;
-        List<String> pageKeyList = new ArrayList<>(nodemap.keySet());
+        List<String> lineKeyList = new ArrayList<>(nodemap.keySet());
 
-        for (String pageId : pageKeyList) {
-            URI pageObjectURI = TextObjectURI.getPageObjectURI(map, pageId);
-            rdfBody = getAreaSequenceMetadata(nodemap, pageId, collectionPredicate, areaContainerIRI);
+        for (String lineId : lineKeyList) {
+            URI lineObjectURI = TextObjectURI.getLineObjectURI(map, lineId);
+            rdfBody = getWordSequenceMetadata(nodemap, lineId, collectionPredicate, wordContainerIRI);
             try {
-                client.doPatch(pageObjectURI, rdfBody);
-                ApplicationContextUtil.addConsoleMessage(message + " " + pageObjectURI);
+                client.doPatch(lineObjectURI, rdfBody);
+                ApplicationContextUtil.addConsoleMessage(message + " " + lineObjectURI);
             } catch (ModellerClientFailedException e) {
-                    ApplicationContextUtil.addConsoleMessage(getMessage(e));
+                ApplicationContextUtil.addConsoleMessage(getMessage(e));
             }
         }
         bagView.getControl().invalidate();
     }
 
-    private Map<String, List<String>> getAreaIdMap(hOCRData hocr, List<String> pageIdList) {
+    private Map<String, List<String>> getLineIdMap(hOCRData hocr, List<String> lineIdList) {
         Map<String, List<String>> nodemap = new HashMap<>();
-        List<String> areaIdList;
-        for (String pageId : pageIdList) {
-            areaIdList = getAreaIdListforPage(hocr, pageId);
-            for (int i = 0; i < areaIdList.size(); i++) {
-                String areaId = StringUtils.substringAfter(areaIdList.get(i), "_");
-                areaIdList.set(i, areaId);
+        List<String> wordIdList;
+        for (String lineId : lineIdList) {
+            wordIdList = getWordIdListforLine(hocr, lineId);
+            for (int i = 0; i < wordIdList.size(); i++) {
+                String wordId = StringUtils.substringAfter(wordIdList.get(i), "_");
+                wordIdList.set(i, wordId);
             }
-            pageId = StringUtils.substringAfter(pageId, "_");
-            nodemap.put(pageId, areaIdList);
+            lineId = StringUtils.substringAfter(lineId, "_");
+            nodemap.put(lineId, wordIdList);
         }
         return nodemap;
     }
 
-    void openPatchPagesFrame() {
+    void openPatchLinesFrame() {
         DefaultBag bag = bagView.getBag();
-        PatchPagesFrame patchPagesFrame = new PatchPagesFrame(bagView, bagView.getPropertyMessage("bag.frame.patch.pages"));
-        patchPagesFrame.setBag(bag);
-        patchPagesFrame.setVisible(true);
+        PatchLinesFrame patchLinesFrame = new PatchLinesFrame(bagView, bagView.getPropertyMessage("bag.frame.patch.lines"));
+        patchLinesFrame.setBag(bag);
+        patchLinesFrame.setVisible(true);
     }
 
-    private InputStream getAreaSequenceMetadata(Map<String, List<String>> resourceIDList, String pageId, String collectionPredicate,
-                                            URI resourceContainerIRI) {
+    private InputStream getWordSequenceMetadata(Map<String, List<String>> resourceIDList, String pageId,
+                                                String collectionPredicate, URI resourceContainerIRI) {
         ArrayList<String> idList = new ArrayList<>(resourceIDList.get(pageId));
         RDFCollectionWriter collectionWriter;
         collectionWriter = RDFCollectionWriter.collection()
@@ -131,6 +133,6 @@ public class PatchPagesHandler extends AbstractAction implements Progress {
                 .build();
 
         String metadata = unescapeXml(metadataTemplate.render());
-        return IOUtils.toInputStream(metadata, UTF_8 );
+        return IOUtils.toInputStream(metadata, UTF_8);
     }
 }

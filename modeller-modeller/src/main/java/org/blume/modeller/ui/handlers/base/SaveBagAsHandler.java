@@ -1,8 +1,8 @@
 package org.blume.modeller.ui.handlers.base;
 
 import org.blume.modeller.bag.impl.DefaultBag;
-import org.blume.modeller.ui.jpanel.BagView;
-import org.blume.modeller.ui.jpanel.SaveBagFrame;
+import org.blume.modeller.ui.jpanel.base.BagView;
+import org.blume.modeller.ui.jpanel.base.SaveBagFrame;
 
 import java.awt.event.ActionEvent;
 

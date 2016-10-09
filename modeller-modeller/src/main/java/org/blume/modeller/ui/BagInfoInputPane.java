@@ -9,9 +9,9 @@ import javax.swing.InputMap;
 import javax.swing.JTabbedPane;
 import javax.swing.KeyStroke;
 
-import org.blume.modeller.ui.jpanel.BagInfoForm;
-import org.blume.modeller.ui.jpanel.BagView;
-import org.blume.modeller.ui.jpanel.OrganizationProfileForm;
+import org.blume.modeller.ui.jpanel.base.BagInfoForm;
+import org.blume.modeller.ui.jpanel.base.BagView;
+import org.blume.modeller.ui.jpanel.base.OrganizationProfileForm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.binding.form.HierarchicalFormModel;

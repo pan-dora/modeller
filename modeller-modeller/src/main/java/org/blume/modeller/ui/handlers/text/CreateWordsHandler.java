@@ -1,55 +1,62 @@
-package org.blume.modeller.ui.handlers.iiif;
+package org.blume.modeller.ui.handlers.text;
 
-import org.blume.modeller.ModellerClient;
-import org.blume.modeller.ModellerClientFailedException;
-import org.blume.modeller.ProfileOptions;
+import org.apache.commons.lang.StringUtils;
+import org.blume.modeller.*;
 import org.blume.modeller.bag.BagInfoField;
 import org.blume.modeller.bag.impl.DefaultBag;
 import org.blume.modeller.ui.Progress;
-import org.blume.modeller.ui.handlers.base.SaveBagHandler;
 import org.blume.modeller.ui.jpanel.base.BagView;
-import org.blume.modeller.ui.jpanel.iiif.CreateCanvasesFrame;
+import org.blume.modeller.ui.jpanel.text.CreateWordsFrame;
 import org.blume.modeller.ui.util.ApplicationContextUtil;
 import org.blume.modeller.ui.util.URIResolver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
-import javax.swing.*;
-
 import static org.apache.commons.lang3.exception.ExceptionUtils.getMessage;
+import static org.blume.modeller.DocManifestBuilder.getWordIdList;
 
-public class CreateCanvasesHandler extends AbstractAction implements Progress {
-    protected static final Logger log = LoggerFactory.getLogger(SaveBagHandler.class);
+public class CreateWordsHandler extends AbstractAction implements Progress {
+    protected static final Logger log = LoggerFactory.getLogger(CreateWordsHandler.class);
     private static final long serialVersionUID = 1L;
     private BagView bagView;
 
-    public CreateCanvasesHandler(BagView bagView) {
+    public CreateWordsHandler(BagView bagView) {
         super();
         this.bagView = bagView;
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) { openCreateCanvasesFrame(); }
+    public void actionPerformed(ActionEvent e) { openCreateWordsFrame(); }
 
     @Override
     public void execute() {
-        String message = ApplicationContextUtil.getMessage("bag.message.canvascreated");
+        String message = ApplicationContextUtil.getMessage("bag.message.wordcreated");
         DefaultBag bag = bagView.getBag();
         Map<String, BagInfoField> map = bag.getInfo().getFieldMap();
-        ResourceIdentifierList idList = new ResourceIdentifierList(bagView);
-        ArrayList<String> resourceIDList = idList.getResourceIdentifierList();
         ModellerClient client = new ModellerClient();
-        for (String resourceID : resourceIDList) {
-            URI canvasObjectURI = getCanvasObjectURI(map, resourceID);
+        String url = bag.gethOCRResource();
+        List<String> wordIdList = null;
+        try {
+            hOCRData hocr = DocManifestBuilder.gethOCRProjectionFromURL(url);
+            wordIdList = getWordIdList(hocr);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        assert wordIdList != null;
+        for (String resourceID : wordIdList) {
+            resourceID = StringUtils.substringAfter(resourceID,"_");
+            URI wordObjectURI = getWordObjectURI(map, resourceID);
             try {
-                client.doPut(canvasObjectURI);
-                ApplicationContextUtil.addConsoleMessage(message + " " + canvasObjectURI);
+                client.doPut(wordObjectURI);
+                ApplicationContextUtil.addConsoleMessage(message + " " + wordObjectURI);
             } catch (ModellerClientFailedException e) {
                     ApplicationContextUtil.addConsoleMessage(getMessage(e));
             }
@@ -57,19 +64,19 @@ public class CreateCanvasesHandler extends AbstractAction implements Progress {
         bagView.getControl().invalidate();
     }
 
-    void openCreateCanvasesFrame() {
+    void openCreateWordsFrame() {
         DefaultBag bag = bagView.getBag();
-        CreateCanvasesFrame createCanvasesFrame = new CreateCanvasesFrame(bagView, bagView.getPropertyMessage("bag.frame.canvas"));
-        createCanvasesFrame.setBag(bag);
-        createCanvasesFrame.setVisible(true);
+        CreateWordsFrame createWordsFrame = new CreateWordsFrame(bagView, bagView.getPropertyMessage("bag.frame.words"));
+        createWordsFrame.setBag(bag);
+        createWordsFrame.setVisible(true);
     }
 
-    public URI getCanvasContainerURI(Map<String, BagInfoField> map) {
+    public URI getWordContainerURI(Map<String, BagInfoField> map) {
         URIResolver uriResolver;
         try {
             uriResolver = URIResolver.resolve()
                     .map(map)
-                    .containerKey(ProfileOptions.CANVAS_CONTAINER_KEY)
+                    .containerKey(ProfileOptions.TEXT_WORD_CONTAINER_KEY)
                     .pathType(4)
                     .build();
             return uriResolver.render();
@@ -79,12 +86,12 @@ public class CreateCanvasesHandler extends AbstractAction implements Progress {
         return null;
     }
 
-    private URI getCanvasObjectURI(Map<String, BagInfoField> map, String resourceID) {
+    private URI getWordObjectURI(Map<String, BagInfoField> map, String resourceID) {
         URIResolver uriResolver;
         try {
             uriResolver = URIResolver.resolve()
                     .map(map)
-                    .containerKey(ProfileOptions.CANVAS_CONTAINER_KEY)
+                    .containerKey(ProfileOptions.TEXT_WORD_CONTAINER_KEY)
                     .resource(resourceID)
                     .pathType(5)
                     .build();

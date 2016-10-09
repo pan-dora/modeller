@@ -1,4 +1,4 @@
-package org.blume.modeller.ui.jpanel;
+package org.blume.modeller.ui.jpanel.base;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -152,10 +152,14 @@ public class BagView extends AbstractView implements ApplicationListener {
     public CreateAreasExecutor createAreasExecutor = new CreateAreasExecutor(this);
     public CreateLinesHandler createLinesHandler;
     public CreateLinesExecutor createLinesExecutor = new CreateLinesExecutor(this);
+    public CreateWordsHandler createWordsHandler;
+    public CreateWordsExecutor createWordsExecutor = new CreateWordsExecutor(this);
     public PatchPagesHandler patchPagesHandler;
     public PatchPagesExecutor patchPagesExecutor = new PatchPagesExecutor(this);
     public PatchAreasHandler patchAreasHandler;
     public PatchAreasExecutor patchAreasExecutor = new PatchAreasExecutor(this);
+    public PatchLinesHandler patchLinesHandler;
+    public PatchLinesExecutor patchLinesExecutor = new PatchLinesExecutor(this);
 
     private JLabel addDataToolBarAction;
     private JLabel removeDataToolBarAction;
@@ -286,8 +290,10 @@ public class BagView extends AbstractView implements ApplicationListener {
         createPagesHandler = new CreatePagesHandler(this);
         createAreasHandler = new CreateAreasHandler(this);
         createLinesHandler = new CreateLinesHandler(this);
+        createWordsHandler = new CreateWordsHandler(this);
         patchPagesHandler = new PatchPagesHandler(this);
         patchAreasHandler = new PatchAreasHandler(this);
+        patchLinesHandler = new PatchLinesHandler(this);
         return buttonPanel;
     }
 
@@ -593,8 +599,10 @@ public class BagView extends AbstractView implements ApplicationListener {
         createPagesExecutor.setEnabled(false);
         createAreasExecutor.setEnabled(false);
         createLinesExecutor.setEnabled(false);
+        createWordsExecutor.setEnabled(false);
         patchPagesExecutor.setEnabled(false);
         patchAreasExecutor.setEnabled(false);
+        patchLinesExecutor.setEnabled(false);
     }
 
     public void updateClearBag() {
@@ -626,8 +634,10 @@ public class BagView extends AbstractView implements ApplicationListener {
         createPagesExecutor.setEnabled(false);
         createAreasExecutor.setEnabled(false);
         createLinesExecutor.setEnabled(false);
+        createWordsExecutor.setEnabled(false);
         patchPagesExecutor.setEnabled(false);
         patchAreasExecutor.setEnabled(false);
+        patchLinesExecutor.setEnabled(false);
     }
 
     public void updateNewBag() {
@@ -649,8 +659,10 @@ public class BagView extends AbstractView implements ApplicationListener {
         createPagesExecutor.setEnabled(false);
         createAreasExecutor.setEnabled(false);
         createLinesExecutor.setEnabled(false);
+        createWordsExecutor.setEnabled(false);
         patchPagesExecutor.setEnabled(false);
         patchAreasExecutor.setEnabled(false);
+        patchLinesExecutor.setEnabled(false);
     }
 
     public void updateOpenBag() {
@@ -678,8 +690,10 @@ public class BagView extends AbstractView implements ApplicationListener {
         createPagesExecutor.setEnabled(true);
         createAreasExecutor.setEnabled(true);
         createLinesExecutor.setEnabled(true);
+        createWordsExecutor.setEnabled(true);
         patchPagesExecutor.setEnabled(true);
         patchAreasExecutor.setEnabled(true);
+        patchLinesExecutor.setEnabled(true);
     }
 
     public void updateBagInPlace() {
@@ -707,8 +721,10 @@ public class BagView extends AbstractView implements ApplicationListener {
         createPagesExecutor.setEnabled(true);
         createAreasExecutor.setEnabled(true);
         createLinesExecutor.setEnabled(true);
+        createWordsExecutor.setEnabled(true);
         patchPagesExecutor.setEnabled(true);
         patchAreasExecutor.setEnabled(true);
+        patchLinesExecutor.setEnabled(true);
     }
 
     public void updateSaveBag() {
@@ -737,8 +753,10 @@ public class BagView extends AbstractView implements ApplicationListener {
         createPagesExecutor.setEnabled(true);
         createAreasExecutor.setEnabled(true);
         createLinesExecutor.setEnabled(true);
+        createWordsExecutor.setEnabled(true);
         patchPagesExecutor.setEnabled(true);
         patchAreasExecutor.setEnabled(true);
+        patchLinesExecutor.setEnabled(true);
     }
 
     public void updateAddData() {
@@ -759,8 +777,10 @@ public class BagView extends AbstractView implements ApplicationListener {
         createPagesExecutor.setEnabled(true);
         createAreasExecutor.setEnabled(true);
         createLinesExecutor.setEnabled(true);
+        createWordsExecutor.setEnabled(true);
         patchPagesExecutor.setEnabled(true);
         patchAreasExecutor.setEnabled(true);
+        patchLinesExecutor.setEnabled(true);
     }
 
     public void updateManifestPane() {
@@ -796,8 +816,10 @@ public class BagView extends AbstractView implements ApplicationListener {
         context.register("createPagesCommand", createPagesExecutor);
         context.register("createAreasCommand", createAreasExecutor);
         context.register("createLinesCommand", createLinesExecutor);
+        context.register("createWordsCommand", createWordsExecutor);
         context.register("patchPagesCommand", patchPagesExecutor);
         context.register("patchAreasCommand", patchAreasExecutor);
+        context.register("patchLinesCommand", patchLinesExecutor);
     }
 
     @Override
