@@ -4,3 +4,9 @@ modeller-business/build/
 modeller-core/build/
 modeller-fedora/build/
 modeller-modeller/build/
+modeller-djatoka/build.gradle
+modeller-djatoka/build/
+modeller-hocr/build/
+/.gitignore
+.gradle/
+classes/
