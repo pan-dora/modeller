@@ -17,6 +17,7 @@ import org.blume.modeller.templates.CanvasScope;
 import org.blume.modeller.templates.MetadataTemplate;
 import org.blume.modeller.ui.jpanel.iiif.PatchCanvasFrame;
 import org.blume.modeller.ui.util.URIResolver;
+import org.blume.modeller.util.ResourceList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
