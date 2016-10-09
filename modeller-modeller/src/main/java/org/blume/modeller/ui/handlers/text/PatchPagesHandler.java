@@ -9,11 +9,12 @@ import org.blume.modeller.common.uri.FedoraPrefixes;
 import org.blume.modeller.templates.CollectionScope;
 import org.blume.modeller.templates.MetadataTemplate;
 import org.blume.modeller.ui.Progress;
+import org.blume.modeller.ui.handlers.common.IIIFObjectURI;
 import org.blume.modeller.ui.handlers.common.TextObjectURI;
 import org.blume.modeller.ui.jpanel.base.BagView;
 import org.blume.modeller.ui.jpanel.text.PatchPagesFrame;
 import org.blume.modeller.ui.util.ApplicationContextUtil;
-import org.blume.modeller.util.RDFCollectionWriter;
+import org.blume.modeller.util.TextCollectionWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -49,29 +50,50 @@ public class PatchPagesHandler extends AbstractAction implements Progress {
         DefaultBag bag = bagView.getBag();
         Map<String, BagInfoField> map = bag.getInfo().getFieldMap();
         ModellerClient client = new ModellerClient();
+        URI canvasContainerURI = IIIFObjectURI.getCanvasContainerURI(map);
         URI areaContainerIRI = TextObjectURI.getAreaContainerURI(map);
         String collectionPredicate = "http://iiif.io/api/text#hasAreas";
 
         String url = bag.gethOCRResource();
 
-        List<String> pageIdList;
+        List<String> pageIdList = null;
         Map <String, List<String>> nodemap = null;
+        Map <String, String> bboxmap = null;
+        Map<String, String> canvasPageMap;
+        Map<String, String> pageIdMap;
+
         InputStream rdfBody;
 
         try {
             hOCRData hocr = DocManifestBuilder.gethOCRProjectionFromURL(url);
             pageIdList = getPageIdList(hocr);
             nodemap = getAreaIdMap(hocr, pageIdList);
+            bboxmap = getBBoxMap(hocr, pageIdList);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
+        canvasPageMap = getCanvasPageMap(pageIdList,canvasContainerURI);
+        pageIdMap = getPageIdMap(pageIdList);
         assert nodemap != null;
         List<String> pageKeyList = new ArrayList<>(nodemap.keySet());
 
         for (String pageId : pageKeyList) {
             URI pageObjectURI = TextObjectURI.getPageObjectURI(map, pageId);
-            rdfBody = getAreaSequenceMetadata(nodemap, pageId, collectionPredicate, areaContainerIRI);
+            assert canvasPageMap != null;
+            String canvasURI = canvasPageMap.get(pageId);
+            assert pageIdMap != null;
+            String hOCRPageId = pageIdMap.get(pageId);
+            String bbox = bboxmap.get(hOCRPageId);
+            String region = Region.region()
+                    .bbox(bbox)
+                    .build();
+            String canvasRegionURI = CanvasRegionURI.regionuri()
+                    .region(region)
+                    .canvasURI(canvasURI)
+                    .build();
+
+            rdfBody = getAreaSequenceMetadata(nodemap, pageId, canvasRegionURI, collectionPredicate, areaContainerIRI);
             try {
                 client.doPatch(pageObjectURI, rdfBody);
                 ApplicationContextUtil.addConsoleMessage(message + " " + pageObjectURI);
@@ -97,6 +119,42 @@ public class PatchPagesHandler extends AbstractAction implements Progress {
         return nodemap;
     }
 
+    private Map<String, String> getBBoxMap(hOCRData hocr, List<String> pageIdList) {
+        Map<String, String> bboxMap = new HashMap<>();
+         for (String pageId : pageIdList) {
+             String bbox = DocManifestBuilder.getBboxForPage(hocr, pageId);
+             bboxMap.put(pageId, bbox);
+        }
+        return bboxMap;
+    }
+
+    public static Map<String,String> getCanvasPageMap(List<String> pageIdList, URI canvasContainerURI) {
+        try {
+            CanvasPageMap canvasPageMap;
+            canvasPageMap = CanvasPageMap.init()
+                    .canvasContainerURI(canvasContainerURI)
+                    .pageIdList(pageIdList)
+                    .build();
+            return canvasPageMap.render();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static Map<String,String> getPageIdMap(List<String> pageIdList) {
+        try {
+            PageIdMap pageIdMap;
+            pageIdMap = PageIdMap.init()
+                     .pageIdList(pageIdList)
+                    .build();
+            return pageIdMap.render();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     void openPatchPagesFrame() {
         DefaultBag bag = bagView.getBag();
         PatchPagesFrame patchPagesFrame = new PatchPagesFrame(bagView, bagView.getPropertyMessage("bag.frame.patch.pages"));
@@ -104,14 +162,15 @@ public class PatchPagesHandler extends AbstractAction implements Progress {
         patchPagesFrame.setVisible(true);
     }
 
-    private InputStream getAreaSequenceMetadata(Map<String, List<String>> resourceIDList, String pageId, String collectionPredicate,
-                                            URI resourceContainerIRI) {
+    private InputStream getAreaSequenceMetadata(Map<String, List<String>> resourceIDList, String pageId,
+                                              String canvasRegionURI, String collectionPredicate, URI resourceContainerIRI) {
         ArrayList<String> idList = new ArrayList<>(resourceIDList.get(pageId));
-        RDFCollectionWriter collectionWriter;
-        collectionWriter = RDFCollectionWriter.collection()
+        TextCollectionWriter collectionWriter;
+        collectionWriter = TextCollectionWriter.collection()
                 .idList(idList)
                 .collectionPredicate(collectionPredicate)
                 .resourceContainerIRI(resourceContainerIRI.toString())
+                .canvasURI(canvasRegionURI)
                 .build();
 
         String collection = collectionWriter.render();

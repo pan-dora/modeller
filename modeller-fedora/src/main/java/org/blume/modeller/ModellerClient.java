@@ -14,7 +14,6 @@ import java.io.InputStream;
 import java.net.URI;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
-import static java.net.URI.create;
 import static org.apache.commons.lang3.exception.ExceptionUtils.getMessage;
 
 public class ModellerClient {

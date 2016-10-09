@@ -33,6 +33,6 @@ public interface hOCRData {
     List<String> getCAreaIdDescIds(String id);
 
     @XBRead("//*[@id='{0}']/@title")
-    List<String> getTitleForId(String id);
+    String getTitleForId(String id);
 
 }

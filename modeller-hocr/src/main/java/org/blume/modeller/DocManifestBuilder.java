@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
+import org.apache.commons.lang3.StringUtils;
 import org.blume.modeller.util.RDFCollectionWriter;
 import org.xmlbeam.XBProjector;
 
@@ -71,8 +72,10 @@ public class DocManifestBuilder {
         return hocr.getCAreasforPage(id);
     }
 
-    public static List<String> getLineIdListforArea(hOCRData hocr, String id) {
-        return hocr.getLinesforArea(id);
+    public static List<String> getLineIdListforArea(hOCRData hocr, String id) { return hocr.getLinesforArea(id); }
+
+    public static String getBboxForPage(hOCRData hocr, String id) {
+        return StringUtils.substringBefore(StringUtils.substringAfter(hocr.getTitleForId(id), "bbox "), ";");
     }
 
     public static List<String> getWordIdListforLine(hOCRData hocr, String id) {

@@ -1,4 +1,4 @@
-package org.blume.modeller.ui.handlers.iiif;
+package org.blume.modeller.util;
 
 import org.apache.jena.rdf.model.*;
 import org.blume.modeller.ModellerClient;
@@ -11,21 +11,19 @@ import java.util.Collections;
 
 import static org.apache.commons.lang3.exception.ExceptionUtils.getMessage;
 
-class ResourceList {
+public class ResourceList {
     private URI resourceContainerURI;
-    ResourceList(URI resourceContainerURI) {
+    public ResourceList(URI resourceContainerURI) {
         this.resourceContainerURI = resourceContainerURI;
     }
 
-    ArrayList<String> getResourceList() {
+    public ArrayList<String> getResourceList() {
         ModellerClient client = new ModellerClient();
         try {
             String resource = client.doGetContainerResources(this.resourceContainerURI);
             final Model model = ModelFactory.createDefaultModel();
             model.read(new ByteArrayInputStream(resource.getBytes()), null, "TTL");
             ArrayList<String> resourceList = getChilden(model);
-            model.write(System.out, "TTL");
-            System.out.println(resourceList);
             Collections.sort(resourceList, String.CASE_INSENSITIVE_ORDER);
             return resourceList;
         } catch (ModellerClientFailedException e) {
