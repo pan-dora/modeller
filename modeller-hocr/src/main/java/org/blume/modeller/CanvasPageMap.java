@@ -52,16 +52,6 @@ public class CanvasPageMap {
             return canvasPageMap;
         }
 
-        public Map<String, String> getPageIdMap(List<String> pageIdList) {
-            Iterator<String> i1 = pageIdList.iterator();
-            Map<String,String> pageIdMap = new LinkedHashMap<>();
-            while (i1.hasNext()) {
-                String pageId = StringUtils.substringAfter(i1.next(), "_");
-                pageIdMap.put(pageId , i1.next());
-            }
-            return pageIdMap;
-        }
-
         public CanvasPageMap build() throws IOException {
             Map<String, String> canvasPageMap = getMap(this.pageIdList, this.canvasContainerURI);
             return new CanvasPageMap(canvasPageMap);

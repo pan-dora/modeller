@@ -74,7 +74,7 @@ public class DocManifestBuilder {
 
     public static List<String> getLineIdListforArea(hOCRData hocr, String id) { return hocr.getLinesforArea(id); }
 
-    public static String getBboxForPage(hOCRData hocr, String id) {
+    public static String getBboxForId(hOCRData hocr, String id) {
         return StringUtils.substringBefore(StringUtils.substringAfter(hocr.getTitleForId(id), "bbox "), ";");
     }
 

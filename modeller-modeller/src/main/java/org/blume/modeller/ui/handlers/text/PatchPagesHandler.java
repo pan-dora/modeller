@@ -1,20 +1,16 @@
 package org.blume.modeller.ui.handlers.text;
 
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.StringUtils;
 import org.blume.modeller.*;
 import org.blume.modeller.bag.BagInfoField;
 import org.blume.modeller.bag.impl.DefaultBag;
-import org.blume.modeller.common.uri.FedoraPrefixes;
-import org.blume.modeller.templates.CollectionScope;
-import org.blume.modeller.templates.MetadataTemplate;
 import org.blume.modeller.ui.Progress;
 import org.blume.modeller.ui.handlers.common.IIIFObjectURI;
+import org.blume.modeller.ui.handlers.common.NodeMap;
 import org.blume.modeller.ui.handlers.common.TextObjectURI;
+import org.blume.modeller.ui.handlers.common.TextSequenceMetadata;
 import org.blume.modeller.ui.jpanel.base.BagView;
 import org.blume.modeller.ui.jpanel.text.PatchPagesFrame;
 import org.blume.modeller.ui.util.ApplicationContextUtil;
-import org.blume.modeller.util.TextCollectionWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,11 +21,10 @@ import java.io.InputStream;
 import java.net.URI;
 import java.util.*;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.apache.commons.lang3.StringEscapeUtils.unescapeXml;
 import static org.apache.commons.lang3.exception.ExceptionUtils.getMessage;
-import static org.blume.modeller.DocManifestBuilder.getAreaIdListforPage;
 import static org.blume.modeller.DocManifestBuilder.getPageIdList;
+import static org.blume.modeller.ui.handlers.common.NodeMap.getCanvasPageMap;
+import static org.blume.modeller.ui.handlers.common.NodeMap.getPageIdMap;
 
 public class PatchPagesHandler extends AbstractAction implements Progress {
     protected static final Logger log = LoggerFactory.getLogger(PatchPagesHandler.class);
@@ -42,7 +37,9 @@ public class PatchPagesHandler extends AbstractAction implements Progress {
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) { openPatchPagesFrame(); }
+    public void actionPerformed(ActionEvent e) {
+        openPatchPagesFrame();
+    }
 
     @Override
     public void execute() {
@@ -57,8 +54,8 @@ public class PatchPagesHandler extends AbstractAction implements Progress {
         String url = bag.gethOCRResource();
 
         List<String> pageIdList = null;
-        Map <String, List<String>> nodemap = null;
-        Map <String, String> bboxmap = null;
+        Map<String, List<String>> areaIdmap = null;
+        Map<String, String> bboxmap = null;
         Map<String, String> canvasPageMap;
         Map<String, String> pageIdMap;
 
@@ -67,16 +64,16 @@ public class PatchPagesHandler extends AbstractAction implements Progress {
         try {
             hOCRData hocr = DocManifestBuilder.gethOCRProjectionFromURL(url);
             pageIdList = getPageIdList(hocr);
-            nodemap = getAreaIdMap(hocr, pageIdList);
-            bboxmap = getBBoxMap(hocr, pageIdList);
+            areaIdmap = NodeMap.getAreaIdMap(hocr, pageIdList);
+            bboxmap = NodeMap.getBBoxMap(hocr, pageIdList);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        canvasPageMap = getCanvasPageMap(pageIdList,canvasContainerURI);
+        canvasPageMap = getCanvasPageMap(pageIdList, canvasContainerURI);
         pageIdMap = getPageIdMap(pageIdList);
-        assert nodemap != null;
-        List<String> pageKeyList = new ArrayList<>(nodemap.keySet());
+        assert areaIdmap != null;
+        List<String> pageKeyList = new ArrayList<>(areaIdmap.keySet());
 
         for (String pageId : pageKeyList) {
             URI pageObjectURI = TextObjectURI.getPageObjectURI(map, pageId);
@@ -93,103 +90,23 @@ public class PatchPagesHandler extends AbstractAction implements Progress {
                     .canvasURI(canvasURI)
                     .build();
 
-            rdfBody = getAreaSequenceMetadata(nodemap, pageId, canvasRegionURI, collectionPredicate, areaContainerIRI);
+            rdfBody = TextSequenceMetadata.getTextSequenceMetadata(areaIdmap, pageId, canvasRegionURI,
+                    collectionPredicate, areaContainerIRI);
             try {
                 client.doPatch(pageObjectURI, rdfBody);
                 ApplicationContextUtil.addConsoleMessage(message + " " + pageObjectURI);
             } catch (ModellerClientFailedException e) {
-                    ApplicationContextUtil.addConsoleMessage(getMessage(e));
+                ApplicationContextUtil.addConsoleMessage(getMessage(e));
             }
         }
         bagView.getControl().invalidate();
     }
 
-    private Map<String, List<String>> getAreaIdMap(hOCRData hocr, List<String> pageIdList) {
-        Map<String, List<String>> nodemap = new HashMap<>();
-        List<String> areaIdList;
-        for (String pageId : pageIdList) {
-            areaIdList = getAreaIdListforPage(hocr, pageId);
-            for (int i = 0; i < areaIdList.size(); i++) {
-                String areaId = StringUtils.substringAfter(areaIdList.get(i), "_");
-                areaIdList.set(i, areaId);
-            }
-            pageId = StringUtils.substringAfter(pageId, "_");
-            nodemap.put(pageId, areaIdList);
-        }
-        return nodemap;
-    }
-
-    private Map<String, String> getBBoxMap(hOCRData hocr, List<String> pageIdList) {
-        Map<String, String> bboxMap = new HashMap<>();
-         for (String pageId : pageIdList) {
-             String bbox = DocManifestBuilder.getBboxForPage(hocr, pageId);
-             bboxMap.put(pageId, bbox);
-        }
-        return bboxMap;
-    }
-
-    public static Map<String,String> getCanvasPageMap(List<String> pageIdList, URI canvasContainerURI) {
-        try {
-            CanvasPageMap canvasPageMap;
-            canvasPageMap = CanvasPageMap.init()
-                    .canvasContainerURI(canvasContainerURI)
-                    .pageIdList(pageIdList)
-                    .build();
-            return canvasPageMap.render();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    public static Map<String,String> getPageIdMap(List<String> pageIdList) {
-        try {
-            PageIdMap pageIdMap;
-            pageIdMap = PageIdMap.init()
-                     .pageIdList(pageIdList)
-                    .build();
-            return pageIdMap.render();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
     void openPatchPagesFrame() {
         DefaultBag bag = bagView.getBag();
-        PatchPagesFrame patchPagesFrame = new PatchPagesFrame(bagView, bagView.getPropertyMessage("bag.frame.patch.pages"));
+        PatchPagesFrame patchPagesFrame = new PatchPagesFrame(bagView, bagView.getPropertyMessage("bag.frame.patch" +
+                ".pages"));
         patchPagesFrame.setBag(bag);
         patchPagesFrame.setVisible(true);
-    }
-
-    private InputStream getAreaSequenceMetadata(Map<String, List<String>> resourceIDList, String pageId,
-                                              String canvasRegionURI, String collectionPredicate, URI resourceContainerIRI) {
-        ArrayList<String> idList = new ArrayList<>(resourceIDList.get(pageId));
-        TextCollectionWriter collectionWriter;
-        collectionWriter = TextCollectionWriter.collection()
-                .idList(idList)
-                .collectionPredicate(collectionPredicate)
-                .resourceContainerIRI(resourceContainerIRI.toString())
-                .canvasURI(canvasRegionURI)
-                .build();
-
-        String collection = collectionWriter.render();
-        MetadataTemplate metadataTemplate;
-        List<CollectionScope.Prefix> prefixes = Arrays.asList(
-                new CollectionScope.Prefix(FedoraPrefixes.RDFS),
-                new CollectionScope.Prefix(FedoraPrefixes.MODE));
-
-        CollectionScope scope = new CollectionScope()
-                .fedoraPrefixes(prefixes)
-                .sequenceGraph(collection);
-
-        metadataTemplate = MetadataTemplate.template()
-                .template("template/sparql-update-seq.mustache")
-                .scope(scope)
-                .throwExceptionOnFailure()
-                .build();
-
-        String metadata = unescapeXml(metadataTemplate.render());
-        return IOUtils.toInputStream(metadata, UTF_8 );
     }
 }
