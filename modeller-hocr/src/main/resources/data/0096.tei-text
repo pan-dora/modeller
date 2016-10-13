@@ -1,0 +1,1402 @@
+<?xml version="1.0" encoding="UTF-8"?>
+Decas quinta collectionis suae craniorum diversarum gentium illustrataJo. Frid. Blumenbachii ... decas quinta collectionis suae craniorum diversarum gentium illustrata (1808)Blumenbach, Johann FriedrichProjekt Johann Friedrich Blumenbach - online der Akademie der Wissenschaften zu GöttingenProjektträger:Akademie der Wissenschaften zu GöttingenVolltexterstellung und Basis-TEI-Auszeichung durch:Editura GmbH &amp; Co.KG, BerlinBearbeitung durch: Bearbeiter des Projekts Johann Friedrich Blumenbach - onlineElektronischer Volltext der online-Werkausgabe der Schriften Johann Friedrich Blumenbachs (Auszeichnung in TEI P5, BP-Level 3)XXXX bytes ... später ausfüllenAkademie der Wissenschaften zu Göttingen... später ausfüllen ...... später ausfüllen ...... später ausfüllen ...Blumenbach - onlineHerstellung der Imagedateien des Quelldokuments durch das Göttinger DigitalisierungszentrumBlumenbach, Johann FriedrichDecas quinta collectionis suae craniorum diversarum gentium illustrataJo. Frid. Blumenbachii ... decas quinta collectionis suae craniorum diversarum gentium illustrataGoettingaeApud Henricum DieterichMDCCCVIII20 S., X gef. Bl. : 10 Ill. (Kupferst.)26 cmSonderdruck des Beitrags "Jo. Frid. Blumenbachii decas quinta collectionis suae craniorum diversarum gentium illustrata. d. XXV. Aug. MDCCCVI", in Commentationes Societatis
+Regiae Scientiarum Gottingensis, Bd. XV (1808), Phys., S. 199-216. Tafel L ist in diesem Exemplar ersetzt. Angezeigt von Blumenbach in GgA 1808 (139. und 140. Stück, 29.
+August), S. 1387; "Göttingen".4 ZOOL XII, 1590:5000096Volltextdigitalisierung für das Projekt "Johann Friedrich Blumenbach - online" der Akademie der Wissenschaften zu Göttingen.Corrigenda und Druckfehlerverzeichnisse wurden soweit vorhanden erfasst und zusätzlich über choice in die Texte eingearbeitet. Innerhalb von choice steht der
+korrigierte Wert in corr type="corrigenda" und der zu korrigierende Wert in orig. In der Editura-Basis HTML-Transformation wird zurzeit der Wert in
+corr realisiert.choicechoicecorr type="corrigenda"origcorrBei der Erfassung eindeutig identifizierte Druckfehler wurden über choice gekennzeichnet. In corr type="misprint" wurde der korrigierte Wert erfasst und in
+orig der fehlerhafte Wert der Druckvorlage. In der Editura-Basis HTML-Transformation wird zurzeit der Wert in corr realisiert.choicecorr type="misprint"origcorrBei der Zeichenerkennung wurde nach dem von der Akademie gelieferten Dokument "Buchstabenmuster_Blumenbach.doc" modernisiert.In Absprache mit der Akademie wurden die folgenden Aspekte der Vorlage nicht erfasst:Bogensignaturen und KustodenKolumnentitelAuf Titelblättern wurde auf die Auszeichnung der Schriftgrößenunterschiede zugunsten der Identifizierung von titleParts verzichtet.titlePartKeine Auszeichnung der Initialbuchstaben am Kapitelanfang.Es wurden alle Anführungszeichen übernommen und die Zitate zusätzlich mit q ausgezeichnet. Eine Ausnahme bilden Zitate, bei denen das Anführungszeichen zu Beginn
+jeder Zeile wiederholt wird. Hier wurden die Wiederholungen des öffnenden Zeichens nicht übernommen, sondern jeweils nur das öffnende und das schließende Zeichen. Das
+umschließende Element q wurde für diese Zitate über das Attribut type mit dem Wert preline gekennzeichnet.qqtypeprelineWeiche und harte Zeilentrennungen wurden als 002D übernommen. Weiche Zeilentrennungen wurden über die Ergänzung eines Attributwertes von den harten Trennungen unterschieden:
+lb type="inWord". Erstreckt sich die Worttrennung über einen Seitenumbruch, steht das Element pb direkt hinter dem schließenden lb type="inWord"
+bzw. lblb type="inWord"pblb type="inWord"lbletter-spacing: 2pt;text-align: center;text-indent: none;text-indent: -1em;text-indent: 1em;text-align: right;text-align: left;margin-left: 1em;margin-left: 2em;margin-right: 1em;display: none;font-size: .8em;font-size: x-small;font-size: xx-small;font-size: large;font-size: x-large;font-size: xx-largefont-variant: small-capsfont-style: italicfont-size: .7em; vertical-align: super;font-size: .7em; vertical-align: sub;horizontal line short; solid; align: centerhorizontal line long; solid; align: centerrectangular box; align: centerprinters ornament; align: centerEs wurden nur nummerierte divs genutzt.Trägt obligatorisch die folgenden Attribute: n gibt die Originalseite der Vorlage wieder, facs ruft die Faksimiledatei auf,
+xml:id bildet für Seitenverweise eine ID aus dem Wert von n und einer laufenden Nummer. Wird pb in Fußnotentexten ein zweites Mal gesetzt, zählt
+die genannte ID eine Stelle hoch.Über das ODD-File "blumenbach_TEI_changedck_manuell.xml" wurde die Schemaerstellung gesteuert. Aktuell stehen alle Elemente der vier Grundmodule tei, core, textstructure und header
+zur Nutzung bereit. Zusätzlich alle Elemente des Moduls tagdocs und namesdates für die Dokumentation im teiHeader. Die von Editura ausgeschlossenen Elemente in den Modulen figures,
+transcr und linking wurden bei der Schemabearbeitung durch Blumenbach-online wieder aufgehoben.Folgende Attributwerte wurden für den Einsatz im Volltext im ODD-File "blumenbach_TEI_changedck_manuell.xml" näher bestimmt und bereitgestellt:Element pb: Für das Attribut n sind neben Seitenzahlen weitere zugelassene Werte definiert.pbnElement lb: Mögliche Werte für das Attribut type sind als geschlossene Liste definiert.lbtypeElement titlePart: Mögliche Werte für das Attribut type sind als geschlossene Liste definiert.titleParttypeElement div1: Mögliche Werte für das Attribut type sind als geschlossene Liste definiert.div1typeElement corr: Mögliche Werte für das Attribut type sind als geschlossene Liste definiert.corrtypeGemeinsame Normdatei (GND)Dewey Decimal ClassificationGetty Thesaurus of Geographic NamesIconclassJohann Friedrich Blumenbach - online Genretypen301AnthropologieSchädelGelehrte AbhandlungSchädelsammlung19. JahrhundertInitiation $Revision: 162 $, $Date: 2011-03-08 13:20:31 +0100 (Di, 08. Mrz 2011) $Aktualisierung des TEI-HeadersTite-Bereinigung und Aktualisierung des TEI-Headers
+
+JO. FRID. BLUMENBACHII
+
+PROF. MED. ORDIN. SOCIET. REG. SCIENT. GOETTING. LONDINENS. ET
+
+SENENS. ACAD. AMERICANAE ART. ET SCIENT. BOSTON. ITALICAE
+
+PISANAE, FLORENTINAE, IMPERIAL, NATVRAE SCRVTATOR. MOSCOVIENS.
+
+SOCIET. PHILOS. PHILADELPHICAE, ROTTERODAMENS. HARLEMENS.
+
+MEDICAE PARISINAE, MONSPELIENS, LONDINENS. HAVNIENSIS, TIGVRINAE,
+
+PARISINAE PHILOMATHICAE, PHILOTECHNICAE, MEDICAE AEMVLATIONIS
+
+ET GALVANICAE, VETERINARIAE HAVNIENSIS, NATVRAE CVRIOSOR.
+
+BEROLINENS. LINNEANAE LONDINENSIS, ALIARVMQVE PLVRIVM SODALIS,
+
+INSTITVTI IMPERIALIS FRANCICI CORRESP.
+
+DECAS QVINTA
+
+COLLECTIONIS SVAE
+
+CRANIORVM
+
+DIVERSARVM GENTIVM
+
+ILLVSTRATA.
+
+GOETTINGAE
+
+APVD HENRICVM DIETERICH.
+
+MDCCCVIII.
+
+Quando primum animum ad parandam ex diuersis per terra-
+
+rum orbem populis craniorum humanorum collectionem
+
+appuli, variam quidem eiusmodi congeriei vtilitatem ad illustrandam
+
+generis humani naturalem historiam perspexi; neque defuturas
+
+mihi occasiones speraui ex principibus generis humani varietatibus
+
+vnum alterumue specimen acquirendi. Verum vti istam spem
+
+successus quem expertus sum vltra expectationem superauit, ita
+
+et vtilitatem ex studio huius supellectilis deriuandam, longe
+
+vberiorem et magis multifariam deprehendi, quam quidem in
+
+antecessum putaram.
+
+Vt enim pauca tantum e multis hic memorare liceat, inseruiit
+
+mihi ista collectio1. 
+
+ad quosdam characteres distinctiuos humano generi pro-
+
+prios constituendos, quo quidem inprimis dentium incisorum
+
+inferiorum situm erectum, et quod huic positioni respondet, men-
+
+tum prominulum, refero.
+
+2. ad pulcherrimam et quasi idealem capitis ossei formam
+
+normalem demonstrandam, cui scopo v. c. eximium feminae Geor-
+
+gianae cranium (– Dec. III. tab. 21. –) accommodatum est.
+
+tab. 21
+
+3. ad generis humani varietates quotquot hactenus inno-
+
+tuerunt, vni eidemque speciei vindicandas, quae per varios gradus
+
+inter binae vniuersae scalae extrema, Aethiopicam scilicet et Mon-
+
+golicam formam, infinitis modis ludit.
+
+4. ab altera vero parte et ad confirmandam diuisionem
+
+generis humani in quinas varietates Caucasiam inquam, Mongo-
+
+licam, Aethiopicam, Americanam et Malaicam.
+
+5. ad explicandam formam mixtam quae nempe populis
+
+ex diuersarum varietatum connubio ortis propria est, vt vc. Casac-
+
+cis (– Dec. I. tab. 4. –), Kirgisis (– Dec. II. tab. 13. –) etc.
+
+tab. 
+
+4tab.136. 
+
+6. ad diluendas opiniones de putatitia vultus similitudine
+
+inter dissitas quasdam gentes, quas ideo inter se affines et cognatas
+
+crediderunt, vt veterum Aegyptiorum cum Sinensibus, aut horum
+
+ipsorum cum Hottentottis.
+
+7. vtique vero ad illustrandum ortum quorundam populorum
+
+qui capitis conformatione euidenter cum aliis quibusdam conue-
+
+niunt, vt prisci Guanchi insularum fortunatarum cum Libyco
+
+stemmate veterum Aegyptiorum (– Dec. V. tab. 42. –) aut
+
+Iacutae cum aliis Mongolis (– Dec. II. tab. 15. –)
+
+tab. 158. 
+
+8. ad explicandas quasdam physiologicas diuersarum nationum
+
+proprietates, vc. insignem odoratum Aethiopum et Indorum
+
+Americae borealis (– Dec. I. tab. 9. –)
+
+tab. 9
+
+Verum taceo numerosas alias obseruationes quibus quadragintae
+
+caluariae quas ex supellectile mea selectas, quaternis decadibus
+
+hactenus selegeram, ansam praebuerunt, et his tanquam comple-
+
+mentum, quintam adhuc decadem subiungo craniorum maxime
+
+memorabilium et rarissimorum; quibus tandem vnicas maioris
+
+momenti lacunas in ista collectione (quae dum haec scribo 134
+
+continet specimina), feliciter expletas esse dicere ausim.
+
+VARIETATIS PRIMAE
+
+SPECIMINA BINA.
+
+XLI. Armeni.
+
+(– Tab. XLI. –)
+
+Tab. XLI
+
+Equidem e Caucasia varietate, vtpote quam pro primigenia
+
+habere cum physiologica tum historica argumenta suadent,
+
+primum prodeat caput osseum Armeni, cuius gentem ad anti-
+
+quissimas omnium referre, imo vero quasi pro aboriginibus humani
+
+generis habere licet, siquidem ex Armeniae montosis iugis post
+
+noachicum diluuium orbis terraquei incolas denuo deriuatos
+
+accepimus.
+
+Debeo hoc cranium amicitiae Cl. Hacquet, anatomes pro-
+
+fessoris in academia Lembergensi.
+
+Hacquet,
+
+Viri est, 67 annorum, dum in viuis esset, ipsi Hacqueto
+probe noti.
+
+Hacqueto
+
+Habitu suo proxime ab eo abest quem iudaea gens prae se
+
+fert, maxime si nasum aduncum et mentum prominulum spectes,
+
+vtpote in quibus simillimum est caluariae iudaei centenarii quod
+
+antea exhibui (– Dec. IV. tab. 34. –). Et in vniuersum lucu-
+
+lentam analogiam quae gentilitium vtriusque nationis vultum
+
+intercedit, tum mihi ipsi in curiis mercatorum videre licuit, quas
+
+praesertim Amstelodami et Londini ea caussa studiose frequentaui,
+
+vt diuersarum gentium natiuos characteres inuicem conferrem;
+
+tum vero et accuratissimis et quasi graphicis Armeniorum descripto-
+
+ribus annotatum est, e quorum numero ipsum Hacquetum in
+
+historia itineris per Daciae et Sarmatiae carpaticos montes
+
+Reisen durch die Dacischen und Sarmatischen Karpathen T. II. p. 208.
+Reisen durch die Dacischen und Sarmatischen Karpathen, et
+
+Cl. Georgi in classica de gentibus quae vniuersum Russicum im-
+
+perium inhabitant opere
+
+Beschreibung aller Nationen des Russischen Reichs. p. 451.
+Beschreibung aller Nationen des Russischen Reichs., nominasse sufficiat.tab. 34
+Hacquetum T. II. p. 208.
+
+Reisen durch die Dacischen und Sarmatischen KarpathenGeorgi p. 451.
+Beschreibung aller Nationen des Russischen Reichs.
+
+Et quidem ille, qui ipse magnam Europae partem inuisit,
+
+expresse memorat, et hoc Armeniis cum Iudaeis esse commune,
+
+quod gentilitium istum vultum vel in remotissimis regionibus,
+
+etiamsi eas per longam iam generationum seriem inhabitarint,
+
+immutatum tamen seruent; imo et infantes eorum a patre Armenio
+
+ex matre alius gentis natos, nihilominus paternae stirpis physiogno-
+
+miam tantum non plane intemeratam prae se ferre.
+
+Characteres primarii. Nasi ossa valde exporrecta, a lateribus
+
+compressa, et acuto dorsali iugo decurrentia. Frons reclinata.
+
+Glabella prominens, et tubera sinuum frontalium turgida,
+
+Maxilla vtraque angusta.
+
+Characteres primarii
+
+Alia obseruata. Caluaria tenuis, proportione leuis. Meatus
+
+auditorii externi angusti.
+
+Alia obseruata
+
+XLII. Guanchi Teneriffensis.
+(– Tab. XLII. –)
+Tab. XLII
+
+Inter cimelia musei mei anthropologici refero integram
+
+mumiam veteris Guanchi c) pretiosum donum perill. Banksii
+
+Verbum Guan lingua istius gentis hominem denotat. v. Jos. de Viera
+(y Clavijo) Noticias de las Islas de Canaria. T. I. p. 131.
+GuanJos. de VieraClavijoNoticias de las Islas de Canaria.,
+
+cuius munificentim toties iam expertus sum.
+
+GuanchiVerbum  lingua istius gentis hominem denotat. v. (y )  T. I. p. 131.
+GuanJos. de VieraClavijo Noticias de las Islas de Canaria.Banksii
+
+Quantum ex vniuersi corporis habitu, thoracis ad ilia rela-
+
+tione, clauiculis etc. coniicere licet, muliebre est cadauer, cum
+
+ex antro sepulcrali subterraneo Teneriffae Londinum afferebatur,
+
+pro more priscarum istarum in insulis fortunatis aboriginum,
+
+totum quantum coriis caprinis, quae iam soluta seruo, curiose
+
+insutum 
+Cf. Edm. Scory in Purchas's Pigrimage p. 787.
+Edm. ScoryPigrimage.Cf.  in Purchas's  p. 787.Edm. ScoryPigrimage
+
+Ipsum corpus plane inodorum mirum in modum exsiccatum
+
+Modum quo sacerdotes Guanchorum funera haec parabant, curate de-
+
+scribunt Abreu de Galindo in Glas'sHistory of the Canary Islands
+p. 151. et Viera. l. c. p. 175.
+
+Abreu de GalindoGlas'sHistory of the Canary IslandsViera,
+
+ita vt ossibus musculi firmiter adhaereant, integumentis quae vocan-
+
+tur communibus stricte obtecti, ventribus vero encephali, thoracis
+
+et abdominis viscera adhuc contineantur.
+
+Modum quo sacerdotes
+Guanchorum funera haec parabant, curate de-
+scribunt  in p. 151. et . l. c. p. 175.Abreu de GalindoGlas'sHistory of the Canary IslandsViera
+
+Omnia vero adeo exsucca et leuia vt totum cadauer non
+
+nisi septem libras cum dimidia pondere aequet, cum tamen vel
+
+solum sceleton excarne feminae eiusdem staturae, et rite ceteroquin
+
+ficcatum at minimum denas libras pendat.
+
+Caput mumiae quod hic solum exhibemus, faciali parte
+
+latius est, non quidem vt in mongolica varietate iugalibus ossibus
+
+fere in eodem horizontali plano vtrinque extantibus, attamen
+
+vt in eo vulgari veterum Aegyptiorum vultu quem alias a binis
+
+aliis quem in istius gentis monumentis videre licet distinximus 
+In philosophical Transactions for 1794. P. I. p. 191. Cf. et Paulini
+A. S. Bartholomaeo mumiograph. musei Obiciani p. 25.
+
+philosophical Transactions forPaulini. Bartholomaeomumiograph. musei Obiciani,
+
+quorum quidem alter propius ad Aethiopicum alter ad Indicum
+
+accedit. Vertex depressior; occiput tuberosum; frons spatiosa;
+
+limbus orbitae superciliaris ad processum orbitalem externum
+
+s. malarem valde protuberans; inferior faciei pars a naribus ad
+
+mentum breuior; maxillae inferioris curuatura magis arcuata quam
+
+elliptica, mentumque rotundatum; coronae vero dentium primo-
+
+rum inferiorum (nam superiores pridem ceciderant) neutiquam
+
+scalpriformes ad demordendum aptae, verum obtusae, fere cylin-
+
+dricae, extima superficie plana detrita, verbo tales quales pridem
+
+ab aliis et a me ipso (– Dec. I. ad tab. 1. et Dec. IV. ad
+
+tab. 31. –) in variis mumiis aegyptiacis annotatae sunt. Verum
+
+his conformationis singularis characteribus alia quoque accedunt
+
+momenta quibus prisci insularum fortunatorum incolae etsi tota
+
+fere Africae borealis latitudine a veteribus Aegyptiis diuisi tamen
+
+cum ipsis conueniunt, quo praesertim tum singularis defunctos
+
+condiendi ritus pertinet, itidem sacerdotibus pollinctoribus com-
+
+missus, vt et lineae coralliorum quibus mumiae Guanchicae aeque
+
+ac aegypticae passim ornatae reperiuntur; tum vero et linguarum
+
+congruentia, siquidem Cl. Marsden ex vocabulario Tuarikorum
+
+Aegypto vicinorum, quod desideratissimus Hornemann noster
+
+apud eos collegerat, affinitatem linguae eorum cum ea Numidarum
+
+seu Berberorum demonstrauitv. 
+Hornemann'sTagebuch seiner Reise von Cairo nach Murzuk p. 235.
+Hornemann'sTagebuch seiner Reise von Cairo nach Murzuk, 
+
+quam ipsam iterum cum Guanchica
+
+Canariensium insularum conuenire notum est. Ex quo triplici
+
+consensione vultus inquam gentilitii, linguarum et rituum
+
+peculiarium, communem tum alterius Aegyptiorum stemmatis, tum
+
+Guanchorum a Libycis s. Numidicis aboriginibus ortum, aut
+
+saltem cognationem eorum, probabiliter coniectare licebit. 
+
+In
+1794. P. I. p. 191. Cf. et A. S p. 25.philosophical Transactions forPaulini. Bartholomaeomumiograph. musei Obicianitab. 1tab. 31MarsdenHornemannv.  p. 235.Hornemann'sTagebuch seiner Reise von Cairo nach Murzuk
+
+VARIETATIS SECVNDAE
+
+SPECIMINA BINA.
+
+XLIII. Lapponis.
+
+(– Tab. XLIII. –)
+
+Tab. XLIII
+
+Cum Perill. Thunberg a populari quodam docto aliquandiu
+
+nobiscum Goettingae versato acceperat diu iam sed hactenus
+
+incassum me desiderare Lapponis cranium, pro singulari qua
+
+excellit tum humanitate tum naturalis historiae cultores iuuandi
+
+ardore, non destitit donec ope amici qui inter Lappones sacerdotis
+
+munere fungitur, bigam istius gentis craniorum, alterum maris
+
+alterum feminae acquireret, mihique beneuole transmitteret.
+
+Vtrumque ex sepulcris templi hodie derelicti erutum est, in quo
+
+ante 24 et quod excurrit annos plures Lappones baptisati inhumati
+
+erant, quorum sceleta iam simul cum vestimentis suis ex renonum
+
+pellibus confectis, restabant. Quoduis eorum vt alteri simillimum
+
+ita et ad amussim tam cum graphicis classicorum de Lapponibus
+
+auctorum descriptionibus
+
+Praeter notissimos de Lapponibus auctores,
+Schefferum, Regnard,
+
+Ho̊gstro̊m al. nominasse liceat opusculum ab ipso Lappone editum s. t.
+
+kurze Lappländische Beschreibung, vonNic. Ohrs,gebohrnemLapp-
+
+länderund der freyen Künste Beflissnen. Hannov. 1704. 8. De auctore
+
+qui magnam Europae partem peragrauerat et Regibus Carolo XI. Sueciae,
+
+Ludovico XIV. Galliae, Georgio I. magnae Britanniae et Imperatori Rus-
+
+sorum Petro innotuerat, deque admiranda facilitate qua linguas exoticas
+
+didicit, cf. Weberiverändertes Russland et Schoberimemorabilia
+
+Russico Asiatica in MülleriSammlung Russischer Geschichte T. VII. p. 100.Schefferum, Regnard,
+Ho̊gstro̊m al. nominasse liceat opusculum ab ipso Lappone editum s. t.
+kurze Lappländische Beschreibung, von Nic. Ohrs,gebohrnem Lapp-
+länder und der freyen Künste Beflissnen. Hannov. 1704. 8. De auctore
+Weberiverändertes RusslandSchoberimemorabilia
+Russico AsiaticaMülleriSammlung Russischer Geschichte 
+conuenit, quam cum fidissimis quae
+
+passim extant eorum iconibus
+
+v. c. in Matth.
+Consett'sTour through Sweden. Lond. 1789. 4.Matth.
+Consett'sTour through Sweden., 
+
+vt et cum vultu virginis
+
+Lapponicae quam ante decennium in comitatu nobilis cuiusdam
+
+Diuionensis ex boreali ista regione reducis et me visitantis videre
+
+mihi exoptata contigit occasio.
+
+Thunberg
+Praeter notissimos de Lapponibus auctores, Schefferum, Regnard,
+
+
+qui magnam Europae partem peragrauerat et Regibus Carolo XI. Sueciae,
+Ludovico XIV. Galliae, Georgio I. magnae Britanniae et Imperatori Rus-
+sorum Petro innotuerat, deque admiranda facilitate qua linguas exoticas
+didicit, cf.  et  in  T. VII. p. 100.
+Ho̊gstro̊mkurze Lappländische Beschreibung, vonNic. Ohrs,gebohrnemLapp-
+länderund der freyen Künste Beflissnen.Weberi verändertes Russland et Schoberi memorabilia
+Russico Asiatica Mülleri Sammlung Russischer Geschichte v. c. in  
+Matth. Consett's Tour through Sweden. Lond. 1789. 4.
+
+Characteres primarii. Cranium proportione staturae magnum.
+
+Habitus in totum qualis mongolicae varietati sollemnis est.
+
+Caluaria fere globosa. Ossa iugalia extrorsum eminentia. Fossa
+
+malaris plana. Frons lata. Mentum prominulum acuminatum.
+
+Characteres primarii.
+
+Alia obseruata. Palati fornix complanatus. Fissurae orbi-
+
+tariae inferiores ingentes. Fossae iugulares vltra modum diuersae
+
+magnitudinis; dextra amplissima.
+
+Alia obseruata.
+
+XLIV. Sinensis.
+(– Tab. XLIV. –)
+Tab. XLIV
+
+Cl. Jassoy M. D. Batauiae in India orientali physicus et
+
+nosocomii medicus primarius, quondam auditor meus dilectissimus,
+
+opportunitate vsus quam grauia sua munera ipsi praebent, mei
+
+memor maxime memorabilia diuersarum gentium Indicarum
+
+crania non solum collegit sed et nitide parauit, mihique iunctim
+
+cum curata notitia quae ad historiam cuiusuis attinet, eaque
+
+tum ex diariis nosocomii, tum si hominum fuerant legali quod
+
+vocant sectione obductorum ex actis iudicialibus excerpta mihi
+
+transmisit.
+
+Jassoy
+
+Est et inter ea quod hic exhibetur caput Sinensis cui nomen
+
+fuerat Tan sayko, qui a. 1803. aetatis anno trigesimo aut quod
+
+excurrit in nosocomio Batauiae lethali capitis vulnere obierat
+
+Adiecit quoque cl. Jassoy ipsi cranio integrum nodum capillorum cada-
+
+veris, qui si cum aliis comparentur, quales ex maxime memorabilibus
+
+per orbem terraqueum gentibus mihi comparaui, praeter nigredinem
+
+rectitudine et maiori crassitie insignes sunt. cf. Staunton's account
+
+of an Embassy to the Emperor ofChina T. II. p. 367 „Their hair so
+
+thick and strong, that, comparatively, they liken the hair of Europeans
+
+to the pile or fur of the smaller animals.”Jassoyaccount
+of an Embassy to the Emperor ofChina„.”Their hair so
+thick and strong, that, comparatively, they liken the hair of Europeans
+to the pile or fur of the smaller animals.
+
+Adiecit quoque cl.  ipsi cranio integrum nodum capillorum cada-
+veris, qui si cum aliis comparentur, quales ex maxime memorabilibus
+per orbem terraqueum gentibus mihi comparaui, praeter nigredinem
+rectitudine et maiori crassitie insignes sunt. cf. Staunton's account
+of an Embassy to the Emperor of China T. II. p. 367 Jassoy„.”Their hair so
+thick and strong, that, comparatively, they liken the hair of Europeans
+to the pile or fur of the smaller animals
+
+In vniuersum quidem habitu suo propius a Mongolica varietate
+
+quam ab vlla ceterarum abest, haud parum tamen a gemino Cal-
+
+muccorum vultu differt quem quasi pro normali typo istius stemma-
+
+tis habere licet
+
+Hinc et quod iam alias monui, in quauis quinarum varietatum princi-
+
+palium generis humani, vnam alteramue eius gentem adhuc a reliquis
+
+distinguere et quodammodo subdiuidere licet; vt a Caucasia, Hindosta-
+
+nicam; a Mongolica, Sinensem; ab Aethiopica, Hottentotticam; ab
+
+Americana boreali, australem; denique a fusco Malaicae varietatis stem-
+
+mate, nigricans Papuense etc.
+
+Hindosta-
+nicamSinensemHottentotticamaustralemPapuense. 
+
+Longe maior etiam inter Sinenses quam
+
+apud Calmuccos vultus varietas, quod mihi ipsi obseruare contigit,
+
+cum Amstelodami in publico diuersorio (Belg. het Gasthuis)
+
+21 Sinenses nautas curatius contemplare data fuerit exoptata
+
+occasio
+
+Ex ipsa hac quam innuimus vultus Sinensium varietate explicare licebit
+
+diuersas auctorum in describendis eorum craniis obseruationes, sicubi
+
+v. c. Camperus ea Vtahitensibus simillima esse dicat, cum contra illud
+
+de quo hic agitur ab Vtahitensi quod antea exhibuimus (– Dec. III.
+
+tab. 26. –) mirum quantum discrepet; aut si Daubentonius bina Si-
+
+nensium capita ossea in museo Parisino nullo notabili charactere ab istis
+
+suae gentis differre scribat.
+
+CamperusVtahitensitab. 26Daubentonius
+
+Quod vero Linneus in systemate naturae Sinenses macrocephalos
+
+capite conico vocet et cum Alpium et Patagoniae incolis ad monstrosas
+humani generis varietates releget, ni fallor vnice de sacerdotibus eorum
+
+mendicantibus intelligendum quibus Nieuhofius capita violentis et diu
+
+repetitis artificiis monstrose deformari, quondam contenderat. v. Nic.
+
+Melchis. Thevenot Rélations de divers voyages etc. T. III. p. 67. fig. 11.
+
+LinneusmonstrosasNieuhofius Nic
+Melchis. Thevenot Rélations de divers voyages etc..
+
+Hinc et quod iam alias monui, in
+quauis quinarum varietatum princi-
+palium generis humani, vnam alteramue eius gentem adhuc a reliquis
+distinguere et quodammodo subdiuidere licet; vt a Caucasia, ; a Mongolica, ; ab Aethiopica, ; ab
+Americana boreali, ; denique a fusco Malaicae varietatis stem-
+mate, nigricans  etc.Hindosta-
+nicamSinensemHottentotticamaustralemPapuensehet GasthuisEx ipsa hac quam innuimus vultus Sinensium varietate
+explicare licebit
+diuersas auctorum in describendis eorum craniis obseruationes, sicubi
+v. c.  ea Vtahitensibus simillima esse dicat, cum contra illud
+de quo hic agitur ab  quod antea exhibuimus (– Dec. III.
+. –) mirum quantum discrepet; aut si  bina Si-
+nensium capita ossea in museo Parisino nullo notabili charactere ab istis
+suae gentis differre scribat.CamperusVtahitensitab. 26DaubentoniusQuod vero  in systemate naturae Sinenses macrocephalos
+capite conico vocet et cum Alpium et Patagoniae incolis ad humani generis varietates releget, ni fallor vnice de sacerdotibus eorum
+mendicantibus intelligendum quibus  capita violentis et diu
+repetitis artificiis monstrose deformari, quondam contenderat. v. .
+T. III. p. 67. fig. 11.LinneusmonstrosasNieuhofiusNicMelchis. ThevenotRélations de divers voyages etc.
+
+Osseum de quo hic agitur caput praeter alia dorso nasi pro-
+
+fundius concauo praesertim autem singulari fere subglobosa rotun-
+
+ditate partis alueolaris maxillae superioris notabile est, cui et
+
+arcuata curuatura dentium anteriorum superiorum, praesertim
+
+quoad radices eorum, respondet. Conuenit cum hac structura
+
+quod Duhalde de peculiari dentium superiorum apud Sinenses
+
+directione memorat
+
+Description de la Chine. T. II. p. 275. ed. Haganae 1736. 4.
+
+Description de la Chine, 
+
+cui quidem Osbeck tribuit quod ipsi
+
+quaedam verba singulari et aliis gentibus inimitabili ratione
+
+pronuncient
+
+Reise nach Ostindien und China p. 226.
+Reise nach Ostindien und China.Duhalde.
+T. II. p. 275. ed. Haganae 1736. 4.Description de la ChineOsbeck
+p. 226.Reise nach Ostindien und China
+
+Ceteroquin egregium hocce cranium perfectissime congruit
+
+cum praestantissima icone nautae Sinensis qui aliquamdiu Havniae
+
+degens a summo imaginum pictore Jens Juel artis graphicae
+
+professore Regio, pictura olearia mascule exhibitum est, quod
+
+iam Cl. Scheel, medici apud Havnienses celeberrimi fauore,
+
+museum meum ornat.
+
+Jens JuelScheel,
+
+VARIETATIS TERTIAE
+
+SPECIMEN.
+
+XLV. Bosjesmanni Hottentottae.
+(– Tab. XLV. –)
+Tab. XLV
+
+Cl. Lichtenstein M. D. Helmstadiensis iam feliciter redux
+
+ex itinere Africano cuius vberiorem notitiam post praestantissima
+
+specimina in antecessum ab eo edita auide expectant omnes quo-
+
+rum historiae naturalis ac ethnologiae exoticae incrementum in-
+
+terest, praeter innumera alia quae ex triplici naturae regno per
+
+magnum Africae australis tractum ab ipso tanto solidioris doctri-
+
+nae penu instructo, peragratum collegit, etiam quatuor crania
+
+memorabilis istius Hottentottarum stemmatis retulit quod inde a
+
+Sec. XVII. medio, hominum siluaticorum (Belg. Bosjes-
+
+mannen) vulgari etsi minus congruo nomine innotuit
+
+„The Bosjesmans seem to be the true aborigines of the (Hottentot –)
+
+country unmixed with any other tribes of people.”Jo. Barrow in Tra-
+
+vels into the interior of Southern Africa T. I. p. 158. cf. quoque
+
+Kicherer's Narrative of his mission to the Boschemen in Trans-
+
+actions of the Missionary Society vol. II. N. I. p. 6. Sane longe a vero
+
+aberrare qui vulgo Buschmannos pro fugitiuis Hottentottis habuere,
+
+pluribus demonstrabit cl. Lichtenstein in ipso quod iam de itinere
+
+suo ad prelum parat opere. Cauendum interim ne forte Buschmannos
+
+cum Beetjuanis s. Huswannis confundas vtpote quae bina stemmata vere vt
+
+Hottentottae proprie sic dicti a Caffris differunt, siquidem Beetjuanos
+
+ab his, Hottentottas vero a Buschmannis ortum duxisse verisimillimum est.
+
+„ ( –)
+”The Bosjesmans seem to be the true aborigines of the Hottentotcountry unmixed with any other tribes of people.Jo. BarrowTra-
+vels into the interior ofSouthern AfricaNarrative of his mission to theBoschemenTrans-
+actions of the Missionary SocietyLichtenstein. Qua-
+
+terna haec capita adeo perfecte inuicem conuenire compertum
+
+habemus 
+
+v. Gottl. E. Schulze über Gall's Entdeckungen die Organe des Ge-
+
+hirns betreffend p. 26. vbi et V. Cl. curatam horum craniorum vt et vbe-
+
+riorem de Buschmannis notitiam dat a Lichtensteinio ipsi suppeditatam.
+
+GottlSchulzeüberGall'sEntdeckungen die Organe des Ge-
+hirns betreffendLichtensteinio, 
+
+vt difficile fuerit tantam similitudinem inter bina
+
+Europaeorum crania reperire. Integerrimo eorum vir humanissi-
+
+mus supellectilem meam ditauit, cui eo maius pretium accedit
+
+quod et facialem cutim cum subiectis musculis adiunxerit, quam
+
+a recenti cadauere artificiose soluit, et apto liquore ita seruauit,
+
+vt iam eam siue ipsi cranio siue gypseo eiusdem ectypo superin-
+
+ducere adeoque ipsam barbari istius imaginem viuidissimam reprae-
+
+sentare liceat. Viri est sexagenarii, ex ea Africae australis regione
+
+quae fluuium Aurantium (Belg. Oranje-revier) et Sacci (Zack-
+
+revier) interiacet, qui quidem postquam per triginta annos rapina
+
+et praedatione colonis Batauis praesertim in districtibus Roggeveld
+
+et Nieuweveld formidabilis fuerat, demum m. Maio 1805. compre-
+
+hensus eodem anno decurrente in carcere obiit.
+
+LichtensteinBosjes-
+mannen in  T. I. p. 158. cf. quoque
+Kicherer's  in  vol. II. N. I. p. 6. Sane longe a vero
+aberrare qui vulgo Buschmannos pro fugitiuis Hottentottis habuere,
+pluribus demonstrabit cl.  in ipso quod iam de itinere
+suo ad prelum parat opere. Cauendum interim ne forte Buschmannos
+cum Beetjuanis s. Huswannis confundas vtpote quae bina stemmata vere vt
+Hottentottae proprie sic dicti a Caffris differunt, siquidem Beetjuanos
+ab his, Hottentottas vero a Buschmannis ortum duxisse verisimillimum est.„ ( –)
+”The Bosjesmans seem to be the true aborigines of theHottentotcountry unmixed with any other tribes of people.Jo. BarrowTra-
+vels into the interior ofSouthern AfricaNarrative of his mission to theBoschemenTrans-
+actions of the Missionary SocietyLichtensteinv. . E.  p. 26. vbi et V. Cl. curatam horum craniorum vt et vbe-
+riorem de Buschmannis notitiam dat a  ipsi suppeditatam.GottlSchulzeüberGall'sEntdeckungen die Organe des Ge-
+hirns betreffendLichtensteinioOranje-revierZack-
+revier
+
+Characteres primarii. Cranium angustum, ad latera com-
+
+pressum, minus tamen quam in Aethiopibus genuinis. Ossium
+
+caluariae proprie sic dictorum vniuersa compages s. receptaculum
+
+encephali pro portione mire depressum, retrorsum in occipite
+
+valde elongatum. Tubera frontalia prominula. Frons ipsa fere
+
+ad perpendiculum descendens. Nasi ossa perangusta, simul autem
+
+cum processuum nasalium in ossibus maxillaribus facie antica, fere
+
+in eodem plano horizontali posita, ita vt vniuersa area nasalis
+
+orbitas discriminans a glabella vsque ad narium aperturam decliuis
+
+et late explanata descendat. Nares internae angustae. Ossa
+
+turbinata exigua. Processus malaris ossium maxillarium deorsum
+
+elongatus et quasi vncinatus. Mentum prominulum, mire angustum
+
+et peracutum. Coronae dentium, praesertim incisorum superiorum
+
+fere in totum detritae 
+
+v. Barrow'svoyage to Cochinchina p. 382. „It was remarked that
+
+the oldest Bosjesmans they saw, had not lost a simple tooth, but that in
+
+many instances they were worn down in a remarkable manner to mere
+
+stumps.”
+
+Barrow'svoyage toCochinchina Bosjesmans „It was remarked that
+the oldestthey saw, had not lost a simple tooth, but that in
+many instances they were worn down in a remarkable manner to mere
+stumps.”.Characteres primarii.v.  p. 382. Barrow'svoyage toCochinchina Bosjesmans „It was remarked that
+the oldestthey saw, had not lost a simple tooth, but that in
+many instances they were worn down in a remarkable manner to mere
+stumps.”
+
+Alia obseruata. Ossa caluariae superiora, verticis inquam,
+
+frontis, et pars squamosa temporalium tenuissima, fere translucida.
+
+Ossicula nasi inuicem concreta. Pars malaris et sphenoidea orbitae
+
+sinistrae vere absorbta, ita vt paries exterior foraminis oculorum
+
+magno hiatu quasi pertusus appareat.
+Alia obseruata.
+
+Vniuerso ceteroquin habitu memorabile hocce cranium
+
+perfecte conuenit cum binis Boschmanni viri eiusque vxoris ad
+
+viuum in districto Roggeveld delineatis imaginibus quas Perill.
+
+Banks ex magno suo periplo reportauit, mecumque cum tot aliis
+
+exoticarum gentium curatissimis picturis humanissime communicauit.
+
+Banks
+
+VARIETATIS QVARTAE
+
+SPECIMINA TERNA.
+
+XLVI. Atvri Orinoccani.
+
+(– Tab. XLVI. –)
+Tab. XLVI
+
+Alex. de Humboldt, quem et meis quondam praelectionibus
+
+interfuisse perassiduum et maximae spei auditorem gloriari mihi
+
+liceat, veteris amici vel in extremo nouo orbe quem itineribus
+
+suis impense illustrauit memor, praeter alia quibus apparatum
+
+meum rerum naturalium adauxit, inprimis acceptissimo dono
+
+cranii de quo hic agitur me affecit, cuius historiam ex ipsis viri
+
+perillustris litteris subnectere liceat.
+
+Alex. de Humboldt,
+
+Extitit quondam in ea nouae Andalusiae interiore et
+
+parum cognita parte quae altum Orinocum ad ingentes
+
+Aturi et Maypuri cataractas
+
+Locus harum cauernarum sepulcralium notatur sub nomine Raudal di
+
+Atures in mappa geographica apud Ant. Caulin,historia corographica
+
+natural y evangelica de lanueva Andalucia. Madr. 1779. fol. Sitae
+
+sunt sub 5°39' lat. boreal. et 51° longit. occid. inde ab ins. Ferri.
+
+Raudal di
+AturesAnt. Caulin,historia corographica
+natural y evangelica de lanueva Andalucia 
+
+adiacet, populus Aturorum hodie
+
+extinctus, qui defunctorum cadauera magno numero et partim
+
+singulari modo curata, in cryptis subterraneis sepeliebat, quibus
+
+rupes graniticae in ipsis istis cataractis eminentes, excauatae sunt.
+
+Vna harum speluncarum, Atarnipensis nempe, quam indefessus
+
+ille peregrinator non sine periculo inuisit, ad sexcenta continebat
+
+cadauera, quorum quoduis corbe seu sacco inuolutum erat, ita
+
+tamen vt aliis horum inuolucrorum nuda ossa siue candida siue
+
+Bixae orellanae rubore tincta, aliis vero eadem mumiarum in
+
+modum bitumine et plantarum foliis permixta continerentur; imo
+
+vero et praeterea sarcophagi ex argilla non cocta parati et croco-
+
+dilorum figuris picti adstarent 4 pedes longi, 3 lati et toti quanti
+
+ossibus repleti.
+
+nouae Andalusiaealtum OrinocumLocus harum cauernarum sepulcralium
+notatur sub nomine  in mappa geographica apud . Madr. 1779. fol. Sitae
+sunt sub 5°39' lat. boreal. et 51° longit. occid. inde ab ins. Ferri.Raudal di
+AturesAnt. Caulin,historia corographica
+natural y evangelica de lanueva AndaluciaAturorumAtarnipensis
+
+Cranium quod iam generosi viri cura ex isto sepulcrali an-
+
+tiquissimo recessu in meum museum transiit eum habitum prae
+
+se fert quem ipse iam in egregia dissertatione de Americae incolis
+
+aboriginibus descripsit
+
+In cl. Biester neue Berliner Monatsschr. T. XV. p. 197.
+
+Biester neue Berliner Monatsschr.. 
+
+Propius ille a Mongolico quam ab
+
+Aethiopico abest. Zygomata quidem non adeo quam in illis com-
+
+planata et extrorsum eminentia, attamen latiora quam in Aethio-
+
+pibus, a quibus praeterea et caluariae et mandibulae inferioris
+
+latitudine differt. Frons valde reclinata elatiore linea per medium
+
+eius decurrente dirimitur. Narium apertura cum vniuersa ol-
+
+factus officina amplissima; orbitae contra pro portione angustio-
+
+res. Textura totius caluariae mire compacta et perdura, in locis
+
+durante longissima vectura attritu politis marmori aemula.
+
+In cl.  T. XV. p. 197.Biesterneue Berliner Monatsschr.
+
+XLVII. Brasiliani.
+(– Tab. XLVII. –)
+Tab. XLVII
+
+Cum ante aliquot annos illustrissimus Arauio Lusitaniae
+
+status minister, tam summis in rempublicam meritis quam omnigena
+
+eruditione aeque clarissimus, me inuiseret, egoque obiter memoras-
+
+sem post repetita et varia, ast hactenus incassa conamina spem denique
+
+me deficere obtinenendorum ex America Lusitanica craniorum indi-
+
+genorum. Ille contra se omnem nauaturum operam promisit qua mihi
+
+vnum alterumue maxime genuinum Indi Brasiliani caput osseum com-
+
+pararet. Hincque Vlyssiponam reuersus curauit vt, nutu ipsius
+
+Supremi Regiminis Regii, Gubernium Parae Brasileense iuberetur
+
+desiderata barbarorum indigenorum crania transmittere. Quod
+
+quidem ita exsecutum est vt non solum tam virile quam femineum
+
+istius gentis cranium adueheretur, verum et tanquam rarissimum
+
+cimelium additum esset integrum Indi Brasiliensis caput integer-
+
+rimum admiranda plane et fere incomprehensibili ratione mumiae
+
+ad instar conditum et omni ornatu quem defunctus pro gentis
+
+suae more quondam gesserat adhuc instructum. Quae omnia
+
+singulari cura perillustris de Mello Franco medici apud
+
+Vlyssiponenses aulici felicissimi, qui quidem ipse in Brasilia natus
+
+diu illinc degerat, ad manus meas peruenerunt.
+
+Arauiode Mello Franco
+
+Miro artificio praeparatum caput non quidem a totius cuius-
+
+dam corporis medicato funere separatum est, sed statim post mortem
+
+defuncti abscissum fuisse oportet, siquidem cutis quae mandibulae
+
+inferiora tegit et colli anticae parti praefixa erat, aequaliter tensa et
+
+fere vsque ad foramen magnum occipitale retracta et absque vlla
+
+sutura solis bituminibus arcte reliquo capiti inferiori quasi agglu-
+
+tinata est; quod quidem non nisi in recenti cadauere fieri potuisse
+
+vel primo intuitu apparet
+
+Pluribus noui orbis barbaris populis moris erat, Cazicorum suorum
+
+defunctorum capita a reliquo cadauere separere et seorsim seruare. cf.
+
+v. c. Herrera, hechos de los Castellanos Dec. III. L. IV. p. 164. ed.
+
+Madr. 1601. et Zoegade orig. obeliscorum p. 270.
+
+Herrerahechos de los CastellanosZoegade orig. obeliscorum.
+
+Pluribus noui orbis barbaris populis moris erat, Cazicorum suorum
+defunctorum capita a reliquo cadauere separere et seorsim seruare. cf.
+v. c. ,  Dec. III. L. IV. p. 164. ed.
+Madr. 1601. et  p. 270.
+Herrerahechos de los CastellanosZoegade orig. obeliscorum
+
+Cutis ipsissimum adhuc ex cupreo fuliginosum colorem prae
+
+se fert qui Brasilianis natiuus est.
+
+Capillamentum circum verticem plane abrasum, in ipso
+
+vertice superstes quidem sed breue, pone aures longius, in vniuer-
+
+sum nigerrimum rigidiusculum
+
+v. Ant. Knivet in Purchas's Pilgrims T. IV. p. 1228 sq.
+
+Ant. Knivet
+Pilgrims.v.  in Purchas's  T. IV. p. 1228 sq.Ant. KnivetPilgrims
+Barba tenuis in labro superiori et sparsim in mento
+v. Barrow's voyage toCochinchina p. 110 de Brasilianis quos ipse
+
+viderat: „the beard was visible only on the upper lip and under the chin.”
+Barrow'svoyage toCochinchina.”„the beard was visible only on the upper lip and under the chin.v.  p. 110 de Brasilianis quos ipse
+viderat: Barrow'svoyage toCochinchina.”„the beard was visible only on the upper lip and under the chin
+Orbitae et os duro bitumine repleta. Clausas palpebras
+
+significant bacilli ossei vtrinque bini paralleli approximati ex den-
+
+tibus Saviaecapybarae scalpti et bitumini firmissime inhaerentes.
+
+Ori contra infixa sunt bina extrema laquei gossypini bipedalis
+
+longitudinis, quo vt coniectari licet caput ipsum suspendebatur.
+
+Saviaecapybarae
+
+Auris vtriusque cartilagineae longis incisuris pro more gentis
+
+innexi sunt crassi flocci filorum gossypinorum.
+
+Ipse denique ornatus frontalis ex pulcherrimis pennis auium
+
+indigenarum, Tantalirubri, Ramphastitucani, et Psittaco-
+
+rum praesertim macaonis et araraunae compositus et funiculis
+
+gossypinis artificiose contextus est
+
+Lery in de Bry Americae P. III. p. 166. it. Marcgrav p. 270.
+Leryde BryAmericaeMarcgrav.TantalirubriRamphastitucaniPsittaco-
+rummacaonisararaunae in  P. III. p. 166. it.  p. 270.Leryde BryAmericaeMarcgrav
+
+Omisi haec in icone vt capitis ipsius forma eo melius appa-
+
+reret, quod quidem depressum breue et fere globosum exacte
+
+respondet descriptioni Equitis Pinto vicecomitis de Balsemam
+qui Brasilianorum faciem magis ab ouali remotam esse ait quam
+
+in vlla alia fortassis gente
+ap. 
+
+Robertson, history of America T. II. p. 403. ed. Basil.
+Robertsonhistory of America.Pintode Balsemamap. ,  T. II. p. 403. ed. Basil.Robertsonhistory of America
+
+XLVIII. Feminae Brasilianae.
+(– Tab. XLVIII. –)
+Tab. XLVIII
+Caput paruum, eleganter conformatum. Frons globosa.
+
+Nasus depressior, ampla tamen olfactus officina
+
+Conueniunt cum ea,
+quae de odoratus Brasiliensium acumine passim me-
+
+morantur, vt in Cl. d'Abbevillehistoire de la mission en l'isle de Ma-
+
+ragnon p. 311. „Ils ont l'odorat si parfaitement bon qu'ils recognoistront
+
+par iceluy seulement, non plus ne moins qu'un chien, sauf l'humanité, la
+
+piste de leurs ennemis; et discernent facilement par l'olfact deux personnes
+
+de diuerses nations.”Cl. d'Abbevillehistoire de la mission en l'isle de Ma-
+ragnon„.”Ils ont l'odorat si parfaitement bon qu'ils recognoistront
+par iceluy seulement, non plus ne moins qu'un chien, sauf l'humanité, la
+piste de leurs ennemis; et discernent facilement par l'olfact deux personnes
+de diuerses nations, 
+
+etiam sinus
+
+frontales tuberosi, quod in feminis rarum. Maxilla superior
+
+parum prominens; inferioris arcus ellipticus magis, non vt in
+
+aethiopibus parabolicus.
+
+Conueniunt cum ea quae de odoratus Brasiliensium acumine passim me-
+morantur, vt in  p. 311. Cl. d'Abbeville histoire de la mission en l'isle de Ma-
+ragnon„.”Ils ont l'odorat si parfaitement bon qu'ils recognoistront
+par iceluy seulement, non plus ne moins qu'un chien, sauf l'humanité, la
+piste de leurs ennemis; et discernent facilement par l'olfact deux personnes
+de diuerses nations
+
+Conuenit in vniuersum tam cum capite quod antecedente
+
+tabula exhibuimus, quam cum eximiis iconibus militis barbari
+
+Brasiliani
+
+Ex eorum numero quorum integras turmas sclopetis et ensibus rite ar-
+
+matas, Jo. Mauritius Nassouicus Brasiliae quamdiu a Batavis occupata
+
+erat, gubernator, formari iusserat. v. J. P. Augspurger's Seereisen
+
+nacher Brasilien p. 23. 26. 41.
+
+Jo. MauritiusAugspurger'sSeereisen
+nacherBrasilien 
+
+et feminae iuuenis eiusdem gentis quae auctore celebri
+
+pictore Francisco Post
+
+Quem idem Mauritius aeque ac Marcgrauium et Pisonem secum in
+
+Brasiliam duxit. v. Houbraken Schouburgh der Nederlantsche Konst-
+
+schilders T. II. p. 343.
+
+MauritiusHoubrakenSchouburgh der Nederlantsche Konst-
+schilders 
+
+in pinacotheca Regis Daniae adseruan-
+
+tur, et quorum egregia apographa manu cl. Abildgaard artis
+
+pictoriae Professoris apud Havnienses elaborata, cl. Neergaard
+M. Dri debeo.
+
+Ex eorum numero quorum integras turmas sclopetis et
+ensibus rite ar-
+matas,  Nassouicus Brasiliae quamdiu a Batavis occupata
+erat, gubernator, formari iusserat. v. J. P.  p. 23. 26. 41.Jo. MauritiusAugspurger'sSeereisen
+nacherBrasilienFrancisco PostQuem idem  aeque ac Marcgrauium et Pisonem secum in
+Brasiliam duxit. v.  T. II. p. 343.MauritiusHoubrakenSchouburgh der Nederlantsche Konst-
+schildersAbildgaardNeergaard
+
+VARIETATIS QVINTAE
+
+SPECIMINA BINA.
+
+XLIX. Buggessi Macassarensis.
+(– Tab. XLIX. –)
+Tab. XLIX
+Ex memorabili Indicorum craniorum collectione qua apparatum
+
+meum ditasse Cl. Jassoy Batauiae medicum supra iam memini.
+
+Jassoy
+
+Viri est 30 circiter annorum nomine La Tua, qui lethali vulnere
+
+in nosocomio Batauiae an 1803. obierat.
+
+Buggessi s. Bugginesi ex quibus ortus erat, singulare
+
+plane Malayicae varietatis stemma in australi insulae Celebes
+plaga constituunt
+
+Cf. Forest'svoyage from Calcutta to the Mergui – Archipelago et
+
+Radermacher in Verhandelingen van het Bataviaasch Genootschap
+T. III. p. 206. Iconem Buggessi v. in Valentyn's Oostindien
+T. II. p. 182. tab. 41.
+
+Forest'svoyage from Calcutta to the Mergui – ArchipelagoRadermacherVerhandelingen van het Bataviaasch GenootschapBuggessiOostindien 
+
+ab ipsis reliquis Macassaribus vti pecu-
+
+liari plane lingua et propriis literarum formis et scribendi modo,
+
+ita et si ex cranii de quo agimus conformatione aliquid coniectari
+
+licet, vultu suo ab aliis Malayicis gentibus haud parum diuersum.
+
+Siquidem illud memorabili habitu quibusdam sui partibus
+
+aethiopico vultui appropinquare in aliis contra ad mongolicum
+
+quodammodo accedere videtur. Vti enim facies decliuis et
+
+alueolaris portionis ossium maxillarium prominentia cum valde
+
+obliqua dentium incisorum superiorum directione caput hoc a latere
+
+spectatum aethiopico haud absimile reddit, ita contra idem ab
+
+antica facie spectatum, insigni latitudine ossium iugalium et orbi-
+
+tarum plano latoque naso longe a se inuicem distantium ampli-
+
+tudine etiam mongolici quid prae se ferre videtur.
+
+BuggessiBugginesiCelebesCf.  et
+in T. III. p. 206. Iconem  v. in Valentyn's T. II. p. 182. tab. 41.Forest'svoyage from Calcutta to the Mergui – ArchipelagoRadermacherVerhandelingen van het Bataviaasch GenootschapBuggessiOostindienMacassaribus
+
+Praeterea dentibus primoribus superioribus vitrea substantia in
+
+facie antica maximam partem gentium istarum more, coticulae
+
+ope deleta est 
+
+Pluribus de hoc ritu egi libro de generis hum. varietate p. 230. ed. 3.
+de
+generis hum. varietate, 
+
+omnes vero dentes continuo masticatorii vsu ex
+
+pipere betel et areca cum calce viua compositi, densa et fusco-
+
+nigricante crusta obducti Cf. Decad. IV. ad tab. 39.tab. 39.Pluribus de hoc ritu egi libro  p. 230. ed. 3.de
+generis hum. varietateCf. Decad. IV. ad .tab. 39
+
+L. Marqvesani.
+(– Tab. L. –)
+Tab. L
+
+Debeo rarissimum et eximium hocce cranium amicitiae
+
+dilectissimi quondam auditoris, Cl. Langsdorff M. Dris et inde-
+
+fessi naturalis historiae scrutatoris, qui in nupero memorabili
+
+periplo, Ruthenorum Augustissimi Imperatoris iussu, duce peril-
+
+lustri et longe meritissimo de Krusenstern, absoluto, in
+
+Nukahiwah primaria nouarum Marchionis insularum
+
+Malo more plerique nuperorum nautarum qui ad hasce insulas appu-
+
+lerunt diuersa noua nomina ipsis imposuerunt; hinc v. c. a gallo Mar-
+
+chand vocantur Iles de la Revolution, ab anglo van Couver Her-
+
+gest's Islands, a Bostonio-Americano RobertWashington's Islands.
+Aptissime vero nominantur Novae Marquesanae cum vicinae sint antiquio-
+
+ribus eiusdem nominis quae ab Hispano navarcho Alv. de Mendana
+iam a. 1595 inuisa et descripta pridem Europaeis innotuerunt.
+
+Mar-
+chandIles de la Revolution,van CouverHer-
+gest's Islands,RobertWashington's Islands.Novae MarquesanaeAlv. de Mendana
+
+acquisiuit, mihique dum adhuc per biennium in Aleuticis insulis
+
+et vicinis Americae borealis oris remanet, interim per socios
+
+laborum et studiorum in tanto itinere feliciter in Europam reduces,
+
+dono misit.
+
+Langsdorffde Krusenstern,NukahiwahMalo more plerique nuperorum nautarum qui ad hasce insulas appu-
+lerunt diuersa noua nomina ipsis imposuerunt; hinc v. c. a gallo  vocantur  ab anglo  a Bostonio-Americano Aptissime vero nominantur  cum vicinae sint antiquio-
+ribus eiusdem nominis quae ab Hispano navarcho iam a. 1595 inuisa et descripta pridem Europaeis innotuerunt.Mar-
+chandIles de la Revolution,van CouverHer-
+gest's Islands,RobertWashington's Islands.Novae MarquesanaeAlv. de Mendana
+
+Incolae harum insularum ab omnibus qui eas inuiserunt
+
+Europaeis, vno ore pro pulcherrimis quod corporis symmetriam
+
+et proportiones attinet, non immensi tantum maris pacifici in-
+
+sulanorum, sed et reliqui qua late patet orbis terraquei gentium,
+
+declarantur
+
+v. Cook's voyage to the South pacific Ocean T. I. p. 308. „The inha-
+
+bitants of the Marquesas, collectively, are without exception the finest
+
+race of people in this sea. For fine shape and regular features they per-
+
+haps surpass all other nations.”
+voyage to the South pacific
+Ocean„, The inha-
+bitants of theMarquesascollectively, are without exception the finest
+race of people in this sea. For fine shape and regular features they per-
+haps surpass all other nations.”, 
+
+quod praesertim Cl. Tilesii, Russorum Imperatori
+
+ab aulae consiliis, meique amantissimi curatae dimensiones viri
+
+iuuenis Marquesani testantur
+
+v. eas in Voigtii Magazin für den neuesten Zustand der Naturkunde
+T. XII. p. 495 et in eiusdem promptuarii, T. XI. p. 299. iconem manus
+
+reginae Nukahiwensis a Langsdorffio curate delineatam. vt specimen
+
+exhiberet eximii artificii et symmetricae elegantiae qua memorabiles isti
+
+insulani corpora sua a capite vt aiunt vsque ad calcem scarificando
+
+mirifice pingunt (quod vulgari Otaheitarum idiomate tatower vocatur).
+VoigtiiMagazin für den neuesten Zustand der NaturkundeLangsdorffiotatower, 
+
+quas iunctim cum insigni
+
+apparatu iconum rerum naturalium peritissima manu ab ipso in
+
+itinere delineatarum et doctissima earum descriptione mecum
+
+amice communicauit.v. Cook's  T. I. p. 308. voyage to the South pacific
+Ocean„, The inha-
+bitants of theMarquesascollectively, are without exception the finest
+race of people in this sea. For fine shape and regular features they per-
+haps surpass all other nations.”Tilesii,Marquesaniv. eas in
+T. XII. p. 495 et in eiusdem promptuarii, T. XI. p. 299. iconem manus
+reginae Nukahiwensis a  curate delineatam. vt specimen
+exhiberet eximii artificii et symmetricae elegantiae qua memorabiles isti
+insulani corpora sua a capite vt aiunt vsque ad calcem scarificando
+mirifice pingunt (quod vulgari Otaheitarum idiomate  vocatur).VoigtiiMagazin für den neuesten Zustand der NaturkundeLangsdorffiotatower
+
+Cranium ipsum Marquesani vti totali quidem habitu pro-
+
+pius abest ab eo Otaheitae quod alias (– Dec. III. tab. 36. –)
+
+exhibui, ita et in singularium partium fabrica peculiari, vt v. c.
+
+iugo elatiore quod frontem mediam ad suturae locum percurrit etc.
+
+attamen conformationis elegantia hoc ipsum longe excedit, ad
+
+latera magis compressum, verticis fornice pulchrius arcuato,
+
+bregmatibus non adeo tuberosis, superciliis osseis prope nasum
+
+minus tumidis aliisque vel ex iconum comparatione patentibus
+
+momentis.
+
+Marquesanitab. 36
+
+Ceteroquin caput hoc singulari modo pro more bellicosis
+
+istis anthropophagis solemni, qui nempe occisorum crania
+
+tanquam trophaea secum gestare solent, ligatum et ad suspenden-
+
+dum aptatum est; quo quidem fine cingulum ex corticis nucem
+
+cocos ambientis fibris artificiose plexum per narium meatum de-
+
+currens mandibulam inferiorem cum ipsa caluaria firmissime iungit,
+
+quod et praeterea ligneo cylindro narium aperturae intruso eo
+
+magis immobile redditur; funiculus autem ex iisdem fibris con-
+
+textus suspendendo capiti inseruit.
+
+XLI. Armeni.Tab. 1XLII. veteris Guanchi Tenerifensis.Tab. 2XLIII. Feminae Lapponicae.Tab. 3XLIV. Sinensis.Tab. 4XLV. Bosjesmanni Hottentottæ.Tab. 5XLVI. veteris Aturi.Tab. 6XLVII. Brasiliani.Tab. 7XLVIII. Feminæ Brasilianae.Tab. 8XLIX. Buggessi Macassarensis.Tab. 9L. Marquesani.Tab. 10
