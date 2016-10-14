@@ -13,11 +13,15 @@ import org.blume.modeller.ModellerClientFailedException;
 import org.blume.modeller.ProfileOptions;
 import org.blume.modeller.bag.BagInfoField;
 import org.blume.modeller.common.uri.FedoraPrefixes;
+import org.blume.modeller.common.uri.FedoraResources;
+import org.blume.modeller.common.uri.IIIFPredicates;
+import org.blume.modeller.common.uri.IIIFPrefixes;
 import org.blume.modeller.templates.CanvasScope;
 import org.blume.modeller.templates.MetadataTemplate;
 import org.blume.modeller.ui.jpanel.iiif.PatchCanvasFrame;
 import org.blume.modeller.ui.util.URIResolver;
 import org.blume.modeller.util.ResourceList;
+import org.blume.modeller.util.ResourceIntegerValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -145,15 +149,30 @@ public class PatchCanvasHandler extends AbstractAction implements Progress {
         MetadataTemplate metadataTemplate;
         List<CanvasScope.Prefix> prefixes = Arrays.asList(
                 new CanvasScope.Prefix(FedoraPrefixes.RDFS),
-                new CanvasScope.Prefix(FedoraPrefixes.MODE));
+                new CanvasScope.Prefix(FedoraPrefixes.MODE),
+                new CanvasScope.Prefix(IIIFPrefixes.SC),
+                new CanvasScope.Prefix(IIIFPrefixes.OA),
+                new CanvasScope.Prefix(IIIFPrefixes.EXIF));
+
+        ResourceIntegerValue resourceHeight = ResourceIntegerValue.init()
+                .resourceURI(resourceURI + FedoraResources.FCRMETADATA)
+                .resourceProperty(IIIFPredicates.HEIGHT)
+                .build();
+        int resheight = resourceHeight.render().get(0);
+
+        ResourceIntegerValue resourceWidth = ResourceIntegerValue.init()
+                .resourceURI(resourceURI + FedoraResources.FCRMETADATA)
+                .resourceProperty(IIIFPredicates.WIDTH)
+                .build();
+        int reswidth = resourceWidth.render().get(0);
 
         CanvasScope scope = new CanvasScope()
                 .fedoraPrefixes(prefixes)
                 .resourceURI(resourceURI)
                 .listURI(listURI)
                 .canvasLabel("test")
-                .canvasHeight(3293)
-                .canvasWidth(2138);
+                .canvasHeight(resheight)
+                .canvasWidth(reswidth);
 
         metadataTemplate = MetadataTemplate.template()
                 .template("template/sparql-update-canvas.mustache")

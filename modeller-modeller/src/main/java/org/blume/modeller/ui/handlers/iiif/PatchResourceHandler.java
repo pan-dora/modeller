@@ -20,6 +20,7 @@ import org.blume.modeller.ProfileOptions;
 import org.blume.modeller.bag.BagInfoField;
 import org.blume.modeller.bag.BaggerFileEntity;
 import org.blume.modeller.common.uri.FedoraPrefixes;
+import org.blume.modeller.common.uri.IIIFPrefixes;
 import org.blume.modeller.templates.ResourceScope;
 import org.blume.modeller.templates.MetadataTemplate;
 import org.blume.modeller.ui.util.URIResolver;
@@ -87,9 +88,11 @@ public class PatchResourceHandler extends AbstractAction implements Progress {
 
             if (dim != null) {
                 double imgWidth = dim.getWidth();
+                int iw = (int) imgWidth;
                 double imgHeight = dim.getHeight();
+                int ih = (int) imgHeight;
                 try {
-                    rdfBody = getResourceMetadata(map, filename, formatName, imgWidth, imgHeight);
+                    rdfBody = getResourceMetadata(map, filename, formatName, iw, ih);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -134,20 +137,24 @@ public class PatchResourceHandler extends AbstractAction implements Progress {
     }
 
     private InputStream getResourceMetadata(Map<String, BagInfoField> map, String filename, String formatName,
-                                            double imgWidth,
-                                            double imgHeight) {
+                                            int iw,
+                                            int ih) {
         MetadataTemplate metadataTemplate;
         List<ResourceScope.Prefix> prefixes = Arrays.asList(
                 new ResourceScope.Prefix(FedoraPrefixes.RDFS),
-                new ResourceScope.Prefix(FedoraPrefixes.MODE));
+                new ResourceScope.Prefix(FedoraPrefixes.MODE),
+                new ResourceScope.Prefix(IIIFPrefixes.DC),
+                new ResourceScope.Prefix(IIIFPrefixes.SVCS),
+                new ResourceScope.Prefix(IIIFPrefixes.EXIF),
+                new ResourceScope.Prefix(IIIFPrefixes.DCTYPES));
 
         ResourceScope scope = new ResourceScope()
                 .fedoraPrefixes(prefixes)
                 .filename(filename)
                 .serviceURI(getServiceURI(map, filename))
                 .formatName(formatName)
-                .imgHeight(imgHeight)
-                .imgWidth(imgWidth);
+                .imgHeight(ih)
+                .imgWidth(iw);
 
         metadataTemplate = MetadataTemplate.template()
                 .template("template/sparql-update-res.mustache")

@@ -63,8 +63,8 @@ public class CanvasScope extends Scope {
         String resourceURI;
         String listURI;
         String canvasLabel;
-        double canvasHeight;
-        double canvasWidth;
+        int canvasHeight;
+        int canvasWidth;
     }
 
     public static class Prefix {

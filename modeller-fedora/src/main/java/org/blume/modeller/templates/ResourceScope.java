@@ -8,8 +8,8 @@ public class ResourceScope extends Scope {
     private String filename;
     private String serviceURI;
     private String formatName;
-    private double imgWidth;
-    private double imgHeight;
+    private int imgWidth;
+    private int imgHeight;
 
     public ResourceScope fedoraPrefixes(List<ResourceScope.Prefix> prefixes) {
         this.prefixes = prefixes;
@@ -31,12 +31,12 @@ public class ResourceScope extends Scope {
         return this;
     }
 
-    public ResourceScope imgWidth(double imgWidth) {
+    public ResourceScope imgWidth(int imgWidth) {
         this.imgWidth = imgWidth;
         return this;
     }
 
-    public ResourceScope imgHeight(double imgHeight) {
+    public ResourceScope imgHeight(int imgHeight) {
         this.imgHeight = imgHeight;
         return this;
     }
@@ -50,7 +50,7 @@ public class ResourceScope extends Scope {
 
     static class Item {
         Item(List<Prefix> prefixes, String filename, String serviceURI, String formatName,
-             double imgHeight, double imgWidth) {
+             int imgHeight, int imgWidth) {
             this.prefixes = prefixes;
             this.filename = filename;
             this.serviceURI = serviceURI;
@@ -63,8 +63,8 @@ public class ResourceScope extends Scope {
         String filename;
         String serviceURI;
         String formatName;
-        double imgHeight;
-        double imgWidth;
+        int imgHeight;
+        int imgWidth;
     }
 
     public static class Prefix {
