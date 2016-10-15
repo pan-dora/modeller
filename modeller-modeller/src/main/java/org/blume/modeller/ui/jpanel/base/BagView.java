@@ -146,6 +146,8 @@ public class BagView extends AbstractView implements ApplicationListener {
     public PatchManifestExecutor patchManifestExecutor = new PatchManifestExecutor(this);
     public CreateXmlFilesHandler createXmlFilesHandler;
     public CreateXmlFilesExecutor createXmlFilesExecutor = new CreateXmlFilesExecutor(this);
+    public PatchListHandler patchListHandler;
+    public PatchListExecutor patchListExecutor = new PatchListExecutor(this);
     public CreatePagesHandler createPagesHandler;
     public CreatePagesExecutor createPagesExecutor = new CreatePagesExecutor(this);
     public CreateAreasHandler createAreasHandler;
@@ -160,6 +162,9 @@ public class BagView extends AbstractView implements ApplicationListener {
     public PatchAreasExecutor patchAreasExecutor = new PatchAreasExecutor(this);
     public PatchLinesHandler patchLinesHandler;
     public PatchLinesExecutor patchLinesExecutor = new PatchLinesExecutor(this);
+    public PatchWordsHandler patchWordsHandler;
+    public PatchWordsExecutor patchWordsExecutor = new PatchWordsExecutor(this);
+
 
     private JLabel addDataToolBarAction;
     private JLabel removeDataToolBarAction;
@@ -287,6 +292,7 @@ public class BagView extends AbstractView implements ApplicationListener {
         patchCanvasHandler = new PatchCanvasHandler(this);
         patchManifestHandler = new PatchManifestHandler(this);
         createXmlFilesHandler = new CreateXmlFilesHandler(this);
+        patchListHandler = new PatchListHandler(this);
         createPagesHandler = new CreatePagesHandler(this);
         createAreasHandler = new CreateAreasHandler(this);
         createLinesHandler = new CreateLinesHandler(this);
@@ -294,6 +300,7 @@ public class BagView extends AbstractView implements ApplicationListener {
         patchPagesHandler = new PatchPagesHandler(this);
         patchAreasHandler = new PatchAreasHandler(this);
         patchLinesHandler = new PatchLinesHandler(this);
+        patchWordsHandler = new PatchWordsHandler(this);
         return buttonPanel;
     }
 
@@ -596,6 +603,7 @@ public class BagView extends AbstractView implements ApplicationListener {
         patchCanvasExecutor.setEnabled(false);
         patchManifestExecutor.setEnabled(false);
         createXmlFilesExecutor.setEnabled(false);
+        patchListExecutor.setEnabled(false);
         createPagesExecutor.setEnabled(false);
         createAreasExecutor.setEnabled(false);
         createLinesExecutor.setEnabled(false);
@@ -603,6 +611,7 @@ public class BagView extends AbstractView implements ApplicationListener {
         patchPagesExecutor.setEnabled(false);
         patchAreasExecutor.setEnabled(false);
         patchLinesExecutor.setEnabled(false);
+        patchWordsExecutor.setEnabled(false);
     }
 
     public void updateClearBag() {
@@ -631,6 +640,7 @@ public class BagView extends AbstractView implements ApplicationListener {
         patchCanvasExecutor.setEnabled(false);
         patchManifestExecutor.setEnabled(false);
         createXmlFilesExecutor.setEnabled(false);
+        patchListExecutor.setEnabled(false);
         createPagesExecutor.setEnabled(false);
         createAreasExecutor.setEnabled(false);
         createLinesExecutor.setEnabled(false);
@@ -638,6 +648,7 @@ public class BagView extends AbstractView implements ApplicationListener {
         patchPagesExecutor.setEnabled(false);
         patchAreasExecutor.setEnabled(false);
         patchLinesExecutor.setEnabled(false);
+        patchWordsExecutor.setEnabled(false);
     }
 
     public void updateNewBag() {
@@ -656,6 +667,7 @@ public class BagView extends AbstractView implements ApplicationListener {
         patchCanvasExecutor.setEnabled(false);
         patchManifestExecutor.setEnabled(false);
         createXmlFilesExecutor.setEnabled(false);
+        patchListExecutor.setEnabled(false);
         createPagesExecutor.setEnabled(false);
         createAreasExecutor.setEnabled(false);
         createLinesExecutor.setEnabled(false);
@@ -663,6 +675,7 @@ public class BagView extends AbstractView implements ApplicationListener {
         patchPagesExecutor.setEnabled(false);
         patchAreasExecutor.setEnabled(false);
         patchLinesExecutor.setEnabled(false);
+        patchWordsExecutor.setEnabled(false);
     }
 
     public void updateOpenBag() {
@@ -687,6 +700,7 @@ public class BagView extends AbstractView implements ApplicationListener {
         patchCanvasExecutor.setEnabled(true);
         patchManifestExecutor.setEnabled(true);
         createXmlFilesExecutor.setEnabled(true);
+        patchListExecutor.setEnabled(true);
         createPagesExecutor.setEnabled(true);
         createAreasExecutor.setEnabled(true);
         createLinesExecutor.setEnabled(true);
@@ -694,6 +708,7 @@ public class BagView extends AbstractView implements ApplicationListener {
         patchPagesExecutor.setEnabled(true);
         patchAreasExecutor.setEnabled(true);
         patchLinesExecutor.setEnabled(true);
+        patchWordsExecutor.setEnabled(true);
     }
 
     public void updateBagInPlace() {
@@ -718,6 +733,7 @@ public class BagView extends AbstractView implements ApplicationListener {
         patchCanvasExecutor.setEnabled(true);
         patchManifestExecutor.setEnabled(true);
         createXmlFilesExecutor.setEnabled(true);
+        patchListExecutor.setEnabled(true);
         createPagesExecutor.setEnabled(true);
         createAreasExecutor.setEnabled(true);
         createLinesExecutor.setEnabled(true);
@@ -725,6 +741,7 @@ public class BagView extends AbstractView implements ApplicationListener {
         patchPagesExecutor.setEnabled(true);
         patchAreasExecutor.setEnabled(true);
         patchLinesExecutor.setEnabled(true);
+        patchWordsExecutor.setEnabled(true);
     }
 
     public void updateSaveBag() {
@@ -750,6 +767,7 @@ public class BagView extends AbstractView implements ApplicationListener {
         patchCanvasExecutor.setEnabled(true);
         patchManifestExecutor.setEnabled(true);
         createXmlFilesExecutor.setEnabled(true);
+        patchListExecutor.setEnabled(true);
         createPagesExecutor.setEnabled(true);
         createAreasExecutor.setEnabled(true);
         createLinesExecutor.setEnabled(true);
@@ -757,6 +775,7 @@ public class BagView extends AbstractView implements ApplicationListener {
         patchPagesExecutor.setEnabled(true);
         patchAreasExecutor.setEnabled(true);
         patchLinesExecutor.setEnabled(true);
+        patchWordsExecutor.setEnabled(true);
     }
 
     public void updateAddData() {
@@ -774,6 +793,7 @@ public class BagView extends AbstractView implements ApplicationListener {
         patchCanvasExecutor.setEnabled(true);
         patchManifestExecutor.setEnabled(true);
         createXmlFilesExecutor.setEnabled(true);
+        patchListExecutor.setEnabled(true);
         createPagesExecutor.setEnabled(true);
         createAreasExecutor.setEnabled(true);
         createLinesExecutor.setEnabled(true);
@@ -781,6 +801,7 @@ public class BagView extends AbstractView implements ApplicationListener {
         patchPagesExecutor.setEnabled(true);
         patchAreasExecutor.setEnabled(true);
         patchLinesExecutor.setEnabled(true);
+        patchWordsExecutor.setEnabled(true);
     }
 
     public void updateManifestPane() {
@@ -813,6 +834,7 @@ public class BagView extends AbstractView implements ApplicationListener {
         context.register("patchCanvasCommand", patchCanvasExecutor);
         context.register("patchManifestCommand", patchManifestExecutor);
         context.register("createXmlFilesCommand", createXmlFilesExecutor);
+        context.register("patchListCommand", patchListExecutor);
         context.register("createPagesCommand", createPagesExecutor);
         context.register("createAreasCommand", createAreasExecutor);
         context.register("createLinesCommand", createLinesExecutor);
@@ -820,6 +842,7 @@ public class BagView extends AbstractView implements ApplicationListener {
         context.register("patchPagesCommand", patchPagesExecutor);
         context.register("patchAreasCommand", patchAreasExecutor);
         context.register("patchLinesCommand", patchLinesExecutor);
+        context.register("patchWordsCommand", patchWordsExecutor);
     }
 
     @Override

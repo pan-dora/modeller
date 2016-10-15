@@ -78,8 +78,16 @@ public class DocManifestBuilder {
         return StringUtils.substringBefore(StringUtils.substringAfter(hocr.getTitleForId(id), "bbox "), ";");
     }
 
+    public static String getCharsForId(hOCRData hocr, String id) {
+        return hocr.getCharsForId(id);
+    }
+
     public static List<String> getWordIdListforLine(hOCRData hocr, String id) {
         return hocr.getWordsforLine(id);
+    }
+
+    public static List<String> getWordIdListforPage(hOCRData hocr, String id) {
+        return hocr.getWordsforPage(id);
     }
 
     private static ByteArrayOutputStream marshal(File hocr) throws JAXBException {

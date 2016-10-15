@@ -21,6 +21,7 @@ import java.io.InputStream;
 import java.net.URI;
 import java.util.*;
 
+import static org.apache.commons.lang.StringUtils.substringBefore;
 import static org.apache.commons.lang3.exception.ExceptionUtils.getMessage;
 import static org.blume.modeller.DocManifestBuilder.*;
 import static org.blume.modeller.ui.handlers.common.NodeMap.getCanvasPageMap;
@@ -80,7 +81,7 @@ public class PatchLinesHandler extends AbstractAction implements Progress {
         for (String lineId : lineKeyList) {
             URI lineObjectURI = TextObjectURI.getLineObjectURI(map, lineId);
             assert canvasPageMap != null;
-            String canvasURI = canvasPageMap.get(org.apache.commons.lang3.StringUtils.substringBefore(lineId, "_"));
+            String canvasURI = canvasPageMap.get(substringBefore(lineId, "_"));
             assert pageIdMap != null;
             String hOCRAreaId = "line_" + lineId;
             String bbox = bboxmap.get(hOCRAreaId);

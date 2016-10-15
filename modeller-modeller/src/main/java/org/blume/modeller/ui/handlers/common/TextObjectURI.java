@@ -128,6 +128,22 @@ public class TextObjectURI {
         }
         return null;
     }
+
+    public static URI getWordObjectURI(Map<String, BagInfoField> map, String resourceID) {
+        URIResolver uriResolver;
+        try {
+            uriResolver = URIResolver.resolve()
+                    .map(map)
+                    .containerKey(ProfileOptions.TEXT_WORD_CONTAINER_KEY)
+                    .resource(resourceID)
+                    .pathType(5)
+                    .build();
+            return uriResolver.render();
+        } catch (URISyntaxException e) {
+            log.debug(e.getMessage());
+        }
+        return null;
+    }
 }
 
 

@@ -29,6 +29,7 @@
                 <value>patchCanvasCommand</value>
                 <value>patchManifestCommand</value>
                 <value>createXmlFilesCommand</value>
+                <value>patchListCommand</value>
                 <value>createPagesCommand</value>
                 <value>createAreasCommand</value>
                 <value>createLinesCommand</value>
@@ -36,6 +37,7 @@
                 <value>patchPagesCommand</value>
                 <value>patchAreasCommand</value>
                 <value>patchLinesCommand</value>
+                <value>patchWordsCommand</value>
             </list>
         </property>
     </bean>
@@ -111,6 +113,7 @@
                 <value>patchSequenceCommand</value>
                 <value>patchManifestCommand</value>
                 <value>createXmlFilesCommand</value>
+                <value>patchListCommand</value>
             </list>
         </property>
     </bean>
@@ -125,6 +128,7 @@
                 <value>patchPagesCommand</value>
                 <value>patchAreasCommand</value>
                 <value>patchLinesCommand</value>
+                <value>patchWordsCommand</value>
             </list>
         </property>
     </bean>

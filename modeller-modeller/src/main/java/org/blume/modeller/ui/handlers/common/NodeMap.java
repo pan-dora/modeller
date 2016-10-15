@@ -12,9 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.blume.modeller.DocManifestBuilder.getAreaIdListforPage;
-import static org.blume.modeller.DocManifestBuilder.getLineIdListforArea;
-import static org.blume.modeller.DocManifestBuilder.getWordIdListforLine;
+import static org.blume.modeller.DocManifestBuilder.*;
 
 public class NodeMap {
 
@@ -43,6 +41,24 @@ public class NodeMap {
             bboxMap.put(lineId, bbox);
         }
         return bboxMap;
+    }
+
+    public static Map<String, String> getBBoxWordMap(hOCRData hocr, List<String> wordIdList) {
+        Map<String, String> bboxMap = new HashMap<>();
+        for (String wordId : wordIdList) {
+            String bbox = DocManifestBuilder.getBboxForId(hocr, wordId);
+            bboxMap.put(wordId, bbox);
+        }
+        return bboxMap;
+    }
+
+    public static Map<String, String> getCharWordMap(hOCRData hocr, List<String> wordIdList) {
+        Map<String, String> charMap = new HashMap<>();
+        for (String wordId : wordIdList) {
+            String chars = DocManifestBuilder.getCharsForId(hocr, wordId);
+            charMap.put(wordId, chars);
+        }
+        return charMap;
     }
 
     public static Map<String, String> getCanvasPageMap(List<String> pageIdList, URI canvasContainerURI) {
@@ -113,6 +129,22 @@ public class NodeMap {
             }
             lineId = StringUtils.substringAfter(lineId, "_");
             nodemap.put(lineId, wordIdList);
+        }
+        return nodemap;
+    }
+
+
+    public static Map<String, List<String>> getWordsForPageMap(hOCRData hocr, List<String> pageIdList) {
+        Map<String, List<String>> nodemap = new HashMap<>();
+        List<String> wordIdList;
+        for (String pageId : pageIdList) {
+            wordIdList = getWordIdListforPage(hocr, pageId);
+            for (int i = 0; i < wordIdList.size(); i++) {
+                String wordId = StringUtils.substringAfter(wordIdList.get(i), "_");
+                wordIdList.set(i, wordId);
+            }
+            pageId = StringUtils.substringAfter(pageId, "_");
+            nodemap.put(pageId, wordIdList);
         }
         return nodemap;
     }
