@@ -33,6 +33,7 @@ import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
+import org.blume.modeller.ui.handlers.common.IIIFObjectURI;
 import org.blume.modeller.ui.jpanel.base.BagView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -140,9 +141,9 @@ public class CreateXmlFilesFrame extends JFrame implements ActionListener {
         JLabel urlLabel = new JLabel(bagView.getPropertyMessage("baseURL.label"));
         urlLabel.setToolTipText(bagView.getPropertyMessage("baseURL.description"));
         JTextField urlField = new JTextField("");
-        URI uri = bagView.createXmlFilesHandler.getResourceContainerURI(map);
+        URI uri = IIIFObjectURI.getResourceContainerURI(map);
         try {
-            urlField.setText(uri.toString());
+            urlField.setText(uri != null ? uri.toString() : null);
         } catch (Exception e) {
             log.error("Failed to set url label", e);
         }

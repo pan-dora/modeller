@@ -7,6 +7,7 @@ import org.blume.modeller.bag.BagInfoField;
 import org.blume.modeller.bag.impl.DefaultBag;
 import org.blume.modeller.ui.Progress;
 import org.blume.modeller.ui.handlers.base.SaveBagHandler;
+import org.blume.modeller.ui.handlers.common.IIIFObjectURI;
 import org.blume.modeller.ui.jpanel.base.BagView;
 import org.blume.modeller.ui.jpanel.iiif.CreateSequencesFrame;
 import org.blume.modeller.ui.util.ApplicationContextUtil;
@@ -44,7 +45,7 @@ public class CreateSequencesHandler extends AbstractAction implements Progress {
 
         ModellerClient client = new ModellerClient();
         String sequenceID = bag.getSequenceID();
-        URI sequenceObjectURI = getSequenceObjectURI(map, sequenceID );
+        URI sequenceObjectURI = IIIFObjectURI.getSequenceObjectURI(map, sequenceID );
         try {
             client.doPut(sequenceObjectURI);
             ApplicationContextUtil.addConsoleMessage(message + " " + sequenceObjectURI);
@@ -61,36 +62,5 @@ public class CreateSequencesHandler extends AbstractAction implements Progress {
                 bagView.getPropertyMessage("bag.frame.sequence"));
         createSequencesFrame.setBag(bag);
         createSequencesFrame.setVisible(true);
-    }
-
-    public URI getSequenceContainerURI(Map<String, BagInfoField> map) {
-        URIResolver uriResolver;
-        try {
-            uriResolver = URIResolver.resolve()
-                    .map(map)
-                    .containerKey(ProfileOptions.SEQUENCE_CONTAINER_KEY)
-                    .pathType(4)
-                    .build();
-            return uriResolver.render();
-        } catch (URISyntaxException e) {
-            log.debug(e.getMessage());
-        }
-        return null;
-    }
-
-    private URI getSequenceObjectURI(Map<String, BagInfoField> map, String sequenceID) {
-        URIResolver uriResolver;
-        try {
-            uriResolver = URIResolver.resolve()
-                    .map(map)
-                    .containerKey(ProfileOptions.SEQUENCE_CONTAINER_KEY)
-                    .resource(sequenceID)
-                    .pathType(5)
-                    .build();
-            return uriResolver.render();
-        } catch (URISyntaxException e) {
-            log.debug(e.getMessage());
-        }
-        return null;
     }
 }

@@ -7,6 +7,7 @@ import org.blume.modeller.bag.BagInfoField;
 import org.blume.modeller.bag.impl.DefaultBag;
 import org.blume.modeller.ui.Progress;
 import org.blume.modeller.ui.handlers.base.SaveBagHandler;
+import org.blume.modeller.ui.handlers.common.IIIFObjectURI;
 import org.blume.modeller.ui.jpanel.base.BagView;
 import org.blume.modeller.ui.jpanel.iiif.CreateCanvasesFrame;
 import org.blume.modeller.ui.util.ApplicationContextUtil;
@@ -46,7 +47,7 @@ public class CreateCanvasesHandler extends AbstractAction implements Progress {
         ArrayList<String> resourceIDList = idList.getResourceIdentifierList();
         ModellerClient client = new ModellerClient();
         for (String resourceID : resourceIDList) {
-            URI canvasObjectURI = getCanvasObjectURI(map, resourceID);
+            URI canvasObjectURI = IIIFObjectURI.getCanvasObjectURI(map, resourceID);
             try {
                 client.doPut(canvasObjectURI);
                 ApplicationContextUtil.addConsoleMessage(message + " " + canvasObjectURI);
@@ -62,36 +63,5 @@ public class CreateCanvasesHandler extends AbstractAction implements Progress {
         CreateCanvasesFrame createCanvasesFrame = new CreateCanvasesFrame(bagView, bagView.getPropertyMessage("bag.frame.canvas"));
         createCanvasesFrame.setBag(bag);
         createCanvasesFrame.setVisible(true);
-    }
-
-    public URI getCanvasContainerURI(Map<String, BagInfoField> map) {
-        URIResolver uriResolver;
-        try {
-            uriResolver = URIResolver.resolve()
-                    .map(map)
-                    .containerKey(ProfileOptions.CANVAS_CONTAINER_KEY)
-                    .pathType(4)
-                    .build();
-            return uriResolver.render();
-        } catch (URISyntaxException e) {
-            log.debug(e.getMessage());
-        }
-        return null;
-    }
-
-    private URI getCanvasObjectURI(Map<String, BagInfoField> map, String resourceID) {
-        URIResolver uriResolver;
-        try {
-            uriResolver = URIResolver.resolve()
-                    .map(map)
-                    .containerKey(ProfileOptions.CANVAS_CONTAINER_KEY)
-                    .resource(resourceID)
-                    .pathType(5)
-                    .build();
-            return uriResolver.render();
-        } catch (URISyntaxException e) {
-            log.debug(e.getMessage());
-        }
-        return null;
     }
 }

@@ -7,6 +7,7 @@ import org.blume.modeller.XmlFileWriter;
 import org.blume.modeller.bag.BagInfoField;
 import org.blume.modeller.bag.impl.DefaultBag;
 import org.blume.modeller.ui.Progress;
+import org.blume.modeller.ui.handlers.common.IIIFObjectURI;
 import org.blume.modeller.ui.jpanel.base.BagView;
 import org.blume.modeller.ui.jpanel.iiif.CreateXmlFilesFrame;
 import org.blume.modeller.ui.util.ApplicationContextUtil;
@@ -62,7 +63,7 @@ public class CreateXmlFilesHandler extends AbstractAction implements Progress {
             ByteArrayInputStream in = new ByteArrayInputStream(resourceFile.toByteArray());
             String filename = resourceId + ".xml";
             String contentType = "application/xml";
-            URI destinationURI = getDestinationURI(map, filename);
+            URI destinationURI = IIIFObjectURI.getDestinationURI(map, filename);
             try {
                 client.doStreamPut(destinationURI, in, contentType);
                 ApplicationContextUtil.addConsoleMessage(message + " " + destinationURI);
@@ -88,36 +89,4 @@ public class CreateXmlFilesHandler extends AbstractAction implements Progress {
                 .build();
         return xmlFileWriter;
     }
-
-    private URI getDestinationURI(Map<String, BagInfoField> map, String filename) {
-        URIResolver uriResolver;
-        try {
-            uriResolver = URIResolver.resolve()
-                    .map(map)
-                    .containerKey(ProfileOptions.RESOURCE_CONTAINER_KEY)
-                    .resource(filename)
-                    .pathType(5)
-                    .build();
-            return uriResolver.render();
-        } catch (URISyntaxException e) {
-            log.debug(e.getMessage());
-        }
-        return null;
-    }
-
-    public URI getResourceContainerURI(Map<String, BagInfoField> map) {
-        URIResolver uriResolver;
-        try {
-            uriResolver = URIResolver.resolve()
-                    .map(map)
-                    .containerKey(ProfileOptions.RESOURCE_CONTAINER_KEY)
-                    .pathType(4)
-                    .build();
-            return uriResolver.render();
-        } catch (URISyntaxException e) {
-            log.debug(e.getMessage());
-        }
-        return null;
-    }
-
 }

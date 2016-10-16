@@ -11,6 +11,7 @@ import org.blume.modeller.ModellerClientFailedException;
 import org.blume.modeller.ProfileOptions;
 import org.blume.modeller.bag.BagInfoField;
 import org.blume.modeller.ui.handlers.base.SaveBagHandler;
+import org.blume.modeller.ui.handlers.common.IIIFObjectURI;
 import org.blume.modeller.ui.util.URIResolver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,8 +46,8 @@ public class CreateDefaultContainersHandler extends AbstractAction implements Pr
         Map<String, BagInfoField> map = bag.getInfo().getFieldMap();
 
         ModellerClient client = new ModellerClient();
-        URI collectionIDURI = getCollectionIDURI(map);
-        URI objektURI = getObjektURI(map);
+        URI collectionIDURI = IIIFObjectURI.getCollectionIdURI(map);
+        URI objektURI = IIIFObjectURI.getObjektURI(map);
 
         try {
         client.doPut(collectionIDURI);
@@ -67,7 +68,7 @@ public class CreateDefaultContainersHandler extends AbstractAction implements Pr
                 ProfileOptions.TEXT_AREA_CONTAINER_KEY, ProfileOptions.TEXT_LINE_CONTAINER_KEY,
                 ProfileOptions.TEXT_WORD_CONTAINER_KEY};
         for (String containerKey: IIIFContainers) {
-            URI containerURI = buildContainerURI(map, containerKey);
+            URI containerURI = IIIFObjectURI.buildContainerURI(map, containerKey);
             try {
                 client.doPut(containerURI);
                 ApplicationContextUtil.addConsoleMessage(message + " " + containerURI);
@@ -84,48 +85,5 @@ public class CreateDefaultContainersHandler extends AbstractAction implements Pr
                 new CreateDefaultContainersFrame(bagView, bagView.getPropertyMessage("bag.frame.put"));
         createDefaultContainersFrame.setBag(bag);
         createDefaultContainersFrame.setVisible(true);
-    }
-
-    public URI getObjektURI(Map<String, BagInfoField> map) {
-        URIResolver uriResolver;
-        try {
-            uriResolver = URIResolver.resolve()
-                    .map(map)
-                    .pathType(3)
-                    .build();
-            return uriResolver.render();
-        } catch (URISyntaxException e) {
-            log.debug(e.getMessage());
-        }
-        return null;
-    }
-
-    private URI getCollectionIDURI(Map<String, BagInfoField> map) {
-        URIResolver uriResolver;
-        try {
-            uriResolver = URIResolver.resolve()
-                    .map(map)
-                    .pathType(2)
-                    .build();
-            return uriResolver.render();
-        } catch (URISyntaxException e) {
-            log.debug(e.getMessage());
-        }
-        return null;
-    }
-
-    private URI buildContainerURI(Map<String, BagInfoField> map, String containerKey) {
-        URIResolver uriResolver;
-        try {
-            uriResolver = URIResolver.resolve()
-                    .map(map)
-                    .containerKey(containerKey)
-                    .pathType(4)
-                    .build();
-            return uriResolver.render();
-        } catch (URISyntaxException e) {
-            log.debug(e.getMessage());
-        }
-        return null;
     }
 }

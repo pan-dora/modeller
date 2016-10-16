@@ -18,6 +18,7 @@ import org.blume.modeller.bag.BagInfoField;
 import org.blume.modeller.common.uri.FedoraPrefixes;
 import org.blume.modeller.templates.CollectionScope;
 import org.blume.modeller.templates.MetadataTemplate;
+import org.blume.modeller.ui.handlers.common.IIIFObjectURI;
 import org.blume.modeller.ui.jpanel.iiif.PatchSequenceFrame;
 import org.blume.modeller.ui.util.URIResolver;
 import org.blume.modeller.util.RDFCollectionWriter;
@@ -57,7 +58,7 @@ public class PatchSequenceHandler extends AbstractAction implements Progress {
         ArrayList<String> resourceIDList = idList.getResourceIdentifierList();
         InputStream rdfBody;
         String collectionPredicate = "http://iiif.io/api/presentation/2#hasCanvases";
-        URI canvasContainerIRI = getCanvasContainer(map);
+        URI canvasContainerIRI = IIIFObjectURI.getCanvasContainerURI(map);
         //TODO Lookup IDs from Created Sequences and provide selection box in Frame
         String sequenceID = bag.getSequenceID();
         rdfBody = getSequenceMetadata(resourceIDList, collectionPredicate, canvasContainerIRI);
@@ -91,36 +92,6 @@ public class PatchSequenceHandler extends AbstractAction implements Progress {
                     .pathType(5)
                     .build();
             return uriResolver.render();
-        } catch (URISyntaxException e) {
-            log.debug(e.getMessage());
-        }
-        return null;
-    }
-
-    public URI getSequenceContainer(Map<String, BagInfoField> map) {
-        URIResolver uriResolver;
-        try {
-            uriResolver = URIResolver.resolve()
-                    .map(map)
-                    .containerKey(ProfileOptions.SEQUENCE_CONTAINER_KEY)
-                    .pathType(4)
-                    .build();
-            return uriResolver.render();
-        } catch (URISyntaxException e) {
-            log.debug(e.getMessage());
-        }
-        return null;
-    }
-
-    private URI getCanvasContainer(Map<String, BagInfoField> map)  {
-        URIResolver uriResolver;
-        try {
-        uriResolver = URIResolver.resolve()
-                .map(map)
-                .containerKey(ProfileOptions.CANVAS_CONTAINER_KEY)
-                .pathType(4)
-                .build();
-        return uriResolver.render();
         } catch (URISyntaxException e) {
             log.debug(e.getMessage());
         }

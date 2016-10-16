@@ -18,6 +18,7 @@ import org.blume.modeller.common.uri.IIIFPredicates;
 import org.blume.modeller.common.uri.IIIFPrefixes;
 import org.blume.modeller.templates.CanvasScope;
 import org.blume.modeller.templates.MetadataTemplate;
+import org.blume.modeller.ui.handlers.common.IIIFObjectURI;
 import org.blume.modeller.ui.jpanel.iiif.PatchCanvasFrame;
 import org.blume.modeller.ui.util.URIResolver;
 import org.blume.modeller.util.ResourceList;
@@ -54,9 +55,9 @@ public class PatchCanvasHandler extends AbstractAction implements Progress {
         String message = ApplicationContextUtil.getMessage("bag.message.canvaspatched");
         DefaultBag bag = bagView.getBag();
         Map<String, BagInfoField> map = bag.getInfo().getFieldMap();
-        URI resourceContainerURI = getResourceContainerURI(map);
-        URI canvasContainerURI = getCanvasContainerURI(map);
-        URI ListContainerURI = getListContainerURI(map);
+        URI resourceContainerURI = IIIFObjectURI.getResourceContainerURI(map);
+        URI canvasContainerURI = IIIFObjectURI.getCanvasContainerURI(map);
+        URI ListContainerURI = IIIFObjectURI.getListContainerURI(map);
         ResourceList canvasList = new ResourceList(canvasContainerURI);
         ArrayList<String> canvasesList = canvasList.getResourceList();
         ResourceList resourceList = new ResourceList(resourceContainerURI);
@@ -99,50 +100,7 @@ public class PatchCanvasHandler extends AbstractAction implements Progress {
         patchCanvasFrame.setVisible(true);
     }
 
-    public URI getCanvasContainerURI(Map<String, BagInfoField> map) {
-        URIResolver uriResolver;
-        try {
-            uriResolver = URIResolver.resolve()
-                    .map(map)
-                    .containerKey(ProfileOptions.CANVAS_CONTAINER_KEY)
-                    .pathType(4)
-                    .build();
-            return uriResolver.render();
-        } catch (URISyntaxException e) {
-            log.debug(e.getMessage());
-        }
-        return null;
-    }
 
-    private URI getResourceContainerURI(Map<String, BagInfoField> map)  {
-        URIResolver uriResolver;
-        try {
-            uriResolver = URIResolver.resolve()
-                    .map(map)
-                    .containerKey(ProfileOptions.RESOURCE_CONTAINER_KEY)
-                    .pathType(4)
-                    .build();
-            return uriResolver.render();
-        } catch (URISyntaxException e) {
-            log.debug(e.getMessage());
-        }
-        return null;
-    }
-
-    private URI getListContainerURI(Map<String, BagInfoField> map)  {
-        URIResolver uriResolver;
-        try {
-            uriResolver = URIResolver.resolve()
-                    .map(map)
-                    .containerKey(ProfileOptions.LIST_CONTAINER_KEY)
-                    .pathType(4)
-                    .build();
-            return uriResolver.render();
-        } catch (URISyntaxException e) {
-            log.debug(e.getMessage());
-        }
-        return null;
-    }
 
     private InputStream getCanvasMetadata(String resourceURI, String listURI) {
 

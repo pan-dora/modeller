@@ -7,6 +7,7 @@ import org.blume.modeller.bag.BagInfoField;
 import org.blume.modeller.bag.impl.DefaultBag;
 import org.blume.modeller.ui.Progress;
 import org.blume.modeller.ui.handlers.base.SaveBagHandler;
+import org.blume.modeller.ui.handlers.common.IIIFObjectURI;
 import org.blume.modeller.ui.jpanel.base.BagView;
 import org.blume.modeller.ui.jpanel.iiif.CreateListsFrame;
 import org.blume.modeller.ui.util.ApplicationContextUtil;
@@ -46,7 +47,7 @@ public class CreateListsHandler extends AbstractAction implements Progress {
         ArrayList<String> resourceIDList = idList.getResourceIdentifierList();
         ModellerClient client = new ModellerClient();
         for (String resourceID : resourceIDList) {
-            URI listObjectURI = getListObjectURI(map, resourceID);
+            URI listObjectURI = IIIFObjectURI.getListObjectURI(map, resourceID);
             try {
                 client.doPut(listObjectURI);
                 ApplicationContextUtil.addConsoleMessage(message + " " + listObjectURI);
@@ -62,37 +63,6 @@ public class CreateListsHandler extends AbstractAction implements Progress {
         CreateListsFrame createListsFrame = new CreateListsFrame(bagView, bagView.getPropertyMessage("bag.frame.list"));
         createListsFrame.setBag(bag);
         createListsFrame.setVisible(true);
-    }
-
-    public URI getListContainerURI(Map<String, BagInfoField> map) {
-        URIResolver uriResolver;
-        try {
-            uriResolver = URIResolver.resolve()
-                    .map(map)
-                    .containerKey(ProfileOptions.LIST_CONTAINER_KEY)
-                    .pathType(4)
-                    .build();
-            return uriResolver.render();
-        } catch (URISyntaxException e) {
-            log.debug(e.getMessage());
-        }
-        return null;
-    }
-
-    private URI getListObjectURI(Map<String, BagInfoField> map, String resourceID) {
-        URIResolver uriResolver;
-        try {
-            uriResolver = URIResolver.resolve()
-                    .map(map)
-                    .containerKey(ProfileOptions.LIST_CONTAINER_KEY)
-                    .resource(resourceID)
-                    .pathType(5)
-                    .build();
-            return uriResolver.render();
-        } catch (URISyntaxException e) {
-            log.debug(e.getMessage());
-        }
-        return null;
     }
 }
 

@@ -23,6 +23,7 @@ import org.blume.modeller.common.uri.FedoraPrefixes;
 import org.blume.modeller.common.uri.IIIFPrefixes;
 import org.blume.modeller.templates.ResourceScope;
 import org.blume.modeller.templates.MetadataTemplate;
+import org.blume.modeller.ui.handlers.common.IIIFObjectURI;
 import org.blume.modeller.ui.util.URIResolver;
 import org.blume.modeller.util.ImageIOUtil;
 import org.slf4j.Logger;
@@ -59,7 +60,7 @@ public class PatchResourceHandler extends AbstractAction implements Progress {
         DefaultBag bag = bagView.getBag();
         List<String> payload = bag.getPayloadPaths();
         Map<String, BagInfoField> map = bag.getInfo().getFieldMap();
-        URI resourceContainer = getResourceContainer(map);
+        URI resourceContainer = IIIFObjectURI.getResourceContainerURI(map);
         ModellerClient client = new ModellerClient();
         ImageIOUtil imageioutil = new ImageIOUtil();
         String basePath = AbstractBagConstants.DATA_DIRECTORY;
@@ -119,21 +120,6 @@ public class PatchResourceHandler extends AbstractAction implements Progress {
         return resourceContainer.toString() +
                 filename +
                 FCRMETADATA;
-    }
-
-    public URI getResourceContainer(Map<String, BagInfoField> map)  {
-        URIResolver uriResolver;
-        try {
-            uriResolver = URIResolver.resolve()
-                    .map(map)
-                    .containerKey(ProfileOptions.RESOURCE_CONTAINER_KEY)
-                    .pathType(4)
-                    .build();
-            return uriResolver.render();
-        } catch (URISyntaxException e) {
-            log.debug(e.getMessage());
-        }
-        return null;
     }
 
     private InputStream getResourceMetadata(Map<String, BagInfoField> map, String filename, String formatName,

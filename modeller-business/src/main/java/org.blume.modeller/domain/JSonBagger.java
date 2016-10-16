@@ -39,10 +39,8 @@ public class JSonBagger implements Bagger {
   private File profilesFolder;
   
   private static final String BAGGER_PROFILES_HOME_PROPERTY = "BAGGER_PROFILES_HOME";
-  private static final String RESOURCE_DIR = "org/blume/modeller/org.blume.modeller/org.blume.modeller.profiles";
-  private static final String[] DEFAULT_PROFILES = new String[]{"eDeposit-profile.json", "ndiipp-profile.json", 
-      "ndnp-profile.json", "other-project-profile.json", "Digital-Records-Accession-Generic-profile.json", 
-      "Digital-Records-Accession-IARA-Indiana-profile.json"};
+  private static final String RESOURCE_DIR = "profiles";
+  private static final String[] DEFAULT_PROFILES = new String[]{"fedora-iiif-profile.json"};
 
   public JSonBagger() {
     String homeDir = System.getProperty("user.home");

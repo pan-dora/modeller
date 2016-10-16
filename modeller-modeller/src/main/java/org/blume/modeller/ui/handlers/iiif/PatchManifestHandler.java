@@ -17,6 +17,7 @@ import org.blume.modeller.bag.BagInfoField;
 import org.blume.modeller.common.uri.FedoraPrefixes;
 import org.blume.modeller.templates.ManifestScope;
 import org.blume.modeller.templates.MetadataTemplate;
+import org.blume.modeller.ui.handlers.common.IIIFObjectURI;
 import org.blume.modeller.ui.jpanel.iiif.PatchManifestFrame;
 import org.blume.modeller.ui.util.URIResolver;
 import org.slf4j.Logger;
@@ -51,12 +52,12 @@ public class PatchManifestHandler extends AbstractAction implements Progress {
         String message = ApplicationContextUtil.getMessage("bag.message.manifestpatched");
         DefaultBag bag = bagView.getBag();
         Map<String, BagInfoField> map = bag.getInfo().getFieldMap();
-        URI collectionIdURI = getCollectionIdURI(map);
-        URI sequenceIdURI = getSequenceIdURI(map, "normal");
+        URI collectionIdURI = IIIFObjectURI.getCollectionIdURI(map);
+        URI sequenceIdURI = IIIFObjectURI.getSequenceObjectURI(map, "normal");
         String label = "Test";
         InputStream rdfBody;
         rdfBody = getManifestMetadata(collectionIdURI, label, sequenceIdURI);
-        URI destinationURI = getManifestResource(map);
+        URI destinationURI = IIIFObjectURI.getManifestResource(map);
         ModellerClient client = new ModellerClient();
         try {
             client.doPatch(destinationURI, rdfBody);
@@ -73,50 +74,6 @@ public class PatchManifestHandler extends AbstractAction implements Progress {
                 bagView.getPropertyMessage("bag.frame.patch.manifest"));
         patchManifestFrame.setBag(bag);
         patchManifestFrame.setVisible(true);
-    }
-
-    public URI getManifestResource(Map<String, BagInfoField> map) {
-        URIResolver uriResolver;
-        try {
-            uriResolver = URIResolver.resolve()
-                    .map(map)
-                    .pathType(6)
-                    .build();
-            return uriResolver.render();
-        } catch (URISyntaxException e) {
-            log.debug(e.getMessage());
-        }
-        return null;
-    }
-
-    private URI getCollectionIdURI(Map<String, BagInfoField> map)  {
-        URIResolver uriResolver;
-        try {
-            uriResolver = URIResolver.resolve()
-                    .map(map)
-                    .pathType(2)
-                    .build();
-            return uriResolver.render();
-        } catch (URISyntaxException e) {
-            log.debug(e.getMessage());
-        }
-        return null;
-    }
-
-    private URI getSequenceIdURI(Map<String, BagInfoField> map, String sequenceID) {
-        URIResolver uriResolver;
-        try {
-            uriResolver = URIResolver.resolve()
-                    .map(map)
-                    .containerKey(ProfileOptions.SEQUENCE_CONTAINER_KEY)
-                    .resource(sequenceID)
-                    .pathType(5)
-                    .build();
-            return uriResolver.render();
-        } catch (URISyntaxException e) {
-            log.debug(e.getMessage());
-        }
-        return null;
     }
 
     private InputStream getManifestMetadata(URI collectionIdURI, String label, URI sequenceIdURI) {
