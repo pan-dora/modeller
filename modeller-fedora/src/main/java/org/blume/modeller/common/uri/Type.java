@@ -22,15 +22,15 @@ public class Type implements Serializable {
         return path;
     }
 
-    private static final Hashtable types = new Hashtable<>();
+    private static final Hashtable<Object, Hashtable<Integer, Type>> types = new Hashtable<>();
 
     private void storeType(Type type) {
         String className = type.getClass().getName();
 
-        Hashtable values;
+        Hashtable<Integer, Type> values;
 
         synchronized (types) {
-            values = (Hashtable) types.get(className);
+            values = types.get(className);
 
             if (values == null) {
                 values = new Hashtable<>();

@@ -139,7 +139,6 @@ public class PatchCanvasHandler extends AbstractAction implements Progress {
                 .build();
 
         String metadata = unescapeXml(metadataTemplate.render());
-        System.out.println(metadata);
         return IOUtils.toInputStream(metadata, UTF_8 );
     }
 
