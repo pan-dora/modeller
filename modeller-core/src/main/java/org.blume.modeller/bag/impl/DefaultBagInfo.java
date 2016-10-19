@@ -29,11 +29,33 @@ public class DefaultBagInfo implements Serializable {
 
     public static final String FIELD_LC_PROJECT = "Profile Name";
 
-    private static final String[] ORGANIZATION_CONTACT_FIELDS = {BagInfoTxtImpl.FIELD_SOURCE_ORGANIZATION, BagInfoTxtImpl.FIELD_ORGANIZATION_ADDRESS,
-            BagInfoTxtImpl.FIELD_CONTACT_NAME, BagInfoTxtImpl.FIELD_CONTACT_PHONE, BagInfoTxtImpl.FIELD_CONTACT_EMAIL, Contact.FIELD_TO_CONTACT_NAME,
-            Contact.FIELD_TO_CONTACT_PHONE, Contact.FIELD_TO_CONTACT_EMAIL};
+    private static final String[] ORGANIZATION_CONTACT_FIELDS = {
+            BagInfoTxtImpl.FIELD_SOURCE_ORGANIZATION,
+            BagInfoTxtImpl.FIELD_ORGANIZATION_ADDRESS,
+            BagInfoTxtImpl.FIELD_CONTACT_NAME,
+            BagInfoTxtImpl.FIELD_CONTACT_PHONE,
+            BagInfoTxtImpl.FIELD_CONTACT_EMAIL,
+            Contact.FIELD_TO_CONTACT_NAME,
+            Contact.FIELD_TO_CONTACT_PHONE,
+            Contact.FIELD_TO_CONTACT_EMAIL};
 
-    private static final HashSet<String> ORGANIZATION_CONTACT_FIELD_SET = new HashSet<String>(Arrays.asList(ORGANIZATION_CONTACT_FIELDS));
+    private static final String[] MANIFEST_PROPERTY_FIELDS = {
+            ManifestPropertiesImpl.FIELD_ATTRIBUTION,
+            ManifestPropertiesImpl.FIELD_AUTHOR,
+            ManifestPropertiesImpl.FIELD_LABEL,
+            ManifestPropertiesImpl.FIELD_LICENSE,
+            ManifestPropertiesImpl.FIELD_INSTITUTION_LOGO_URI,
+            ManifestPropertiesImpl.FIELD_DESCRIPTION,
+            ManifestPropertiesImpl.FIELD_PUBLISHED,
+            ManifestPropertiesImpl.FIELD_RENDERING,
+            ManifestPropertiesImpl.FIELD_RENDERING_FORMAT,
+            ManifestPropertiesImpl.FIELD_RENDERING_LABEL};
+
+    private static final HashSet<String> ORGANIZATION_CONTACT_FIELD_SET = new HashSet<String>(Arrays.asList
+            (ORGANIZATION_CONTACT_FIELDS));
+
+    private static final HashSet<String> MANIFEST_PROPERTY_FIELD_SET = new HashSet<String>(Arrays.asList
+            (MANIFEST_PROPERTY_FIELDS));
 
     private BaggerSourceOrganization sourceOrganization = new BaggerSourceOrganization();
     private Contact toContact = new Contact(true);
@@ -56,19 +78,22 @@ public class DefaultBagInfo implements Serializable {
         sourceOrganization = new BaggerSourceOrganization(bagInfoTxt);
         toContact = new Contact(true);
         if (bagInfoTxt.containsKey(Contact.FIELD_TO_CONTACT_NAME)) {
-            toContact.setContactName(ProfileField.createProfileField(Contact.FIELD_TO_CONTACT_NAME, bagInfoTxt.get(Contact.FIELD_TO_CONTACT_NAME)));
+            toContact.setContactName(ProfileField.createProfileField(Contact.FIELD_TO_CONTACT_NAME, bagInfoTxt.get
+                    (Contact.FIELD_TO_CONTACT_NAME)));
         } else {
             toContact.setContactName(ProfileField.createProfileField(Contact.FIELD_TO_CONTACT_NAME, ""));
         }
 
         if (bagInfoTxt.containsKey(Contact.FIELD_TO_CONTACT_PHONE)) {
-            toContact.setTelephone(ProfileField.createProfileField(Contact.FIELD_TO_CONTACT_PHONE, bagInfoTxt.get(Contact.FIELD_TO_CONTACT_PHONE)));
+            toContact.setTelephone(ProfileField.createProfileField(Contact.FIELD_TO_CONTACT_PHONE, bagInfoTxt.get
+                    (Contact.FIELD_TO_CONTACT_PHONE)));
         } else {
             toContact.setTelephone(ProfileField.createProfileField(Contact.FIELD_TO_CONTACT_PHONE, ""));
         }
 
         if (bagInfoTxt.containsKey(Contact.FIELD_TO_CONTACT_EMAIL)) {
-            toContact.setEmail(ProfileField.createProfileField(Contact.FIELD_TO_CONTACT_EMAIL, bagInfoTxt.get(Contact.FIELD_TO_CONTACT_EMAIL)));
+            toContact.setEmail(ProfileField.createProfileField(Contact.FIELD_TO_CONTACT_EMAIL, bagInfoTxt.get(Contact
+                    .FIELD_TO_CONTACT_EMAIL)));
         } else {
             toContact.setEmail(ProfileField.createProfileField(Contact.FIELD_TO_CONTACT_EMAIL, ""));
         }
@@ -172,27 +197,26 @@ public class DefaultBagInfo implements Serializable {
 
             if (exclusiveProfileFields.size() > 0) {
                 for (ProfileField profileField : exclusiveProfileFields.values()) {
-                    ProfileField projectProfile = profileField;
-                    if (projectProfile != null) {
+                    if (profileField != null) {
                         BagInfoField field = new BagInfoField();
-                        field.setLabel(projectProfile.getFieldName());
+                        field.setLabel(profileField.getFieldName());
                         field.setName(field.getLabel());
                         field.setComponentType(BagInfoField.TEXTFIELD_COMPONENT);
-                        field.isEnabled(!projectProfile.isReadOnly());
-                        field.isEditable(!projectProfile.isReadOnly());
-                        field.isRequiredvalue(projectProfile.getIsValueRequired());
-                        field.isRequired(projectProfile.getIsRequired());
-                        field.setValue(projectProfile.getFieldValue());
+                        field.isEnabled(!profileField.isReadOnly());
+                        field.isEditable(!profileField.isReadOnly());
+                        field.isRequiredvalue(profileField.getIsValueRequired());
+                        field.isRequired(profileField.getIsRequired());
+                        field.setValue(profileField.getFieldValue());
                         // field.setValue("");
-                        if (projectProfile.isReadOnly()) {
+                        if (profileField.isReadOnly()) {
                             field.isEnabled(false);
                         }
-                        field.buildElements(projectProfile.getElements());
-                        if (projectProfile.getFieldType().equalsIgnoreCase(BagInfoField.TEXTFIELD_CODE)) {
+                        field.buildElements(profileField.getElements());
+                        if (profileField.getFieldType().equalsIgnoreCase(BagInfoField.TEXTFIELD_CODE)) {
                             field.setComponentType(BagInfoField.TEXTFIELD_COMPONENT);
-                        } else if (projectProfile.getFieldType().equalsIgnoreCase(BagInfoField.TEXTAREA_CODE)) {
+                        } else if (profileField.getFieldType().equalsIgnoreCase(BagInfoField.TEXTAREA_CODE)) {
                             field.setComponentType(BagInfoField.TEXTAREA_COMPONENT);
-                        } else if (!(projectProfile.getElements().isEmpty())) {
+                        } else if (!(profileField.getElements().isEmpty())) {
                             field.setComponentType(BagInfoField.LIST_COMPONENT);
                         }
                         fieldMap.put(field.getLabel(), field);
@@ -223,6 +247,10 @@ public class DefaultBagInfo implements Serializable {
 
     public static boolean isOrganizationContactField(String fieldName) {
         return ORGANIZATION_CONTACT_FIELD_SET.contains(fieldName);
+    }
+
+    public static boolean isManifestPropertyField(String fieldName) {
+        return MANIFEST_PROPERTY_FIELD_SET.contains(fieldName);
     }
 
     public void prepareBilBagInfo(BagInfoTxt bagInfoTxt) {

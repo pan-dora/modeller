@@ -18,7 +18,6 @@ import org.slf4j.LoggerFactory;
 import java.awt.event.ActionEvent;
 import java.io.*;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Map;
 
