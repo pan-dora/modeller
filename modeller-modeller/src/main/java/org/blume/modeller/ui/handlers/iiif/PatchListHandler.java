@@ -1,17 +1,10 @@
 package org.blume.modeller.ui.handlers.iiif;
 
-import org.apache.commons.io.IOUtils;
-import org.apache.jena.rdf.model.Model;
-import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.RDFNode;
 import org.blume.modeller.*;
 import org.blume.modeller.bag.BagInfoField;
 import org.blume.modeller.bag.impl.DefaultBag;
-import org.blume.modeller.common.uri.FedoraPrefixes;
-import org.blume.modeller.common.uri.FedoraResources;
 import org.blume.modeller.common.uri.IIIFPredicates;
-import org.blume.modeller.templates.CollectionScope;
-import org.blume.modeller.templates.MetadataTemplate;
 import org.blume.modeller.ui.Progress;
 import org.blume.modeller.ui.handlers.common.IIIFObjectURI;
 import org.blume.modeller.ui.handlers.common.TextObjectURI;
@@ -19,9 +12,6 @@ import org.blume.modeller.ui.handlers.common.TextSequenceMetadata;
 import org.blume.modeller.ui.jpanel.base.BagView;
 import org.blume.modeller.ui.jpanel.iiif.PatchListFrame;
 import org.blume.modeller.ui.util.ApplicationContextUtil;
-import org.blume.modeller.ui.util.URIResolver;
-import org.blume.modeller.util.RDFCollectionWriter;
-import org.blume.modeller.util.ResourceIntegerValue;
 import org.blume.modeller.util.ResourceList;
 import org.blume.modeller.util.ResourceObjectNode;
 import org.slf4j.Logger;
@@ -29,16 +19,12 @@ import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
-import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.*;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.apache.commons.lang.StringUtils.substringAfter;
 import static org.apache.commons.lang.StringUtils.substringBefore;
-import static org.apache.commons.lang3.StringEscapeUtils.unescapeXml;
 import static org.apache.commons.lang3.StringUtils.leftPad;
 import static org.apache.commons.lang3.exception.ExceptionUtils.getMessage;
 
@@ -63,17 +49,18 @@ public class PatchListHandler extends AbstractAction implements Progress {
         Map<String, BagInfoField> map = bag.getInfo().getFieldMap();
         URI resourceContainerURI = TextObjectURI.getWordContainerURI(map);
         URI listContainerURI = IIIFObjectURI.getListContainerURI(map);
+        String listServiceBaseURI = bag.getListServiceBaseURI();
         ResourceList listList = new ResourceList(listContainerURI);
         ArrayList<String> listsList = listList.getResourceList();
         ResourceList resourceList = new ResourceList(resourceContainerURI);
         ArrayList<String> resourcesList = resourceList.getResourceList();
-        String collectionPredicate = "http://iiif.io/api/presentation/2#hasAnnotations";
+        String collectionPredicate = IIIFPredicates.OTHER_CONTENT;
         InputStream rdfBody;
         Map<String, List<String>> pageResourcesMap = getPageResourcesMap(listsList, resourcesList);
         Map<String, String> resourceTargetMap = getResourceTargetMap(resourcesList);
         for (String listURI : listsList) {
             rdfBody = TextSequenceMetadata.getListSequenceMetadata(pageResourcesMap, listURI, resourceTargetMap,
-                    collectionPredicate);
+                    collectionPredicate, listServiceBaseURI);
             URI destinationURI = URI.create(listURI);
             ModellerClient client = new ModellerClient();
             try {
@@ -88,7 +75,7 @@ public class PatchListHandler extends AbstractAction implements Progress {
 
     private Map<String, String> getResourceTargetMap(List<String> resourcesList) {
         Map<String, String> wordTargetMap = new HashMap<>();
-        for (String resource: resourcesList) {
+        for (String resource : resourcesList) {
             RDFNode target = getResourceTarget(resource);
             if (target != null) {
                 wordTargetMap.put(resource, target.toString());
@@ -97,20 +84,21 @@ public class PatchListHandler extends AbstractAction implements Progress {
         return wordTargetMap;
     }
 
-    private Map<String, List<String>> getPageResourcesMap(ArrayList<String> listsList, ArrayList<String> resourcesList) {
+    private Map<String, List<String>> getPageResourcesMap(ArrayList<String> listsList, ArrayList<String>
+            resourcesList) {
         Map<String, List<String>> pageResourcesMap = new HashMap<>();
-        for (String list: listsList) {
-            ArrayList <String> rl = new ArrayList<>();
-            for (String resource: resourcesList) {
-                String var1 = substringAfter(list,"list/");
+        for (String list : listsList) {
+            ArrayList<String> rl = new ArrayList<>();
+            for (String resource : resourcesList) {
+                String var1 = substringAfter(list, "list/");
                 String var2 = leftPad(substringBefore(substringAfter(resource, "word/"), "_"), 2, "0");
                 if (Objects.equals(var1, var2)) {
-                  rl.add(resource);
+                    rl.add(resource);
                 }
             }
             pageResourcesMap.put(list, rl);
         }
-       return pageResourcesMap;
+        return pageResourcesMap;
     }
 
     void openPatchListFrame() {
@@ -126,10 +114,10 @@ public class PatchListHandler extends AbstractAction implements Progress {
                 .resourceURI(resourceURI)
                 .resourceProperty(IIIFPredicates.ON)
                 .build();
-            ArrayList<RDFNode> resourceTarget = resourceObjectNode.render();
-            if (resourceTarget.isEmpty()) {
-                return null;
-            }
-            return resourceTarget.get(0);
+        ArrayList<RDFNode> resourceTarget = resourceObjectNode.render();
+        if (resourceTarget.isEmpty()) {
+            return null;
+        }
+        return resourceTarget.get(0);
     }
 }

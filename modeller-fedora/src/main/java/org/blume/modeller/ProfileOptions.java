@@ -23,6 +23,7 @@ public final class ProfileOptions {
     public static final String TEXT_AREA_CONTAINER_KEY = "TextAreaContainer";
     public static final String TEXT_LINE_CONTAINER_KEY = "TextLineContainer";
     public static final String TEXT_WORD_CONTAINER_KEY = "TextWordContainer";
+    public static final String LIST_SERVICE_KEY = "ListServiceBaseURI";
 
     private ProfileOptions() {
     }

@@ -10,6 +10,8 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Map;
 
+import static org.blume.modeller.ui.util.URIResolver.ContainerURIResolverNormal.getMapValue;
+
 public class IIIFObjectURI {
     protected static final Logger log = LoggerFactory.getLogger(TextObjectURI.class);
     public IIIFObjectURI() {}
@@ -195,6 +197,10 @@ public class IIIFObjectURI {
             log.debug(e.getMessage());
         }
         return null;
+    }
+
+    public static String getListServiceBaseURI(Map<String, BagInfoField> map) {
+        return getMapValue(map, ProfileOptions.LIST_SERVICE_KEY);
     }
 
 }

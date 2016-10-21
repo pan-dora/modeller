@@ -92,6 +92,7 @@ public class DefaultBag {
 
     private String sequenceID;
     private String hOCRResource;
+    private String listServiceURI;
 
     public DefaultBag() {
         this(null, Version.V0_96.versionString);
@@ -245,6 +246,14 @@ public class DefaultBag {
 
     public String gethOCRResource() {
         return this.hOCRResource;
+    }
+
+    public void setListServiceBaseURI(String listServiceURI) {
+        this.listServiceURI = listServiceURI;
+    }
+
+    public String getListServiceBaseURI() {
+        return this.listServiceURI;
     }
 
     public void setSize(long size) {

@@ -5,66 +5,40 @@ import java.util.List;
 
 public class ListScope extends Scope {
     private List<ListScope.Prefix> prefixes;
-    private String resourceURI;
-    private String listURI;
-    private String canvasLabel;
-    private int canvasHeight;
-    private int canvasWidth;
+    private String sequenceGraph;
+    private String serviceNode;
 
     public ListScope fedoraPrefixes(List<ListScope.Prefix> prefixes) {
         this.prefixes = prefixes;
         return this;
     }
 
-    public ListScope resourceURI(String resourceURI) {
-        this.resourceURI = resourceURI;
+    public ListScope sequenceGraph(String sequenceGraph) {
+        this.sequenceGraph = sequenceGraph;
         return this;
     }
 
-    public ListScope listURI(String listURI) {
-        this.listURI = listURI;
-        return this;
-    }
-
-    public ListScope canvasLabel(String canvasLabel) {
-        this.canvasLabel = canvasLabel;
-        return this;
-    }
-
-    public ListScope canvasHeight(int canvasHeight) {
-        this.canvasHeight = canvasHeight;
-        return this;
-    }
-
-    public ListScope canvasWidth(int canvasWidth) {
-        this.canvasWidth = canvasWidth;
+    public ListScope serviceNode(String serviceNode) {
+        this.serviceNode = serviceNode;
         return this;
     }
 
     List<Item> items() {
         return Collections.singletonList(
-                new Item(this.prefixes, this.resourceURI, this.listURI, this.canvasLabel,
-                        this.canvasHeight, this.canvasWidth)
+                new Item(this.prefixes, this.sequenceGraph, this.serviceNode)
         );
     }
 
     static class Item {
-        Item(List<Prefix> prefixes, String resourceURI, String listURI, String canvasLabel,
-             int canvasHeight, int canvasWidth) {
+        Item(List<Prefix> prefixes, String sequenceGraph, String serviceNode) {
             this.prefixes = prefixes;
-            this.resourceURI = resourceURI;
-            this.listURI = listURI;
-            this.canvasLabel = canvasLabel;
-            this.canvasHeight = canvasHeight;
-            this.canvasWidth = canvasWidth;
+            this.sequenceGraph = sequenceGraph;
+            this.serviceNode = serviceNode;
         }
 
         List<Prefix> prefixes;
-        String resourceURI;
-        String listURI;
-        String canvasLabel;
-        int canvasHeight;
-        int canvasWidth;
+        String sequenceGraph;
+        String serviceNode;
     }
 
     public static class Prefix {

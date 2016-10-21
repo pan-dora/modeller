@@ -1,4 +1,4 @@
 package org.blume.modeller.templates;
 
-public class Scope {
+public abstract class Scope {
 }

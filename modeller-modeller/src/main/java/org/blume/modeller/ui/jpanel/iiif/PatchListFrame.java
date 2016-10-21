@@ -43,6 +43,7 @@ public class PatchListFrame extends JFrame implements ActionListener {
     transient BagView bagView;
     private Map<String, BagInfoField> map;
     private JPanel savePanel;
+    private JTextField listServiceField;
 
     public PatchListFrame(BagView bagView, String title) {
         super(title);
@@ -133,10 +134,19 @@ public class PatchListFrame extends JFrame implements ActionListener {
         JTextField urlField = new JTextField("");
         URI uri = IIIFObjectURI.getListContainerURI(map);
         try {
-            assert uri != null;
-            urlField.setText(uri.toString());
+            urlField.setText(uri != null ? uri.toString() : null);
         } catch (Exception e) {
             log.error("Failed to set url label", e);
+        }
+
+        JLabel listServiceLabel = new JLabel(bagView.getPropertyMessage("listServiceLabel.label"));
+        listServiceLabel.setToolTipText(bagView.getPropertyMessage("listServiceLabel.description"));
+        listServiceField = new JTextField("");
+        String listService = IIIFObjectURI.getListServiceBaseURI(map);
+        try {
+            listServiceField.setText(listService);
+        } catch (Exception e) {
+            log.error("Failed to set list service label", e);
         }
 
         GridBagLayout layout = new GridBagLayout();
@@ -155,11 +165,11 @@ public class PatchListFrame extends JFrame implements ActionListener {
         panel.add(urlField);
         row++;
         buildConstraints(glbc, 0, row, 1, 1, 1, 50, GridBagConstraints.NONE, GridBagConstraints.WEST);
-        layout.setConstraints(urlLabel, glbc);
-        panel.add(urlLabel);
+        layout.setConstraints(listServiceLabel, glbc);
+        panel.add(listServiceLabel);
         buildConstraints(glbc, 1, row, 1, 1, 80, 50, GridBagConstraints.HORIZONTAL, GridBagConstraints.CENTER);
-        layout.setConstraints(urlField, glbc);
-        panel.add(urlField);
+        layout.setConstraints(listServiceField, glbc);
+        panel.add(listServiceField);
         row++;
         buildConstraints(glbc, 0, row, 1, 1, 1, 50, GridBagConstraints.NONE, GridBagConstraints.WEST);
         buildConstraints(glbc, 1, row, 2, 1, 80, 50, GridBagConstraints.HORIZONTAL, GridBagConstraints.CENTER);
@@ -190,8 +200,8 @@ public class PatchListFrame extends JFrame implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             setVisible(false);
-            String bagFileName = "";
-            bagView.getBag().setName(bagFileName);
+            String listService = listServiceField.getText().trim();
+            bagView.getBag().setListServiceBaseURI(listService);
             bagView.patchListHandler.execute();
         }
     }
