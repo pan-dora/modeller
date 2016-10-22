@@ -3,23 +3,19 @@ package org.blume.modeller.ui.handlers.iiif;
 import java.awt.event.ActionEvent;
 import java.io.InputStream;
 import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import javax.swing.AbstractAction;
 
 import org.apache.commons.io.IOUtils;
 import org.blume.modeller.ModellerClientFailedException;
-import org.blume.modeller.ProfileOptions;
 import org.blume.modeller.bag.BagInfoField;
+import org.blume.modeller.bag.impl.ManifestPropertiesImpl;
 import org.blume.modeller.common.uri.FedoraPrefixes;
 import org.blume.modeller.templates.ManifestScope;
 import org.blume.modeller.templates.MetadataTemplate;
 import org.blume.modeller.ui.handlers.common.IIIFObjectURI;
 import org.blume.modeller.ui.jpanel.iiif.PatchManifestFrame;
-import org.blume.modeller.ui.util.URIResolver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -52,11 +48,12 @@ public class PatchManifestHandler extends AbstractAction implements Progress {
         String message = ApplicationContextUtil.getMessage("bag.message.manifestpatched");
         DefaultBag bag = bagView.getBag();
         Map<String, BagInfoField> map = bag.getInfo().getFieldMap();
+
         URI collectionIdURI = IIIFObjectURI.getCollectionIdURI(map);
         URI sequenceIdURI = IIIFObjectURI.getSequenceObjectURI(map, "normal");
-        String label = "Test";
+
         InputStream rdfBody;
-        rdfBody = getManifestMetadata(collectionIdURI, label, sequenceIdURI);
+        rdfBody = getManifestMetadata(collectionIdURI, sequenceIdURI, map);
         URI destinationURI = IIIFObjectURI.getManifestResource(map);
         ModellerClient client = new ModellerClient();
         try {
@@ -76,20 +73,32 @@ public class PatchManifestHandler extends AbstractAction implements Progress {
         patchManifestFrame.setVisible(true);
     }
 
-    private InputStream getManifestMetadata(URI collectionIdURI, String label, URI sequenceIdURI) {
+    private InputStream getManifestMetadata(URI collectionIdURI, URI sequenceIdURI, Map<String, BagInfoField> map) {
 
         MetadataTemplate metadataTemplate;
         List<ManifestScope.Prefix> prefixes = Arrays.asList(
                 new ManifestScope.Prefix(FedoraPrefixes.RDFS),
                 new ManifestScope.Prefix(FedoraPrefixes.MODE));
 
+        String label = getMapValue(map, ManifestPropertiesImpl.FIELD_LABEL);
+        String attribution = getMapValue(map, ManifestPropertiesImpl.FIELD_ATTRIBUTION);
+        String license = getMapValue(map, ManifestPropertiesImpl.FIELD_LICENSE);
+        String rendering = getMapValue(map, ManifestPropertiesImpl.FIELD_RENDERING);
+        String logo = getMapValue(map, ManifestPropertiesImpl.FIELD_INSTITUTION_LOGO_URI);
+        String author = getMapValue(map, ManifestPropertiesImpl.FIELD_AUTHOR);
+        String published = getMapValue(map, ManifestPropertiesImpl.FIELD_PUBLISHED);
+
         ManifestScope scope = new ManifestScope()
                 .fedoraPrefixes(prefixes)
                 .collectionURI(collectionIdURI.toString())
-                .label(label)
                 .sequenceURI(sequenceIdURI.toString())
-                .license("http://localhost/static/test/license.html")
-                .format("http://example.org/iiif/book1.pdf");
+                .label(label)
+                .attribution(attribution)
+                .license(license)
+                .logo(logo)
+                .rendering(rendering)
+                .author(author)
+                .published(published);
 
         metadataTemplate = MetadataTemplate.template()
                 .template("template/sparql-update-manifest.mustache")
@@ -101,4 +110,8 @@ public class PatchManifestHandler extends AbstractAction implements Progress {
         return IOUtils.toInputStream(metadata, UTF_8 );
     }
 
+    private static String getMapValue(Map<String, BagInfoField> map, String key) {
+        BagInfoField bagDescriptorKey = map.get(key);
+        return bagDescriptorKey != null ? bagDescriptorKey.getValue() : null;
+    }
 }

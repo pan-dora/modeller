@@ -6,20 +6,17 @@ import java.util.List;
 public class ManifestScope extends Scope {
     private List<ManifestScope.Prefix> prefixes;
     private String collectionURI;
-    private String label;
     private String sequenceURI;
-    private String attributionLabel;
+    private String label;
+    private String attribution;
     private String license;
     private String logo;
-    private String format;
+    private String rendering;
+    private String author;
+    private String published;
 
     public ManifestScope fedoraPrefixes(List<ManifestScope.Prefix> prefixes) {
         this.prefixes = prefixes;
-        return this;
-    }
-
-    public ManifestScope attributionLabel(String attributionLabel) {
-        this.attributionLabel = attributionLabel;
         return this;
     }
 
@@ -38,6 +35,11 @@ public class ManifestScope extends Scope {
         return this;
     }
 
+    public ManifestScope attribution(String attribution) {
+        this.attribution = attribution;
+        return this;
+    }
+
     public ManifestScope license(String license) {
         this.license = license;
         return this;
@@ -48,39 +50,53 @@ public class ManifestScope extends Scope {
         return this;
     }
 
-    public ManifestScope format(String format) {
-        this.format = format;
+    public ManifestScope rendering(String rendering) {
+        this.rendering = rendering;
+        return this;
+    }
+
+    public ManifestScope author(String author) {
+        this.author = author;
+        return this;
+    }
+
+    public ManifestScope published(String published) {
+        this.published = published;
         return this;
     }
 
     List<Item> items() {
         return Collections.singletonList(
-                new Item(this.prefixes, this.collectionURI, this.label, this.sequenceURI,
-                        this.attributionLabel, this.license, this.logo, this.format)
-        );
+                new Item(this.prefixes, this.collectionURI, this.sequenceURI, this.label, this.attribution, this
+                        .license, this.logo, this.rendering,this.author, this.published));
     }
 
     private static class Item {
-        Item(List<Prefix> prefixes, String collectionURI, String label, String sequenceURI,
-             String attributionLabel, String license, String logo, String format) {
+        Item(List<Prefix> prefixes, String collectionURI, String sequenceURI, String label, String attribution,
+             String license, String logo, String rendering, String author, String published) {
             this.prefixes = prefixes;
             this.collectionURI = collectionURI;
-            this.label = label;
             this.sequenceURI = sequenceURI;
-            this.attributionLabel = attributionLabel;
+            this.label = label;
+            this.attribution = attribution;
             this.license = license;
             this.logo = logo;
-            this.format = format;
+            this.rendering = rendering;
+            this.author = author;
+            this.published = published;
+
         }
 
         List<Prefix> prefixes;
         String collectionURI;
-        String label;
         String sequenceURI;
-        String attributionLabel;
+        String attribution;
+        String label;
         String license;
         String logo;
-        String format;
+        String rendering;
+        String author;
+        String published;
     }
 
     public static class Prefix {

@@ -28,7 +28,7 @@ public class ManifestPropertiesImpl extends AbstractNameValueMapListBagFile impl
     public static final String FIELD_PUBLISHED = "Published";
     public static final String FIELD_INSTITUTION_LOGO_URI = "Logo URI";
     public static final String FIELD_RENDERING = "Rendering URI";
-    public static final String FIELD_RENDERING_LABEL = "Rendering URI";
+    public static final String FIELD_RENDERING_LABEL = "Rendering Label";
     public static final String FIELD_RENDERING_FORMAT = "Rendering MIME Type";
     public static final String FIELD_SOURCE_ORGANIZATION = "Source-Organization";
     public static final String FIELD_ORGANIZATION_ADDRESS = "Organization-Address";
@@ -102,6 +102,10 @@ public class ManifestPropertiesImpl extends AbstractNameValueMapListBagFile impl
         } catch (NumberFormatException ex) {
             throw new ParseException("Bag in Group is not an integer: " + bagInGroup, 0);
         }
+    }
+
+    public String getAttribution() {
+        return this.getCaseInsensitive(FIELD_ATTRIBUTION);
     }
 
     @Override
