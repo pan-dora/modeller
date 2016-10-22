@@ -2,8 +2,9 @@ package org.blume.modeller.ui.handlers.iiif;
 
 import java.awt.event.ActionEvent;
 import java.net.URI;
-import java.net.URISyntaxException;
+import java.util.Arrays;
 import java.util.Map;
+import java.util.stream.Stream;
 
 import javax.swing.AbstractAction;
 
@@ -12,7 +13,6 @@ import org.blume.modeller.ProfileOptions;
 import org.blume.modeller.bag.BagInfoField;
 import org.blume.modeller.ui.handlers.base.SaveBagHandler;
 import org.blume.modeller.ui.handlers.common.IIIFObjectURI;
-import org.blume.modeller.ui.util.URIResolver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -60,14 +60,24 @@ public class CreateDefaultContainersHandler extends AbstractAction implements Pr
             ApplicationContextUtil.addConsoleMessage(getMessage(e));
         }
 
+        String[] Containers;
         String[] IIIFContainers = new String[]{ProfileOptions.RESOURCE_CONTAINER_KEY,
                 ProfileOptions.MANIFEST_RESOURCE_LABEL, ProfileOptions.SEQUENCE_CONTAINER_KEY,
                 ProfileOptions.RANGE_CONTAINER_KEY, ProfileOptions.CANVAS_CONTAINER_KEY,
-                ProfileOptions.LIST_CONTAINER_KEY, ProfileOptions.LAYER_CONTAINER_KEY,
-                ProfileOptions.TEXT_PAGE_CONTAINER_KEY,
+                ProfileOptions.LIST_CONTAINER_KEY, ProfileOptions.LAYER_CONTAINER_KEY};
+
+        String[] TextContainers = new String[]{ProfileOptions.TEXT_PAGE_CONTAINER_KEY,
                 ProfileOptions.TEXT_AREA_CONTAINER_KEY, ProfileOptions.TEXT_LINE_CONTAINER_KEY,
                 ProfileOptions.TEXT_WORD_CONTAINER_KEY};
-        for (String containerKey: IIIFContainers) {
+
+        if (bag.hasText()) {
+            Containers = Stream.concat(Arrays.stream(IIIFContainers), Arrays.stream(TextContainers))
+                    .toArray(String[]::new);
+        } else {
+            Containers = IIIFContainers;
+        }
+
+        for (String containerKey: Containers) {
             URI containerURI = IIIFObjectURI.buildContainerURI(map, containerKey);
             try {
                 client.doPut(containerURI);

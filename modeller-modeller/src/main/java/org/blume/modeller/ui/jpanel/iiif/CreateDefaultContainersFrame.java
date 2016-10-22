@@ -24,18 +24,13 @@ import java.awt.event.ActionListener;
 import java.net.URI;
 import java.util.Map;
 
-import javax.swing.AbstractAction;
-import javax.swing.JComponent;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JSeparator;
-import javax.swing.JTextField;
+import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
 import org.blume.modeller.ui.handlers.common.IIIFObjectURI;
 import org.blume.modeller.ui.jpanel.base.BagView;
+import org.blume.modeller.ui.jpanel.base.SaveBagFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.richclient.command.AbstractCommand;
@@ -54,6 +49,7 @@ public class CreateDefaultContainersFrame extends JFrame implements ActionListen
     transient BagView bagView;
     private Map<String, BagInfoField> map;
     private JPanel savePanel;
+    JCheckBox hasTextCheckbox;
 
     public CreateDefaultContainersFrame(BagView bagView, String title) {
         super(title);
@@ -149,6 +145,13 @@ public class CreateDefaultContainersFrame extends JFrame implements ActionListen
             log.error("Failed to set url label", e);
         }
 
+        JLabel tagLabel = new JLabel(getMessage("bag.label.hasText"));
+        tagLabel.setToolTipText(getMessage("bag.label.hasText.help"));
+        hasTextCheckbox = new JCheckBox();
+        hasTextCheckbox.setBorder(border);
+        hasTextCheckbox.setToolTipText(getMessage("bag.checkbox.hasText.help"));
+
+        hasTextCheckbox.setSelected(bag != null && bag.hasText());
         GridBagLayout layout = new GridBagLayout();
         GridBagConstraints glbc = new GridBagConstraints();
         JPanel panel = new JPanel(layout);
@@ -165,11 +168,11 @@ public class CreateDefaultContainersFrame extends JFrame implements ActionListen
         panel.add(urlField);
         row++;
         buildConstraints(glbc, 0, row, 1, 1, 1, 50, GridBagConstraints.NONE, GridBagConstraints.WEST);
-        layout.setConstraints(urlLabel, glbc);
-        panel.add(urlLabel);
-        buildConstraints(glbc, 1, row, 1, 1, 80, 50, GridBagConstraints.HORIZONTAL, GridBagConstraints.CENTER);
-        layout.setConstraints(urlField, glbc);
-        panel.add(urlField);
+        layout.setConstraints(tagLabel, glbc);
+        panel.add(tagLabel);
+        buildConstraints(glbc, 1, row, 2, 1, 80, 50, GridBagConstraints.HORIZONTAL, GridBagConstraints.CENTER);
+        layout.setConstraints(hasTextCheckbox, glbc);
+        panel.add(hasTextCheckbox);
         row++;
         buildConstraints(glbc, 0, row, 1, 1, 1, 50, GridBagConstraints.NONE, GridBagConstraints.WEST);
         buildConstraints(glbc, 1, row, 2, 1, 80, 50, GridBagConstraints.HORIZONTAL, GridBagConstraints.CENTER);
@@ -199,6 +202,9 @@ public class CreateDefaultContainersFrame extends JFrame implements ActionListen
 
         @Override
         public void actionPerformed(ActionEvent e) {
+            if (!hasTextCheckbox.isSelected()) {
+                bagView.getBag().hasText(false);
+            }
             setVisible(false);
             String bagFileName = "";
             bagView.getBag().setName(bagFileName);

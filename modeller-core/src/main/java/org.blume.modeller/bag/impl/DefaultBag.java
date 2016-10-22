@@ -49,15 +49,15 @@ public class DefaultBag {
     public static final long MAX_SIZE = 104857600; // 100 MB
     public static final short NO_MODE = 0;
     public static final short ZIP_MODE = 1;
-    public static final short TAR_MODE = 2;
-    public static final short TAR_GZ_MODE = 3;
-    public static final short TAR_BZ2_MODE = 4;
+    private static final short TAR_MODE = 2;
+    private static final short TAR_GZ_MODE = 3;
+    private static final short TAR_BZ2_MODE = 4;
     public static final String NO_LABEL = "none";
     public static final String ZIP_LABEL = "zip";
-    public static final String TAR_LABEL = "tar";
+    private static final String TAR_LABEL = "tar";
     public static final String GZ_LABEL = "gz";
-    public static final String TAR_GZ_LABEL = "tar.gz";
-    public static final String TAR_BZ2_LABEL = "tar.bz2";
+    private static final String TAR_GZ_LABEL = "tar.gz";
+    private static final String TAR_BZ2_LABEL = "tar.bz2";
 
     // Bag option flags
     private boolean isHoley = false;
@@ -90,6 +90,7 @@ public class DefaultBag {
     private String versionString = null;
     private File bagFile = null;
 
+    private boolean hasText = true;
     private String sequenceID;
     private String hOCRResource;
     private String listServiceURI;
@@ -230,6 +231,12 @@ public class DefaultBag {
 
     public String getName() {
         return this.name;
+    }
+
+    public void hasText(boolean b) {this.hasText = b;}
+
+    public boolean hasText() {
+        return this.hasText;
     }
 
     public void setSequenceID(String sequenceID) {
