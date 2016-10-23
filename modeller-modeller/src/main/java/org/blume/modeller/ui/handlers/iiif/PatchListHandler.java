@@ -91,7 +91,7 @@ public class PatchListHandler extends AbstractAction implements Progress {
             ArrayList<String> rl = new ArrayList<>();
             for (String resource : resourcesList) {
                 String var1 = substringAfter(list, "list/");
-                String var2 = leftPad(substringBefore(substringAfter(resource, "word/"), "_"), 2, "0");
+                String var2 = leftPad(substringBefore(substringAfter(resource, "word/"), "_"), 3, "0");
                 if (Objects.equals(var1, var2)) {
                     rl.add(resource);
                 }

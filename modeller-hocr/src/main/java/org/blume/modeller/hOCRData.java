@@ -38,7 +38,7 @@ public interface hOCRData {
     @XBRead("//*[@id='{0}']/@title")
     String getTitleForId(String id);
 
-    @XBRead("//*[@id='{0}']/text()")
+    @XBRead("//*[@id='{0}']//text()")
     String getCharsForId(String id);
 
 }
