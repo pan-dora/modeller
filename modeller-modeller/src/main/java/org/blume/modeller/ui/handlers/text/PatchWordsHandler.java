@@ -35,7 +35,6 @@ import static org.apache.commons.lang3.exception.ExceptionUtils.getMessage;
 import static org.blume.modeller.DocManifestBuilder.getPageIdList;
 import static org.blume.modeller.DocManifestBuilder.getWordIdList;
 import static org.blume.modeller.ui.handlers.common.NodeMap.getCanvasPageMap;
-import static org.blume.modeller.ui.handlers.common.NodeMap.getPageIdMap;
 
 public class PatchWordsHandler extends AbstractAction implements Progress {
     protected static final Logger log = LoggerFactory.getLogger(PatchWordsHandler.class);
@@ -67,7 +66,6 @@ public class PatchWordsHandler extends AbstractAction implements Progress {
         Map<String, String> bboxmap = null;
         Map<String, String> charmap = null;
         Map<String, String> canvasPageMap;
-        Map<String, String> pageIdMap;
 
         InputStream rdfBody;
 
@@ -82,31 +80,32 @@ public class PatchWordsHandler extends AbstractAction implements Progress {
         }
 
         canvasPageMap = getCanvasPageMap(pageIdList, canvasContainerURI);
-        pageIdMap = getPageIdMap(pageIdList);
-        assert wordIdList != null;
 
-        for (String wordId : wordIdList) {
-            String subWordId = substringAfter(wordId, "_");
-            URI wordObjectURI = TextObjectURI.getWordObjectURI(map, subWordId);
-            assert canvasPageMap != null;
-            String canvasURI = canvasPageMap.get(substringBefore(subWordId, "_"));
-            assert pageIdMap != null;
-            String bbox = bboxmap.get(wordId);
-            String chars = charmap.get(wordId);
-            String region = Region.region()
-                    .bbox(bbox)
-                    .build();
-            String canvasRegionURI = CanvasRegionURI.regionuri()
-                    .region(region)
-                    .canvasURI(canvasURI)
-                    .build();
-            if (canvasRegionURI != null & chars !=null) {
-                rdfBody = getWordMetadata(canvasRegionURI, wordContainerURI.toString(), chars);
-                try {
-                    client.doPatch(wordObjectURI, rdfBody);
-                    ApplicationContextUtil.addConsoleMessage(message + " " + wordObjectURI);
-                } catch (ModellerClientFailedException e) {
-                    ApplicationContextUtil.addConsoleMessage(getMessage(e));
+        if (wordIdList != null) {
+            for (String wordId : wordIdList) {
+                String subWordId = substringAfter(wordId, "_");
+                URI wordObjectURI = TextObjectURI.getWordObjectURI(map, subWordId);
+                String canvasURI = null;
+                if (canvasPageMap != null) {
+                    canvasURI = canvasPageMap.get(substringBefore(subWordId, "_"));
+                }
+                String bbox = bboxmap.get(wordId);
+                String chars = charmap.get(wordId);
+                String region = Region.region()
+                        .bbox(bbox)
+                        .build();
+                String canvasRegionURI = CanvasRegionURI.regionuri()
+                        .region(region)
+                        .canvasURI(canvasURI)
+                        .build();
+                if (canvasRegionURI != null & chars !=null & wordContainerURI != null) {
+                    rdfBody = getWordMetadata(canvasRegionURI, wordContainerURI.toString(), chars);
+                    try {
+                        client.doPatch(wordObjectURI, rdfBody);
+                        ApplicationContextUtil.addConsoleMessage(message + " " + wordObjectURI);
+                    } catch (ModellerClientFailedException e) {
+                        ApplicationContextUtil.addConsoleMessage(getMessage(e));
+                    }
                 }
             }
         }
@@ -135,7 +134,7 @@ public class PatchWordsHandler extends AbstractAction implements Progress {
                 .fedoraPrefixes(prefixes)
                 .canvasURI(canvasRegionURI)
                 .resourceContainerURI(wordContainerURI)
-                .chars(chars);
+                .chars(chars.replace("\"", "\\\""));
 
         metadataTemplate = MetadataTemplate.template()
                 .template("template/sparql-update-word.mustache")

@@ -21,8 +21,7 @@ public class buildManifestTemplate {
                 .collectionURI("http://localhost:8080/fcrepo/rest/collection/test/")
                 .label("Test")
                 .sequenceURI("http://localhost:8080/fcrepo/rest/collection/test/001/sequence/normal")
-                .license("http://localhost/static/test/license.html")
-                .format("http://example.org/iiif/book1.pdf");
+                .license("http://localhost/static/test/license.html");
 
         metadataTemplate = MetadataTemplate.template()
                 .template("template/sparql-update-manifest.mustache")

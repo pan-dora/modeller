@@ -21,7 +21,7 @@ public class buildCanvasTemplate {
                 .fedoraPrefixes(prefixes)
                 .resourceURI("http://localhost:8080/fcrepo/rest/collection/test/001/res/001.tif")
                 .listURI("http://localhost:8080/fcrepo/rest/collection/test/001/list/001")
-                .canvasLabel("test")
+                .canvasLabel("te&quot;st")
                 .canvasHeight(3000)
                 .canvasWidth(2000);
 

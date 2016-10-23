@@ -133,7 +133,6 @@ public class NodeMap {
         return nodemap;
     }
 
-
     public static Map<String, List<String>> getWordsForPageMap(hOCRData hocr, List<String> pageIdList) {
         Map<String, List<String>> nodemap = new HashMap<>();
         List<String> wordIdList;
