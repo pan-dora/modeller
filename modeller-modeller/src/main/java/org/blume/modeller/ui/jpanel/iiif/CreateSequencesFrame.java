@@ -152,7 +152,7 @@ public class CreateSequencesFrame extends JFrame implements ActionListener {
 
         JLabel sequenceIDLabel = new JLabel(bagView.getPropertyMessage("sequenceID.label"));
         sequenceIDLabel.setToolTipText(bagView.getPropertyMessage("sequenceID.description"));
-        sequenceIDField = new JTextField("");
+        sequenceIDField = new JTextField("normal");
         GridBagLayout layout = new GridBagLayout();
         GridBagConstraints glbc = new GridBagConstraints();
         JPanel panel = new JPanel(layout);

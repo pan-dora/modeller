@@ -32,6 +32,7 @@ import org.blume.modeller.ui.Progress;
 import org.blume.modeller.ui.util.ApplicationContextUtil;
 import org.blume.modeller.ModellerClient;
 
+import static org.apache.commons.lang.StringUtils.substringAfter;
 import static org.apache.commons.lang3.StringEscapeUtils.unescapeXml;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.apache.commons.lang3.exception.ExceptionUtils.getMessage;
@@ -124,11 +125,12 @@ public class PatchCanvasHandler extends AbstractAction implements Progress {
                 .build();
         int reswidth = resourceWidth.render().get(0);
 
+        String canvasLabel = substringAfter(listURI, "list/");
         CanvasScope scope = new CanvasScope()
                 .fedoraPrefixes(prefixes)
                 .resourceURI(resourceURI)
                 .listURI(listURI)
-                .canvasLabel("test")
+                .canvasLabel(canvasLabel)
                 .canvasHeight(resheight)
                 .canvasWidth(reswidth);
 
