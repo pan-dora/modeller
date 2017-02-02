@@ -1,5 +1,5 @@
 group 'org.blume'
-version '0.1-SNAPSHOT'
+version '1.0.0'
 
 import org.apache.tools.ant.filters.ReplaceTokens
 
