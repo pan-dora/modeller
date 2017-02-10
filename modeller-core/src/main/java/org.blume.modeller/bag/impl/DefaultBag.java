@@ -91,7 +91,7 @@ public class DefaultBag {
     private File bagFile = null;
 
     private boolean hasText = true;
-    private String sequenceID;
+    private String sequenceID = "normal";
     private String hOCRResource;
     private String listServiceURI;
 

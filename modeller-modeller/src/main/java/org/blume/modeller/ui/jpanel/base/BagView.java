@@ -164,7 +164,7 @@ public class BagView extends AbstractView implements ApplicationListener {
     public PatchLinesExecutor patchLinesExecutor = new PatchLinesExecutor(this);
     public PatchWordsHandler patchWordsHandler;
     public PatchWordsExecutor patchWordsExecutor = new PatchWordsExecutor(this);
-
+    public PublishBagExecutor publishBagExecutor = new PublishBagExecutor(this);
 
     private JLabel addDataToolBarAction;
     private JLabel removeDataToolBarAction;
@@ -612,6 +612,7 @@ public class BagView extends AbstractView implements ApplicationListener {
         patchAreasExecutor.setEnabled(false);
         patchLinesExecutor.setEnabled(false);
         patchWordsExecutor.setEnabled(false);
+        publishBagExecutor.setEnabled(false);
     }
 
     public void updateClearBag() {
@@ -649,6 +650,7 @@ public class BagView extends AbstractView implements ApplicationListener {
         patchAreasExecutor.setEnabled(false);
         patchLinesExecutor.setEnabled(false);
         patchWordsExecutor.setEnabled(false);
+        publishBagExecutor.setEnabled(false);
     }
 
     public void updateNewBag() {
@@ -676,6 +678,7 @@ public class BagView extends AbstractView implements ApplicationListener {
         patchAreasExecutor.setEnabled(false);
         patchLinesExecutor.setEnabled(false);
         patchWordsExecutor.setEnabled(false);
+        publishBagExecutor.setEnabled(false);
     }
 
     public void updateOpenBag() {
@@ -709,6 +712,7 @@ public class BagView extends AbstractView implements ApplicationListener {
         patchAreasExecutor.setEnabled(true);
         patchLinesExecutor.setEnabled(true);
         patchWordsExecutor.setEnabled(true);
+        publishBagExecutor.setEnabled(true);
     }
 
     public void updateBagInPlace() {
@@ -742,6 +746,7 @@ public class BagView extends AbstractView implements ApplicationListener {
         patchAreasExecutor.setEnabled(true);
         patchLinesExecutor.setEnabled(true);
         patchWordsExecutor.setEnabled(true);
+        publishBagExecutor.setEnabled(true);
     }
 
     public void updateSaveBag() {
@@ -776,6 +781,7 @@ public class BagView extends AbstractView implements ApplicationListener {
         patchAreasExecutor.setEnabled(true);
         patchLinesExecutor.setEnabled(true);
         patchWordsExecutor.setEnabled(true);
+        publishBagExecutor.setEnabled(true);
     }
 
     public void updateAddData() {
@@ -802,6 +808,7 @@ public class BagView extends AbstractView implements ApplicationListener {
         patchAreasExecutor.setEnabled(true);
         patchLinesExecutor.setEnabled(true);
         patchWordsExecutor.setEnabled(true);
+        publishBagExecutor.setEnabled(true);
     }
 
     public void updateManifestPane() {
@@ -843,6 +850,7 @@ public class BagView extends AbstractView implements ApplicationListener {
         context.register("patchAreasCommand", patchAreasExecutor);
         context.register("patchLinesCommand", patchLinesExecutor);
         context.register("patchWordsCommand", patchWordsExecutor);
+        context.register("publishBagCommand", publishBagExecutor);
     }
 
     @Override
