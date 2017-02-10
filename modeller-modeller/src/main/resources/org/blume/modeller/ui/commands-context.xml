@@ -38,6 +38,7 @@
                 <value>patchAreasCommand</value>
                 <value>patchLinesCommand</value>
                 <value>patchWordsCommand</value>
+                <value>publishBagCommand</value>
             </list>
         </property>
     </bean>
@@ -77,6 +78,7 @@
                 <value>clearCommand</value>
                 <value>saveBagCommand</value>
                 <value>saveBagAsCommand</value>
+                <value>publishBagCommand</value>
                 <value>buildMenu</value>
                 <value>textMenu</value>
             </list>
