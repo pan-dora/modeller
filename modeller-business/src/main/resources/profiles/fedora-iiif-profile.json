@@ -43,7 +43,7 @@
     {
       "IIIFServiceBaseURI" : {
         "fieldRequired" : true,
-        "defaultValue" : "http://localhost:8888/iiif/"
+        "defaultValue" : "http://localhost:5004/iiif:"
       }
     },
     {

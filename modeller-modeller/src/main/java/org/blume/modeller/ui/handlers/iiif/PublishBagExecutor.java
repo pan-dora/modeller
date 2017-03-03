@@ -32,7 +32,6 @@ public class PublishBagExecutor extends AbstractActionCommandExecutor {
             bagView.createSequencesHandler.execute();
             bagView.patchSequenceHandler.execute();
             bagView.patchManifestHandler.execute();
-            bagView.createXmlFilesHandler.execute();
             ApplicationContextUtil.addConsoleMessage(message + " " + baglabel);
         } catch (Exception e) {
             ApplicationContextUtil.addConsoleMessage(getMessage(e));

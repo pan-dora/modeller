@@ -5,7 +5,6 @@ import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.InputStream;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
@@ -24,7 +23,6 @@ import org.blume.modeller.common.uri.IIIFPrefixes;
 import org.blume.modeller.templates.ResourceScope;
 import org.blume.modeller.templates.MetadataTemplate;
 import org.blume.modeller.ui.handlers.common.IIIFObjectURI;
-import org.blume.modeller.ui.util.URIResolver;
 import org.blume.modeller.util.ImageIOUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -111,7 +109,8 @@ public class PatchResourceHandler extends AbstractAction implements Progress {
 
     void openPatchResourceFrame() {
         DefaultBag bag = bagView.getBag();
-        PatchResourceFrame patchResourcesFrame = new PatchResourceFrame(bagView, bagView.getPropertyMessage("bag.frame.patch"));
+        PatchResourceFrame patchResourcesFrame = new PatchResourceFrame(bagView, bagView.getPropertyMessage("bag" +
+                ".frame.patch"));
         patchResourcesFrame.setBag(bag);
         patchResourcesFrame.setVisible(true);
     }
@@ -149,15 +148,15 @@ public class PatchResourceHandler extends AbstractAction implements Progress {
                 .build();
 
         String metadata = metadataTemplate.render();
-        return IOUtils.toInputStream(metadata, UTF_8 );
+        return IOUtils.toInputStream(metadata, UTF_8);
     }
 
     private String getServiceURI(Map<String, BagInfoField> map, String filename) {
         String serviceURI = getMapValue(map, ProfileOptions.IIIF_SERVICE_KEY);
         String collectionID = substringBeforeLast(getMapValue(map, ProfileOptions.COLLECTION_ID_KEY), "/");
         String objektID = substringBeforeLast(getMapValue(map, ProfileOptions.OBJEKT_ID_KEY), "/");
-        return serviceURI + collectionID + "." + objektID + "." +
-                BaggerFileEntity.removeFileExtension(filename);
+        return serviceURI + collectionID + "_" + objektID + "_"
+                + getMapValue(map, ProfileOptions.RESOURCE_CONTAINER_KEY) + "_" + filename;
     }
 
     private String getMapValue(Map<String, BagInfoField> map, String key) {
