@@ -152,31 +152,19 @@ public class PatchResourceHandler extends AbstractAction implements Progress {
     }
 
     private String getServiceURI(Map<String, BagInfoField> map, String filename) {
+        String separator = "_";
         String serviceURI = getMapValue(map, ProfileOptions.IIIF_SERVICE_KEY);
-        String collectionID = substringBeforeLast(getMapValue(map, ProfileOptions.COLLECTION_ID_KEY), "/");
-        String objektID = substringBeforeLast(getMapValue(map, ProfileOptions.OBJEKT_ID_KEY), "/");
-        return serviceURI + collectionID + "_" + objektID + "_"
-                + getMapValue(map, ProfileOptions.RESOURCE_CONTAINER_KEY) + "_" + filename;
+        String path = getMapValue(map, ProfileOptions.COLLECTION_ROOT_KEY) + separator + getMapValue(map,
+                ProfileOptions.COLLECTION_ID_KEY)
+                + separator + getMapValue(map, ProfileOptions.OBJEKT_ID_KEY) + separator + getMapValue(map,
+                ProfileOptions.RESOURCE_CONTAINER_KEY)
+                + separator + filename;
+        return serviceURI + path.replace("tif", "jp2");
     }
 
     private String getMapValue(Map<String, BagInfoField> map, String key) {
         BagInfoField IIIFProfileKey = map.get(key);
         return IIIFProfileKey.getValue();
-    }
-
-    private static String substringBeforeLast(String str, String separator) {
-        if (isEmpty(str) || isEmpty(separator)) {
-            return str;
-        }
-        int pos = str.lastIndexOf(separator);
-        if (pos == -1) {
-            return str;
-        }
-        return str.substring(0, pos);
-    }
-
-    private static boolean isEmpty(String str) {
-        return str == null || str.length() == 0;
     }
 
 }
