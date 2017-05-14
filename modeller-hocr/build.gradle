@@ -1,4 +1,4 @@
-version 'unspecified'
+group 'cool.pandora'
 
 apply plugin: 'java'
 

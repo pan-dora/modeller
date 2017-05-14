@@ -1,127 +1,127 @@
 {
   "ordered": [
     {
-      "FedoraHostName" : {
-        "fieldRequired" : true,
-        "defaultValue" : "localhost"
+      "FedoraHostName": {
+        "fieldRequired": true,
+        "defaultValue": "localhost"
       }
     },
     {
-      "Port" : {
-        "fieldRequired" : false,
-        "defaultValue" : "8080"
+      "Port": {
+        "fieldRequired": false,
+        "defaultValue": "8080"
       }
     },
     {
-      "FedoraAppRoot" : {
-        "fieldRequired" : true,
-        "defaultValue" : "fcrepo"
+      "FedoraAppRoot": {
+        "fieldRequired": true,
+        "defaultValue": "fcrepo"
       }
     },
     {
-      "RestServlet" : {
-        "fieldRequired" : true,
-        "defaultValue" : "rest"
+      "RestServlet": {
+        "fieldRequired": true,
+        "defaultValue": "rest"
       }
     },
     {
-      "CollectionRoot" : {
-        "fieldRequired" : true,
-        "defaultValue" : "collection"
+      "CollectionRoot": {
+        "fieldRequired": true,
+        "defaultValue": "collection"
       }
     },
     {
-      "CollectionID" : {
-        "fieldRequired" : true
+      "CollectionID": {
+        "fieldRequired": true
       }
     },
     {
-      "ObjektID" : {
-        "fieldRequired" : true
+      "ObjektID": {
+        "fieldRequired": true
       }
     },
     {
-      "IIIFServiceBaseURI" : {
-        "fieldRequired" : true,
-        "defaultValue" : "http://localhost:5004/iiif:"
+      "IIIFServiceBaseURI": {
+        "fieldRequired": true,
+        "defaultValue": "http://localhost:5004/"
       }
     },
     {
-      "ListServiceBaseURI" : {
-        "fieldRequired" : true,
-        "defaultValue" : "http://localhost:3000/api/graphs/list.nt?node="
+      "ListServiceBaseURI": {
+        "fieldRequired": true,
+        "defaultValue": "http://localhost:3000/api/graphs/list.nt?node="
       }
     },
     {
-      "IIIFManifestResourceLabel" : {
-        "fieldRequired" : true,
-        "defaultValue" : "manifest"
+      "IIIFManifestResourceLabel": {
+        "fieldRequired": true,
+        "defaultValue": "manifest"
       }
     },
     {
-      "IIIFSequenceContainer" : {
-        "fieldRequired" : true,
-        "defaultValue" : "sequence"
+      "IIIFSequenceContainer": {
+        "fieldRequired": true,
+        "defaultValue": "sequence"
       }
     },
     {
-      "IIIFRangeContainer" : {
-        "fieldRequired" : true,
-        "defaultValue" : "range"
+      "IIIFRangeContainer": {
+        "fieldRequired": true,
+        "defaultValue": "range"
       }
     },
     {
-      "IIIFCanvasContainer" : {
-        "fieldRequired" : true,
-        "defaultValue" : "canvas"
+      "IIIFCanvasContainer": {
+        "fieldRequired": true,
+        "defaultValue": "canvas"
       }
     },
     {
-      "IIIFResourceContainer" : {
-        "fieldRequired" : true,
-        "defaultValue" : "res"
+      "IIIFResourceContainer": {
+        "fieldRequired": true,
+        "defaultValue": "res"
       }
     },
     {
-      "IIIFListContainer" : {
-        "fieldRequired" : true,
-        "defaultValue" : "list"
+      "IIIFListContainer": {
+        "fieldRequired": true,
+        "defaultValue": "list"
       }
     },
     {
-      "IIIFLayerContainer" : {
-        "fieldRequired" : true,
-        "defaultValue" : "layer"
+      "IIIFLayerContainer": {
+        "fieldRequired": true,
+        "defaultValue": "layer"
       }
     },
     {
-      "TexthOCRResource" : {
-        "fieldRequired" : false
+      "TexthOCRResource": {
+        "fieldRequired": false
       }
     },
     {
-      "TextPageContainer" : {
-        "fieldRequired" : true,
-        "defaultValue" : "page"
+      "TextPageContainer": {
+        "fieldRequired": true,
+        "defaultValue": "page"
       }
     },
     {
-      "TextAreaContainer" : {
-        "fieldRequired" : true,
-        "defaultValue" : "area"
+      "TextAreaContainer": {
+        "fieldRequired": true,
+        "defaultValue": "area"
       }
     },
     {
-      "TextLineContainer" : {
-        "fieldRequired" : true,
-        "defaultValue" : "line"
+      "TextLineContainer": {
+        "fieldRequired": true,
+        "defaultValue": "line"
       }
     },
     {
-      "TextWordContainer" : {
-        "fieldRequired" : true,
-        "defaultValue" : "word"
+      "TextWordContainer": {
+        "fieldRequired": true,
+        "defaultValue": "word"
       }
     }
-    ]
+  ]
 }
