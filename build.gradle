@@ -1,13 +1,77 @@
-subprojects{
-    apply plugin: 'java'
+buildscript {
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+    dependencies {
+        classpath "io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.5.1"
+        classpath 'com.bmuschko:gradle-nexus-plugin:2.3.1'
+    }
+}
+
+plugins {
+    id 'com.github.hierynomus.license' version '0.13.1'
+    id 'net.researchgate.release' version '2.4.0'
+    id 'org.sonarqube' version '2.2.1'
+}
+
+apply plugin: 'com.bmuschko.nexus'
+apply plugin: 'io.codearte.nexus-staging'
+
+allprojects {
     apply plugin: 'maven'
+
+    group = 'cool.pandora'
+
+    repositories {
+        jcenter()
+        mavenCentral()
+        mavenLocal()
+    }
+
+    gradle.projectsEvaluated {
+        tasks.withType(JavaCompile) {
+            options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+        }
+    }
+
+    release {
+        tagTemplate = '$name-$version'
+        scmAdapters = [
+                net.researchgate.release.GitAdapter
+        ]
+
+        git {
+            requireBranch = 'master'
+            pushToRemote = 'origin'
+            pushToBranchPrefix = ''
+            commitVersionFileOnly = false
+        }
+    }
+
+}
+
+subprojects {
+    apply plugin: 'java'
     apply plugin: 'findbugs'
     apply plugin: 'pmd'
+    apply plugin: 'maven-publish'
+    apply plugin: 'signing'
+    apply plugin: 'checkstyle'
+    apply plugin: 'com.github.hierynomus.license'
+    apply plugin: 'jacoco'
+    apply plugin: 'signing'
 
-    group = 'org.blume'
+    group = 'cool.pandora'
 
-    sourceCompatibility = 1.8
-    targetCompatibility = 1.8
+    ext {
+        vendor = 'Pan-dora Ecosystem'
+        homepage = 'http://pandora.cool'
+        docURL = 'https://github.com/pan-dora/pandora-demo/wiki'
+        license = 'Apache 2'
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
 
     repositories {
         jcenter()
@@ -33,9 +97,182 @@ subprojects{
     jar.doLast {
         ant.signjar(destDir: jar.destinationDir,
                 jar: jar.archivePath,
-                alias:"rdc",
-                keystore:"${rootDir.path}/keystore/bagger.ks",
-                storepass:"bagger-rdc",
-                preservelastmodified:"true")
+                alias: "rdc",
+                keystore: "${rootDir.path}/keystore/bagger.ks",
+                storepass: "bagger-rdc",
+                preservelastmodified: "true")
+    }
+
+    task processConfig(type: Copy) {
+        from('src/main/cfg') {
+            include '**/*.cfg'
+        }
+        into 'build/cfg/main'
+    }
+
+    task sourceJar(type: Jar) {
+        classifier 'sources'
+        from sourceSets.main.allSource
+    }
+
+
+    task javadocJar(type: Jar) {
+        classifier 'javadoc'
+        from javadoc
+    }
+
+    artifacts {
+        archives javadocJar
+        archives sourceJar
+    }
+
+    classes {
+        classes.dependsOn processConfig
+    }
+
+    checkstyle {
+        configFile = rootProject.file('build/checkstyle/checkstyle.xml')
+        configProperties.checkstyleConfigDir = rootProject.file('build/checkstyle/')
+    }
+
+    jacoco {
+        toolVersion = "0.7.6.201602180812"
+    }
+
+    license {
+        include "**/*.java"
+        header rootProject.file('build/license/HEADER.txt')
+        strictCheck true
+        mapping {
+            java = 'SLASHSTAR_STYLE'
+        }
+    }
+
+    publishing {
+        publications {
+            maven(MavenPublication) {
+                from components.java
+            }
+        }
+    }
+
+    signing {
+        sign configurations.archives
+    }
+
+    uploadArchives {
+        repositories.mavenDeployer {
+            def sonatypeUsername = project.hasProperty('ossrhUsername') ? ossrhUsername : ""
+            def sonatypePassword = project.hasProperty('ossrhPassword') ? ossrhPassword : ""
+            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+                authentication(userName: sonatypeUsername, password: sonatypePassword)
+            }
+
+            snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+                authentication(userName: sonatypeUsername, password: sonatypePassword)
+            }
+
+            pom.project {
+                packaging 'jar'
+                url 'https://pan-dora.github.io/'
+                inceptionYear '2017'
+                name 'Modeller'
+                description 'Modeller'
+
+                organization {
+                    name project.vendor
+                    url project.homepage
+                }
+
+                developers {
+                    developer {
+                        id 'christopher-johnson'
+                        name 'Christopher Johnson'
+                        email 'chjohnson @ (domain of organization url)'
+                        organization 'Pan-dora Ecosystem'
+                        organizationUrl 'https://pan-dora.github.io/'
+                        roles {
+                            role 'developer'
+                        }
+                        timezone '+1'
+                    }
+                }
+
+                scm {
+                    connection 'scm:git:git://github.com/pan-dora/modeller.git'
+                    developerConnection 'scm:git:git@github.com/pan-dora/modeller.git'
+                    url 'https://github.com/pan-dora/modeller/'
+                    tag 'HEAD'
+                }
+
+                licenses {
+                    license {
+                        name 'Apache License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0'
+                        comments 'Copyright (c) 2017 Pan-dora Ecosystem'
+                    }
+                }
+            }
+        }
+    }
+
+    if (project.name != 'acrepo-itests') {
+        afterReleaseBuild.dependsOn uploadArchives
     }
 }
+
+configurations {
+    buildToolsConfig
+}
+
+
+dependencies {
+    buildToolsConfig "edu.amherst.acdc:acrepo-build-tools:0.1.0"
+}
+
+task processBuildTools(type: Copy) {
+    from {
+        configurations.buildToolsConfig.collect {
+            zipTree(it).matching {
+                include 'checkstyle/*.xml'
+                include 'license/*.txt'
+            }
+        }
+    }
+    into 'build'
+}
+
+sonarqube {
+    properties {
+        property "sonar.projectName", "Pan-dora Ecosystem Modeller"
+        property "sonar.projectKey", "cool.pandora:modeller"
+    }
+}
+
+nexusStaging {
+    packageGroup = "cool.pandora"
+    stagingProfileId = "4d5f13c386f543"
+}
+
+extraArchive {
+    sources = false
+    tests = false
+}
+
+nexus {
+    sign = true
+    repositoryUrl = 'https://oss.sonatype.org/service/local/staging/deploy/maven2/'
+    snapshotRepositoryUrl = 'https://oss.sonatype.org/content/repositories/snapshots/'
+}
+
+task docs(type: Javadoc) {
+    source subprojects.collect { project -> project.sourceSets.main.allJava }
+    classpath = files(subprojects.collect { project -> project.sourceSets.main.compileClasspath })
+    destinationDir = new File(projectDir, "docs/${version}")
+}
+
+check.dependsOn processBuildTools
+afterReleaseBuild.dependsOn docs
+

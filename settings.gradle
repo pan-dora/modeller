@@ -4,6 +4,6 @@ include 'modeller-modeller'
 findProject(':modeller-modeller')?.name = 'modeller'
 include 'modeller-business'
 include 'modeller-fedora'
-include 'modeller-djatoka'
+include 'modeller-marshaller'
 include 'modeller-hocr'
 

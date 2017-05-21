@@ -1,5 +1,4 @@
-group 'org.blume'
-version '1.0.0'
+group 'cool.pandora'
 
 apply plugin: 'java'
 

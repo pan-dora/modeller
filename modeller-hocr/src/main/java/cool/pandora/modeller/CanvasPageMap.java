@@ -1,0 +1,104 @@
+package cool.pandora.modeller;
+
+import cool.pandora.modeller.util.ResourceList;
+import org.apache.commons.lang3.StringUtils;
+
+import java.io.IOException;
+import java.net.URI;
+import java.util.Map;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+
+/**
+ * CanvasPageMap
+ *
+ * @author Christopher Johnson
+ */
+public class CanvasPageMap {
+    private final Map<String, String> canvasPageMap;
+
+    /**
+     * @param canvasPageMap Map
+     */
+    CanvasPageMap(final Map<String, String> canvasPageMap) {
+        this.canvasPageMap = canvasPageMap;
+    }
+
+    /**
+     * @return CanvasPageMapBuilder
+     */
+    public static CanvasPageMap.CanvasPageMapBuilder init() {
+        return new CanvasPageMap.CanvasPageMapBuilder();
+    }
+
+    /**
+     * @return canvasPageMap
+     */
+    public Map<String, String> render() {
+        return this.canvasPageMap;
+    }
+
+    /**
+     *
+     */
+    public static class CanvasPageMapBuilder {
+
+        private List<String> pageIdList;
+        private URI canvasContainerURI;
+
+        CanvasPageMapBuilder() {
+        }
+
+        /**
+         * @param pageIdList List
+         * @return this
+         */
+        public CanvasPageMap.CanvasPageMapBuilder pageIdList(final List<String> pageIdList) {
+            this.pageIdList = pageIdList;
+            return this;
+        }
+
+        /**
+         *
+         * @param canvasContainerURI URI
+         * @return this
+         */
+        public CanvasPageMap.CanvasPageMapBuilder canvasContainerURI(final URI canvasContainerURI) {
+            this.canvasContainerURI = canvasContainerURI;
+            return this;
+        }
+
+        /**
+         *
+         * @param pageIdList List
+         * @param canvasContainerURI URI
+         * @return canvasPageMap
+         */
+        static Map<String, String> getMap(final List<String> pageIdList, final URI canvasContainerURI) {
+            final ResourceList canvasList = new ResourceList(canvasContainerURI);
+            final ArrayList<String> canvasesList = canvasList.getResourceList();
+            final Iterator<String> i1 = pageIdList.iterator();
+            final Iterator<String> i2 = canvasesList.iterator();
+            final Map<String, String> canvasPageMap = new LinkedHashMap<>();
+            while (i1.hasNext() && i2.hasNext()) {
+                final String pageId = StringUtils.substringAfter(i1.next(), "_");
+                canvasPageMap.put(pageId, i2.next());
+            }
+            return canvasPageMap;
+        }
+
+        /**
+         *
+         * @return CanvasPageMap
+         * @throws IOException Exception
+         */
+        public CanvasPageMap build() throws IOException {
+            final Map<String, String> canvasPageMap = getMap(this.pageIdList, this.canvasContainerURI);
+            return new CanvasPageMap(canvasPageMap);
+        }
+
+    }
+
+}
