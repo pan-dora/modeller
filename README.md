@@ -1,12 +1,10 @@
-# modeller
+pandora modeller
+=========================
 
-This project serves as a client for interacting with Fedora 4
-using Java to create IIIF data models.
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/cool.pandora/modeller/badge.svg)](https://maven-badges.herokuapp.com/maven-central/cool.pandora/modeller)
 
 The intention is to add configuration templates and a UI for simple
 creation of LDP sequences that conform to the IIIF presentation data model.
-
-This will replace [iiif-builder](https://github.com/blumenbach/iiif-builder)
 
 Current maintainers:
 * [Christopher Johnson](https://github.com/christopher-johnson)
