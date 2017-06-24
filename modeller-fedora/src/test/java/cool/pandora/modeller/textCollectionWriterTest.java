@@ -1,3 +1,16 @@
+/*
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package cool.pandora.modeller;
 
 import cool.pandora.modeller.util.TextCollectionWriter;
@@ -5,23 +18,33 @@ import cool.pandora.modeller.util.TextCollectionWriter;
 import java.util.ArrayList;
 import java.util.stream.IntStream;
 
+/**
+ * textCollectionWriterTest
+ *
+ * @author Christopher Johnson
+ */
 public class textCollectionWriterTest {
-    public static void main(String[] args) {
-        TextCollectionWriter collectionWriter;
+
+    private textCollectionWriterTest() {
+    }
+
+    public static void main(final String[] args) {
+        final TextCollectionWriter collectionWriter;
         collectionWriter = TextCollectionWriter.collection().idList(getMockSequence())
                 .collectionPredicate("http://iiif.io/api/presentation/2#hasCanvases")
                 .resourceContainerIRI("http://localhost:8080/fcrepo/rest/collection/AIG/")
                 .canvasURI("http://localhost:8080/fcrepo/rest/collection/test/007/canvas/001").build();
-        String collection = collectionWriter.render();
+        final String collection = collectionWriter.render();
         System.out.println(collection);
     }
 
-    public static ArrayList<String> getMockSequence() {
-        int numOfValues = 2;
-        int[] array = IntStream.range(1, numOfValues + 1).toArray();
-        ArrayList<String> idList = new ArrayList<>(array.length);
-        for (int anArray : array)
+    private static ArrayList<String> getMockSequence() {
+        final int numOfValues = 2;
+        final int[] array = IntStream.range(1, numOfValues + 1).toArray();
+        final ArrayList<String> idList = new ArrayList<>(array.length);
+        for (final int anArray : array) {
             idList.add(String.valueOf(anArray));
+        }
         return idList;
     }
 }

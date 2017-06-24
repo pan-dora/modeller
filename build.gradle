@@ -237,7 +237,6 @@ task processBuildTools(type: Copy) {
         configurations.buildToolsConfig.collect {
             zipTree(it).matching {
                 include 'checkstyle/*.xml'
-                include 'license/*.txt'
             }
         }
     }

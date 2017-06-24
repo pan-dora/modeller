@@ -11,60 +11,46 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cool.pandora.modeller.util;
+package cool.pandora.modeller;
 
-import cool.pandora.modeller.ModellerClient;
-import cool.pandora.modeller.ModellerClientFailedException;
-import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.Property;
-import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.StmtIterator;
-import org.apache.jena.rdf.model.Statement;
 import org.apache.jena.rdf.model.SimpleSelector;
-
+import org.apache.jena.rdf.model.Statement;
+import org.apache.jena.rdf.model.Resource;
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
 
 import static org.apache.commons.lang3.exception.ExceptionUtils.getMessage;
 
 /**
- * ResourceList
+ * getContainerTest
  *
  * @author Christopher Johnson
  */
-public class ResourceList {
-    private final URI resourceContainerURI;
+public class getContainerTest {
 
-    /**
-     * @param resourceContainerURI URI
-     */
-    public ResourceList(final URI resourceContainerURI) {
-        this.resourceContainerURI = resourceContainerURI;
+    private getContainerTest() {
     }
 
-    /**
-     * @return resourceList
-     */
-    public ArrayList<String> getResourceList() {
+    public static void main(final String[] args) throws IOException {
         try {
-            final String resource = ModellerClient.doGetContainerResources(this.resourceContainerURI);
+            final String resource = ModellerClient
+                    .doGetContainerResources(URI.create("http://localhost:8080/fcrepo/rest/collection/test/001/res"));
             final Model model = ModelFactory.createDefaultModel();
-            model.read(new ByteArrayInputStream(resource != null ? resource.getBytes() : new byte[0]), null, "TTL");
-            final ArrayList<String> resourceList = getChilden(model);
-            resourceList.sort(String.CASE_INSENSITIVE_ORDER);
-            return resourceList;
-        } catch (final ModellerClientFailedException e) {
+            model.read(new ByteArrayInputStream(resource.getBytes()), null, "TTL");
+            final ArrayList<String> children = getChilden(model);
+            model.write(System.out, "TTL");
+            System.out.println(children);
+        } catch (ModellerClientFailedException e) {
             System.out.println(getMessage(e));
         }
-        return null;
     }
 
-    /**
-     * @param model Model
-     * @return retval
-     */
     private static ArrayList<String> getChilden(final Model model) {
         final String NS = "http://www.w3.org/ns/ldp#";
         final Property ldpcontains = model.getProperty(NS + "contains");
@@ -78,4 +64,3 @@ public class ResourceList {
     }
 
 }
-
