@@ -14,8 +14,8 @@
 package cool.pandora.modeller.util;
 
 
+import com.github.jaiimageio.jpeg2000.impl.J2KImageWriterSpi;
 import com.twelvemonkeys.imageio.plugins.tiff.TIFFImageWriterSpi;
-
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
 import javax.imageio.spi.IIORegistry;
@@ -42,6 +42,7 @@ public class ImageIOUtil {
      */
     private static void registerAllServicesProviders() {
         IIORegistry.getDefaultInstance().registerServiceProvider(new TIFFImageWriterSpi());
+        IIORegistry.getDefaultInstance().registerServiceProvider(new J2KImageWriterSpi());
     }
 
     /**

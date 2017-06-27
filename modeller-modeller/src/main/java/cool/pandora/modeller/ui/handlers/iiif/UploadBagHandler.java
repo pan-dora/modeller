@@ -19,6 +19,7 @@ import java.net.URI;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.swing.AbstractAction;
 
@@ -75,7 +76,10 @@ public class UploadBagHandler extends AbstractAction implements Progress {
             final URI destinationURI = IIIFObjectURI.getDestinationURI(map, filename);
             final Path absoluteFilePath = rootDir.resolve(filePath);
             final File resourceFile = absoluteFilePath.toFile();
-            final String contentType = ImageIOUtil.getImageMIMEType(resourceFile);
+            String contentType = ImageIOUtil.getImageMIMEType(resourceFile);
+            if (Objects.equals(contentType, "image/jpeg 2000")) {
+                contentType = "image/jp2";
+            }
             try {
                 ModellerClient.doBinaryPut(destinationURI, resourceFile, contentType);
                 ApplicationContextUtil.addConsoleMessage(message + " " + destinationURI);
