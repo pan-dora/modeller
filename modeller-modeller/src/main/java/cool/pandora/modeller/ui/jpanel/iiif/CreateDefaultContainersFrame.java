@@ -11,6 +11,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller.ui.jpanel.iiif;
 
 import cool.pandora.modeller.bag.BagInfoField;
@@ -60,7 +61,7 @@ public class CreateDefaultContainersFrame extends JFrame implements ActionListen
 
     /**
      * @param bagView BagView
-     * @param title   String
+     * @param title String
      */
     public CreateDefaultContainersFrame(final BagView bagView, final String title) {
         super(title);
@@ -82,7 +83,8 @@ public class CreateDefaultContainersFrame extends JFrame implements ActionListen
      * @return buttonBar
      */
     private JComponent createButtonBar() {
-        final CommandGroup dialogCommandGroup = CommandGroup.createCommandGroup(null, getCommandGroupMembers());
+        final CommandGroup dialogCommandGroup = CommandGroup.createCommandGroup(null,
+                getCommandGroupMembers());
         final JComponent buttonBar = dialogCommandGroup.createButtonBar();
         GuiStandardUtils.attachDialogBorder(buttonBar);
         return buttonBar;
@@ -147,7 +149,8 @@ public class CreateDefaultContainersFrame extends JFrame implements ActionListen
         final JPanel pageControl = new JPanel(new BorderLayout());
         final JPanel titlePaneContainer = new JPanel(new BorderLayout());
         titlePane.setTitle(bagView.getPropertyMessage("CreateContainersFrame.title"));
-        titlePane.setMessage(new DefaultMessage(bagView.getPropertyMessage("Create the default IIIF Containers")));
+        titlePane.setMessage(new DefaultMessage(bagView.getPropertyMessage("Create the default " +
+                "IIIF Containers")));
         titlePaneContainer.add(titlePane.getControl());
         titlePaneContainer.add(new JSeparator(), BorderLayout.SOUTH);
         pageControl.add(titlePaneContainer, BorderLayout.NORTH);
@@ -183,22 +186,28 @@ public class CreateDefaultContainersFrame extends JFrame implements ActionListen
         int row = 0;
 
         row++;
-        buildConstraints(glbc, 0, row, 1, 1, 1, 50, GridBagConstraints.NONE, GridBagConstraints.WEST);
+        buildConstraints(glbc, 0, row, 1, 1, 1, 50, GridBagConstraints.NONE, GridBagConstraints
+                .WEST);
         layout.setConstraints(urlLabel, glbc);
         panel.add(urlLabel);
-        buildConstraints(glbc, 1, row, 1, 1, 80, 50, GridBagConstraints.HORIZONTAL, GridBagConstraints.CENTER);
+        buildConstraints(glbc, 1, row, 1, 1, 80, 50, GridBagConstraints.HORIZONTAL,
+                GridBagConstraints.CENTER);
         layout.setConstraints(urlField, glbc);
         panel.add(urlField);
         row++;
-        buildConstraints(glbc, 0, row, 1, 1, 1, 50, GridBagConstraints.NONE, GridBagConstraints.WEST);
+        buildConstraints(glbc, 0, row, 1, 1, 1, 50, GridBagConstraints.NONE, GridBagConstraints
+                .WEST);
         layout.setConstraints(tagLabel, glbc);
         panel.add(tagLabel);
-        buildConstraints(glbc, 1, row, 2, 1, 80, 50, GridBagConstraints.HORIZONTAL, GridBagConstraints.CENTER);
+        buildConstraints(glbc, 1, row, 2, 1, 80, 50, GridBagConstraints.HORIZONTAL,
+                GridBagConstraints.CENTER);
         layout.setConstraints(hasTextCheckbox, glbc);
         panel.add(hasTextCheckbox);
         row++;
-        buildConstraints(glbc, 0, row, 1, 1, 1, 50, GridBagConstraints.NONE, GridBagConstraints.WEST);
-        buildConstraints(glbc, 1, row, 2, 1, 80, 50, GridBagConstraints.HORIZONTAL, GridBagConstraints.CENTER);
+        buildConstraints(glbc, 0, row, 1, 1, 1, 50, GridBagConstraints.NONE, GridBagConstraints
+                .WEST);
+        buildConstraints(glbc, 1, row, 2, 1, 80, 50, GridBagConstraints.HORIZONTAL,
+                GridBagConstraints.CENTER);
 
         GuiStandardUtils.attachDialogBorder(contentPane);
         pageControl.add(panel);
@@ -248,18 +257,20 @@ public class CreateDefaultContainersFrame extends JFrame implements ActionListen
     }
 
     /**
-     * @param gbc    GridBagConstraints
-     * @param x      int
-     * @param y      int
-     * @param w      int
-     * @param h      int
-     * @param wx     int
-     * @param wy     int
-     * @param fill   int
+     * @param gbc GridBagConstraints
+     * @param x int
+     * @param y int
+     * @param w int
+     * @param h int
+     * @param wx int
+     * @param wy int
+     * @param fill int
      * @param anchor int
      */
-    private static void buildConstraints(final GridBagConstraints gbc, final int x, final int y, final int w,
-                                         final int h, final int wx, final int wy, final int fill, final int anchor) {
+    private static void buildConstraints(final GridBagConstraints gbc, final int x, final int y,
+                                         final int w,
+                                         final int h, final int wx, final int wy, final int fill,
+                                         final int anchor) {
         gbc.gridx = x; // start cell in a row
         gbc.gridy = y; // start cell in a column
         gbc.gridwidth = w; // how many column does the control occupy in the row

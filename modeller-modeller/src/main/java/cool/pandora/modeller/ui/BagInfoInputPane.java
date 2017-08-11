@@ -11,6 +11,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller.ui;
 
 import cool.pandora.modeller.bag.BaggerProfile;
@@ -19,22 +20,24 @@ import cool.pandora.modeller.bag.impl.DefaultBagInfo;
 import cool.pandora.modeller.ui.jpanel.base.BagInfoForm;
 import cool.pandora.modeller.ui.jpanel.base.BagView;
 import cool.pandora.modeller.ui.jpanel.base.OrganizationProfileForm;
+
+import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.util.HashMap;
+
+import javax.swing.AbstractAction;
+import javax.swing.ActionMap;
+import javax.swing.InputMap;
+import javax.swing.JTabbedPane;
+import javax.swing.KeyStroke;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.binding.form.HierarchicalFormModel;
 import org.springframework.richclient.form.FormModelHelper;
 
-import javax.swing.AbstractAction;
-import javax.swing.JTabbedPane;
-import javax.swing.InputMap;
-import javax.swing.KeyStroke;
-import javax.swing.ActionMap;
-import java.awt.Component;
-import java.awt.event.ActionEvent;
-import java.util.HashMap;
-
 /**
- * BagInfoInputPane
+ * BagInfoInputPane.
  *
  * @author gov.loc
  */
@@ -49,6 +52,8 @@ public class BagInfoInputPane extends JTabbedPane {
     private OrganizationProfileForm profileForm = null;
 
     /**
+     * BagInfoInputPane.
+     *
      * @param bagView BagView
      */
     public BagInfoInputPane(final BagView bagView) {
@@ -79,6 +84,8 @@ public class BagInfoInputPane extends JTabbedPane {
     }
 
     /**
+     * enableForms.
+     *
      * @param b boolean
      */
     public void enableForms(final boolean b) {
@@ -91,6 +98,8 @@ public class BagInfoInputPane extends JTabbedPane {
     }
 
     /**
+     * populateForms.
+     *
      * @param bag DefaultBag
      */
     public void populateForms(final DefaultBag bag) {
@@ -105,31 +114,40 @@ public class BagInfoInputPane extends JTabbedPane {
         bagProfile.setOrganization(bagInfo.getBagOrganization());
         bagProfile.setToContact(bagInfo.getToContact());
 
-        final HierarchicalFormModel profileFormModel = FormModelHelper.createCompoundFormModel(bagProfile);
+        final HierarchicalFormModel profileFormModel = FormModelHelper.createCompoundFormModel(
+                bagProfile);
         profileForm =
-                new OrganizationProfileForm(FormModelHelper.createChildPageFormModel(profileFormModel, null), bagView);
+                new OrganizationProfileForm(FormModelHelper.createChildPageFormModel(
+                        profileFormModel, null), bagView);
 
-        final HierarchicalFormModel infoFormModel = FormModelHelper.createCompoundFormModel(bagInfo);
-        bagInfoForm = new BagInfoForm(FormModelHelper.createChildPageFormModel(infoFormModel, null), bagView,
+        final HierarchicalFormModel infoFormModel = FormModelHelper.createCompoundFormModel(
+                bagInfo);
+        bagInfoForm = new BagInfoForm(FormModelHelper.createChildPageFormModel(infoFormModel,
+                null), bagView,
                 bagInfo.getFieldMap());
 
         createTabbedUiComponentsWithForms();
     }
 
     /**
-     * Create a tabbed pane for the information forms and checkbox panel
+     * createTabbedUiComponentsWithForms.
+     *
+     * <p>Create a tabbed pane for the information forms and checkbox panel
      */
     private void createTabbedUiComponentsWithForms() {
         removeAll();
         // invalidate();
         validate();
         setName("Profile");
-        bagInfoForm.getControl().setToolTipText(bagView.getPropertyMessage("infoinputpane.tab.details.help"));
+        bagInfoForm.getControl().setToolTipText(bagView.getPropertyMessage("infoinputpane.tab"
+                + ".details.help"));
         addTab(bagView.getPropertyMessage("infoInputPane.tab.details"), bagInfoForm.getControl());
         profileForm.getControl().setToolTipText("Profile Form");
     }
 
     /**
+     * verifyForms.
+     *
      * @param bag DefaultBag
      */
     private void verifyForms(final DefaultBag bag) {
@@ -150,6 +168,8 @@ public class BagInfoInputPane extends JTabbedPane {
     }
 
     /**
+     * updateForms.
+     *
      * @param bag DefaultBag
      */
     public void updateForms(final DefaultBag bag) {
@@ -170,6 +190,8 @@ public class BagInfoInputPane extends JTabbedPane {
     }
 
     /**
+     * updateProject.
+     *
      * @param bagView BagView
      */
     public static void updateProject(final BagView bagView) {
@@ -182,7 +204,7 @@ public class BagInfoInputPane extends JTabbedPane {
     }
 
     /**
-     *
+     * requestFocus.
      */
     @Override
     public void requestFocus() {

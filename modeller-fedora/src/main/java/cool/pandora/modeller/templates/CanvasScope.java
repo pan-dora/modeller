@@ -11,13 +11,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller.templates;
 
 import java.util.Collections;
 import java.util.List;
 
 /**
- * CanvasScope
+ * CanvasScope.
  *
  * @author Christopher Johnson
  */
@@ -30,6 +31,8 @@ public class CanvasScope extends Scope {
     private int canvasWidth;
 
     /**
+     * fedoraPrefixes.
+     *
      * @param prefixes List
      * @return scope
      */
@@ -39,6 +42,8 @@ public class CanvasScope extends Scope {
     }
 
     /**
+     * resourceURI.
+     *
      * @param resourceURI String
      * @return scope
      */
@@ -48,6 +53,8 @@ public class CanvasScope extends Scope {
     }
 
     /**
+     * listURI.
+     *
      * @param listURI String
      * @return scope
      */
@@ -57,6 +64,8 @@ public class CanvasScope extends Scope {
     }
 
     /**
+     * canvasLabel.
+     *
      * @param canvasLabel String
      * @return scope
      */
@@ -66,6 +75,8 @@ public class CanvasScope extends Scope {
     }
 
     /**
+     * canvasHeight.
+     *
      * @param canvasHeight int
      * @return scope
      */
@@ -75,6 +86,8 @@ public class CanvasScope extends Scope {
     }
 
     /**
+     * canvasWidth.
+     *
      * @param canvasWidth int
      * @return scope
      */
@@ -84,19 +97,23 @@ public class CanvasScope extends Scope {
     }
 
     /**
+     * items.
+     *
      * @return Item
      */
     List<Item> items() {
         return Collections.singletonList(
-                new Item(this.prefixes, this.resourceURI, this.listURI, this.canvasLabel, this.canvasHeight,
+                new Item(this.prefixes, this.resourceURI, this.listURI, this.canvasLabel, this
+                        .canvasHeight,
                         this.canvasWidth));
     }
 
     /**
-     *
+     * Item.
      */
     static class Item {
-        Item(final List<Prefix> prefixes, final String resourceURI, final String listURI, final String canvasLabel,
+        Item(final List<Prefix> prefixes, final String resourceURI, final String listURI, final
+        String canvasLabel,
              final int canvasHeight, final int canvasWidth) {
             this.prefixes = prefixes;
             this.resourceURI = resourceURI;
@@ -115,10 +132,12 @@ public class CanvasScope extends Scope {
     }
 
     /**
-     *
+     * Prefix.
      */
     public static class Prefix {
         /**
+         * Prefix.
+         *
          * @param prefix String
          */
         public Prefix(final String prefix) {

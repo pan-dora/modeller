@@ -11,6 +11,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller;
 
 import org.json.JSONException;
@@ -127,11 +128,12 @@ public class Contact implements Serializable {
 
     /**
      * @param contactSendToJson JSONObject
-     * @param sendTo            boolean
+     * @param sendTo boolean
      * @return contact
      * @throws JSONException exception
      */
-    static Contact createContact(final JSONObject contactSendToJson, final boolean sendTo) throws JSONException {
+    static Contact createContact(final JSONObject contactSendToJson, final boolean sendTo) throws
+            JSONException {
         final Contact contact = new Contact();
         final String name = sendTo ? FIELD_TO_CONTACT_NAME : FIELD_CONTACT_NAME;
         final String phone = sendTo ? FIELD_TO_CONTACT_PHONE : FIELD_CONTACT_PHONE;
@@ -193,8 +195,10 @@ public class Contact implements Serializable {
 
         contactWriter.object().key(FIELD_JSON_NAME)
                 .value(new JSONObject(new JSONTokener(getContactName().serialize())));
-        contactWriter.key(FIELD_JSON_PHONE).value(new JSONObject(new JSONTokener(getTelephone().serialize())));
-        contactWriter.key(FIELD_JSON_EMAIL).value(new JSONObject(new JSONTokener(getEmail().serialize())));
+        contactWriter.key(FIELD_JSON_PHONE).value(new JSONObject(new JSONTokener(getTelephone()
+                .serialize())));
+        contactWriter.key(FIELD_JSON_EMAIL).value(new JSONObject(new JSONTokener(getEmail()
+                .serialize())));
         contactWriter.endObject();
 
         return writer.toString();

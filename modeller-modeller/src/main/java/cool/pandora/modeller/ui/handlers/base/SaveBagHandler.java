@@ -11,7 +11,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller.ui.handlers.base;
+
+import cool.pandora.modeller.bag.impl.DefaultBag;
+import cool.pandora.modeller.ui.Progress;
+import cool.pandora.modeller.ui.jpanel.base.BagView;
+import cool.pandora.modeller.ui.util.ApplicationContextUtil;
+
+import gov.loc.repository.bagit.BagFactory;
+import gov.loc.repository.bagit.writer.Writer;
+import gov.loc.repository.bagit.writer.impl.FileSystemWriter;
+//import gov.loc.repository.bagit.writer.impl.TarBz2Writer;
+//import gov.loc.repository.bagit.writer.impl.TarGzWriter;
+//import gov.loc.repository.bagit.writer.impl.TarWriter;
+import gov.loc.repository.bagit.writer.impl.ZipWriter;
 
 import java.awt.event.ActionEvent;
 import java.io.File;
@@ -24,20 +38,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.richclient.dialog.CloseAction;
 import org.springframework.richclient.dialog.ConfirmationDialog;
 
-import cool.pandora.modeller.bag.impl.DefaultBag;
-import cool.pandora.modeller.ui.jpanel.base.BagView;
-import cool.pandora.modeller.ui.Progress;
-import cool.pandora.modeller.ui.util.ApplicationContextUtil;
-import gov.loc.repository.bagit.BagFactory;
-import gov.loc.repository.bagit.writer.Writer;
-import gov.loc.repository.bagit.writer.impl.FileSystemWriter;
-//import gov.loc.repository.bagit.writer.impl.TarBz2Writer;
-//import gov.loc.repository.bagit.writer.impl.TarGzWriter;
-//import gov.loc.repository.bagit.writer.impl.TarWriter;
-import gov.loc.repository.bagit.writer.impl.ZipWriter;
 
 /**
- * Save Bag Handler
+ * Save Bag Handler.
  *
  * @author gov.loc
  */
@@ -50,6 +53,8 @@ public class SaveBagHandler extends AbstractAction implements Progress {
     private String messages;
 
     /**
+     * SaveBagHandler.
+     *
      * @param bagView BagView
      */
     public SaveBagHandler(final BagView bagView) {
@@ -91,12 +96,14 @@ public class SaveBagHandler extends AbstractAction implements Progress {
                 messages = bag.write(bagWriter);
 
                 if (messages != null && !messages.trim().isEmpty()) {
-                    BagView.showWarningErrorDialog("Warning - bag not saved", "Problem saving bag:\n" + messages);
+                    BagView.showWarningErrorDialog("Warning - bag not saved", "Problem saving "
+                            + "bag:\n" + messages);
                 } else {
                     BagView.showWarningErrorDialog("Bag saved", "Bag saved successfully.\n");
                 }
             } else {
-                BagView.showWarningErrorDialog("Warning - bag not saved", "Could not get writer for bag");
+                BagView.showWarningErrorDialog("Warning - bag not saved", "Could not get writer "
+                        + "for bag");
             }
 
             SwingUtilities.invokeLater(() -> {

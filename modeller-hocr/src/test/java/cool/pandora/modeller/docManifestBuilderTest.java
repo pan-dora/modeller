@@ -11,6 +11,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller;
 
 import java.io.IOException;
@@ -29,7 +30,8 @@ public class docManifestBuilderTest {
         final String url = "resource://data/001.hocr";
         final hOCRData hocr = DocManifestBuilder.gethOCRProjectionFromURL(url);
         final String resourceURI = "http://localhost:8080/fcrepo/rest/collection/test/004/area/";
-        final String rdfseq = DocManifestBuilder.getAreaRDFSequenceForhOCRResource(hocr, resourceURI);
+        final String rdfseq = DocManifestBuilder.getAreaRDFSequenceForhOCRResource(hocr,
+                resourceURI);
         System.out.println(rdfseq);
         //Map map = getAreaMapForhOCRResource(hocr);
         //System.out.println(map);

@@ -11,15 +11,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller.ui;
+
+import javax.swing.JScrollPane;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.swing.JScrollPane;
-
 /**
- * Bag Tree Panel
+ * Bag Tree Panel.
  *
  * @author gov.loc
  */
@@ -29,6 +30,8 @@ public class BagTreePanel extends JScrollPane {
     private BagTree bagTree;
 
     /**
+     * BagTreePanel.
+     *
      * @param bagTree BagTree
      */
     public BagTreePanel(final BagTree bagTree) {
@@ -38,7 +41,7 @@ public class BagTreePanel extends JScrollPane {
     }
 
     /**
-     *
+     * init.
      */
     private void init() {
         log.debug("BagTreePanel.init");
@@ -48,6 +51,8 @@ public class BagTreePanel extends JScrollPane {
     }
 
     /**
+     * refresh.
+     *
      * @param tree BagTree
      */
     public void refresh(final BagTree tree) {

@@ -11,13 +11,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller.templates;
 
 import java.util.Collections;
 import java.util.List;
 
 /**
- * ListScope
+ * ListScope.
  *
  * @author Christopher Johnson
  */
@@ -27,6 +28,8 @@ public class ListScope extends Scope {
     private String serviceNode;
 
     /**
+     * fedoraPrefixes.
+     *
      * @param prefixes List
      * @return this
      */
@@ -36,6 +39,8 @@ public class ListScope extends Scope {
     }
 
     /**
+     * sequenceGraph.
+     *
      * @param sequenceGraph String
      * @return this
      */
@@ -45,6 +50,8 @@ public class ListScope extends Scope {
     }
 
     /**
+     * serviceNode.
+     *
      * @param serviceNode String
      * @return this
      */
@@ -54,14 +61,17 @@ public class ListScope extends Scope {
     }
 
     /**
+     * items.
+     *
      * @return Item
      */
     List<Item> items() {
-        return Collections.singletonList(new Item(this.prefixes, this.sequenceGraph, this.serviceNode));
+        return Collections.singletonList(new Item(this.prefixes, this.sequenceGraph, this
+                .serviceNode));
     }
 
     /**
-     *
+     * Item.
      */
     static class Item {
         Item(final List<Prefix> prefixes, final String sequenceGraph, final String serviceNode) {
@@ -76,10 +86,11 @@ public class ListScope extends Scope {
     }
 
     /**
-     *
+     * Prefix.
      */
     public static class Prefix {
         /**
+         * Prefix.
          * @param prefix String
          */
         public Prefix(final String prefix) {

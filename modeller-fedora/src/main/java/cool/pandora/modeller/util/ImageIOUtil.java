@@ -11,24 +11,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller.util;
 
+import static cool.pandora.modeller.common.uri.FedoraResources.IMAGE;
 
 import com.github.jaiimageio.jpeg2000.impl.J2KImageWriterSpi;
+
 import com.twelvemonkeys.imageio.plugins.tiff.TIFFImageWriterSpi;
-import javax.imageio.ImageIO;
-import javax.imageio.ImageReader;
-import javax.imageio.spi.IIORegistry;
-import javax.imageio.stream.ImageInputStream;
+
 import java.awt.Dimension;
 import java.io.File;
 import java.io.IOException;
 import java.util.Iterator;
+import java.util.Objects;
+import javax.imageio.ImageIO;
+import javax.imageio.ImageReader;
+import javax.imageio.spi.IIORegistry;
+import javax.imageio.stream.ImageInputStream;
 
-import static cool.pandora.modeller.common.uri.FedoraResources.IMAGE;
 
 /**
- * ImageIOUtil
+ * ImageIOUtil.
  *
  * @author Christopher Johnson
  */
@@ -38,7 +42,7 @@ public class ImageIOUtil {
     }
 
     /**
-     *
+     * registerAllServicesProviders.
      */
     private static void registerAllServicesProviders() {
         IIORegistry.getDefaultInstance().registerServiceProvider(new TIFFImageWriterSpi());
@@ -46,6 +50,8 @@ public class ImageIOUtil {
     }
 
     /**
+     * getImageDimensions.
+     *
      * @param resourceFile File
      * @return Dimension
      */
@@ -70,6 +76,8 @@ public class ImageIOUtil {
     }
 
     /**
+     * getImageMIMEType.
+     *
      * @param resourceFile File
      * @return MimeType
      */
@@ -81,7 +89,11 @@ public class ImageIOUtil {
             if (readers.hasNext()) {
                 final ImageReader reader = readers.next();
                 try {
-                    final String formatName = reader.getFormatName();
+                    String formatName = reader.getFormatName();
+                    //hack to set JP2 mime type
+                    if (Objects.equals(formatName, "jpeg 2000")) {
+                        formatName = "jp2";
+                    }
                     reader.setInput(in);
                     return IMAGE + formatName;
                 } finally {

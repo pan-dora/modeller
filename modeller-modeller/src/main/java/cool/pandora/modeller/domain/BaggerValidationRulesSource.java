@@ -11,34 +11,35 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller.domain;
 
 import org.springframework.rules.Rules;
 import org.springframework.rules.support.DefaultRulesSource;
 
 /**
- * Rule Validation
+ * Rule Validation.
  *
  * @author gov.loc
  */
 public class BaggerValidationRulesSource extends DefaultRulesSource {
 
     /**
-     *
+     * BaggerValidationRulesSource.
      */
     public BaggerValidationRulesSource() {
         super();
     }
 
     /**
-     *
+     * init.
      */
     public void init() {
         clear();
     }
 
     /**
-     *
+     * clear.
      */
     public void clear() {
         final java.util.List<Rules> empty = new java.util.ArrayList<Rules>();

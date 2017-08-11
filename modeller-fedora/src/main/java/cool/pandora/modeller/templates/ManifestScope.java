@@ -11,13 +11,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller.templates;
 
 import java.util.Collections;
 import java.util.List;
 
 /**
- * ManifestScope
+ * ManifestScope.
  *
  * @author Christopher Johnson
  */
@@ -34,6 +35,8 @@ public class ManifestScope extends Scope {
     private String published;
 
     /**
+     * fedoraPrefixes.
+     *
      * @param prefixes List
      * @return this
      */
@@ -43,6 +46,8 @@ public class ManifestScope extends Scope {
     }
 
     /**
+     * sequenceURI.
+     *
      * @param sequenceURI String
      * @return this
      */
@@ -52,6 +57,8 @@ public class ManifestScope extends Scope {
     }
 
     /**
+     * collectionURI.
+     *
      * @param collectionURI String
      * @return this
      */
@@ -61,6 +68,8 @@ public class ManifestScope extends Scope {
     }
 
     /**
+     * label.
+     *
      * @param label String
      * @return this
      */
@@ -70,6 +79,8 @@ public class ManifestScope extends Scope {
     }
 
     /**
+     * attribution.
+     *
      * @param attribution String
      * @return this
      */
@@ -79,6 +90,8 @@ public class ManifestScope extends Scope {
     }
 
     /**
+     * license.
+     *
      * @param license String
      * @return this
      */
@@ -88,6 +101,8 @@ public class ManifestScope extends Scope {
     }
 
     /**
+     * logo.
+     *
      * @param logo String
      * @return this
      */
@@ -97,6 +112,8 @@ public class ManifestScope extends Scope {
     }
 
     /**
+     * rendering.
+     *
      * @param rendering String
      * @return this
      */
@@ -106,6 +123,8 @@ public class ManifestScope extends Scope {
     }
 
     /**
+     * author.
+     *
      * @param author String
      * @return this
      */
@@ -115,6 +134,8 @@ public class ManifestScope extends Scope {
     }
 
     /**
+     * published.
+     *
      * @param published String
      * @return this
      */
@@ -124,20 +145,25 @@ public class ManifestScope extends Scope {
     }
 
     /**
+     * items.
+     *
      * @return Item
      */
     List<Item> items() {
         return Collections.singletonList(
-                new Item(this.prefixes, this.collectionURI, this.sequenceURI, this.label, this.attribution,
+                new Item(this.prefixes, this.collectionURI, this.sequenceURI, this.label, this
+                        .attribution,
                         this.license, this.logo, this.rendering, this.author, this.published));
     }
 
     /**
-     *
+     * Item.
      */
     private static class Item {
-        Item(final List<Prefix> prefixes, final String collectionURI, final String sequenceURI, final String label,
-             final String attribution, final String license, final String logo, final String rendering,
+        Item(final List<Prefix> prefixes, final String collectionURI, final String sequenceURI,
+             final String label,
+             final String attribution, final String license, final String logo, final String
+                     rendering,
              final String author, final String published) {
             this.prefixes = prefixes;
             this.collectionURI = collectionURI;
@@ -165,10 +191,12 @@ public class ManifestScope extends Scope {
     }
 
     /**
-     *
+     * Prefix.
      */
     public static class Prefix {
         /**
+         * Prefix.
+         *
          * @param prefix String
          */
         public Prefix(final String prefix) {

@@ -11,13 +11,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller.templates;
 
 import java.util.Collections;
 import java.util.List;
 
 /**
- * ResourceScope
+ * ResourceScope.
  *
  * @author Christopher Johnson
  */
@@ -30,6 +31,8 @@ public class ResourceScope extends Scope {
     private int imgHeight;
 
     /**
+     * fedoraPrefixes.
+     *
      * @param prefixes List
      * @return this
      */
@@ -39,6 +42,8 @@ public class ResourceScope extends Scope {
     }
 
     /**
+     * filename.
+     *
      * @param filename String
      * @return this
      */
@@ -48,6 +53,8 @@ public class ResourceScope extends Scope {
     }
 
     /**
+     * serviceURI.
+     *
      * @param serviceURI String
      * @return this
      */
@@ -57,6 +64,8 @@ public class ResourceScope extends Scope {
     }
 
     /**
+     * formatName.
+     *
      * @param formatName String
      * @return this
      */
@@ -66,6 +75,8 @@ public class ResourceScope extends Scope {
     }
 
     /**
+     * imgWidth.
+     *
      * @param imgWidth int
      * @return this
      */
@@ -75,6 +86,8 @@ public class ResourceScope extends Scope {
     }
 
     /**
+     * imgHeight.
+     *
      * @param imgHeight int
      * @return this
      */
@@ -84,19 +97,23 @@ public class ResourceScope extends Scope {
     }
 
     /**
+     * items.
+     *
      * @return Item
      */
     List<Item> items() {
         return Collections.singletonList(
-                new Item(this.prefixes, this.filename, this.serviceURI, this.formatName, this.imgHeight,
+                new Item(this.prefixes, this.filename, this.serviceURI, this.formatName, this
+                        .imgHeight,
                         this.imgWidth));
     }
 
     /**
-     *
+     * Item.
      */
     static class Item {
-        Item(final List<Prefix> prefixes, final String filename, final String serviceURI, final String formatName,
+        Item(final List<Prefix> prefixes, final String filename, final String serviceURI, final
+        String formatName,
              final int imgHeight, final int imgWidth) {
             this.prefixes = prefixes;
             this.filename = filename;
@@ -115,10 +132,12 @@ public class ResourceScope extends Scope {
     }
 
     /**
-     *
+     * Prefix.
      */
     public static class Prefix {
         /**
+         * Prefix.
+         *
          * @param prefix String
          */
         public Prefix(final String prefix) {

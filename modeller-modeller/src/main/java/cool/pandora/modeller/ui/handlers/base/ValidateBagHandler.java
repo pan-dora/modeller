@@ -11,12 +11,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller.ui.handlers.base;
 
 import cool.pandora.modeller.bag.impl.DefaultBag;
-import cool.pandora.modeller.ui.jpanel.base.BagView;
 import cool.pandora.modeller.ui.Progress;
+import cool.pandora.modeller.ui.jpanel.base.BagView;
 import cool.pandora.modeller.ui.util.ApplicationContextUtil;
+
 import gov.loc.repository.bagit.verify.impl.CompleteVerifierImpl;
 import gov.loc.repository.bagit.verify.impl.ParallelManifestChecksumVerifier;
 import gov.loc.repository.bagit.verify.impl.ValidVerifierImpl;
@@ -27,7 +29,7 @@ import javax.swing.AbstractAction;
 import javax.swing.SwingUtilities;
 
 /**
- * Validate Bag Handler
+ * Validate Bag Handler.
  *
  * @author gov.loc
  */
@@ -59,16 +61,19 @@ public class ValidateBagHandler extends AbstractAction implements Progress {
         try {
             final CompleteVerifierImpl completeVerifier = new CompleteVerifierImpl();
 
-            final ParallelManifestChecksumVerifier manifestVerifier = new ParallelManifestChecksumVerifier();
+            final ParallelManifestChecksumVerifier manifestVerifier = new
+                    ParallelManifestChecksumVerifier();
 
-            final ValidVerifierImpl validVerifier = new ValidVerifierImpl(completeVerifier, manifestVerifier);
+            final ValidVerifierImpl validVerifier = new ValidVerifierImpl(completeVerifier,
+                    manifestVerifier);
             validVerifier.addProgressListener(bagView.task);
             bagView.longRunningProcess = validVerifier;
       /* */
             messages = bag.validateBag(validVerifier);
 
             if (messages != null && !messages.trim().isEmpty()) {
-                BagView.showWarningErrorDialog("Warning - validation failed", "Validation result: " + messages);
+                BagView.showWarningErrorDialog("Warning - validation failed", "Validation result:"
+                        + " " + messages);
             } else {
                 BagView.showWarningErrorDialog("Validation Dialog", "Validation successful.");
             }

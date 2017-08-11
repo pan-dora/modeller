@@ -11,17 +11,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller.ui;
 
 import cool.pandora.modeller.bag.impl.DefaultBag;
 import cool.pandora.modeller.ui.jpanel.base.BagView;
 import gov.loc.repository.bagit.BagFile;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import javax.swing.JTabbedPane;
-import javax.swing.JScrollPane;
-import javax.swing.event.ChangeListener;
 import java.awt.Dimension;
 import java.awt.Color;
 import java.util.ArrayList;
@@ -29,8 +25,14 @@ import java.util.Collection;
 import java.util.List;
 import java.util.StringTokenizer;
 
+import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
+import javax.swing.event.ChangeListener;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 /**
- * Tag Manifest Pane
+ * Tag Manifest Pane.
  *
  * @author gov.loc
  */
@@ -44,6 +46,8 @@ public class TagManifestPane extends JTabbedPane {
     private final Color unselectedColor = Color.black; // new Color(180, 180, 160);
 
     /**
+     * TagManifestPane.
+     *
      * @param bagView BagView
      */
     public TagManifestPane(final BagView bagView) {
@@ -54,7 +58,7 @@ public class TagManifestPane extends JTabbedPane {
     }
 
     /**
-     *
+     * init.
      */
     private void init() {
         this.setPreferredSize(preferredDimension);
@@ -72,6 +76,8 @@ public class TagManifestPane extends JTabbedPane {
     }
 
     /**
+     * setBag.
+     *
      * @param bag DefaultBag
      */
     public void setBag(final DefaultBag bag) {
@@ -79,6 +85,8 @@ public class TagManifestPane extends JTabbedPane {
     }
 
     /**
+     * getBag.
+     *
      * @return defaultBag
      */
     public DefaultBag getBag() {
@@ -86,7 +94,7 @@ public class TagManifestPane extends JTabbedPane {
     }
 
     /**
-     *
+     * populateBagPane.
      */
     private void populateBagPane() {
         final Collection<BagFile> list = defaultBag.getTags();
@@ -105,7 +113,8 @@ public class TagManifestPane extends JTabbedPane {
             manifestPaneList.add(manifestPane);
             final JScrollPane manifestScrollPane = new JScrollPane();
             manifestScrollPane.setViewportView(manifestPane);
-            manifestScrollPane.setToolTipText(parentView.getPropertyMessage("compositePane.tab.manifest.help"));
+            manifestScrollPane.setToolTipText(parentView.getPropertyMessage("compositePane.tab" +
+                    ".manifest.help"));
             manifestScrollPane.setForeground(selectedColor);
             manifestScrollPaneList.add(manifestScrollPane);
             final String tabName = bf.getFilepath();
@@ -126,6 +135,8 @@ public class TagManifestPane extends JTabbedPane {
     }
 
     /**
+     * updateCompositePaneTabs.
+     *
      * setBag must be called before updateTabs is called
      *
      * @param defaultBag DefaultBag
@@ -148,6 +159,8 @@ public class TagManifestPane extends JTabbedPane {
     }
 
     /**
+     * tokenFormat.
+     *
      * @param content String
      * @return buffer
      */

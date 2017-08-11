@@ -11,10 +11,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller.templates;
 
 /**
- * MetadataTemplate
+ * MetadataTemplate.
  *
  * @author Christopher Johnson
  */
@@ -23,6 +24,8 @@ public class MetadataTemplate {
     private final String renderedTemplate;
 
     /**
+     * template.
+     *
      * @return MetadataTemplateBuilder
      */
     public static MetadataTemplate.MetadataTemplateBuilder template() {
@@ -30,8 +33,10 @@ public class MetadataTemplate {
     }
 
     /**
+     * MetadataTemplate.
+     *
      * @param template String
-     * @param scope    Scope
+     * @param scope Scope
      */
     private MetadataTemplate(final String template, final Scope scope) {
         final TemplateBuilder mb = new TemplateBuilder().scope(scope).template(template);
@@ -39,6 +44,8 @@ public class MetadataTemplate {
     }
 
     /**
+     * render.
+     *
      * @return renderedTemplate
      */
     public String render() {
@@ -46,7 +53,7 @@ public class MetadataTemplate {
     }
 
     /**
-     *
+     * MetadataTemplateBuilder.
      */
     public static class MetadataTemplateBuilder {
         private String template;
@@ -57,6 +64,8 @@ public class MetadataTemplate {
         }
 
         /**
+         * scope.
+         *
          * @param scope Scope
          * @return this
          */
@@ -66,6 +75,8 @@ public class MetadataTemplate {
         }
 
         /**
+         * template.
+         *
          * @param template String
          * @return this
          */
@@ -75,6 +86,8 @@ public class MetadataTemplate {
         }
 
         /**
+         * build.
+         *
          * @return MetadataTemplate
          */
         public MetadataTemplate build() {
@@ -82,6 +95,8 @@ public class MetadataTemplate {
         }
 
         /**
+         * throwExceptionOnFailure.
+         *
          * @return this
          */
         public MetadataTemplate.MetadataTemplateBuilder throwExceptionOnFailure() {

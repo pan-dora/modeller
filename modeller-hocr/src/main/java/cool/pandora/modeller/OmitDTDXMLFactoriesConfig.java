@@ -11,17 +11,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller;
-
-
-import org.xmlbeam.config.DefaultXMLFactoriesConfig;
-import org.xmlbeam.config.XMLFactoriesConfig;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.xmlbeam.config.DefaultXMLFactoriesConfig;
+import org.xmlbeam.config.XMLFactoriesConfig;
 /**
- * OmitDTDXMLFactoriesConfig
+ * OmitDTDXMLFactoriesConfig.
  *
  * @author Christopher Johnson
  */
@@ -34,7 +33,8 @@ class OmitDTDXMLFactoriesConfig extends DefaultXMLFactoriesConfig implements XML
     public DocumentBuilderFactory createDocumentBuilderFactory() {
         final DocumentBuilderFactory instance = DocumentBuilderFactory.newInstance();
         try {
-            instance.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
+            instance.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd",
+                    false);
         } catch (ParserConfigurationException e) {
             e.printStackTrace();
         }

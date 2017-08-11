@@ -1,0 +1,5 @@
+<> <http://iiif.io/api/presentation/2#hasCanvases> <_:f2a02d1ff70f1d8ded355a0dc8da5bf6> .
+<_:d6ab07cd1ed7cf5ca2fe03874dd7fbb3> <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> <http://www.w3.org/1999/02/22-rdf-syntax-ns#nil> .
+<_:d6ab07cd1ed7cf5ca2fe03874dd7fbb3> <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> <http://localhost:8080/fcrepo/rest/collection/AIG/2> .
+<_:f2a02d1ff70f1d8ded355a0dc8da5bf6> <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> <_:d6ab07cd1ed7cf5ca2fe03874dd7fbb3> .
+<_:f2a02d1ff70f1d8ded355a0dc8da5bf6> <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> <http://localhost:8080/fcrepo/rest/collection/AIG/1> .

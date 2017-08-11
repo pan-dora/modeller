@@ -11,6 +11,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller.common.uri;
 
 import java.io.Serializable;
@@ -18,7 +19,7 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 
 /**
- * Type
+ * Type.
  *
  * @author Christopher Johnson
  */
@@ -27,8 +28,10 @@ public class Type implements Serializable {
     private final transient String path;
 
     /**
+     * Type.
+     *
      * @param value int
-     * @param path  String
+     * @param path String
      */
     protected Type(final int value, final String path) {
         this.value = value;
@@ -37,6 +40,8 @@ public class Type implements Serializable {
     }
 
     /**
+     * getValue.
+     *
      * @return value
      */
     public int getValue() {
@@ -44,6 +49,8 @@ public class Type implements Serializable {
     }
 
     /**
+     * toString.
+     *
      * @return path
      */
     public String toString() {
@@ -51,11 +58,13 @@ public class Type implements Serializable {
     }
 
     /**
-     *
+     * types.
      */
     private static final Hashtable<Object, Hashtable<Integer, Type>> types = new Hashtable<>();
 
     /**
+     * storeType.
+     *
      * @param type Type
      */
     private static void storeType(final Type type) {
@@ -72,8 +81,10 @@ public class Type implements Serializable {
     }
 
     /**
+     * getByValue.
+     *
      * @param classRef Class
-     * @param value    int
+     * @param value int
      * @return type
      */
     public static Type getByValue(final Class classRef, final int value) {
@@ -89,6 +100,8 @@ public class Type implements Serializable {
     }
 
     /**
+     * elements.
+     *
      * @param classRef Class
      * @return values
      */

@@ -11,6 +11,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller.ui.util;
 
 import java.awt.GridBagConstraints;
@@ -26,17 +27,19 @@ public class LayoutUtil {
     }
 
     /**
-     * @param x      int
-     * @param y      int
-     * @param w      int
-     * @param h      int
-     * @param wx     int
-     * @param wy     int
-     * @param fill   int
+     * @param x int
+     * @param y int
+     * @param w int
+     * @param h int
+     * @param wx int
+     * @param wy int
+     * @param fill int
      * @param anchor int
      */
-    public static GridBagConstraints buildGridBagConstraints(final int x, final int y, final int w, final int h,
-                                                             final int wx, final int wy, final int fill,
+    public static GridBagConstraints buildGridBagConstraints(final int x, final int y, final int
+            w, final int h,
+                                                             final int wx, final int wy, final
+                                                             int fill,
                                                              final int anchor) {
         final GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = x; // start cell in a row

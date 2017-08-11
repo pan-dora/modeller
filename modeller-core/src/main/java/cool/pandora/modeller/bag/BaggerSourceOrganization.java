@@ -11,6 +11,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller.bag;
 
 import cool.pandora.modeller.Contact;
@@ -56,29 +57,36 @@ public class BaggerSourceOrganization implements Serializable {
         contact = new Contact(false);
         if (bagInfoTxt.getContactName() != null && !bagInfoTxt.getContactName().trim().isEmpty()) {
             contact.setContactName(
-                    ProfileField.createProfileField(Contact.FIELD_CONTACT_NAME, bagInfoTxt.getContactName()));
+                    ProfileField.createProfileField(Contact.FIELD_CONTACT_NAME, bagInfoTxt
+                            .getContactName()));
         } else {
             contact.setContactName(ProfileField.createProfileField(Contact.FIELD_CONTACT_NAME, ""));
         }
-        if (bagInfoTxt.getContactPhone() != null && !bagInfoTxt.getContactPhone().trim().isEmpty()) {
+        if (bagInfoTxt.getContactPhone() != null && !bagInfoTxt.getContactPhone().trim().isEmpty
+                ()) {
             contact.setTelephone(
-                    ProfileField.createProfileField(Contact.FIELD_CONTACT_PHONE, bagInfoTxt.getContactPhone()));
+                    ProfileField.createProfileField(Contact.FIELD_CONTACT_PHONE, bagInfoTxt
+                            .getContactPhone()));
         } else {
             contact.setTelephone(ProfileField.createProfileField(Contact.FIELD_CONTACT_PHONE, ""));
         }
-        if (bagInfoTxt.getContactEmail() != null && !bagInfoTxt.getContactEmail().trim().isEmpty()) {
+        if (bagInfoTxt.getContactEmail() != null && !bagInfoTxt.getContactEmail().trim().isEmpty
+                ()) {
             contact.setEmail(
-                    ProfileField.createProfileField(Contact.FIELD_CONTACT_EMAIL, bagInfoTxt.getContactEmail()));
+                    ProfileField.createProfileField(Contact.FIELD_CONTACT_EMAIL, bagInfoTxt
+                            .getContactEmail()));
         } else {
             contact.setEmail(ProfileField.createProfileField(Contact.FIELD_CONTACT_EMAIL, ""));
         }
 
-        if (bagInfoTxt.getSourceOrganization() != null && !bagInfoTxt.getSourceOrganization().trim().isEmpty()) {
+        if (bagInfoTxt.getSourceOrganization() != null && !bagInfoTxt.getSourceOrganization()
+                .trim().isEmpty()) {
             setOrganizationName(bagInfoTxt.getSourceOrganization());
         } else {
             setOrganizationName("");
         }
-        if (bagInfoTxt.getOrganizationAddress() != null && !bagInfoTxt.getOrganizationAddress().trim().isEmpty()) {
+        if (bagInfoTxt.getOrganizationAddress() != null && !bagInfoTxt.getOrganizationAddress()
+                .trim().isEmpty()) {
             setOrganizationAddress(bagInfoTxt.getOrganizationAddress());
         } else {
             setOrganizationAddress("");
@@ -131,7 +139,8 @@ public class BaggerSourceOrganization implements Serializable {
     public String toString() {
         log.info("SourceOrganization.toString");
 
-        return this.organizationName + '\n' + this.organizationAddress + '\n' + this.contact.getContactName() + '\n' +
+        return this.organizationName + '\n' + this.organizationAddress + '\n' + this.contact
+                .getContactName() + '\n' +
                 this.contact.getTelephone() + '\n' + this.contact.getEmail() + '\n';
     }
 

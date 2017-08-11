@@ -11,6 +11,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller.ui.util;
 
 import cool.pandora.modeller.ui.ConsoleView;
@@ -51,7 +52,8 @@ public class ApplicationContextUtil {
      * @return imageName
      */
     public static Image getImage(final String imageName) {
-        final ImageSource source = (ImageSource) ApplicationServicesLocator.services().getService(ImageSource.class);
+        final ImageSource source = (ImageSource) ApplicationServicesLocator.services().getService
+                (ImageSource.class);
         return source.getImage(imageName);
     }
 
@@ -67,7 +69,8 @@ public class ApplicationContextUtil {
      */
     public static void addConsoleMessage(final String message) {
         final ConsoleView consoleView =
-                (ConsoleView) Application.instance().getApplicationContext().getBean("myConsoleView");
+                (ConsoleView) Application.instance().getApplicationContext().getBean
+                        ("myConsoleView");
         consoleView.addConsoleMessages(message);
     }
 

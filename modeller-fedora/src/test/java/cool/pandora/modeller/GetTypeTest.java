@@ -11,6 +11,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller;
 
 import cool.pandora.modeller.common.uri.IIIFPathTemplate;
@@ -18,20 +19,25 @@ import cool.pandora.modeller.common.uri.Type;
 
 import java.util.Enumeration;
 
+import org.junit.Test;
+
+import static junit.framework.TestCase.assertEquals;
+
 /**
  * getTypeTest
  *
  * @author Christopher Johnson
  */
-public class getTypeTest {
 
-    private getTypeTest() {
-    }
+public class GetTypeTest {
 
-    public static void main(final String[] args) {
+    @Test
+    public void testType() throws Exception {
         final Type object_id_path = IIIFPathTemplate.OBJECT_ID_PATH;
         final Enumeration e = Type.elements(IIIFPathTemplate.class);
         final Type path = Type.getByValue(IIIFPathTemplate.class, 0);
         System.out.println(path);
+        String out = "/{FedoraAppRoot}/{RestServletURI}/";
+        assertEquals(path.toString(), out);
     }
 }

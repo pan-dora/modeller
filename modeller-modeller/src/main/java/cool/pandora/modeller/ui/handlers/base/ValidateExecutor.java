@@ -11,13 +11,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller.ui.handlers.base;
 
 import cool.pandora.modeller.ui.jpanel.base.BagView;
 import org.springframework.richclient.command.support.AbstractActionCommandExecutor;
 
 /**
- * Validate Executor
+ * Validate Executor.
  *
  * @author gov.loc
  */
@@ -25,6 +26,8 @@ public class ValidateExecutor extends AbstractActionCommandExecutor {
     BagView bagView;
 
     /**
+     * ValidateExecutor.
+     *
      * @param bagView BagView
      */
     public ValidateExecutor(final BagView bagView) {

@@ -11,6 +11,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller.bag;
 
 import gov.loc.repository.bagit.utilities.FilenameHelper;
@@ -101,7 +102,7 @@ public class BaggerFileEntity {
 
     /**
      * @param bagDir File
-     * @param src    File
+     * @param src File
      */
     public void setBagSrc(final File bagDir, final File src) {
         // TODO given the bag location, create the location the src file will exist
@@ -169,7 +170,8 @@ public class BaggerFileEntity {
      * @return filenameWithoutBasePath
      * @throws RuntimeException RuntimeException
      */
-    public static String removeBasePath(final String basePath, final String filename) throws RuntimeException {
+    public static String removeBasePath(final String basePath, final String filename) throws
+            RuntimeException {
         if (filename == null) {
             throw new RuntimeException("Cannot remove basePath from null");
         }
@@ -181,7 +183,8 @@ public class BaggerFileEntity {
         } else {
             if (!normFilename.startsWith(normBasePath)) {
                 throw new RuntimeException(
-                        MessageFormat.format("Cannot remove basePath {0} from {1}", basePath, filename));
+                        MessageFormat.format("Cannot remove basePath {0} from {1}", basePath,
+                                filename));
             }
             if (normBasePath.equals(normFilename)) {
                 filenameWithoutBasePath = "";
@@ -197,7 +200,8 @@ public class BaggerFileEntity {
             }
         }
         log.debug(MessageFormat
-                .format("Removing {0} from {1} resulted in {2}", basePath, filename, filenameWithoutBasePath));
+                .format("Removing {0} from {1} resulted in {2}", basePath, filename,
+                        filenameWithoutBasePath));
         return filenameWithoutBasePath;
     }
 

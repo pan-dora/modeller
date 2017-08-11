@@ -11,6 +11,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller.ui.handlers.base;
 
 import cool.pandora.modeller.bag.impl.DefaultBag;
@@ -21,7 +22,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 
 /**
- * Edit Tag Files Handler
+ * Edit Tag Files Handler.
  *
  * @author gov.loc
  */
@@ -31,6 +32,8 @@ public class EditTagFilesHandler extends AbstractAction {
     DefaultBag bag;
 
     /**
+     * EditTagFilesHandler.
+     *
      * @param bagView BagView
      */
     public EditTagFilesHandler(final BagView bagView) {

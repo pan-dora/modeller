@@ -95,7 +95,8 @@
       This is a trivial singleton object providing access to the configured
       services, as specified on the applicationServices property.
     -->
-    <bean id="serviceLocator" class="org.springframework.richclient.application.ApplicationServicesLocator">
+    <bean id="serviceLocator"
+          class="org.springframework.richclient.application.ApplicationServicesLocator">
         <property name="applicationServices" ref="applicationServices"/>
     </bean>
 
@@ -131,7 +132,8 @@
 
         <property name="registryEntries">
             <map>
-                <entry key="org.springframework.richclient.command.CommandServices" value-ref="commandServices"/>
+                <entry key="org.springframework.richclient.command.CommandServices"
+                       value-ref="commandServices"/>
             </map>
         </property>
     </bean>
@@ -187,7 +189,8 @@
       </bean>
      -->
 
-    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+    <bean id="messageSource"
+          class="org.springframework.context.support.ResourceBundleMessageSource">
         <property name="basenames">
             <list>
                 <value>cool.pandora.modeller.ui.messages</value>
@@ -196,7 +199,8 @@
         </property>
     </bean>
 
-    <bean id="imageResourcesFactory" class="org.springframework.context.support.ResourceMapFactoryBean">
+    <bean id="imageResourcesFactory"
+          class="org.springframework.context.support.ResourceMapFactoryBean">
         <property name="locations">
             <list>
                 <value>classpath:org/springframework/richclient/image/images.properties</value>
@@ -233,7 +237,8 @@
           class="org.springframework.richclient.application.docking.vldocking.VLDockingApplicationPageFactory">
     </bean>
 
-    <bean id="bagView" class="org.springframework.richclient.application.docking.vldocking.VLDockingViewDescriptor">
+    <bean id="bagView"
+          class="org.springframework.richclient.application.docking.vldocking.VLDockingViewDescriptor">
         <property name="viewClass" value="cool.pandora.modeller.ui.jpanel.base.BagView"/>
         <property name="autoHideEnabled" value="true"/>
         <property name="floatEnabled" value="true"/>
@@ -282,11 +287,13 @@
 
     -->
 
-    <bean id="commandServices" class="org.springframework.richclient.command.support.DefaultCommandServices">
+    <bean id="commandServices"
+          class="org.springframework.richclient.command.support.DefaultCommandServices">
         <property name="toolBarButtonConfigurer" ref="toolBarButtonConfigurer"/>
     </bean>
 
-    <bean id="toolBarButtonConfigurer" class="cool.pandora.modeller.BbToolBarCommandButtonConfigurer">
+    <bean id="toolBarButtonConfigurer"
+          class="cool.pandora.modeller.BbToolBarCommandButtonConfigurer">
         <property name="useLargeIcons" value="true"/>
     </bean>
 

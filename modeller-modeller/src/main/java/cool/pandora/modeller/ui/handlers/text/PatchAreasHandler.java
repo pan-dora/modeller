@@ -11,6 +11,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller.ui.handlers.text;
 
 import org.apache.commons.lang3.StringUtils;
@@ -114,10 +115,12 @@ public class PatchAreasHandler extends AbstractAction implements Progress {
             final String hOCRAreaId = "block_" + areaId;
             final String bbox = bboxmap.get(hOCRAreaId);
             final String region = Region.region().bbox(bbox).build();
-            final String canvasRegionURI = CanvasRegionURI.regionuri().region(region).canvasURI(canvasURI).build();
+            final String canvasRegionURI = CanvasRegionURI.regionuri().region(region).canvasURI
+                    (canvasURI).build();
 
             rdfBody = TextSequenceMetadata
-                    .getTextSequenceMetadata(lineIdmap, areaId, canvasRegionURI, collectionPredicate, lineContainerIRI);
+                    .getTextSequenceMetadata(lineIdmap, areaId, canvasRegionURI,
+                            collectionPredicate, lineContainerIRI);
             try {
                 ModellerClient.doPatch(areaObjectURI, rdfBody);
                 ApplicationContextUtil.addConsoleMessage(message + " " + areaObjectURI);
@@ -132,7 +135,8 @@ public class PatchAreasHandler extends AbstractAction implements Progress {
     void openPatchAreasFrame() {
         final DefaultBag bag = bagView.getBag();
         final PatchAreasFrame patchAreasFrame =
-                new PatchAreasFrame(bagView, bagView.getPropertyMessage("bag.frame" + ".patch" + ".areas"));
+                new PatchAreasFrame(bagView, bagView.getPropertyMessage("bag.frame" + ".patch" +
+                        ".areas"));
         patchAreasFrame.setBag(bag);
         patchAreasFrame.setVisible(true);
     }

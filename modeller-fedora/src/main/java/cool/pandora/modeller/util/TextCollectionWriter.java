@@ -11,9 +11,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller.util;
 
+import static org.apache.jena.graph.NodeFactory.createBlankNode;
+import static org.apache.jena.riot.writer.WriterConst.RDF_First;
+import static org.apache.jena.riot.writer.WriterConst.RDF_Nil;
+import static org.apache.jena.riot.writer.WriterConst.RDF_Rest;
+
 import cool.pandora.modeller.common.uri.IIIFPredicates;
+
+import java.io.ByteArrayOutputStream;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+
 import org.apache.jena.graph.Node;
 import org.apache.jena.query.Dataset;
 import org.apache.jena.query.DatasetFactory;
@@ -26,24 +39,15 @@ import org.apache.jena.riot.RDFDataMgr;
 import org.apache.jena.riot.lang.BlankNodeAllocator;
 import org.apache.jena.riot.lang.BlankNodeAllocatorHash;
 
-import java.io.ByteArrayOutputStream;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-
-import static org.apache.jena.graph.NodeFactory.createBlankNode;
-import static org.apache.jena.riot.writer.WriterConst.RDF_First;
-import static org.apache.jena.riot.writer.WriterConst.RDF_Rest;
-import static org.apache.jena.riot.writer.WriterConst.RDF_Nil;
-
 /**
- * TextCollectionWriter
+ * TextCollectionWriter.
  *
  * @author Christopher Johnson
  */
 public class TextCollectionWriter {
     /**
+     * returns collection object.
+     *
      * @return RDFCollectionBuilder
      */
     public static RDFCollectionBuilder collection() {
@@ -53,6 +57,8 @@ public class TextCollectionWriter {
     private final ByteArrayOutputStream rdfCollection;
 
     /**
+     * renders collection to string.
+     *
      * @return rdfCollection
      */
     public String render() {
@@ -60,20 +66,23 @@ public class TextCollectionWriter {
     }
 
     /**
-     * @param idList               List
-     * @param collectionPredicate  String
+     * constructs model.
+     *
+     * @param idList List
+     * @param collectionPredicate String
      * @param resourceContainerIRI String
-     * @param canvasURI            String
+     * @param canvasURI String
      */
-    TextCollectionWriter(final List<String> idList, final String collectionPredicate, final String resourceContainerIRI,
+    TextCollectionWriter(final List<String> idList, final String collectionPredicate, final
+    String resourceContainerIRI,
                          final String canvasURI) {
 
         final Model model = ModelFactory.createDefaultModel();
-        final Map<String, Node> bNodeMap = getBNodeKeyMap(idList);
+        final Map<String, Node> bnodeMap = getBNodeKeyMap(idList);
 
         final Resource s = model.createResource(getIdentitySubject());
         final Property p = model.createProperty(collectionPredicate);
-        final Node firstBNode = getSubjNodeForCurrentIndex(0, bNodeMap);
+        final Node firstBNode = getSubjNodeForCurrentIndex(0, bnodeMap);
         final Resource o = model.createResource(String.valueOf(firstBNode));
         model.add(s, p, o);
 
@@ -82,7 +91,7 @@ public class TextCollectionWriter {
             final String lastId = idList.get(idList.size() - 1);
             //singleton list
             if (pos == 0 && (Objects.equals(id, lastId))) {
-                final Node subjNode = getSubjNodeForCurrentIndex(pos, bNodeMap);
+                final Node subjNode = getSubjNodeForCurrentIndex(pos, bnodeMap);
                 final String objectURI = getResourceURI(resourceContainerIRI, id);
 
                 final Resource s0 = model.createResource(String.valueOf(subjNode));
@@ -100,8 +109,8 @@ public class TextCollectionWriter {
                 final Resource o2 = model.createResource(String.valueOf(RDF_Nil));
                 model.add(s2, p2, o2);
             } else if (pos == 0) {
-                final Node subjNode = getSubjNodeForCurrentIndex(pos, bNodeMap);
-                final Node objNode = getObjNodeForCurrentIndex(pos, bNodeMap);
+                final Node subjNode = getSubjNodeForCurrentIndex(pos, bnodeMap);
+                final Node objNode = getObjNodeForCurrentIndex(pos, bnodeMap);
                 final String objectURI = getResourceURI(resourceContainerIRI, id);
 
                 final Resource s0 = model.createResource(String.valueOf(subjNode));
@@ -119,7 +128,7 @@ public class TextCollectionWriter {
                 final Resource o2 = model.createResource(String.valueOf(objNode));
                 model.add(s2, p2, o2);
             } else if (Objects.equals(id, lastId)) {
-                final Node subjNode = getObjNodeFromPrevIndex(pos, bNodeMap);
+                final Node subjNode = getObjNodeFromPrevIndex(pos, bnodeMap);
                 final String objectURI = getResourceURI(resourceContainerIRI, id);
 
                 final Resource s0 = model.createResource(String.valueOf(subjNode));
@@ -137,8 +146,8 @@ public class TextCollectionWriter {
                 final Resource o2 = model.createResource(String.valueOf(RDF_Nil));
                 model.add(s2, p2, o2);
             } else {
-                final Node subjNode = getObjNodeFromPrevIndex(pos, bNodeMap);
-                final Node objNode = getObjNodeForCurrentIndex(pos, bNodeMap);
+                final Node subjNode = getObjNodeFromPrevIndex(pos, bnodeMap);
+                final Node objNode = getObjNodeForCurrentIndex(pos, bnodeMap);
                 final String objectURI = getResourceURI(resourceContainerIRI, id);
 
                 final Resource s0 = model.createResource(String.valueOf(subjNode));
@@ -165,8 +174,10 @@ public class TextCollectionWriter {
     }
 
     /**
+     * getIDPos.
+     *
      * @param idList List
-     * @param id     String
+     * @param id String
      * @return id position
      */
     private static int getIDPos(final List<String> idList, final String id) {
@@ -174,56 +185,67 @@ public class TextCollectionWriter {
     }
 
     /**
+     * getBNodeKeyMap.
+     *
      * @param idList List
-     * @return bNodeMap
+     * @return bnodeMap
      */
     private static Map<String, Node> getBNodeKeyMap(final List<String> idList) {
-        final Map<String, Node> bNodeMap = new HashMap<>();
+        final Map<String, Node> bnodeMap = new HashMap<>();
 
         for (final String id : idList) {
             final int pos = getIDPos(idList, id);
             final Node sNode = getNewBNode();
             final Node oNode = getNewBNode();
             final String subjKey = String.valueOf(pos) + ":subj";
-            bNodeMap.put(subjKey, sNode);
+            bnodeMap.put(subjKey, sNode);
             final String objKey = String.valueOf(pos) + ":obj";
-            bNodeMap.put(objKey, oNode);
+            bnodeMap.put(objKey, oNode);
         }
-        return bNodeMap;
+        return bnodeMap;
     }
 
     /**
-     * @param pos      int
-     * @param bNodeMap Map
+     * getObjNodeFromPrevIndex.
+     *
+     * @param pos int
+     * @param bnodeMap Map
      * @return object Node
      */
-    private static Node getObjNodeFromPrevIndex(final int pos, final Map<String, Node> bNodeMap) {
+    private static Node getObjNodeFromPrevIndex(final int pos, final Map<String, Node> bnodeMap) {
         final int prevIndex = pos - 1;
         final String objKey = String.valueOf(prevIndex) + ":obj";
-        return bNodeMap.get(objKey);
+        return bnodeMap.get(objKey);
     }
 
     /**
-     * @param pos      int
-     * @param bNodeMap Map
+     * getSubjNodeForCurrentIndex.
+     *
+     * @param pos int
+     * @param bnodeMap Map
      * @return subject Node
      */
-    private static Node getSubjNodeForCurrentIndex(final int pos, final Map<String, Node> bNodeMap) {
+    private static Node getSubjNodeForCurrentIndex(final int pos, final Map<String, Node>
+            bnodeMap) {
         final String objKey = String.valueOf(pos) + ":subj";
-        return bNodeMap.get(objKey);
+        return bnodeMap.get(objKey);
     }
 
     /**
-     * @param pos      int
-     * @param bNodeMap Map
+     * getObjNodeForCurrentIndex.
+     *
+     * @param pos int
+     * @param bnodeMap Map
      * @return object Node
      */
-    private static Node getObjNodeForCurrentIndex(final int pos, final Map<String, Node> bNodeMap) {
+    private static Node getObjNodeForCurrentIndex(final int pos, final Map<String, Node> bnodeMap) {
         final String objKey = String.valueOf(pos) + ":obj";
-        return bNodeMap.get(objKey);
+        return bnodeMap.get(objKey);
     }
 
     /**
+     * getIdentitySubject.
+     *
      * @return identity
      */
     private static String getIdentitySubject() {
@@ -231,6 +253,8 @@ public class TextCollectionWriter {
     }
 
     /**
+     * getNewBNode.
+     *
      * @return bnodeLabel
      */
     private static Node getNewBNode() {
@@ -243,16 +267,19 @@ public class TextCollectionWriter {
     }
 
     /**
+     * getResourceURI.
+     *
      * @param resourceContainerIRI String
-     * @param resourceID           String
+     * @param resourceID String
      * @return resourceURI
      */
-    private static String getResourceURI(final String resourceContainerIRI, final String resourceID) {
+    private static String getResourceURI(final String resourceContainerIRI, final String
+            resourceID) {
         return resourceContainerIRI + resourceID;
     }
 
     /**
-     *
+     * RDFCollectionBuilder.
      */
     public static class RDFCollectionBuilder {
 
@@ -262,6 +289,8 @@ public class TextCollectionWriter {
         private String canvasURI;
 
         /**
+         * idList.
+         *
          * @param idList List
          * @return this
          */
@@ -271,24 +300,32 @@ public class TextCollectionWriter {
         }
 
         /**
+         * collectionPredicate.
+         *
          * @param collectionPredicate String
          * @return this
          */
-        public TextCollectionWriter.RDFCollectionBuilder collectionPredicate(final String collectionPredicate) {
+        public TextCollectionWriter.RDFCollectionBuilder collectionPredicate(final String
+                                                                                     collectionPredicate) {
             this.collectionPredicate = collectionPredicate;
             return this;
         }
 
         /**
+         * resourceContainerIRI.
+         *
          * @param resourceContainerIRI String
          * @return this
          */
-        public TextCollectionWriter.RDFCollectionBuilder resourceContainerIRI(final String resourceContainerIRI) {
+        public TextCollectionWriter.RDFCollectionBuilder resourceContainerIRI(final String
+                                                                                      resourceContainerIRI) {
             this.resourceContainerIRI = resourceContainerIRI;
             return this;
         }
 
         /**
+         * canvasURI.
+         *
          * @param canvasURI String
          * @return this
          */
@@ -298,18 +335,23 @@ public class TextCollectionWriter {
         }
 
         /**
+         * build.
+         *
          * @return TextCollectionWriter
          */
         public TextCollectionWriter build() {
-            return new TextCollectionWriter(this.idList, this.collectionPredicate, this.resourceContainerIRI,
+            return new TextCollectionWriter(this.idList, this.collectionPredicate, this
+                    .resourceContainerIRI,
                     this.canvasURI);
         }
 
         /**
-         *
+         * Factory.
          */
         public interface Factory {
             /**
+             * create.
+             *
              * @return blank node
              */
             BlankNodeAllocator create();

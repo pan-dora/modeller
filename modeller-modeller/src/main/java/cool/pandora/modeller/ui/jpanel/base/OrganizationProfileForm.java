@@ -11,6 +11,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller.ui.jpanel.base;
 
 import cool.pandora.modeller.Contact;
@@ -38,7 +39,7 @@ public class OrganizationProfileForm extends AbstractForm implements FocusListen
 
     /**
      * @param formModel FormModel
-     * @param bagView   BagView
+     * @param bagView BagView
      */
     public OrganizationProfileForm(final FormModel formModel, final BagView bagView) {
         super(formModel, PROFILE_FORM_PAGE);

@@ -11,41 +11,50 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller;
 
 import cool.pandora.modeller.common.uri.FedoraPrefixes;
 import cool.pandora.modeller.templates.ManifestScope;
 import cool.pandora.modeller.templates.MetadataTemplate;
+import org.junit.Test;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
+
+import static junit.framework.TestCase.assertEquals;
 
 /**
  * buildManifestTemplateTest
  *
  * @author Christopher Johnson
  */
-public class buildManifestTemplateTest {
+public class BuildManifestTemplateTest {
 
-    private buildManifestTemplateTest() {
-    }
-
-    public static void main(final String[] args) throws IOException {
+    @Test
+    public void buildManifestTemplateTest() throws IOException {
         final MetadataTemplate metadataTemplate;
-        final List<ManifestScope.Prefix> prefixes = Arrays.asList(new ManifestScope.Prefix(FedoraPrefixes.RDFS),
+        final List<ManifestScope.Prefix> prefixes = Arrays.asList(new ManifestScope.Prefix
+                        (FedoraPrefixes.RDFS),
                 new ManifestScope.Prefix(FedoraPrefixes.MODE));
 
         final ManifestScope scope = new ManifestScope().fedoraPrefixes(prefixes)
                 .collectionURI("http://localhost:8080/fcrepo/rest/collection/test/").label("Test")
-                .sequenceURI("http://localhost:8080/fcrepo/rest/collection/test/001/sequence/normal")
+                .sequenceURI("http://localhost:8080/fcrepo/rest/collection/test/001/sequence" +
+                        "/normal")
                 .license("http://localhost/static/test/license.html");
 
-        metadataTemplate = MetadataTemplate.template().template("template/sparql-update-manifest.mustache").scope(scope)
+        metadataTemplate = MetadataTemplate.template().template("template/sparql-update-manifest" +
+                ".mustache").scope(scope)
                 .throwExceptionOnFailure().build();
 
         final String template = metadataTemplate.render();
         System.out.println(template);
+        InputStream is = getClass().getResourceAsStream("/manifest_template_out.txt");
+        String out = TestUtils.StreamToString(is);
+        assertEquals(template, out);
     }
 }
 

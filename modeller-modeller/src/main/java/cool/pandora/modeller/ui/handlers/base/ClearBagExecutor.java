@@ -11,13 +11,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller.ui.handlers.base;
 
 import cool.pandora.modeller.ui.jpanel.base.BagView;
 import org.springframework.richclient.command.support.AbstractActionCommandExecutor;
 
 /**
- * Clear Bag Executor
+ * Clear Bag Executor.
  *
  * @author gov.loc
  */
@@ -25,6 +26,8 @@ public class ClearBagExecutor extends AbstractActionCommandExecutor {
     BagView bagView;
 
     /**
+     * ClearBagExecutor.
+     *
      * @param bagView BagView
      */
     public ClearBagExecutor(final BagView bagView) {
@@ -33,7 +36,7 @@ public class ClearBagExecutor extends AbstractActionCommandExecutor {
     }
 
     /**
-     *
+     * execute.
      */
     @Override
     public void execute() {

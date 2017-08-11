@@ -11,42 +11,35 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller;
 
 import cool.pandora.modeller.util.TextCollectionWriter;
+import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.stream.IntStream;
+import static junit.framework.TestCase.assertNotNull;
 
 /**
- * textCollectionWriterTest
+ * TextCollectionWriterTest
  *
  * @author Christopher Johnson
  */
-public class textCollectionWriterTest {
+public class TextCollectionWriterTest {
 
-    private textCollectionWriterTest() {
-    }
-
-    public static void main(final String[] args) {
+    @Test
+    public void textCollectionWriterTest() {
         final TextCollectionWriter collectionWriter;
-        collectionWriter = TextCollectionWriter.collection().idList(getMockSequence())
+        collectionWriter = TextCollectionWriter.collection().idList(TestUtils.getMockSequence())
                 .collectionPredicate("http://iiif.io/api/presentation/2#hasCanvases")
                 .resourceContainerIRI("http://localhost:8080/fcrepo/rest/collection/AIG/")
-                .canvasURI("http://localhost:8080/fcrepo/rest/collection/test/007/canvas/001").build();
+                .canvasURI("http://localhost:8080/fcrepo/rest/collection/test/007/canvas/001")
+                .build();
         final String collection = collectionWriter.render();
         System.out.println(collection);
+        assertNotNull(collection);
     }
 
-    private static ArrayList<String> getMockSequence() {
-        final int numOfValues = 2;
-        final int[] array = IntStream.range(1, numOfValues + 1).toArray();
-        final ArrayList<String> idList = new ArrayList<>(array.length);
-        for (final int anArray : array) {
-            idList.add(String.valueOf(anArray));
-        }
-        return idList;
-    }
+
 }
 
 

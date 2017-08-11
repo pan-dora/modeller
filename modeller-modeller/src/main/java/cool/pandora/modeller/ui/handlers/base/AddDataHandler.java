@@ -11,7 +11,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller.ui.handlers.base;
+
+import cool.pandora.modeller.ui.Progress;
+import cool.pandora.modeller.ui.jpanel.base.BagView;
+import cool.pandora.modeller.ui.util.ApplicationContextUtil;
 
 import java.awt.event.ActionEvent;
 import java.io.File;
@@ -22,15 +27,13 @@ import javax.swing.JFrame;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import org.springframework.richclient.application.Application;
 import org.springframework.richclient.progress.BusyIndicator;
 
-import cool.pandora.modeller.ui.jpanel.base.BagView;
-import cool.pandora.modeller.ui.Progress;
-import cool.pandora.modeller.ui.util.ApplicationContextUtil;
 
 /**
- * Add Data Handler
+ * Add Data Handler.
  *
  * @author gov.loc
  */
@@ -40,6 +43,8 @@ public class AddDataHandler extends AbstractAction implements Progress {
     BagView bagView;
 
     /**
+     * AddDataHandler.
+     *
      * @param bagView BagView
      */
     public AddDataHandler(final BagView bagView) {
@@ -48,7 +53,7 @@ public class AddDataHandler extends AbstractAction implements Progress {
     }
 
     /**
-     *
+     * execute.
      */
     @Override
     public void execute() {
@@ -56,6 +61,8 @@ public class AddDataHandler extends AbstractAction implements Progress {
     }
 
     /**
+     * actionPerformed.
+     *
      * @param e ActionEvent
      */
     @Override
@@ -66,7 +73,7 @@ public class AddDataHandler extends AbstractAction implements Progress {
     }
 
     /**
-     *
+     * addData.
      */
     void addData() {
         final File selectFile = new File(File.separator + ".");
@@ -95,6 +102,8 @@ public class AddDataHandler extends AbstractAction implements Progress {
     }
 
     /**
+     * getFileNames.
+     *
      * @param files File[]
      * @return FileNames
      */
@@ -118,6 +127,8 @@ public class AddDataHandler extends AbstractAction implements Progress {
     }
 
     /**
+     * addBagData.
+     *
      * @param files File[]
      */
     private void addBagData(final File[] files) {
@@ -130,6 +141,8 @@ public class AddDataHandler extends AbstractAction implements Progress {
     }
 
     /**
+     * addBagData.
+     *
      * @param file File
      */
     private void addBagData(final File file) {

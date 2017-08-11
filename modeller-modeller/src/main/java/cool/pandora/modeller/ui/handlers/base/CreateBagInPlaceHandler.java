@@ -11,7 +11,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller.ui.handlers.base;
+
+import cool.pandora.modeller.Profile;
+import cool.pandora.modeller.bag.impl.DefaultBag;
+import cool.pandora.modeller.bag.impl.DefaultBagInfo;
+import cool.pandora.modeller.ui.jpanel.base.BagView;
+import cool.pandora.modeller.ui.jpanel.base.NewBagInPlaceFrame;
+import cool.pandora.modeller.ui.Progress;
+
+import gov.loc.repository.bagit.BagFactory;
 
 import java.awt.event.ActionEvent;
 import java.io.File;
@@ -23,16 +33,9 @@ import javax.swing.AbstractAction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import cool.pandora.modeller.Profile;
-import cool.pandora.modeller.bag.impl.DefaultBag;
-import cool.pandora.modeller.bag.impl.DefaultBagInfo;
-import cool.pandora.modeller.ui.jpanel.base.BagView;
-import cool.pandora.modeller.ui.jpanel.base.NewBagInPlaceFrame;
-import cool.pandora.modeller.ui.Progress;
-import gov.loc.repository.bagit.BagFactory;
 
 /**
- * Create Bag in Place Handler
+ * Create Bag in Place Handler.
  *
  * @author gov.loc
  */
@@ -49,9 +52,6 @@ public class CreateBagInPlaceHandler extends AbstractAction implements Progress 
         this.bagView = bagView;
     }
 
-    /**
-     * @param e ActionEvent
-     */
     @Override
     public void actionPerformed(final ActionEvent e) {
         createBagInPlace();
@@ -64,18 +64,22 @@ public class CreateBagInPlaceHandler extends AbstractAction implements Progress 
 
     void createBagInPlace() {
         final NewBagInPlaceFrame newBagInPlaceFrame =
-                new NewBagInPlaceFrame(bagView, bagView.getPropertyMessage("bag" + ".frame" + ".newbaginplace"));
+                new NewBagInPlaceFrame(bagView, bagView.getPropertyMessage("bag" + ".frame" + "" +
+                        ".newbaginplace"));
         newBagInPlaceFrame.setBag(bagView.getBag());
         newBagInPlaceFrame.setVisible(true);
     }
 
     /**
-     * @param dataFile    File
+     * createPreBag.
+     *
+     * @param dataFile File
      * @param profileName String
      */
     public void createPreBag(final File dataFile, final String profileName) {
         if (dataFile != null && profileName != null) {
-            log.info("Creating a new bag in place with data: {}, version: {}, profile: {}", dataFile.getName(),
+            log.info("Creating a new bag in place with data: {}, version: {}, profile: {}",
+                    dataFile.getName(),
                     BagFactory.LATEST.versionString, profileName);
             bagView.clearBagHandler.clearExistingBag();
             try {
@@ -94,7 +98,8 @@ public class CreateBagInPlaceHandler extends AbstractAction implements Progress 
 
             bagView.saveBagHandler.save(dataFile);
         } else {
-            log.warn("datafile is null? {} profileName is null? {}", dataFile == null, profileName == null);
+            log.warn("datafile is null? {} profileName is null? {}", dataFile == null,
+                    profileName == null);
         }
     }
 
@@ -102,12 +107,14 @@ public class CreateBagInPlaceHandler extends AbstractAction implements Progress 
      * Prepares the call to Create Bag in Place and
      * adding .keep files in Empty Pay load Folder(s)
      *
-     * @param dataFile    File
+     * @param dataFile File
      * @param profileName String
      */
-    public void createPreBagAddKeepFilesToEmptyFolders(final File dataFile, final String profileName) {
+    public void createPreBagAddKeepFilesToEmptyFolders(final File dataFile, final String
+            profileName) {
         if (dataFile != null && profileName != null) {
-            log.info("Creating a new bag in place with data: {}, version: {}, profile: {}", dataFile.getName(),
+            log.info("Creating a new bag in place with data: {}, version: {}, profile: {}",
+                    dataFile.getName(),
                     BagFactory.LATEST.versionString, profileName);
             bagView.clearBagHandler.clearExistingBag();
             try {
@@ -127,7 +134,8 @@ public class CreateBagInPlaceHandler extends AbstractAction implements Progress 
 
             bagView.saveBagHandler.save(dataFile);
         } else {
-            log.warn("datafile is null? {} profileName is null? {}", dataFile == null, profileName == null);
+            log.warn("datafile is null? {} profileName is null? {}", dataFile == null,
+                    profileName == null);
         }
     }
 

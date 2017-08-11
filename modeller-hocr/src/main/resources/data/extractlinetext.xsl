@@ -1,10 +1,12 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:hocr="http://www.purl.org/hocr#" xmlns:functx="http://www.functx.com"
                 xmlns:saxon="http://saxon.sf.net/" xmlns:xs="http://www.w3.org/2001/XMLSchema"
-                extension-element-prefixes="saxon" version="2.0" xpath-default-namespace="http://www.w3.org/1999/xhtml">
+                extension-element-prefixes="saxon" version="2.0"
+                xpath-default-namespace="http://www.w3.org/1999/xhtml">
     <xsl:output method="xml" indent="yes"/>
     <xsl:strip-space elements="*"/>
-    <xsl:param name="base_uri">http://localhost:8080/fcrepo/rest/collection/test/013/line/</xsl:param>
+    <xsl:param name="base_uri">http://localhost:8080/fcrepo/rest/collection/test/013/line/
+    </xsl:param>
     <xsl:param name="padding">&#160;</xsl:param>
     <xsl:variable name="line" select="0" saxon:assignable="yes"/>
     <xsl:function name="functx:trim" as="xs:string">

@@ -11,13 +11,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller.ui;
 
-import javax.swing.JTextArea;
 import java.awt.event.KeyEvent;
+import javax.swing.JTextArea;
 
 /**
- * NoTabTextArea
+ * NoTabTextArea.
  *
  * @author gov.loc
  */
@@ -25,7 +26,9 @@ public class NoTabTextArea extends JTextArea {
     private static final long serialVersionUID = 1L;
 
     /**
-     * @param row  int
+     * NoTabTextArea.
+     *
+     * @param row int
      * @param cols int
      */
     NoTabTextArea(final int row, final int cols) {
@@ -34,6 +37,8 @@ public class NoTabTextArea extends JTextArea {
     }
 
     /**
+     * processComponentKeyEvent.
+     *
      * @param e KeyEvent
      */
     @Override

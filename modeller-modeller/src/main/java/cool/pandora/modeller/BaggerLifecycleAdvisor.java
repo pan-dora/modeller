@@ -11,7 +11,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller;
+
+import java.awt.Dimension;
+import java.awt.GraphicsEnvironment;
+import java.awt.Rectangle;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,11 +24,6 @@ import org.springframework.richclient.application.ApplicationWindow;
 import org.springframework.richclient.application.config.ApplicationWindowConfigurer;
 import org.springframework.richclient.application.config.DefaultApplicationLifecycleAdvisor;
 import org.springframework.richclient.application.setup.SetupWizard;
-
-import java.awt.Rectangle;
-import java.awt.Dimension;
-import java.awt.GraphicsEnvironment;
-
 
 /**
  * Custom application lifecycle implementation that configures the app at well
@@ -48,7 +48,8 @@ public class BaggerLifecycleAdvisor extends DefaultApplicationLifecycleAdvisor {
         final boolean useWizard = false;
         if (useWizard && getApplication().getApplicationContext().containsBean("setupWizard")) {
             final SetupWizard setupWizard =
-                    (SetupWizard) getApplication().getApplicationContext().getBean("setupWizard", SetupWizard.class);
+                    (SetupWizard) getApplication().getApplicationContext().getBean("setupWizard",
+                            SetupWizard.class);
             setupWizard.execute();
         }
     }
@@ -61,7 +62,8 @@ public class BaggerLifecycleAdvisor extends DefaultApplicationLifecycleAdvisor {
         super.onPreWindowOpen(configurer);
         // comment out to hide the menubar, or reduce window size...
         // configurer.setShowMenuBar(false);
-        final Rectangle rect = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds();
+        final Rectangle rect = GraphicsEnvironment.getLocalGraphicsEnvironment()
+                .getMaximumWindowBounds();
         configurer.setInitialSize(new Dimension(rect.width, rect.height));
         //configurer.setInitialSize(new Dimension(1024, 768));
     }

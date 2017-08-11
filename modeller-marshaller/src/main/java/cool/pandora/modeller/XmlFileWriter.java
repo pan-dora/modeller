@@ -11,6 +11,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller;
 
 import javax.xml.bind.JAXBContext;
@@ -25,7 +26,6 @@ import java.io.ByteArrayOutputStream;
  */
 public class XmlFileWriter extends ByteArrayOutputStream {
     /**
-     *
      * @return XMLWriterBuilder
      */
     public static XMLWriterBuilder write() {
@@ -36,12 +36,12 @@ public class XmlFileWriter extends ByteArrayOutputStream {
     }
 
     /**
-     *
      * @param fileDescriptor ImageFileDescriptor
      * @return marshalled output
      * @throws JAXBException Exception
      */
-    private static ByteArrayOutputStream marshal(final ImageFileDescriptor fileDescriptor) throws JAXBException {
+    private static ByteArrayOutputStream marshal(final ImageFileDescriptor fileDescriptor) throws
+            JAXBException {
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
         final JAXBContext jaxbContext = JAXBContext.newInstance(ImageFileDescriptor.class);
         final Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
@@ -61,7 +61,6 @@ public class XmlFileWriter extends ByteArrayOutputStream {
         private String resourceId;
 
         /**
-         *
          * @param collectionId String
          * @return this
          */
@@ -71,7 +70,6 @@ public class XmlFileWriter extends ByteArrayOutputStream {
         }
 
         /**
-         *
          * @param objektId String
          * @return this
          */
@@ -81,7 +79,6 @@ public class XmlFileWriter extends ByteArrayOutputStream {
         }
 
         /**
-         *
          * @param resourceId String
          * @return this
          */
@@ -91,12 +88,12 @@ public class XmlFileWriter extends ByteArrayOutputStream {
         }
 
         /**
-         *
          * @return marshalled output
          * @throws JAXBException Exception
          */
         public ByteArrayOutputStream build() throws JAXBException {
-            final String descriptor = this.collectionId + "." + this.objektId + "." + this.resourceId;
+            final String descriptor = this.collectionId + "." + this.objektId + "." + this
+                    .resourceId;
             final ImageFileDescriptor fileDescriptor = new ImageFileDescriptor();
             fileDescriptor.setId(descriptor);
             return XmlFileWriter.marshal(fileDescriptor);

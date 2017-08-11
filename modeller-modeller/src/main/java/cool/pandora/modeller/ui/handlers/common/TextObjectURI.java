@@ -11,6 +11,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller.ui.handlers.common;
 
 
@@ -53,7 +54,8 @@ public class TextObjectURI {
         final URIResolver uriResolver;
         try {
             uriResolver =
-                    URIResolver.resolve().map(map).containerKey(ProfileOptions.TEXT_PAGE_CONTAINER_KEY).pathType(4)
+                    URIResolver.resolve().map(map).containerKey(ProfileOptions
+                            .TEXT_PAGE_CONTAINER_KEY).pathType(4)
                             .build();
             return uriResolver.render();
         } catch (final URISyntaxException e) {
@@ -70,7 +72,8 @@ public class TextObjectURI {
         final URIResolver uriResolver;
         try {
             uriResolver =
-                    URIResolver.resolve().map(map).containerKey(ProfileOptions.TEXT_AREA_CONTAINER_KEY).pathType(4)
+                    URIResolver.resolve().map(map).containerKey(ProfileOptions
+                            .TEXT_AREA_CONTAINER_KEY).pathType(4)
                             .build();
             return uriResolver.render();
         } catch (final URISyntaxException e) {
@@ -87,7 +90,8 @@ public class TextObjectURI {
         final URIResolver uriResolver;
         try {
             uriResolver =
-                    URIResolver.resolve().map(map).containerKey(ProfileOptions.TEXT_LINE_CONTAINER_KEY).pathType(4)
+                    URIResolver.resolve().map(map).containerKey(ProfileOptions
+                            .TEXT_LINE_CONTAINER_KEY).pathType(4)
                             .build();
             return uriResolver.render();
         } catch (final URISyntaxException e) {
@@ -104,7 +108,8 @@ public class TextObjectURI {
         final URIResolver uriResolver;
         try {
             uriResolver =
-                    URIResolver.resolve().map(map).containerKey(ProfileOptions.TEXT_WORD_CONTAINER_KEY).pathType(4)
+                    URIResolver.resolve().map(map).containerKey(ProfileOptions
+                            .TEXT_WORD_CONTAINER_KEY).pathType(4)
                             .build();
             return uriResolver.render();
         } catch (final URISyntaxException e) {
@@ -117,10 +122,12 @@ public class TextObjectURI {
      * @param map Map
      * @return String
      */
-    public static URI getPageObjectURI(final Map<String, BagInfoField> map, final String resourceID) {
+    public static URI getPageObjectURI(final Map<String, BagInfoField> map, final String
+            resourceID) {
         final URIResolver uriResolver;
         try {
-            uriResolver = URIResolver.resolve().map(map).containerKey(ProfileOptions.TEXT_PAGE_CONTAINER_KEY)
+            uriResolver = URIResolver.resolve().map(map).containerKey(ProfileOptions
+                    .TEXT_PAGE_CONTAINER_KEY)
                     .resource(resourceID).pathType(5).build();
             return uriResolver.render();
         } catch (URISyntaxException e) {
@@ -133,10 +140,12 @@ public class TextObjectURI {
      * @param map Map
      * @return String
      */
-    public static URI getAreaObjectURI(final Map<String, BagInfoField> map, final String resourceID) {
+    public static URI getAreaObjectURI(final Map<String, BagInfoField> map, final String
+            resourceID) {
         final URIResolver uriResolver;
         try {
-            uriResolver = URIResolver.resolve().map(map).containerKey(ProfileOptions.TEXT_AREA_CONTAINER_KEY)
+            uriResolver = URIResolver.resolve().map(map).containerKey(ProfileOptions
+                    .TEXT_AREA_CONTAINER_KEY)
                     .resource(resourceID).pathType(5).build();
             return uriResolver.render();
         } catch (URISyntaxException e) {
@@ -149,10 +158,12 @@ public class TextObjectURI {
      * @param map Map
      * @return String
      */
-    public static URI getLineObjectURI(final Map<String, BagInfoField> map, final String resourceID) {
+    public static URI getLineObjectURI(final Map<String, BagInfoField> map, final String
+            resourceID) {
         final URIResolver uriResolver;
         try {
-            uriResolver = URIResolver.resolve().map(map).containerKey(ProfileOptions.TEXT_LINE_CONTAINER_KEY)
+            uriResolver = URIResolver.resolve().map(map).containerKey(ProfileOptions
+                    .TEXT_LINE_CONTAINER_KEY)
                     .resource(resourceID).pathType(5).build();
             return uriResolver.render();
         } catch (URISyntaxException e) {
@@ -165,10 +176,12 @@ public class TextObjectURI {
      * @param map Map
      * @return String
      */
-    public static URI getWordObjectURI(final Map<String, BagInfoField> map, final String resourceID) {
+    public static URI getWordObjectURI(final Map<String, BagInfoField> map, final String
+            resourceID) {
         final URIResolver uriResolver;
         try {
-            uriResolver = URIResolver.resolve().map(map).containerKey(ProfileOptions.TEXT_WORD_CONTAINER_KEY)
+            uriResolver = URIResolver.resolve().map(map).containerKey(ProfileOptions
+                    .TEXT_WORD_CONTAINER_KEY)
                     .resource(resourceID).pathType(5).build();
             return uriResolver.render();
         } catch (URISyntaxException e) {

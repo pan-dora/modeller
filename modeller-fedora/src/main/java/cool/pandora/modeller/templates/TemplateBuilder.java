@@ -11,6 +11,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller.templates;
 
 import com.github.mustachejava.DefaultMustacheFactory;
@@ -20,7 +21,7 @@ import com.github.mustachejava.MustacheFactory;
 import java.io.StringWriter;
 
 /**
- * TemplateBuilder
+ * TemplateBuilder.
  *
  * @author Christopher Johnson
  */
@@ -32,6 +33,8 @@ public class TemplateBuilder {
     }
 
     /**
+     * scope.
+     *
      * @param scope Scope
      * @return this
      */
@@ -41,6 +44,8 @@ public class TemplateBuilder {
     }
 
     /**
+     * template.
+     *
      * @param template String
      * @return this
      */
@@ -50,6 +55,8 @@ public class TemplateBuilder {
     }
 
     /**
+     * build.
+     *
      * @return String
      */
     public String build() {

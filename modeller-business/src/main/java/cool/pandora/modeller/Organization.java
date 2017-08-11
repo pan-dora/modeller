@@ -11,6 +11,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller;
 
 import org.json.JSONException;
@@ -101,16 +102,20 @@ public class Organization {
         ProfileField address = null;
         if (organizationJson != null) {
             if (organizationJson.has(FIELD_SOURCE_ORGANIZATION)) {
-                final JSONObject jsonObjectOrgName = (JSONObject) organizationJson.get(FIELD_SOURCE_ORGANIZATION);
+                final JSONObject jsonObjectOrgName = (JSONObject) organizationJson.get
+                        (FIELD_SOURCE_ORGANIZATION);
                 if (jsonObjectOrgName != null) {
-                    name = ProfileField.createProfileField(jsonObjectOrgName, FIELD_SOURCE_ORGANIZATION);
+                    name = ProfileField.createProfileField(jsonObjectOrgName,
+                            FIELD_SOURCE_ORGANIZATION);
                 }
             }
 
             if (organizationJson.has(FIELD_ORGANIZATION_ADDRESS)) {
-                final JSONObject jsonObjectOrgAddr = (JSONObject) organizationJson.get(FIELD_ORGANIZATION_ADDRESS);
+                final JSONObject jsonObjectOrgAddr = (JSONObject) organizationJson.get
+                        (FIELD_ORGANIZATION_ADDRESS);
                 if (jsonObjectOrgAddr != null) {
-                    address = ProfileField.createProfileField(jsonObjectOrgAddr, FIELD_ORGANIZATION_ADDRESS);
+                    address = ProfileField.createProfileField(jsonObjectOrgAddr,
+                            FIELD_ORGANIZATION_ADDRESS);
                 }
             }
         }
@@ -134,7 +139,8 @@ public class Organization {
 
         orgStringer.object().key(FIELD_ORGANIZATION_ADDRESS)
                 .value(new JSONObject(new JSONTokener(this.getAddress().serialize())));
-        orgStringer.key(FIELD_SOURCE_ORGANIZATION).value(new JSONObject(new JSONTokener(getName().serialize())));
+        orgStringer.key(FIELD_SOURCE_ORGANIZATION).value(new JSONObject(new JSONTokener(getName()
+                .serialize())));
         orgStringer.endObject();
         return writer.toString();
     }

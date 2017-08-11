@@ -11,19 +11,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cool.pandora.modeller;
 
-import org.xmlbeam.annotation.XBRead;
+package cool.pandora.modeller;
 
 import java.util.List;
 
+import org.xmlbeam.annotation.XBRead;
+
 /**
- * hOCRData
+ * hOCRData.
  *
  * @author Christopher Johnson
  */
 public interface hOCRData {
     /**
+     * getPageNodeId.
      *
      * @return PageNodeId
      */
@@ -31,6 +33,7 @@ public interface hOCRData {
     List<String> getPageNodeId();
 
     /**
+     * getCAreaNodeId.
      *
      * @return CAreaNodeId
      */
@@ -38,6 +41,7 @@ public interface hOCRData {
     List<String> getCAreaNodeId();
 
     /**
+     * getLineNodeId.
      *
      * @return LineNodeId
      */
@@ -45,6 +49,7 @@ public interface hOCRData {
     List<String> getLineNodeId();
 
     /**
+     * getWordNodeId.
      *
      * @return WordNodeId
      */
@@ -52,38 +57,47 @@ public interface hOCRData {
     List<String> getWordNodeId();
 
     /**
+     * getCAreasforPage.
      *
      * @param id String
      * @return CAreasforPage
      */
-    @XBRead("//*[local-name()='div'][@class='ocr_page'][@id='{0}']/descendant::node()[@class='ocr_carea']/@id")
+    @XBRead("//*[local-name()='div'][@class='ocr_page'][@id='{0}']/descendant::node()"
+            + "[@class='ocr_carea']/@id")
     List<String> getCAreasforPage(String id);
 
     /**
+     * getLinesforArea.
      *
      * @param id String
      * @return LinesforArea
      */
-    @XBRead("//*[local-name()='div'][@class='ocr_carea'][@id='{0}']/descendant::node()[@class='ocr_line']/@id")
+    @XBRead("//*[local-name()='div'][@class='ocr_carea'][@id='{0}']/descendant::node()"
+            + "[@class='ocr_line']/@id")
     List<String> getLinesforArea(String id);
 
     /**
+     * getWordsforLine.
      *
      * @param id String
      * @return WordsforLine
      */
-    @XBRead("//*[local-name()='span'][@class='ocr_line'][@id='{0}']/descendant::node()[@class='ocrx_word']/@id")
+    @XBRead("//*[local-name()='span'][@class='ocr_line'][@id='{0}']/descendant::node()"
+            + "[@class='ocrx_word']/@id")
     List<String> getWordsforLine(String id);
 
     /**
+     * getWordsforPage.
      *
      * @param id String
      * @return WordsforPage
      */
-    @XBRead("//*[local-name()='div'][@class='ocr_page'][@id='{0}']/descendant::node()[@class='ocrx_word']/@id")
+    @XBRead("//*[local-name()='div'][@class='ocr_page'][@id='{0}']/descendant::node()"
+            + "[@class='ocrx_word']/@id")
     List<String> getWordsforPage(String id);
 
     /**
+     * getCAreaIdDescIds.
      *
      * @param id String
      * @return CAreaIdDescIds
@@ -92,6 +106,7 @@ public interface hOCRData {
     List<String> getCAreaIdDescIds(String id);
 
     /**
+     * getTitleForId.
      *
      * @param id String
      * @return TitleForId
@@ -100,6 +115,7 @@ public interface hOCRData {
     String getTitleForId(String id);
 
     /**
+     * getCharsForId.
      *
      * @param id String
      * @return CharsForId

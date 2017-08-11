@@ -11,10 +11,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller;
 
 /**
- * CanvasRegionURI
+ * CanvasRegionURI.
  *
  * @author Christopher Johnson
  */
@@ -23,7 +24,9 @@ public class CanvasRegionURI {
     private CanvasRegionURI() {
 
     }
+
     /**
+     * regionuri.
      *
      * @return CanvasRegionURIBuilder
      */
@@ -31,11 +34,15 @@ public class CanvasRegionURI {
         return new CanvasRegionURI.CanvasRegionURIBuilder();
     }
 
+    /**
+     * CanvasRegionURIBuilder.
+     */
     public static class CanvasRegionURIBuilder {
         private String region;
         private String canvasUri;
 
         /**
+         * region.
          *
          * @param region String
          * @return this
@@ -46,6 +53,7 @@ public class CanvasRegionURI {
         }
 
         /**
+         * canvasURI.
          *
          * @param canvasUri String
          * @return this
@@ -56,6 +64,7 @@ public class CanvasRegionURI {
         }
 
         /**
+         * build.
          *
          * @return String
          */

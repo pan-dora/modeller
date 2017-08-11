@@ -11,6 +11,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller.ui.jpanel.base;
 
 import cool.pandora.modeller.ui.util.ApplicationContextUtil;
@@ -53,7 +54,7 @@ public class NewBagFrame extends JFrame implements ActionListener {
 
     /**
      * @param bagView BagView
-     * @param title   String
+     * @param title String
      */
     public NewBagFrame(final BagView bagView, final String title) {
         super(title);
@@ -89,7 +90,8 @@ public class NewBagFrame extends JFrame implements ActionListener {
         final JPanel pageControl = new JPanel(new BorderLayout());
         final JPanel titlePaneContainer = new JPanel(new BorderLayout());
         titlePane.setTitle(bagView.getPropertyMessage("NewBagFrame.title"));
-        titlePane.setMessage(new DefaultMessage(bagView.getPropertyMessage("NewBagFrame.description")));
+        titlePane.setMessage(new DefaultMessage(bagView.getPropertyMessage("NewBagFrame" +
+                ".description")));
         titlePaneContainer.add(titlePane.getControl());
         titlePaneContainer.add(new JSeparator(), BorderLayout.SOUTH);
         pageControl.add(titlePaneContainer, BorderLayout.NORTH);
@@ -116,7 +118,7 @@ public class NewBagFrame extends JFrame implements ActionListener {
 
     /**
      * @param contentPane JPanel
-     * @param row         int
+     * @param row int
      */
     private static void layoutBagVersionSelection(final JPanel contentPane, final int row) {
         // contents
@@ -125,17 +127,20 @@ public class NewBagFrame extends JFrame implements ActionListener {
 
         final JLabel spacerLabel = new JLabel();
         glbc = LayoutUtil
-                .buildGridBagConstraints(0, row, 1, 1, 5, 50, GridBagConstraints.HORIZONTAL, GridBagConstraints.WEST);
-        glbc = LayoutUtil.buildGridBagConstraints(1, row, 1, 1, 40, 50, GridBagConstraints.HORIZONTAL,
+                .buildGridBagConstraints(0, row, 1, 1, 5, 50, GridBagConstraints.HORIZONTAL,
+                        GridBagConstraints.WEST);
+        glbc = LayoutUtil.buildGridBagConstraints(1, row, 1, 1, 40, 50, GridBagConstraints
+                        .HORIZONTAL,
                 GridBagConstraints.CENTER);
         glbc = LayoutUtil
-                .buildGridBagConstraints(2, row, 1, 1, 40, 50, GridBagConstraints.NONE, GridBagConstraints.EAST);
+                .buildGridBagConstraints(2, row, 1, 1, 40, 50, GridBagConstraints.NONE,
+                        GridBagConstraints.EAST);
         contentPane.add(spacerLabel, glbc);
     }
 
     /**
      * @param contentPane JPanel
-     * @param row         int
+     * @param row int
      */
     private void layoutProfileSelection(final JPanel contentPane, final int row) {
         // content
@@ -152,13 +157,16 @@ public class NewBagFrame extends JFrame implements ActionListener {
 
         final JLabel spacerLabel = new JLabel();
         glbc = LayoutUtil
-                .buildGridBagConstraints(0, row, 1, 1, 5, 50, GridBagConstraints.HORIZONTAL, GridBagConstraints.WEST);
+                .buildGridBagConstraints(0, row, 1, 1, 5, 50, GridBagConstraints.HORIZONTAL,
+                        GridBagConstraints.WEST);
         contentPane.add(bagProfileLabel, glbc);
-        glbc = LayoutUtil.buildGridBagConstraints(1, row, 1, 1, 40, 50, GridBagConstraints.HORIZONTAL,
+        glbc = LayoutUtil.buildGridBagConstraints(1, row, 1, 1, 40, 50, GridBagConstraints
+                        .HORIZONTAL,
                 GridBagConstraints.CENTER);
         contentPane.add(profileList, glbc);
         glbc = LayoutUtil
-                .buildGridBagConstraints(2, row, 1, 1, 40, 50, GridBagConstraints.NONE, GridBagConstraints.EAST);
+                .buildGridBagConstraints(2, row, 1, 1, 40, 50, GridBagConstraints.NONE,
+                        GridBagConstraints.EAST);
         contentPane.add(spacerLabel, glbc);
     }
 
@@ -166,7 +174,8 @@ public class NewBagFrame extends JFrame implements ActionListener {
      * @return buttonBar
      */
     protected JComponent createButtonBar() {
-        final CommandGroup dialogCommandGroup = CommandGroup.createCommandGroup(null, getCommandGroupMembers());
+        final CommandGroup dialogCommandGroup = CommandGroup.createCommandGroup(null,
+                getCommandGroupMembers());
         final JComponent buttonBar = dialogCommandGroup.createButtonBar();
         GuiStandardUtils.attachDialogBorder(buttonBar);
         return buttonBar;

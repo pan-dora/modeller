@@ -11,21 +11,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller;
 
 import cool.pandora.modeller.util.ResourceList;
-import org.apache.commons.lang3.StringUtils;
-
 import java.io.IOException;
 import java.net.URI;
-import java.util.Map;
-import java.util.Iterator;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.lang3.StringUtils;
 
 /**
- * CanvasPageMap
+ * CanvasPageMap.
  *
  * @author Christopher Johnson
  */
@@ -33,6 +34,8 @@ public class CanvasPageMap {
     private final Map<String, String> canvasPageMap;
 
     /**
+     * CanvasPageMap.
+     *
      * @param canvasPageMap Map
      */
     CanvasPageMap(final Map<String, String> canvasPageMap) {
@@ -40,6 +43,8 @@ public class CanvasPageMap {
     }
 
     /**
+     * init.
+     *
      * @return CanvasPageMapBuilder
      */
     public static CanvasPageMap.CanvasPageMapBuilder init() {
@@ -47,6 +52,8 @@ public class CanvasPageMap {
     }
 
     /**
+     * render.
+     *
      * @return canvasPageMap
      */
     public Map<String, String> render() {
@@ -54,7 +61,7 @@ public class CanvasPageMap {
     }
 
     /**
-     *
+     * CanvasPageMapBuilder.
      */
     public static class CanvasPageMapBuilder {
 
@@ -65,6 +72,8 @@ public class CanvasPageMap {
         }
 
         /**
+         * pageIdList.
+         *
          * @param pageIdList List
          * @return this
          */
@@ -74,6 +83,7 @@ public class CanvasPageMap {
         }
 
         /**
+         * canvasContainerURI.
          *
          * @param canvasContainerURI URI
          * @return this
@@ -84,12 +94,14 @@ public class CanvasPageMap {
         }
 
         /**
+         * getMap.
          *
          * @param pageIdList List
          * @param canvasContainerURI URI
          * @return canvasPageMap
          */
-        static Map<String, String> getMap(final List<String> pageIdList, final URI canvasContainerURI) {
+        static Map<String, String> getMap(final List<String> pageIdList, final URI
+                canvasContainerURI) {
             final ResourceList canvasList = new ResourceList(canvasContainerURI);
             final ArrayList<String> canvasesList = canvasList.getResourceList();
             final Iterator<String> i1 = pageIdList.iterator();
@@ -103,12 +115,14 @@ public class CanvasPageMap {
         }
 
         /**
+         * build.
          *
          * @return CanvasPageMap
          * @throws IOException Exception
          */
         public CanvasPageMap build() throws IOException {
-            final Map<String, String> canvasPageMap = getMap(this.pageIdList, this.canvasContainerURI);
+            final Map<String, String> canvasPageMap = getMap(this.pageIdList, this
+                    .canvasContainerURI);
             return new CanvasPageMap(canvasPageMap);
         }
 

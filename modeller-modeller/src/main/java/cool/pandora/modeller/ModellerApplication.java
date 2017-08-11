@@ -11,15 +11,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller;
+
+import javax.swing.JOptionPane;
+import javax.swing.JFrame;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.PropertyAccessException;
 import org.springframework.richclient.application.ApplicationLauncher;
-
-import javax.swing.JOptionPane;
-import javax.swing.JFrame;
 
 /**
  * Main driver that starts the Bagger spring rich client application.
@@ -35,19 +36,22 @@ final class ModellerApplication {
     public static void main(final String[] args) {
         final String rootContextDirectoryClassPath = "cool/pandora/modeller/ctx";
 
-        final String startupContextPath = rootContextDirectoryClassPath + "/common/richclient-startup-context.xml";
+        final String startupContextPath = rootContextDirectoryClassPath
+                + "/common/richclient-startup-context.xml";
 
         final String richclientApplicationContextPath =
                 rootContextDirectoryClassPath + "/common/richclient-application-context.xml";
 
-        final String businessLayerContextPath = rootContextDirectoryClassPath + "/common/business-layer-context.xml";
+        final String businessLayerContextPath = rootContextDirectoryClassPath
+                + "/common/business-layer-context.xml";
 
         try {
             new ApplicationLauncher(startupContextPath,
                     new String[]{richclientApplicationContextPath, businessLayerContextPath});
         } catch (final IllegalStateException ex1) {
             log.error("IllegalStateException during startup", ex1);
-            JOptionPane.showMessageDialog(new JFrame(), "An illegal state error occured.\n", "Bagger startup error!",
+            JOptionPane.showMessageDialog(new JFrame(), "An illegal state error occured.\n",
+                    "Bagger startup error!",
                     JOptionPane.ERROR_MESSAGE);
             System.exit(1);
         } catch (final PropertyAccessException ex) {
@@ -60,7 +64,8 @@ final class ModellerApplication {
             final String msg = e.getMessage();
             if (msg.contains("SAXParseException")) {
                 JOptionPane.showMessageDialog(new JFrame(),
-                        "An error occured parsing application context.  You may " + "have no internet access.\n",
+                        "An error occured parsing application context.  You may " + "have no "
+                                + "internet access.\n",
                         "Bagger startup error!", JOptionPane.ERROR_MESSAGE);
             } else {
                 JOptionPane.showMessageDialog(new JFrame(), "An error occured during startup.\n",

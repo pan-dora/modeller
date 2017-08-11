@@ -11,6 +11,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller.ui.handlers.text;
 
 import cool.pandora.modeller.ModellerClient;
@@ -110,10 +111,12 @@ public class PatchPagesHandler extends AbstractAction implements Progress {
             final String hOCRPageId = pageIdMap.get(pageId);
             final String bbox = bboxmap.get(hOCRPageId);
             final String region = Region.region().bbox(bbox).build();
-            final String canvasRegionURI = CanvasRegionURI.regionuri().region(region).canvasURI(canvasURI).build();
+            final String canvasRegionURI = CanvasRegionURI.regionuri().region(region).canvasURI
+                    (canvasURI).build();
 
             rdfBody = TextSequenceMetadata
-                    .getTextSequenceMetadata(areaIdmap, pageId, canvasRegionURI, collectionPredicate, areaContainerIRI);
+                    .getTextSequenceMetadata(areaIdmap, pageId, canvasRegionURI,
+                            collectionPredicate, areaContainerIRI);
             try {
                 ModellerClient.doPatch(pageObjectURI, rdfBody);
                 ApplicationContextUtil.addConsoleMessage(message + " " + pageObjectURI);
@@ -127,7 +130,8 @@ public class PatchPagesHandler extends AbstractAction implements Progress {
     void openPatchPagesFrame() {
         final DefaultBag bag = bagView.getBag();
         final PatchPagesFrame patchPagesFrame =
-                new PatchPagesFrame(bagView, bagView.getPropertyMessage("bag.frame" + ".patch" + ".pages"));
+                new PatchPagesFrame(bagView, bagView.getPropertyMessage("bag.frame" + ".patch" +
+                        ".pages"));
         patchPagesFrame.setBag(bag);
         patchPagesFrame.setVisible(true);
     }

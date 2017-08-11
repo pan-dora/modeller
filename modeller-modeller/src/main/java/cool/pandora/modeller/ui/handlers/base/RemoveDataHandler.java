@@ -11,7 +11,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller.ui.handlers.base;
+
+import cool.pandora.modeller.bag.BaggerFileEntity;
+import cool.pandora.modeller.bag.impl.DefaultBag;
+import cool.pandora.modeller.ui.jpanel.base.BagView;
+import cool.pandora.modeller.ui.util.ApplicationContextUtil;
 
 import java.awt.event.ActionEvent;
 import java.io.File;
@@ -25,13 +31,9 @@ import javax.swing.tree.TreePath;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import cool.pandora.modeller.bag.BaggerFileEntity;
-import cool.pandora.modeller.bag.impl.DefaultBag;
-import cool.pandora.modeller.ui.jpanel.base.BagView;
-import cool.pandora.modeller.ui.util.ApplicationContextUtil;
 
 /**
- * Remove Data Handler
+ * Remove Data Handler.
  *
  * @author gov.loc
  */
@@ -41,6 +43,8 @@ public class RemoveDataHandler extends AbstractAction {
     BagView bagView;
 
     /**
+     * RemoveDataHandler.
+     *
      * @param bagView BagView
      */
     public RemoveDataHandler(final BagView bagView) {
@@ -81,7 +85,8 @@ public class RemoveDataHandler extends AbstractAction {
                 if (fileName != null && !fileName.isEmpty()) {
                     try {
                         bag.removeBagFile(fileName);
-                        ApplicationContextUtil.addConsoleMessage("Payload data removed: " + fileName);
+                        ApplicationContextUtil.addConsoleMessage("Payload data removed: "
+                                + fileName);
                         if (node instanceof MutableTreeNode) {
                             model.removeNodeFromParent((MutableTreeNode) node);
                         } else {
@@ -94,12 +99,14 @@ public class RemoveDataHandler extends AbstractAction {
                             if (node instanceof MutableTreeNode) {
                                 model.removeNodeFromParent((MutableTreeNode) node);
                             } else {
-                                final DefaultMutableTreeNode aNode = new DefaultMutableTreeNode(node);
+                                final DefaultMutableTreeNode aNode = new DefaultMutableTreeNode(
+                                        node);
                                 model.removeNodeFromParent(aNode);
                             }
                         } catch (final Exception ex) {
                             message = "Error trying to remove: " + fileName + "\n";
-                            BagView.showWarningErrorDialog("Error - file not removed", message + ex.getMessage());
+                            BagView.showWarningErrorDialog("Error - file not removed", message
+                                    + ex.getMessage());
                         }
                     }
                 }

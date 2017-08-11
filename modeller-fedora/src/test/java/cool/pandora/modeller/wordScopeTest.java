@@ -11,6 +11,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller;
 
 import cool.pandora.modeller.common.uri.FedoraPrefixes;
@@ -36,19 +37,24 @@ public class wordScopeTest {
     public static void main(final String[] args) {
         final MetadataTemplate metadataTemplate;
         final String canvasRegionURI =
-                "http://localhost:8080/fcrepo/rest/collection/test/021/canvas/007#xywh=445%2C1431" + "%2C154%2C40";
+                "http://localhost:8080/fcrepo/rest/collection/test/021/canvas/007#xywh=445%2C1431" +
+                        "" + "%2C154%2C40";
         final String wordContainerURI = "http://test/word";
         final String chars = "blah&quot;blah&quot;blah";
 
         final List<WordScope.Prefix> prefixes =
-                Arrays.asList(new WordScope.Prefix(FedoraPrefixes.RDFS), new WordScope.Prefix(FedoraPrefixes.MODE),
-                        new WordScope.Prefix(IIIFPrefixes.OA), new WordScope.Prefix(IIIFPrefixes.CNT),
-                        new WordScope.Prefix(IIIFPrefixes.SC), new WordScope.Prefix(IIIFPrefixes.DCTYPES));
+                Arrays.asList(new WordScope.Prefix(FedoraPrefixes.RDFS), new WordScope.Prefix
+                                (FedoraPrefixes.MODE),
+                        new WordScope.Prefix(IIIFPrefixes.OA), new WordScope.Prefix(IIIFPrefixes
+                                .CNT),
+                        new WordScope.Prefix(IIIFPrefixes.SC), new WordScope.Prefix(IIIFPrefixes
+                                .DCTYPES));
 
         final WordScope scope = new WordScope().fedoraPrefixes(prefixes).canvasURI(canvasRegionURI)
                 .resourceContainerURI(wordContainerURI).chars(chars.replace("&quot;", "\\\""));
 
-        metadataTemplate = MetadataTemplate.template().template("template/sparql-update-word.mustache").scope(scope)
+        metadataTemplate = MetadataTemplate.template().template("template/sparql-update-word" +
+                ".mustache").scope(scope)
                 .throwExceptionOnFailure().build();
 
         final String metadata = unescapeXml(metadataTemplate.render());

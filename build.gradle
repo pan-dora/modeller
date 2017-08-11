@@ -1,22 +1,20 @@
+import net.researchgate.release.GitAdapter
+
 buildscript {
     repositories {
         mavenCentral()
         jcenter()
     }
     dependencies {
-        classpath "io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.5.1"
         classpath 'com.bmuschko:gradle-nexus-plugin:2.3.1'
     }
 }
 
 plugins {
     id 'com.github.hierynomus.license' version '0.13.1'
-    id 'net.researchgate.release' version '2.4.0'
-    id 'org.sonarqube' version '2.2.1'
+    id 'net.researchgate.release' version '2.6.0'
+    id 'io.codearte.nexus-staging' version '0.9.0'
 }
-
-apply plugin: 'com.bmuschko.nexus'
-apply plugin: 'io.codearte.nexus-staging'
 
 allprojects {
     apply plugin: 'maven'
@@ -31,14 +29,15 @@ allprojects {
 
     gradle.projectsEvaluated {
         tasks.withType(JavaCompile) {
-            options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+            options.compilerArgs.add("-Xlint:unchecked")
+            options.compilerArgs.add("-Xlint:deprecation")
         }
     }
 
     release {
         tagTemplate = '$name-$version'
         scmAdapters = [
-                net.researchgate.release.GitAdapter
+                GitAdapter
         ]
 
         git {
@@ -52,15 +51,13 @@ allprojects {
 }
 
 subprojects {
+    apply plugin: 'com.bmuschko.nexus'
     apply plugin: 'java'
-    apply plugin: 'findbugs'
-    apply plugin: 'pmd'
     apply plugin: 'maven-publish'
     apply plugin: 'signing'
     apply plugin: 'checkstyle'
     apply plugin: 'com.github.hierynomus.license'
     apply plugin: 'jacoco'
-    apply plugin: 'signing'
 
     group = 'cool.pandora'
 
@@ -71,26 +68,6 @@ subprojects {
         license = 'Apache 2'
         sourceCompatibility = 1.8
         targetCompatibility = 1.8
-    }
-
-    repositories {
-        jcenter()
-        mavenCentral()
-    }
-
-    test { //show test output
-        testLogging.showStandardStreams = true
-    }
-
-    findbugsTest.enabled = false
-
-    findbugs {
-        ignoreFailures = true //don't fail the gradle build if bugs are found
-    }
-
-    pmd {
-        ruleSets = ["java-basic", "java-braces"]
-        ignoreFailures = true //don't fail the gradle build if rules are broken
     }
 
     //sign all the bagger jars
@@ -115,14 +92,7 @@ subprojects {
         from sourceSets.main.allSource
     }
 
-
-    task javadocJar(type: Jar) {
-        classifier 'javadoc'
-        from javadoc
-    }
-
     artifacts {
-        archives javadocJar
         archives sourceJar
     }
 
@@ -133,6 +103,7 @@ subprojects {
     checkstyle {
         configFile = rootProject.file('build/checkstyle/checkstyle.xml')
         configProperties.checkstyleConfigDir = rootProject.file('build/checkstyle/')
+        toolVersion = "8.1"
     }
 
     jacoco {
@@ -154,72 +125,66 @@ subprojects {
                 from components.java
             }
         }
+        repositories {
+            maven {
+                url "$buildDir/maven"
+            }
+        }
     }
 
-    signing {
-        sign configurations.archives
-    }
+    modifyPom {
+        project {
+            name 'Modeller'
+            description 'A BagIt and Fedora Client'
+            url 'https://github.com/pan-dora/modeller/'
+            inceptionYear '2017'
+            name 'Modeller'
+            description 'Modeller'
 
-    uploadArchives {
-        repositories.mavenDeployer {
-            def sonatypeUsername = project.hasProperty('ossrhUsername') ? ossrhUsername : ""
-            def sonatypePassword = project.hasProperty('ossrhPassword') ? ossrhPassword : ""
-            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
-
-            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
-                authentication(userName: sonatypeUsername, password: sonatypePassword)
+            organization {
+                name project.vendor
+                url project.homepage
             }
 
-            snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
-                authentication(userName: sonatypeUsername, password: sonatypePassword)
+            developers {
+                developer {
+                    id 'christopher-johnson'
+                    name 'Christopher Johnson'
+                    email 'chjohnson @ (domain of organization url)'
+                    organization 'Pan-dora Ecosystem'
+                    organizationUrl 'https://pan-dora.github.io/'
+                    roles {
+                        role 'developer'
+                    }
+                    timezone '+1'
+                }
             }
 
-            pom.project {
-                packaging 'jar'
-                url 'https://pan-dora.github.io/'
-                inceptionYear '2017'
-                name 'Modeller'
-                description 'Modeller'
+            scm {
+                connection 'scm:git:git://github.com/pan-dora/modeller.git'
+                developerConnection 'scm:git:git@github.com/pan-dora/modeller.git'
+                url 'https://github.com/pan-dora/modeller/'
+                tag 'HEAD'
+            }
 
-                organization {
-                    name project.vendor
-                    url project.homepage
-                }
-
-                developers {
-                    developer {
-                        id 'christopher-johnson'
-                        name 'Christopher Johnson'
-                        email 'chjohnson @ (domain of organization url)'
-                        organization 'Pan-dora Ecosystem'
-                        organizationUrl 'https://pan-dora.github.io/'
-                        roles {
-                            role 'developer'
-                        }
-                        timezone '+1'
-                    }
-                }
-
-                scm {
-                    connection 'scm:git:git://github.com/pan-dora/modeller.git'
-                    developerConnection 'scm:git:git@github.com/pan-dora/modeller.git'
-                    url 'https://github.com/pan-dora/modeller/'
-                    tag 'HEAD'
-                }
-
-                licenses {
-                    license {
-                        name 'Apache License, Version 2.0'
-                        url 'http://www.apache.org/licenses/LICENSE-2.0'
-                        comments 'Copyright (c) 2017 Pan-dora Ecosystem'
-                    }
+            licenses {
+                license {
+                    name 'Apache License, Version 2.0'
+                    url 'http://www.apache.org/licenses/LICENSE-2.0'
                 }
             }
         }
     }
 
-    if (project.name != 'acrepo-itests') {
-        afterReleaseBuild.dependsOn uploadArchives
+    nexusStaging {
+        packageGroup = "cool.pandora"
+        stagingProfileId = "4d5f13c386f543"
+    }
+
+    nexus {
+        sign = true
+        repositoryUrl = 'https://oss.sonatype.org/service/local/staging/deploy/maven2/'
+        snapshotRepositoryUrl = 'https://oss.sonatype.org/content/repositories/snapshots/'
     }
 }
 
@@ -229,7 +194,7 @@ configurations {
 
 
 dependencies {
-    buildToolsConfig "edu.amherst.acdc:acrepo-build-tools:0.1.0"
+    buildToolsConfig "cool.pandora:pandora-build-tools:0.1.2"
 }
 
 task processBuildTools(type: Copy) {
@@ -237,41 +202,12 @@ task processBuildTools(type: Copy) {
         configurations.buildToolsConfig.collect {
             zipTree(it).matching {
                 include 'checkstyle/*.xml'
+                include 'license/*.txt'
             }
         }
     }
     into 'build'
 }
 
-sonarqube {
-    properties {
-        property "sonar.projectName", "Pan-dora Ecosystem Modeller"
-        property "sonar.projectKey", "cool.pandora:modeller"
-    }
-}
-
-nexusStaging {
-    packageGroup = "cool.pandora"
-    stagingProfileId = "4d5f13c386f543"
-}
-
-extraArchive {
-    sources = false
-    tests = false
-}
-
-nexus {
-    sign = true
-    repositoryUrl = 'https://oss.sonatype.org/service/local/staging/deploy/maven2/'
-    snapshotRepositoryUrl = 'https://oss.sonatype.org/content/repositories/snapshots/'
-}
-
-task docs(type: Javadoc) {
-    source subprojects.collect { project -> project.sourceSets.main.allJava }
-    classpath = files(subprojects.collect { project -> project.sourceSets.main.compileClasspath })
-    destinationDir = new File(projectDir, "docs/${version}")
-}
-
 check.dependsOn processBuildTools
-afterReleaseBuild.dependsOn docs
 

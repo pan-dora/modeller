@@ -11,6 +11,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller;
 
 import java.io.IOException;
@@ -35,7 +36,8 @@ public class canvasPageMapTest {
         final hOCRData hocr = DocManifestBuilder.gethOCRProjectionFromURL(url);
         pageIdList = getPageIdList(hocr);
         final CanvasPageMap canvasPageMap = CanvasPageMap.init()
-                .canvasContainerURI(URI.create("http://localhost:8080/fcrepo/rest/collection/test/007/canvas"))
+                .canvasContainerURI(URI.create
+                        ("http://localhost:8080/fcrepo/rest/collection/test/007/canvas"))
                 .pageIdList(pageIdList).build();
         System.out.println(canvasPageMap);
     }

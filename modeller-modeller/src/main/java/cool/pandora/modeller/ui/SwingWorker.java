@@ -11,6 +11,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller.ui;
 
 import javax.swing.SwingUtilities;
@@ -20,10 +21,10 @@ import javax.swing.SwingUtilities;
  * SwingWorker 3), an abstract class that you subclass to
  * perform GUI-related work in a dedicated thread. For
  * instructions on and examples of using this class, see:
- * <p>
- * http://java.sun.com/docs/books/tutorial/uiswing/misc/threads.html
- * <p>
- * Note that the API changed slightly in the 3rd version:
+ *
+ * <p>http://java.sun.com/docs/books/tutorial/uiswing/misc/threads.html
+ *
+ * <p>Note that the API changed slightly in the 3rd version:
  * You must now invoke start() on the SwingWorker after
  * creating it.
  *
@@ -64,7 +65,7 @@ public abstract class SwingWorker {
     }
 
     /**
-     * Set the value produced by worker thread
+     * Set the value produced by worker thread.
      */
     private synchronized void setValue(final Object x) {
         value = x;
@@ -104,6 +105,11 @@ public abstract class SwingWorker {
         }
     }
 
+    /**
+     * SwingWorker.
+     *
+     * @param longTask LongTask
+     */
     SwingWorker(final LongTask longTask) {
         this.longTask = longTask;
         final Runnable doFinished = this::finished;

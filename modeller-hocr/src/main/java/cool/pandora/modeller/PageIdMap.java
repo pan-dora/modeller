@@ -11,9 +11,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package cool.pandora.modeller;
 
-import org.apache.commons.lang3.StringUtils;
+package cool.pandora.modeller;
 
 import java.io.IOException;
 import java.util.Iterator;
@@ -21,8 +20,10 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
+
 /**
- * PageIdMap
+ * PageIdMap.
  *
  * @author Christopher Johnson
  */
@@ -30,6 +31,7 @@ public class PageIdMap {
     private final Map<String, String> pageIdMap;
 
     /**
+     * PageIdMap.
      *
      * @param pageIdMap Map
      */
@@ -38,6 +40,7 @@ public class PageIdMap {
     }
 
     /**
+     * init.
      *
      * @return PageIdMapBuilder
      */
@@ -46,6 +49,7 @@ public class PageIdMap {
     }
 
     /**
+     * render.
      *
      * @return Map
      */
@@ -61,6 +65,7 @@ public class PageIdMap {
         }
 
         /**
+         * pageIdList.
          *
          * @param pageIdList List
          * @return this
@@ -71,6 +76,7 @@ public class PageIdMap {
         }
 
         /**
+         * getPageIdMap.
          *
          * @param pageIdList List
          * @return pageIdMap
@@ -87,6 +93,7 @@ public class PageIdMap {
         }
 
         /**
+         * build.
          *
          * @return PageIdMap
          * @throws IOException Exception

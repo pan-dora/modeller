@@ -11,6 +11,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller.ui.handlers.iiif;
 
 import java.awt.event.ActionEvent;
@@ -97,7 +98,8 @@ public class PatchSequenceHandler extends AbstractAction implements Progress {
     void openPatchSequenceFrame() {
         final DefaultBag bag = bagView.getBag();
         final PatchSequenceFrame patchSequencesFrame =
-                new PatchSequenceFrame(bagView, bagView.getPropertyMessage("bag.frame.patch.sequence"));
+                new PatchSequenceFrame(bagView, bagView.getPropertyMessage("bag.frame.patch" +
+                        ".sequence"));
         patchSequencesFrame.setBag(bag);
         patchSequencesFrame.setVisible(true);
     }
@@ -105,7 +107,8 @@ public class PatchSequenceHandler extends AbstractAction implements Progress {
     private static URI getDestinationURI(final Map<String, BagInfoField> map) {
         final URIResolver uriResolver;
         try {
-            uriResolver = URIResolver.resolve().map(map).containerKey(ProfileOptions.SEQUENCE_CONTAINER_KEY)
+            uriResolver = URIResolver.resolve().map(map).containerKey(ProfileOptions
+                    .SEQUENCE_CONTAINER_KEY)
                     .resource("normal").pathType(5).build();
             return uriResolver.render();
         } catch (URISyntaxException e) {
@@ -115,20 +118,25 @@ public class PatchSequenceHandler extends AbstractAction implements Progress {
     }
 
     private static InputStream getSequenceMetadata(final ArrayList<String> resourceIDList,
-                                                   final String collectionPredicate, final URI resourceContainerIRI) {
+                                                   final String collectionPredicate, final URI
+                                                           resourceContainerIRI) {
         final RDFCollectionWriter collectionWriter;
         collectionWriter =
-                RDFCollectionWriter.collection().idList(resourceIDList).collectionPredicate(collectionPredicate)
+                RDFCollectionWriter.collection().idList(resourceIDList).collectionPredicate
+                        (collectionPredicate)
                         .resourceContainerIRI(resourceContainerIRI.toString()).build();
 
         final String collection = collectionWriter.render();
         final MetadataTemplate metadataTemplate;
-        final List<CollectionScope.Prefix> prefixes = Arrays.asList(new CollectionScope.Prefix(FedoraPrefixes.RDFS),
+        final List<CollectionScope.Prefix> prefixes = Arrays.asList(new CollectionScope.Prefix
+                        (FedoraPrefixes.RDFS),
                 new CollectionScope.Prefix(FedoraPrefixes.MODE));
 
-        final CollectionScope scope = new CollectionScope().fedoraPrefixes(prefixes).sequenceGraph(collection);
+        final CollectionScope scope = new CollectionScope().fedoraPrefixes(prefixes)
+                .sequenceGraph(collection);
 
-        metadataTemplate = MetadataTemplate.template().template("template/sparql-update-seq.mustache").scope(scope)
+        metadataTemplate = MetadataTemplate.template().template("template/sparql-update-seq" +
+                ".mustache").scope(scope)
                 .throwExceptionOnFailure().build();
 
         final String metadata = unescapeXml(metadataTemplate.render());

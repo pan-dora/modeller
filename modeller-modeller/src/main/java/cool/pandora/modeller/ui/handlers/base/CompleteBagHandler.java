@@ -11,12 +11,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller.ui.handlers.base;
 
 import cool.pandora.modeller.bag.impl.DefaultBag;
-import cool.pandora.modeller.ui.jpanel.base.BagView;
 import cool.pandora.modeller.ui.Progress;
+import cool.pandora.modeller.ui.jpanel.base.BagView;
 import cool.pandora.modeller.ui.util.ApplicationContextUtil;
+
 import gov.loc.repository.bagit.verify.impl.CompleteVerifierImpl;
 
 import java.awt.event.ActionEvent;
@@ -25,7 +27,7 @@ import javax.swing.AbstractAction;
 import javax.swing.SwingUtilities;
 
 /**
- * Complete Bag Handler
+ * Complete Bag Handler.
  *
  * @author gov.loc
  */
@@ -35,6 +37,8 @@ public class CompleteBagHandler extends AbstractAction implements Progress {
     private String messages;
 
     /**
+     * CompleteBagHandler.
+     *
      * @param bagView BagView
      */
     public CompleteBagHandler(final BagView bagView) {
@@ -42,9 +46,6 @@ public class CompleteBagHandler extends AbstractAction implements Progress {
         this.bagView = bagView;
     }
 
-    /**
-     * @param e ActionEvent
-     */
     @Override
     public void actionPerformed(final ActionEvent e) {
         completeBag();
@@ -65,7 +66,8 @@ public class CompleteBagHandler extends AbstractAction implements Progress {
             messages = bag.completeBag(completeVerifier);
 
             if (messages != null && !messages.trim().isEmpty()) {
-                BagView.showWarningErrorDialog("Warning - incomplete", "Is complete result: " + messages);
+                BagView.showWarningErrorDialog("Warning - incomplete", "Is complete result: "
+                        + messages);
             } else {
                 BagView.showWarningErrorDialog("Is Complete Dialog", "Bag is complete.");
             }

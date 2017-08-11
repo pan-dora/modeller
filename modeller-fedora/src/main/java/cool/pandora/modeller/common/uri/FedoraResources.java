@@ -11,10 +11,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller.common.uri;
 
 /**
- * FedoraResources
+ * FedoraResources.
  *
  * @author Christopher Johnson
  */

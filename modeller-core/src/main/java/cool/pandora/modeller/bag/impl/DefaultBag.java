@@ -11,6 +11,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller.bag.impl;
 
 import cool.pandora.modeller.Profile;
@@ -695,7 +696,7 @@ public class DefaultBag {
 
     /**
      * @param profile Profile
-     * @param newBag  boolean
+     * @param newBag boolean
      */
     public void setProfile(final Profile profile, final boolean newBag) {
         this.profile = profile;
@@ -1008,13 +1009,17 @@ public class DefaultBag {
     private void generateManifestFiles() {
         final DefaultCompleter completer = new DefaultCompleter(new BagFactory());
         if (this.isBuildPayloadManifest) {
-            if (this.payloadManifestAlgorithm.equalsIgnoreCase(Manifest.Algorithm.MD5.bagItAlgorithm)) {
+            if (this.payloadManifestAlgorithm.equalsIgnoreCase(Manifest.Algorithm
+                    .MD5.bagItAlgorithm)) {
                 completer.setPayloadManifestAlgorithm(Algorithm.MD5);
-            } else if (this.payloadManifestAlgorithm.equalsIgnoreCase(Manifest.Algorithm.SHA1.bagItAlgorithm)) {
+            } else if (this.payloadManifestAlgorithm.equalsIgnoreCase(Manifest.Algorithm
+                    .SHA1.bagItAlgorithm)) {
                 completer.setPayloadManifestAlgorithm(Algorithm.SHA1);
-            } else if (this.payloadManifestAlgorithm.equalsIgnoreCase(Manifest.Algorithm.SHA256.bagItAlgorithm)) {
+            } else if (this.payloadManifestAlgorithm.equalsIgnoreCase(Manifest.Algorithm
+                    .SHA256.bagItAlgorithm)) {
                 completer.setPayloadManifestAlgorithm(Algorithm.SHA256);
-            } else if (this.payloadManifestAlgorithm.equalsIgnoreCase(Manifest.Algorithm.SHA512.bagItAlgorithm)) {
+            } else if (this.payloadManifestAlgorithm.equalsIgnoreCase(Manifest.Algorithm
+                    .SHA512.bagItAlgorithm)) {
                 completer.setPayloadManifestAlgorithm(Algorithm.SHA512);
             } else {
                 completer.setPayloadManifestAlgorithm(Algorithm.MD5);
@@ -1026,11 +1031,14 @@ public class DefaultBag {
             completer.setGenerateTagManifest(true);
             if (this.tagManifestAlgorithm.equalsIgnoreCase(Manifest.Algorithm.MD5.bagItAlgorithm)) {
                 completer.setTagManifestAlgorithm(Algorithm.MD5);
-            } else if (this.tagManifestAlgorithm.equalsIgnoreCase(Manifest.Algorithm.SHA1.bagItAlgorithm)) {
+            } else if (this.tagManifestAlgorithm.equalsIgnoreCase(Manifest.Algorithm
+                    .SHA1.bagItAlgorithm)) {
                 completer.setTagManifestAlgorithm(Algorithm.SHA1);
-            } else if (this.tagManifestAlgorithm.equalsIgnoreCase(Manifest.Algorithm.SHA256.bagItAlgorithm)) {
+            } else if (this.tagManifestAlgorithm.equalsIgnoreCase(Manifest.Algorithm
+                    .SHA256.bagItAlgorithm)) {
                 completer.setTagManifestAlgorithm(Algorithm.SHA256);
-            } else if (this.tagManifestAlgorithm.equalsIgnoreCase(Manifest.Algorithm.SHA512.bagItAlgorithm)) {
+            } else if (this.tagManifestAlgorithm.equalsIgnoreCase(Manifest.Algorithm
+                    .SHA512.bagItAlgorithm)) {
                 completer.setTagManifestAlgorithm(Algorithm.SHA512);
             } else {
                 completer.setTagManifestAlgorithm(Algorithm.MD5);

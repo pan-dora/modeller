@@ -11,19 +11,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller.ui;
 
 import cool.pandora.modeller.model.Status;
 import cool.pandora.modeller.model.StatusModel;
 import cool.pandora.modeller.ui.util.ApplicationContextUtil;
 
-import javax.swing.JLabel;
-import javax.swing.ImageIcon;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 
 /**
- * Status Image Label
+ * Status Image Label.
  *
  * @author gov.loc
  */
@@ -36,6 +37,8 @@ public class StatusImageLabel extends JLabel implements PropertyChangeListener {
     private static final String UNKNOWN_STATUS_ICON = "status.unknown.icon";
 
     /**
+     * StatusImageLabel.
+     *
      * @param model StatusModel
      */
     public StatusImageLabel(final StatusModel model) {
@@ -45,6 +48,8 @@ public class StatusImageLabel extends JLabel implements PropertyChangeListener {
     }
 
     /**
+     * propertyChange.
+     *
      * @param evt PropertyChangeEvent
      */
     @Override
@@ -54,6 +59,8 @@ public class StatusImageLabel extends JLabel implements PropertyChangeListener {
     }
 
     /**
+     * changeIcon.
+     *
      * @param status Status
      */
     private void changeIcon(final Status status) {

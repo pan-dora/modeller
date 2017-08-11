@@ -11,6 +11,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller.ui.handlers.text;
 
 import cool.pandora.modeller.ModellerClient;
@@ -114,9 +115,11 @@ public class PatchLinesHandler extends AbstractAction implements Progress {
             final String hOCRAreaId = "line_" + lineId;
             final String bbox = bboxmap.get(hOCRAreaId);
             final String region = Region.region().bbox(bbox).build();
-            final String canvasRegionURI = CanvasRegionURI.regionuri().region(region).canvasURI(canvasURI).build();
+            final String canvasRegionURI = CanvasRegionURI.regionuri().region(region).canvasURI
+                    (canvasURI).build();
             rdfBody = TextSequenceMetadata
-                    .getTextSequenceMetadata(wordIdMap, lineId, canvasRegionURI, collectionPredicate, wordContainerIRI);
+                    .getTextSequenceMetadata(wordIdMap, lineId, canvasRegionURI,
+                            collectionPredicate, wordContainerIRI);
             try {
                 ModellerClient.doPatch(lineObjectURI, rdfBody);
                 ApplicationContextUtil.addConsoleMessage(message + " " + lineObjectURI);
@@ -130,7 +133,8 @@ public class PatchLinesHandler extends AbstractAction implements Progress {
     void openPatchLinesFrame() {
         final DefaultBag bag = bagView.getBag();
         final PatchLinesFrame patchLinesFrame =
-                new PatchLinesFrame(bagView, bagView.getPropertyMessage("bag.frame" + ".patch" + ".lines"));
+                new PatchLinesFrame(bagView, bagView.getPropertyMessage("bag.frame" + ".patch" +
+                        ".lines"));
         patchLinesFrame.setBag(bag);
         patchLinesFrame.setVisible(true);
     }

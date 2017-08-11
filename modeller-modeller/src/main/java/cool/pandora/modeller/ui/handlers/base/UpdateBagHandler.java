@@ -11,6 +11,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller.ui.handlers.base;
 
 import cool.pandora.modeller.bag.impl.DefaultBag;
@@ -21,7 +22,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 
 /**
- * Update Bag Handler
+ * Update Bag Handler.
  *
  * @author gov.loc
  */
@@ -30,6 +31,8 @@ public class UpdateBagHandler extends AbstractAction {
     private BagView bagView;
 
     /**
+     * UpdateBagHandler.
+     *
      * @param bagView BagView
      */
     public UpdateBagHandler(final BagView bagView) {
@@ -38,6 +41,8 @@ public class UpdateBagHandler extends AbstractAction {
     }
 
     /**
+     * setBagView.
+     *
      * @param bagView BagView
      */
     public void setBagView(final BagView bagView) {
@@ -50,6 +55,8 @@ public class UpdateBagHandler extends AbstractAction {
     }
 
     /**
+     * updateBag.
+     *
      * @param bag DefaultBag
      */
     public void updateBag(final DefaultBag bag) {

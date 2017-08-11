@@ -11,13 +11,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller.templates;
 
 import java.util.Collections;
 import java.util.List;
 
 /**
- * WordScope
+ * WordScope.
  *
  * @author Christopher Johnson
  */
@@ -28,6 +29,8 @@ public class WordScope extends Scope {
     private String chars;
 
     /**
+     * fedoraPrefixes.
+     *
      * @param prefixes List
      * @return this
      */
@@ -37,6 +40,8 @@ public class WordScope extends Scope {
     }
 
     /**
+     * canvasURI.
+     *
      * @param canvasURI String
      * @return this
      */
@@ -46,6 +51,8 @@ public class WordScope extends Scope {
     }
 
     /**
+     * resourceContainerURI.
+     *
      * @param resourceContainerURI String
      * @return this
      */
@@ -55,6 +62,8 @@ public class WordScope extends Scope {
     }
 
     /**
+     * chars.
+     *
      * @param chars String
      * @return this
      */
@@ -64,15 +73,18 @@ public class WordScope extends Scope {
     }
 
     /**
+     * items.
+     *
      * @return Item
      */
     List<Item> items() {
         return Collections
-                .singletonList(new Item(this.prefixes, this.canvasURI, this.resourceContainerURI, this.chars));
+                .singletonList(new Item(this.prefixes, this.canvasURI, this.resourceContainerURI,
+                        this.chars));
     }
 
     /**
-     *
+     * Item.
      */
     static class Item {
         Item(final List<Prefix> prefixes, final String canvasURI, final String resourceContainerURI,
@@ -90,10 +102,12 @@ public class WordScope extends Scope {
     }
 
     /**
-     *
+     * Prefix.
      */
     public static class Prefix {
         /**
+         * Prefix.
+         *
          * @param prefix String
          */
         public Prefix(final String prefix) {

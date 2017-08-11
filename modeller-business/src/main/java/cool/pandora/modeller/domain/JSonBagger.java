@@ -11,6 +11,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller.domain;
 
 import cool.pandora.modeller.Bagger;
@@ -93,7 +94,8 @@ public class JSonBagger implements Bagger {
                 log.debug("Checking if {} exists", profile);
                 final File target = new File(folder, profile);
                 if (!target.exists()) {
-                    log.debug("Profile {} does not already exist on the filesystem. Copying it from jar", profile);
+                    log.debug("Profile {} does not already exist on the filesystem. Copying it " +
+                            "from jar", profile);
                     Files.copy(inputStream, target.toPath());
                 }
             } catch (Exception e) {
@@ -131,7 +133,8 @@ public class JSonBagger implements Bagger {
         if (profilesFiles != null) {
             for (final File file : profilesFiles) {
                 try {
-                    final InputStreamReader reader = new InputStreamReader(new FileInputStream(file), "UTF-8");
+                    final InputStreamReader reader = new InputStreamReader(new FileInputStream
+                            (file), "UTF-8");
                     final Profile profile = loadProfile(reader, file.getName());
                     profilesToReturn.add(profile);
                 } catch (final FileNotFoundException e) {
@@ -153,12 +156,13 @@ public class JSonBagger implements Bagger {
     }
 
     /**
-     * @param reader       Reader
+     * @param reader Reader
      * @param jsonFileName String
      * @return profile
      * @throws JSONException RuntimeException
      */
-    private static Profile loadProfile(final Reader reader, final String jsonFileName) throws JSONException {
+    private static Profile loadProfile(final Reader reader, final String jsonFileName) throws
+            JSONException {
         final JSONTokener tokenizer = new JSONTokener(reader);
         final JSONObject jsonObject = new JSONObject(tokenizer);
 
@@ -174,7 +178,8 @@ public class JSonBagger implements Bagger {
         try {
             final String fileName = getJsonFileName(profile.getName());
             final OutputStreamWriter writer = new OutputStreamWriter(
-                    new FileOutputStream(profilesFolder.getAbsolutePath() + File.separator + fileName),
+                    new FileOutputStream(profilesFolder.getAbsolutePath() + File.separator +
+                            fileName),
                     Charset.forName("UTF-8"));
             final StringWriter stringWriter = new StringWriter();
             final JSONWriter jsonWriter = new JSONWriter(stringWriter);

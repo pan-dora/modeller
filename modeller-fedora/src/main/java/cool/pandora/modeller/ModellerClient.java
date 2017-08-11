@@ -11,14 +11,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller;
 
-import org.apache.commons.io.IOUtils;
-import org.fcrepo.client.FcrepoClient;
-import org.fcrepo.client.FcrepoOperationFailedException;
-import org.fcrepo.client.FcrepoResponse;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static org.apache.commons.lang3.exception.ExceptionUtils.getMessage;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -26,11 +23,16 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.apache.commons.lang3.exception.ExceptionUtils.getMessage;
+import org.apache.commons.io.IOUtils;
+import org.fcrepo.client.FcrepoClient;
+import org.fcrepo.client.FcrepoOperationFailedException;
+import org.fcrepo.client.FcrepoResponse;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- * ModellerClient
+ * ModellerClient.
  *
  * @author Christopher Johnson
  */
@@ -39,23 +41,27 @@ public class ModellerClient {
     protected static final Logger log = LoggerFactory.getLogger(ModellerClient.class);
 
     /**
-     *
+     * ModellerClient.
      */
     private ModellerClient() {
     }
 
     /**
+     * doBinaryPut.
+     *
      * @param destinationURI URI
-     * @param resourceFile   File
-     * @param contentType    String
+     * @param resourceFile File
+     * @param contentType String
      * @throws ModellerClientFailedException Throwable
      */
-    public static void doBinaryPut(final URI destinationURI, final File resourceFile, final String contentType)
+    public static void doBinaryPut(final URI destinationURI, final File resourceFile, final
+    String contentType)
             throws ModellerClientFailedException {
         final FcrepoClient testClient;
         testClient = FcrepoClient.client().throwExceptionOnFailure().build();
         try {
-            final FcrepoResponse response = testClient.put(destinationURI).body(resourceFile, contentType).perform();
+            final FcrepoResponse response = testClient.put(destinationURI).body(resourceFile,
+                    contentType).perform();
             log.info(String.valueOf(response.getStatusCode()));
         } catch (FcrepoOperationFailedException e) {
             log.info(getMessage(e));
@@ -66,17 +72,21 @@ public class ModellerClient {
     }
 
     /**
+     * doStreamPut.
+     *
      * @param destinationURI URI
-     * @param resourceFile   ByteArrayInputStream
-     * @param contentType    String
+     * @param resourceFile ByteArrayInputStream
+     * @param contentType String
      * @throws ModellerClientFailedException Throwable
      */
-    public static void doStreamPut(final URI destinationURI, final ByteArrayInputStream resourceFile,
+    public static void doStreamPut(final URI destinationURI, final ByteArrayInputStream
+            resourceFile,
                                    final String contentType) throws ModellerClientFailedException {
         final FcrepoClient testClient;
         testClient = FcrepoClient.client().throwExceptionOnFailure().build();
         try {
-            final FcrepoResponse response = testClient.put(destinationURI).body(resourceFile, contentType).perform();
+            final FcrepoResponse response = testClient.put(destinationURI).body(resourceFile,
+                    contentType).perform();
             log.info(String.valueOf(response.getStatusCode()));
         } catch (FcrepoOperationFailedException e) {
             log.info(getMessage(e));
@@ -85,6 +95,8 @@ public class ModellerClient {
     }
 
     /**
+     * doPut.
+     *
      * @param destinationURI URI
      * @throws ModellerClientFailedException Throwable
      */
@@ -105,8 +117,10 @@ public class ModellerClient {
     }
 
     /**
+     * doPatch.
+     *
      * @param destinationURI URI
-     * @param rdfBody        InputStream
+     * @param rdfBody InputStream
      * @throws ModellerClientFailedException Throwable
      */
     public static void doPatch(final URI destinationURI, final InputStream rdfBody)
@@ -114,7 +128,8 @@ public class ModellerClient {
         final FcrepoClient testClient;
         testClient = FcrepoClient.client().throwExceptionOnFailure().build();
         try {
-            final FcrepoResponse response = testClient.patch(destinationURI).body(rdfBody).perform();
+            final FcrepoResponse response = testClient.patch(destinationURI).body(rdfBody)
+                    .perform();
             log.info(String.valueOf(response.getStatusCode()));
         } catch (FcrepoOperationFailedException e) {
             log.info(getMessage(e));
@@ -123,14 +138,18 @@ public class ModellerClient {
     }
 
     /**
+     * doGetContainerResources.
+     *
      * @param containerURI URI
      * @return resources
      * @throws ModellerClientFailedException Throwable
      */
-    public static String doGetContainerResources(final URI containerURI) throws ModellerClientFailedException {
+    public static String doGetContainerResources(final URI containerURI) throws
+            ModellerClientFailedException {
         final FcrepoClient testClient;
         testClient = FcrepoClient.client().throwExceptionOnFailure().build();
-        try (FcrepoResponse response = testClient.get(containerURI).accept("text/turtle").perform()) {
+        try (FcrepoResponse response = testClient.get(containerURI).accept("text/turtle").perform(
+                )) {
             return IOUtils.toString(response.getBody(), "UTF-8");
         } catch (FcrepoOperationFailedException e) {
             log.info(getMessage(e));

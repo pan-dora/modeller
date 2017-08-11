@@ -11,6 +11,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller;
 
 
@@ -29,7 +30,8 @@ public class xmlWriterTest {
 
     public static void main(final String[] args) throws JAXBException {
         final ByteArrayOutputStream out =
-                XmlFileWriter.write().collectionId("test10").objektId("001").resourceId("004").build();
+                XmlFileWriter.write().collectionId("test10").objektId("001").resourceId("004")
+                        .build();
         System.out.println(out);
     }
 }

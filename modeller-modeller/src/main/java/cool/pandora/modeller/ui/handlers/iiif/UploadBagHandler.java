@@ -11,6 +11,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller.ui.handlers.iiif;
 
 import java.awt.event.ActionEvent;
@@ -77,9 +78,6 @@ public class UploadBagHandler extends AbstractAction implements Progress {
             final Path absoluteFilePath = rootDir.resolve(filePath);
             final File resourceFile = absoluteFilePath.toFile();
             String contentType = ImageIOUtil.getImageMIMEType(resourceFile);
-            if (Objects.equals(contentType, "image/jpeg 2000")) {
-                contentType = "image/jp2";
-            }
             try {
                 ModellerClient.doBinaryPut(destinationURI, resourceFile, contentType);
                 ApplicationContextUtil.addConsoleMessage(message + " " + destinationURI);

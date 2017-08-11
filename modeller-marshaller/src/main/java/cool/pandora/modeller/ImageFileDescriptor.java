@@ -11,6 +11,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller;
 
 import javax.xml.bind.annotation.XmlElement;
@@ -27,7 +28,6 @@ public class ImageFileDescriptor {
     private String id;
 
     /**
-     *
      * @param id String
      */
     @XmlElement
@@ -36,7 +36,6 @@ public class ImageFileDescriptor {
     }
 
     /**
-     *
      * @return id
      */
     public String getId() {

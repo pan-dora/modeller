@@ -11,6 +11,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller.ui.jpanel.base;
 
 import cool.pandora.modeller.bag.BagInfoField;
@@ -64,10 +65,11 @@ public class BagInfoForm extends AbstractForm implements FocusListener {
 
     /**
      * @param formModel FormModel
-     * @param bagView   BagView
-     * @param map       HashMap
+     * @param bagView BagView
+     * @param map HashMap
      */
-    public BagInfoForm(final FormModel formModel, final BagView bagView, final HashMap<String, BagInfoField> map) {
+    public BagInfoForm(final FormModel formModel, final BagView bagView, final HashMap<String,
+            BagInfoField> map) {
         super(formModel, INFO_FORM_PAGE);
         this.bagView = bagView;
         this.fieldMap = map;
@@ -92,14 +94,16 @@ public class BagInfoForm extends AbstractForm implements FocusListener {
         addFieldPannel = new AddFieldPanel();
         contentPanel.add(addFieldPannel, gbc);
 
-        gbc = LayoutUtil.buildGridBagConstraints(col, row++, 1, 1, 0, 0, GridBagConstraints.HORIZONTAL,
+        gbc = LayoutUtil.buildGridBagConstraints(col, row++, 1, 1, 0, 0, GridBagConstraints
+                        .HORIZONTAL,
                 GridBagConstraints.CENTER);
         contentPanel.add(new JSeparator(), gbc);
 
         // bag-info input form
         form = createFormFields();
         gbc = LayoutUtil
-                .buildGridBagConstraints(col, row++, 1, 1, 1, 1, GridBagConstraints.BOTH, GridBagConstraints.WEST);
+                .buildGridBagConstraints(col, row++, 1, 1, 1, 1, GridBagConstraints.BOTH,
+                        GridBagConstraints.WEST);
         contentPanel.add(form, gbc);
         return contentPanel;
     }
@@ -145,7 +149,8 @@ public class BagInfoForm extends AbstractForm implements FocusListener {
             switch (field.getComponentType()) {
                 case BagInfoField.TEXTAREA_COMPONENT:
                     final JComponent[] tlist =
-                            formBuilder.addTextArea(field.isRequired(), field.getLabel(), removeButton);
+                            formBuilder.addTextArea(field.isRequired(), field.getLabel(),
+                                    removeButton);
                     final JComponent textarea = tlist[index];
                     textarea.setEnabled(field.isEnabled());
                     textarea.addFocusListener(this);
@@ -157,7 +162,8 @@ public class BagInfoForm extends AbstractForm implements FocusListener {
                     }
                     break;
                 case BagInfoField.TEXTFIELD_COMPONENT:
-                    final JComponent[] flist = formBuilder.add(field.isRequired(), field.getLabel(), removeButton);
+                    final JComponent[] flist = formBuilder.add(field.isRequired(), field.getLabel
+                            (), removeButton);
                     final JComponent comp = flist[index];
                     comp.setEnabled(field.isEnabled());
                     comp.addFocusListener(this);
@@ -169,7 +175,8 @@ public class BagInfoForm extends AbstractForm implements FocusListener {
                 case BagInfoField.LIST_COMPONENT:
                     final List<String> elements = field.getElements();
                     final JComponent[] llist = formBuilder
-                            .addList(field.isRequired(), field.getLabel(), elements, field.getValue(), removeButton);
+                            .addList(field.isRequired(), field.getLabel(), elements, field
+                                    .getValue(), removeButton);
                     final JComponent lcomp = llist[index];
                     lcomp.setEnabled(field.isEnabled());
                     lcomp.addFocusListener(this);

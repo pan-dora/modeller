@@ -11,6 +11,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller.ui.handlers.iiif;
 
 import cool.pandora.modeller.ModellerClient;
@@ -71,8 +72,10 @@ public class CreateXmlFilesHandler extends AbstractAction implements Progress {
         final ResourceIdentifierList idList = new ResourceIdentifierList(bagView);
         final ArrayList<String> resourceIDList = idList.getResourceIdentifierList();
         final String collectionId =
-                URIResolver.ContainerURIResolverNormal.getMapValue(map, ProfileOptions.COLLECTION_ID_KEY);
-        final String objektId = URIResolver.ContainerURIResolverNormal.getMapValue(map, ProfileOptions.OBJEKT_ID_KEY);
+                URIResolver.ContainerURIResolverNormal.getMapValue(map, ProfileOptions
+                        .COLLECTION_ID_KEY);
+        final String objektId = URIResolver.ContainerURIResolverNormal.getMapValue(map,
+                ProfileOptions.OBJEKT_ID_KEY);
         for (final String resourceId : resourceIDList) {
             ByteArrayOutputStream resourceFile = null;
             try {
@@ -97,16 +100,20 @@ public class CreateXmlFilesHandler extends AbstractAction implements Progress {
     void openCreateXmlFilesFrame() {
         final DefaultBag bag = bagView.getBag();
         final CreateXmlFilesFrame createXmlFilesFrame =
-                new CreateXmlFilesFrame(bagView, bagView.getPropertyMessage("bag" + ".frame.xmlfiles"));
+                new CreateXmlFilesFrame(bagView, bagView.getPropertyMessage("bag" + ".frame" +
+                        ".xmlfiles"));
         createXmlFilesFrame.setBag(bag);
         createXmlFilesFrame.setVisible(true);
     }
 
-    private static ByteArrayOutputStream getXmlOutputStream(final String collectionId, final String objektId,
-                                                            final String resourceId) throws JAXBException {
+    private static ByteArrayOutputStream getXmlOutputStream(final String collectionId, final
+    String objektId,
+                                                            final String resourceId) throws
+            JAXBException {
         final ByteArrayOutputStream xmlFileWriter;
         xmlFileWriter =
-                XmlFileWriter.write().collectionId(collectionId).objektId(objektId).resourceId(resourceId).build();
+                XmlFileWriter.write().collectionId(collectionId).objektId(objektId).resourceId
+                        (resourceId).build();
         return xmlFileWriter;
     }
 }

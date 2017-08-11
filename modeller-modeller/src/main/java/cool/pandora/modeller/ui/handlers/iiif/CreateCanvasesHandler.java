@@ -11,6 +11,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller.ui.handlers.iiif;
 
 import cool.pandora.modeller.ModellerClient;
@@ -80,7 +81,8 @@ public class CreateCanvasesHandler extends AbstractAction implements Progress {
     void openCreateCanvasesFrame() {
         final DefaultBag bag = bagView.getBag();
         final CreateCanvasesFrame createCanvasesFrame =
-                new CreateCanvasesFrame(bagView, bagView.getPropertyMessage("bag" + ".frame.canvas"));
+                new CreateCanvasesFrame(bagView, bagView.getPropertyMessage("bag" + ".frame" +
+                        ".canvas"));
         createCanvasesFrame.setBag(bag);
         createCanvasesFrame.setVisible(true);
     }

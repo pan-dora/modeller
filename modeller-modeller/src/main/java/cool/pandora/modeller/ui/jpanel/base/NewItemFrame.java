@@ -11,6 +11,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller.ui.jpanel.base;
 
 import cool.pandora.modeller.bag.impl.DefaultBag;
@@ -42,11 +43,12 @@ public class NewItemFrame extends JFrame implements ActionListener {
     private final JComboBox<String> itemList;
 
     /**
-     * @param bagView  BagView
+     * @param bagView BagView
      * @param itemList JComboBox
-     * @param title    String
+     * @param title String
      */
-    public NewItemFrame(final BagView bagView, final JComboBox<String> itemList, final String title) {
+    public NewItemFrame(final BagView bagView, final JComboBox<String> itemList, final String
+            title) {
         super(title);
         this.itemList = itemList;
         final DefaultBag bag = bagView.getBag();
@@ -69,7 +71,8 @@ public class NewItemFrame extends JFrame implements ActionListener {
         final GridBagConstraints gbc = new GridBagConstraints();
         buildConstraints(gbc, 0, 0, 1, 1, 20, 50, GridBagConstraints.NONE, GridBagConstraints.WEST);
         gridLayout.setConstraints(itemLabel, gbc);
-        buildConstraints(gbc, 1, 0, 1, 1, 80, 50, GridBagConstraints.HORIZONTAL, GridBagConstraints.CENTER);
+        buildConstraints(gbc, 1, 0, 1, 1, 80, 50, GridBagConstraints.HORIZONTAL,
+                GridBagConstraints.CENTER);
         gridLayout.setConstraints(itemName, gbc);
         final JPanel itemPanel = new JPanel(gridLayout);
         itemPanel.add(itemLabel);
@@ -87,12 +90,15 @@ public class NewItemFrame extends JFrame implements ActionListener {
         final GridBagConstraints glbc = new GridBagConstraints();
 
         int row = 0;
-        buildConstraints(glbc, 0, row, 2, 1, 100, 50, GridBagConstraints.HORIZONTAL, GridBagConstraints.CENTER);
+        buildConstraints(glbc, 0, row, 2, 1, 100, 50, GridBagConstraints.HORIZONTAL,
+                GridBagConstraints.CENTER);
         layout.setConstraints(itemPanel, glbc);
         row++;
-        buildConstraints(glbc, 0, row, 1, 1, 20, 50, GridBagConstraints.NONE, GridBagConstraints.WEST);
+        buildConstraints(glbc, 0, row, 1, 1, 20, 50, GridBagConstraints.NONE, GridBagConstraints
+                .WEST);
         layout.setConstraints(cancelButton, glbc);
-        buildConstraints(glbc, 1, row, 1, 1, 80, 50, GridBagConstraints.NONE, GridBagConstraints.CENTER);
+        buildConstraints(glbc, 1, row, 1, 1, 80, 50, GridBagConstraints.NONE, GridBagConstraints
+                .CENTER);
         layout.setConstraints(okButton, glbc);
 
         final JPanel panel = new JPanel(layout);
@@ -145,18 +151,20 @@ public class NewItemFrame extends JFrame implements ActionListener {
     }
 
     /**
-     * @param gbc    GridBagConstraints
-     * @param x      int
-     * @param y      int
-     * @param w      int
-     * @param h      int
-     * @param wx     int
-     * @param wy     int
-     * @param fill   int
+     * @param gbc GridBagConstraints
+     * @param x int
+     * @param y int
+     * @param w int
+     * @param h int
+     * @param wx int
+     * @param wy int
+     * @param fill int
      * @param anchor int
      */
-    private static void buildConstraints(final GridBagConstraints gbc, final int x, final int y, final int w,
-                                         final int h, final int wx, final int wy, final int fill, final int anchor) {
+    private static void buildConstraints(final GridBagConstraints gbc, final int x, final int y,
+                                         final int w,
+                                         final int h, final int wx, final int wy, final int fill,
+                                         final int anchor) {
         gbc.gridx = x; // start cell in a row
         gbc.gridy = y; // start cell in a column
         gbc.gridwidth = w; // how many column does the control occupy in the row

@@ -11,26 +11,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller.util;
+
+import static org.apache.commons.lang3.exception.ExceptionUtils.getMessage;
 
 import cool.pandora.modeller.ModellerClient;
 import cool.pandora.modeller.ModellerClientFailedException;
-import org.apache.jena.rdf.model.Model;
-import org.apache.jena.rdf.model.ModelFactory;
-import org.apache.jena.rdf.model.Property;
-import org.apache.jena.rdf.model.Resource;
-import org.apache.jena.rdf.model.StmtIterator;
-import org.apache.jena.rdf.model.Statement;
-import org.apache.jena.rdf.model.SimpleSelector;
 
 import java.io.ByteArrayInputStream;
 import java.net.URI;
 import java.util.ArrayList;
 
-import static org.apache.commons.lang3.exception.ExceptionUtils.getMessage;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.rdf.model.Property;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.SimpleSelector;
+import org.apache.jena.rdf.model.Statement;
+import org.apache.jena.rdf.model.StmtIterator;
+
+
 
 /**
- * ResourceList
+ * ResourceList.
  *
  * @author Christopher Johnson
  */
@@ -38,6 +42,8 @@ public class ResourceList {
     private final URI resourceContainerURI;
 
     /**
+     * ResourceList.
+     *
      * @param resourceContainerURI URI
      */
     public ResourceList(final URI resourceContainerURI) {
@@ -45,13 +51,17 @@ public class ResourceList {
     }
 
     /**
+     * getResourceList.
+     *
      * @return resourceList
      */
     public ArrayList<String> getResourceList() {
         try {
-            final String resource = ModellerClient.doGetContainerResources(this.resourceContainerURI);
+            final String resource = ModellerClient.doGetContainerResources(this
+                    .resourceContainerURI);
             final Model model = ModelFactory.createDefaultModel();
-            model.read(new ByteArrayInputStream(resource != null ? resource.getBytes() : new byte[0]), null, "TTL");
+            model.read(new ByteArrayInputStream(resource != null ? resource.getBytes() : new
+                    byte[0]), null, "TTL");
             final ArrayList<String> resourceList = getChilden(model);
             resourceList.sort(String.CASE_INSENSITIVE_ORDER);
             return resourceList;
@@ -62,6 +72,8 @@ public class ResourceList {
     }
 
     /**
+     * getChilden.
+     *
      * @param model Model
      * @return retval
      */
@@ -69,7 +81,8 @@ public class ResourceList {
         final String NS = "http://www.w3.org/ns/ldp#";
         final Property ldpcontains = model.getProperty(NS + "contains");
         final ArrayList<String> retval = new ArrayList<>();
-        final StmtIterator it = model.listStatements(new SimpleSelector(null, ldpcontains, (Resource) null));
+        final StmtIterator it = model.listStatements(new SimpleSelector(null, ldpcontains,
+                (Resource) null));
         while (it.hasNext()) {
             final Statement st = it.next();
             retval.add(st.getObject().toString());

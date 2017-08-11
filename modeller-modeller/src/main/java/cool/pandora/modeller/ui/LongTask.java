@@ -11,17 +11,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller.ui;
 
 import gov.loc.repository.bagit.ProgressListener;
+import java.text.MessageFormat;
+import javax.swing.ProgressMonitor;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.swing.ProgressMonitor;
-import java.text.MessageFormat;
 
 /**
- * LongTask
+ * LongTask.
  *
  * @author gov.loc
  */
@@ -36,7 +38,7 @@ public class LongTask implements ProgressListener {
     private String activityMonitored;
 
     /**
-     *
+     * LongTask.
      */
     public LongTask() {
         // Compute length of task...
@@ -45,6 +47,8 @@ public class LongTask implements ProgressListener {
     }
 
     /**
+     * setMonitor.
+     *
      * @param monitor ProgressMonitor
      */
     public void setMonitor(final ProgressMonitor monitor) {
@@ -52,6 +56,8 @@ public class LongTask implements ProgressListener {
     }
 
     /**
+     * setProgress.
+     *
      * @param progress Progress
      */
     public void setProgress(final Progress progress) {
@@ -59,6 +65,8 @@ public class LongTask implements ProgressListener {
     }
 
     /**
+     * go.
+     *
      * Called from ProgressBarDemo to start the task.
      */
     public void go() {
@@ -79,6 +87,8 @@ public class LongTask implements ProgressListener {
     }
 
     /**
+     * hasUserTriedToCancel.
+     *
      * @return isCanceled
      */
     public boolean hasUserTriedToCancel() {
@@ -86,6 +96,8 @@ public class LongTask implements ProgressListener {
     }
 
     /**
+     * isDone.
+     *
      * Called from ProgressBarDemo to find out if the task has completed.
      */
     public boolean isDone() {
@@ -93,7 +105,7 @@ public class LongTask implements ProgressListener {
     }
 
     /**
-     *
+     * done.
      */
     public void done() {
         this.done = true;
@@ -101,21 +113,25 @@ public class LongTask implements ProgressListener {
     }
 
     /**
+     * reportProgress.
+     *
      * should be thread-safe
      *
      * @param activity String
-     * @param item     Object
-     * @param count    Long
-     * @param total    Long
+     * @param item Object
+     * @param count Long
+     * @param total Long
      */
     @Override
-    public synchronized void reportProgress(final String activity, final Object item, final Long count,
+    public synchronized void reportProgress(final String activity, final Object item, final Long
+            count,
                                             final Long total) {
         if (count == null || total == null) {
             log.error("reportProgress received null info: count={}, total={}", count, total);
         } else {
             if (activityMonitored == null || activityMonitored.equals(activity)) {
-                final String message = MessageFormat.format("{0} ({2} of {3}) {1} ", activity, item, count, total);
+                final String message = MessageFormat.format("{0} ({2} of {3}) {1} ", activity,
+                        item, count, total);
                 this.progressMonitor.setNote(message);
                 this.progressMonitor.setMaximum(total.intValue());
                 this.progressMonitor.setProgress(count.intValue());
@@ -124,6 +140,8 @@ public class LongTask implements ProgressListener {
     }
 
     /**
+     * setActivityMonitored.
+     *
      * @param activityMonitored String
      */
     public synchronized void setActivityMonitored(final String activityMonitored) {

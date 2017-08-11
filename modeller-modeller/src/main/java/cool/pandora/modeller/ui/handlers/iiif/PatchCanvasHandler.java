@@ -11,6 +11,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller.ui.handlers.iiif;
 
 import java.awt.event.ActionEvent;
@@ -103,7 +104,8 @@ public class PatchCanvasHandler extends AbstractAction implements Progress {
 
         InputStream rdfBody;
         for (final String canvasURI : canvasesList) {
-            rdfBody = getCanvasMetadata(canvasResourceMap.get(canvasURI), canvasListMap.get(canvasURI));
+            rdfBody = getCanvasMetadata(canvasResourceMap.get(canvasURI), canvasListMap.get
+                    (canvasURI));
             final URI destinationURI = URI.create(canvasURI);
             try {
                 ModellerClient.doPatch(destinationURI, rdfBody);
@@ -128,8 +130,10 @@ public class PatchCanvasHandler extends AbstractAction implements Progress {
 
         final MetadataTemplate metadataTemplate;
         final List<CanvasScope.Prefix> prefixes =
-                Arrays.asList(new CanvasScope.Prefix(FedoraPrefixes.RDFS), new CanvasScope.Prefix(FedoraPrefixes.MODE),
-                        new CanvasScope.Prefix(IIIFPrefixes.SC), new CanvasScope.Prefix(IIIFPrefixes.OA),
+                Arrays.asList(new CanvasScope.Prefix(FedoraPrefixes.RDFS), new CanvasScope.Prefix
+                                (FedoraPrefixes.MODE),
+                        new CanvasScope.Prefix(IIIFPrefixes.SC), new CanvasScope.Prefix
+                                (IIIFPrefixes.OA),
                         new CanvasScope.Prefix(IIIFPrefixes.EXIF));
 
         final ResourceIntegerValue resourceHeight =
@@ -143,10 +147,12 @@ public class PatchCanvasHandler extends AbstractAction implements Progress {
         final int reswidth = resourceWidth.render().get(0);
 
         final String canvasLabel = substringAfter(listURI, "list/");
-        final CanvasScope scope = new CanvasScope().fedoraPrefixes(prefixes).resourceURI(resourceURI).listURI(listURI)
+        final CanvasScope scope = new CanvasScope().fedoraPrefixes(prefixes).resourceURI
+                (resourceURI).listURI(listURI)
                 .canvasLabel(canvasLabel).canvasHeight(resheight).canvasWidth(reswidth);
 
-        metadataTemplate = MetadataTemplate.template().template("template/sparql-update-canvas.mustache").scope(scope)
+        metadataTemplate = MetadataTemplate.template().template("template/sparql-update-canvas" +
+                ".mustache").scope(scope)
                 .throwExceptionOnFailure().build();
 
         final String metadata = unescapeXml(metadataTemplate.render());

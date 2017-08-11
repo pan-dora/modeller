@@ -11,6 +11,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller;
 
 import org.json.JSONObject;
@@ -18,6 +19,7 @@ import org.json.JSONException;
 import org.json.JSONArray;
 import org.json.JSONTokener;
 import org.json.JSONWriter;
+
 import java.io.StringWriter;
 import java.util.LinkedHashMap;
 import java.util.Collection;
@@ -129,7 +131,8 @@ public class Profile {
      * @return profile
      * @throws JSONException exception
      */
-    public static Profile createProfile(final JSONObject profileJson, final String profileName) throws JSONException {
+    public static Profile createProfile(final JSONObject profileJson, final String profileName)
+            throws JSONException {
         final Profile profile = new Profile();
         profile.setName(profileName);
 
@@ -175,7 +178,8 @@ public class Profile {
      * @return profileFields
      * @throws JSONException exception
      */
-    private static LinkedHashMap<String, ProfileField> getFields(final JSONObject fieldsJson) throws JSONException {
+    private static LinkedHashMap<String, ProfileField> getFields(final JSONObject fieldsJson)
+            throws JSONException {
         final LinkedHashMap<String, ProfileField> profileFields = new LinkedHashMap<>();
         if (fieldsJson != null) {
             final String[] names = JSONObject.getNames(fieldsJson);
@@ -192,7 +196,8 @@ public class Profile {
             } else {
                 for (final String name : names) {
                     final JSONObject jsonObject = (JSONObject) fieldsJson.get(name);
-                    final ProfileField profileField = ProfileField.createProfileField(jsonObject, name);
+                    final ProfileField profileField = ProfileField.createProfileField(jsonObject,
+                            name);
                     profileFields.put(profileField.getFieldName(), profileField);
                 }
             }
@@ -253,13 +258,15 @@ public class Profile {
      * @return String
      * @throws JSONException exception
      */
-    private static String seralizeFields(final Collection<ProfileField> profileFields) throws JSONException {
+    private static String seralizeFields(final Collection<ProfileField> profileFields) throws
+            JSONException {
         final StringWriter writer = new StringWriter();
         final JSONWriter filedWriter = new JSONWriter(writer);
         filedWriter.object();
         for (final ProfileField field : profileFields) {
             final String fieldStringer = field.serialize();
-            filedWriter.key(field.getFieldName()).value(new JSONObject(new JSONTokener(fieldStringer)));
+            filedWriter.key(field.getFieldName()).value(new JSONObject(new JSONTokener
+                    (fieldStringer)));
         }
         filedWriter.endObject();
         return writer.toString();

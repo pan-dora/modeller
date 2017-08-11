@@ -11,6 +11,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller.ui.handlers.base;
 
 import cool.pandora.modeller.bag.impl.DefaultBag;
@@ -28,7 +29,7 @@ import org.springframework.richclient.dialog.CloseAction;
 import org.springframework.richclient.dialog.ConfirmationDialog;
 
 /**
- * Clear Bag Handler
+ * Clear Bag Handler.
  *
  * @author gov.loc
  */
@@ -38,6 +39,8 @@ public class ClearBagHandler extends AbstractAction {
     private boolean confirmSaveFlag = false;
 
     /**
+     * ClearBagHandler.
+     *
      * @param bagView BagView
      */
     public ClearBagHandler(final BagView bagView) {
@@ -45,9 +48,6 @@ public class ClearBagHandler extends AbstractAction {
         this.bagView = bagView;
     }
 
-    /**
-     * @param e ActionEvent
-     */
     @Override
     public void actionPerformed(final ActionEvent e) {
         closeExistingBag();
@@ -96,7 +96,8 @@ public class ClearBagHandler extends AbstractAction {
         bagView.baggerRules.clear();
         bagView.bagPayloadTree = new BagTree(bagView, AbstractBagConstants.DATA_DIRECTORY);
         bagView.bagPayloadTreePanel.refresh(bagView.bagPayloadTree);
-        bagView.bagTagFileTree = new BagTree(bagView, ApplicationContextUtil.getMessage("bag.label.noname"));
+        bagView.bagTagFileTree = new BagTree(bagView, ApplicationContextUtil.getMessage("bag"
+                + ".label.noname"));
         bagView.bagTagFileTreePanel.refresh(bagView.bagTagFileTree);
         bagView.infoInputPane.setBagName(bag.getName());
         bagView.infoInputPane.updateInfoForms();

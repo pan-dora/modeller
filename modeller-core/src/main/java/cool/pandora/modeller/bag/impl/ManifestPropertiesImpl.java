@@ -11,6 +11,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller.bag.impl;
 
 import gov.loc.repository.bagit.Bag;
@@ -69,7 +70,7 @@ public class ManifestPropertiesImpl extends AbstractNameValueMapListBagFile impl
     private final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     /**
-     * @param bagFile      BagFile
+     * @param bagFile BagFile
      * @param bagConstants BagConstants
      */
     public ManifestPropertiesImpl(final BagFile bagFile, final BagConstants bagConstants) {
@@ -263,7 +264,8 @@ public class ManifestPropertiesImpl extends AbstractNameValueMapListBagFile impl
         if (totalBagsInGroup == UNKNOWN_TOTAL_BAGS_IN_GROUP) {
             totalBags = UNKNOWN_TOTAL_BAGS_IN_GROUP_MARKER;
         }
-        this.setBagCount(MessageFormat.format("{0} of {1}", Integer.toString(bagInGroup), totalBags));
+        this.setBagCount(MessageFormat.format("{0} of {1}", Integer.toString(bagInGroup),
+                totalBags));
 
     }
 
@@ -297,7 +299,8 @@ public class ManifestPropertiesImpl extends AbstractNameValueMapListBagFile impl
     public void setBaggingDate(final int year, final int month, final int day) {
         try {
             this.setBaggingDate(
-                    this.dateFormat.parse(MessageFormat.format("{0}-{1}-{2}", Integer.toString(year), month, day)));
+                    this.dateFormat.parse(MessageFormat.format("{0}-{1}-{2}", Integer.toString
+                            (year), month, day)));
 
         } catch (final Exception ex) {
             throw new RuntimeException(ex);
@@ -430,7 +433,8 @@ public class ManifestPropertiesImpl extends AbstractNameValueMapListBagFile impl
         final Field[] fields = this.getClass().getFields();
         try {
             for (final Field field : fields) {
-                if (field.getName().startsWith("FIELD_") && this.containsKeyCaseInsensitive((String) field.get(this))) {
+                if (field.getName().startsWith("FIELD_") && this.containsKeyCaseInsensitive(
+                        (String) field.get(this))) {
                     standardFields.addAll(this.getActualKeys((String) field.get(this)));
                 }
             }

@@ -11,40 +11,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller;
 
 import cool.pandora.modeller.util.RDFCollectionWriter;
+import org.junit.Test;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.stream.IntStream;
 
+import static junit.framework.TestCase.assertNotNull;
+
 /**
- * rdfCollectionWriterTest
+ * RdfCollectionWriterTest
  *
  * @author Christopher Johnson
  */
-public class rdfCollectionWriterTest {
+public class RdfCollectionWriterTest {
 
-    private rdfCollectionWriterTest() {
-    }
-
-    public static void main(final String[] args) {
+    @Test
+    public void rdfCollectionWriterTest() throws IOException {
         final RDFCollectionWriter collectionWriter;
-        collectionWriter = RDFCollectionWriter.collection().idList(getMockSequence())
+        collectionWriter = RDFCollectionWriter.collection().idList(TestUtils.getMockSequence())
                 .collectionPredicate("http://iiif.io/api/presentation/2#hasCanvases")
                 .resourceContainerIRI("http://localhost:8080/fcrepo/rest/collection/AIG/").build();
         final String collection = collectionWriter.render();
         System.out.println(collection);
-    }
-
-    private static ArrayList<String> getMockSequence() {
-        final int numOfValues = 2;
-        final int[] array = IntStream.range(1, numOfValues + 1).toArray();
-        final ArrayList<String> idList = new ArrayList<>(array.length);
-        for (final int anArray : array) {
-            idList.add(String.valueOf(anArray));
-        }
-        return idList;
+        assertNotNull(collection);
     }
 }
 

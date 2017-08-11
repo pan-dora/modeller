@@ -11,26 +11,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller.ui;
+
+import java.awt.Color;
+
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JTextPane;
+
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DefaultStyledDocument;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.Style;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyleContext;
+import javax.swing.text.StyledDocument;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.swing.JLabel;
-import javax.swing.JTextPane;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.text.StyledDocument;
-import javax.swing.text.StyleContext;
-import javax.swing.text.DefaultStyledDocument;
-import javax.swing.text.Style;
-import javax.swing.text.StyleConstants;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.SimpleAttributeSet;
-import java.awt.Color;
-
 /**
- * BagTextPane
+ * BagTextPane.
  *
  * @author gov.loc
  */
@@ -43,6 +46,8 @@ public class BagTextPane extends JTextPane {
     private String message = "";
 
     /**
+     * BagTextPane.
+     *
      * @param message String
      */
     BagTextPane(final String message) {
@@ -58,6 +63,8 @@ public class BagTextPane extends JTextPane {
     }
 
     /**
+     * setMessage.
+     *
      * @param message String
      */
     public void setMessage(final String message) {
@@ -67,6 +74,8 @@ public class BagTextPane extends JTextPane {
     }
 
     /**
+     * getMessage.
+     *
      * @return message
      */
     public String getMessage() {
@@ -74,7 +83,7 @@ public class BagTextPane extends JTextPane {
     }
 
     /**
-     *
+     * buildDocument.
      */
     private void buildDocument() {
         final StyleContext context = new StyleContext();

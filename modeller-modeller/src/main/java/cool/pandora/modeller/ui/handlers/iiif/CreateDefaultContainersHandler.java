@@ -11,6 +11,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller.ui.handlers.iiif;
 
 import java.awt.event.ActionEvent;
@@ -82,18 +83,22 @@ public class CreateDefaultContainersHandler extends AbstractAction implements Pr
 
         final String[] Containers;
         final String[] IIIFContainers =
-                new String[]{ProfileOptions.RESOURCE_CONTAINER_KEY, ProfileOptions.MANIFEST_RESOURCE_LABEL,
+                new String[]{ProfileOptions.RESOURCE_CONTAINER_KEY, ProfileOptions
+                        .MANIFEST_RESOURCE_LABEL,
                         ProfileOptions.SEQUENCE_CONTAINER_KEY, ProfileOptions.RANGE_CONTAINER_KEY,
                         ProfileOptions.CANVAS_CONTAINER_KEY, ProfileOptions.LIST_CONTAINER_KEY,
                         ProfileOptions.LAYER_CONTAINER_KEY};
 
         final String[] TextContainers =
-                new String[]{ProfileOptions.TEXT_PAGE_CONTAINER_KEY, ProfileOptions.TEXT_AREA_CONTAINER_KEY,
-                        ProfileOptions.TEXT_LINE_CONTAINER_KEY, ProfileOptions.TEXT_WORD_CONTAINER_KEY};
+                new String[]{ProfileOptions.TEXT_PAGE_CONTAINER_KEY, ProfileOptions
+                        .TEXT_AREA_CONTAINER_KEY,
+                        ProfileOptions.TEXT_LINE_CONTAINER_KEY, ProfileOptions
+                        .TEXT_WORD_CONTAINER_KEY};
 
         if (bag.hasText()) {
             Containers =
-                    Stream.concat(Arrays.stream(IIIFContainers), Arrays.stream(TextContainers)).toArray(String[]::new);
+                    Stream.concat(Arrays.stream(IIIFContainers), Arrays.stream(TextContainers))
+                            .toArray(String[]::new);
         } else {
             Containers = IIIFContainers;
         }
@@ -113,7 +118,8 @@ public class CreateDefaultContainersHandler extends AbstractAction implements Pr
     void openCreateDefaultContainersFrame() {
         final DefaultBag bag = bagView.getBag();
         final CreateDefaultContainersFrame createDefaultContainersFrame =
-                new CreateDefaultContainersFrame(bagView, bagView.getPropertyMessage("bag.frame.put"));
+                new CreateDefaultContainersFrame(bagView, bagView.getPropertyMessage("bag.frame" +
+                        ".put"));
         createDefaultContainersFrame.setBag(bag);
         createDefaultContainersFrame.setVisible(true);
     }

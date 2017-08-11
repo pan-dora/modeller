@@ -11,32 +11,38 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller.util;
+
+import static org.apache.commons.lang3.exception.ExceptionUtils.getMessage;
 
 import cool.pandora.modeller.ModellerClient;
 import cool.pandora.modeller.ModellerClientFailedException;
-import org.apache.jena.rdf.model.Model;
-import org.apache.jena.rdf.model.ModelFactory;
-import org.apache.jena.rdf.model.Property;
-import org.apache.jena.rdf.model.Resource;
-import org.apache.jena.rdf.model.StmtIterator;
-import org.apache.jena.rdf.model.Statement;
-import org.apache.jena.rdf.model.SimpleSelector;
-import org.apache.jena.rdf.model.RDFNode;
+
 import java.io.ByteArrayInputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 
-import static org.apache.commons.lang3.exception.ExceptionUtils.getMessage;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.rdf.model.Property;
+import org.apache.jena.rdf.model.RDFNode;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.SimpleSelector;
+import org.apache.jena.rdf.model.Statement;
+import org.apache.jena.rdf.model.StmtIterator;
+
 
 /**
- * ResourceObjectNode
+ * ResourceObjectNode.
  *
  * @author Christopher Johnson
  */
 public class ResourceObjectNode {
     /**
+     * init.
+     *
      * @return ResourceValueBuilder
      */
     public static ResourceObjectNode.ResourceValueBuilder init() {
@@ -46,6 +52,8 @@ public class ResourceObjectNode {
     private ArrayList<RDFNode> resourceValue;
 
     /**
+     * render.
+     *
      * @return resourceValue
      */
     public ArrayList<RDFNode> render() {
@@ -53,7 +61,9 @@ public class ResourceObjectNode {
     }
 
     /**
-     * @param resourceURI      String
+     * ResourceObjectNode.
+     *
+     * @param resourceURI String
      * @param resourceProperty String
      */
     ResourceObjectNode(final String resourceURI, final String resourceProperty) {
@@ -61,7 +71,8 @@ public class ResourceObjectNode {
         try {
             final String resource = ModellerClient.doGetContainerResources(new URI(resourceURI));
             final Model model = ModelFactory.createDefaultModel();
-            model.read(new ByteArrayInputStream(resource != null ? resource.getBytes() : new byte[0]), null, "TTL");
+            model.read(new ByteArrayInputStream(resource != null ? resource.getBytes() : new
+                    byte[0]), null, "TTL");
             this.resourceValue = getValue(model, resourceProperty);
         } catch (final ModellerClientFailedException e) {
             System.out.println(getMessage(e));
@@ -71,14 +82,17 @@ public class ResourceObjectNode {
     }
 
     /**
-     * @param model            Model
+     * getValue.
+     *
+     * @param model Model
      * @param resourceProperty String
      * @return retval
      */
     private static ArrayList<RDFNode> getValue(final Model model, final String resourceProperty) {
         final Property property = model.getProperty(resourceProperty);
         final ArrayList<RDFNode> retval = new ArrayList<>();
-        final StmtIterator it = model.listStatements(new SimpleSelector(null, property, (Resource) null));
+        final StmtIterator it = model.listStatements(new SimpleSelector(null, property,
+                (Resource) null));
         while (it.hasNext()) {
             final Statement st = it.next();
             retval.add(st.getObject());
@@ -87,7 +101,7 @@ public class ResourceObjectNode {
     }
 
     /**
-     *
+     * ResourceValueBuilder.
      */
     public static class ResourceValueBuilder {
 
@@ -95,6 +109,8 @@ public class ResourceObjectNode {
         private String resourceProperty;
 
         /**
+         * resourceURI.
+         *
          * @param resourceURI String
          * @return this
          */
@@ -104,15 +120,20 @@ public class ResourceObjectNode {
         }
 
         /**
+         * resourceProperty.
+         *
          * @param resourceProperty String
          * @return this
          */
-        public ResourceObjectNode.ResourceValueBuilder resourceProperty(final String resourceProperty) {
+        public ResourceObjectNode.ResourceValueBuilder resourceProperty(final String
+                                                                                resourceProperty) {
             this.resourceProperty = resourceProperty;
             return this;
         }
 
         /**
+         * build.
+         *
          * @return ResourceObjectNode
          */
         public ResourceObjectNode build() {

@@ -11,6 +11,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller;
 
 import org.json.JSONArray;
@@ -148,11 +149,12 @@ public class ProfileField implements Serializable {
 
     /**
      * @param profileFieldJson JSONObject
-     * @param name             String
+     * @param name String
      * @return profileField
      * @throws JSONException exception
      */
-    static ProfileField createProfileField(final JSONObject profileFieldJson, final String name) throws JSONException {
+    static ProfileField createProfileField(final JSONObject profileFieldJson, final String name)
+            throws JSONException {
         final ProfileField profileField = new ProfileField();
         profileField.setFieldName(name);
         if (profileFieldJson != null) {
@@ -196,7 +198,7 @@ public class ProfileField implements Serializable {
     }
 
     /**
-     * @param name  String
+     * @param name String
      * @param value String
      * @return profileField
      */

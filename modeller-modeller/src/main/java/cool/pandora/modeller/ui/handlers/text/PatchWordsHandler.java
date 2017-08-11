@@ -11,6 +11,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller.ui.handlers.text;
 
 import org.apache.commons.io.IOUtils;
@@ -117,7 +118,8 @@ public class PatchWordsHandler extends AbstractAction implements Progress {
                 final String bbox = bboxmap.get(wordId);
                 final String chars = charmap.get(wordId);
                 final String region = Region.region().bbox(bbox).build();
-                final String canvasRegionURI = CanvasRegionURI.regionuri().region(region).canvasURI(canvasURI).build();
+                final String canvasRegionURI = CanvasRegionURI.regionuri().region(region)
+                        .canvasURI(canvasURI).build();
                 if (canvasRegionURI != null & chars != null & wordContainerURI != null) {
                     rdfBody = getWordMetadata(canvasRegionURI, wordContainerURI.toString(), chars);
                     try {
@@ -135,29 +137,35 @@ public class PatchWordsHandler extends AbstractAction implements Progress {
     void openPatchWordsFrame() {
         final DefaultBag bag = bagView.getBag();
         final PatchWordsFrame patchWordsFrame =
-                new PatchWordsFrame(bagView, bagView.getPropertyMessage("bag.frame" + ".patch" + ".words"));
+                new PatchWordsFrame(bagView, bagView.getPropertyMessage("bag.frame" + ".patch" +
+                        ".words"));
         patchWordsFrame.setBag(bag);
         patchWordsFrame.setVisible(true);
     }
 
     /**
-     * @param canvasRegionURI  String
+     * @param canvasRegionURI String
      * @param wordContainerURI String
-     * @param chars            String
+     * @param chars String
      * @return InputStream
      */
-    private static InputStream getWordMetadata(final String canvasRegionURI, final String wordContainerURI,
+    private static InputStream getWordMetadata(final String canvasRegionURI, final String
+            wordContainerURI,
                                                final String chars) {
         final MetadataTemplate metadataTemplate;
         final List<WordScope.Prefix> prefixes =
-                Arrays.asList(new WordScope.Prefix(FedoraPrefixes.RDFS), new WordScope.Prefix(FedoraPrefixes.MODE),
-                        new WordScope.Prefix(IIIFPrefixes.OA), new WordScope.Prefix(IIIFPrefixes.CNT),
-                        new WordScope.Prefix(IIIFPrefixes.SC), new WordScope.Prefix(IIIFPrefixes.DCTYPES));
+                Arrays.asList(new WordScope.Prefix(FedoraPrefixes.RDFS), new WordScope.Prefix
+                                (FedoraPrefixes.MODE),
+                        new WordScope.Prefix(IIIFPrefixes.OA), new WordScope.Prefix(IIIFPrefixes
+                                .CNT),
+                        new WordScope.Prefix(IIIFPrefixes.SC), new WordScope.Prefix(IIIFPrefixes
+                                .DCTYPES));
 
         final WordScope scope = new WordScope().fedoraPrefixes(prefixes).canvasURI(canvasRegionURI)
                 .resourceContainerURI(wordContainerURI).chars(chars.replace("\"", "\\\""));
 
-        metadataTemplate = MetadataTemplate.template().template("template/sparql-update-word.mustache").scope(scope)
+        metadataTemplate = MetadataTemplate.template().template("template/sparql-update-word" +
+                ".mustache").scope(scope)
                 .throwExceptionOnFailure().build();
 
         final String metadata = unescapeXml(metadataTemplate.render());

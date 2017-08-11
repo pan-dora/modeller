@@ -11,6 +11,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller.ui.handlers.iiif;
 
 import java.awt.Dimension;
@@ -138,26 +139,34 @@ public class PatchResourceHandler extends AbstractAction implements Progress {
         return resourceContainer.toString() + filename + FCRMETADATA;
     }
 
-    private static InputStream getResourceMetadata(final Map<String, BagInfoField> map, final String filename,
-                                                   final String formatName, final int iw, final int ih) {
+    private static InputStream getResourceMetadata(final Map<String, BagInfoField> map, final
+    String filename,
+                                                   final String formatName, final int iw, final
+                                                   int ih) {
         final MetadataTemplate metadataTemplate;
-        final List<ResourceScope.Prefix> prefixes = Arrays.asList(new ResourceScope.Prefix(FedoraPrefixes.RDFS),
-                new ResourceScope.Prefix(FedoraPrefixes.MODE), new ResourceScope.Prefix(IIIFPrefixes.DC),
-                new ResourceScope.Prefix(IIIFPrefixes.SVCS), new ResourceScope.Prefix(IIIFPrefixes.EXIF),
+        final List<ResourceScope.Prefix> prefixes = Arrays.asList(new ResourceScope.Prefix
+                        (FedoraPrefixes.RDFS),
+                new ResourceScope.Prefix(FedoraPrefixes.MODE), new ResourceScope.Prefix
+                        (IIIFPrefixes.DC),
+                new ResourceScope.Prefix(IIIFPrefixes.SVCS), new ResourceScope.Prefix
+                        (IIIFPrefixes.EXIF),
                 new ResourceScope.Prefix(IIIFPrefixes.DCTYPES));
 
         final ResourceScope scope =
-                new ResourceScope().fedoraPrefixes(prefixes).filename(filename).serviceURI(getServiceURI(map, filename))
+                new ResourceScope().fedoraPrefixes(prefixes).filename(filename).serviceURI
+                        (getServiceURI(map, filename))
                         .formatName(formatName).imgHeight(ih).imgWidth(iw);
 
-        metadataTemplate = MetadataTemplate.template().template("template/sparql-update-res.mustache").scope(scope)
+        metadataTemplate = MetadataTemplate.template().template("template/sparql-update-res" +
+                ".mustache").scope(scope)
                 .throwExceptionOnFailure().build();
 
         final String metadata = metadataTemplate.render();
         return IOUtils.toInputStream(metadata, UTF_8);
     }
 
-    private static String getServiceURI(final Map<String, BagInfoField> map, final String filename) {
+    private static String getServiceURI(final Map<String, BagInfoField> map, final String
+            filename) {
         final String separator = "_";
         final String serviceURI = getMapValue(map, ProfileOptions.IIIF_SERVICE_KEY);
         final String path = getMapValue(map, ProfileOptions.COLLECTION_ROOT_KEY) + separator +

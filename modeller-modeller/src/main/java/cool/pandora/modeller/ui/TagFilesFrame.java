@@ -11,16 +11,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller.ui;
 
-import javax.swing.JTabbedPane;
-import javax.swing.JFrame;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.JFrame;
+import javax.swing.JTabbedPane;
 
 /**
- * Tag Files Frame
+ * Tag Files Frame.
  *
  * @author gov.loc
  */

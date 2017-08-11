@@ -11,6 +11,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller;
 
 import org.apache.jena.rdf.model.ModelFactory;
@@ -20,6 +21,7 @@ import org.apache.jena.rdf.model.StmtIterator;
 import org.apache.jena.rdf.model.SimpleSelector;
 import org.apache.jena.rdf.model.Statement;
 import org.apache.jena.rdf.model.Resource;
+
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.URI;
@@ -40,7 +42,8 @@ public class getContainerTest {
     public static void main(final String[] args) throws IOException {
         try {
             final String resource = ModellerClient
-                    .doGetContainerResources(URI.create("http://localhost:8080/fcrepo/rest/collection/test/001/res"));
+                    .doGetContainerResources(URI.create
+                            ("http://localhost:8080/fcrepo/rest/collection/test/001/res"));
             final Model model = ModelFactory.createDefaultModel();
             model.read(new ByteArrayInputStream(resource.getBytes()), null, "TTL");
             final ArrayList<String> children = getChilden(model);
@@ -55,7 +58,8 @@ public class getContainerTest {
         final String NS = "http://www.w3.org/ns/ldp#";
         final Property ldpcontains = model.getProperty(NS + "contains");
         final ArrayList<String> retval = new ArrayList<>();
-        final StmtIterator it = model.listStatements(new SimpleSelector(null, ldpcontains, (Resource) null));
+        final StmtIterator it = model.listStatements(new SimpleSelector(null, ldpcontains,
+                (Resource) null));
         while (it.hasNext()) {
             final Statement st = it.next();
             retval.add(st.getObject().toString());

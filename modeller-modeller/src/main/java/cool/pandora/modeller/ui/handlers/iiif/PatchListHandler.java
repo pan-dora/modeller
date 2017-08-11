@@ -11,6 +11,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller.ui.handlers.iiif;
 
 import org.apache.jena.rdf.model.RDFNode;
@@ -82,11 +83,13 @@ public class PatchListHandler extends AbstractAction implements Progress {
         final ArrayList<String> resourcesList = resourceList.getResourceList();
         final String collectionPredicate = IIIFPredicates.OTHER_CONTENT;
         InputStream rdfBody;
-        final Map<String, List<String>> pageResourcesMap = getPageResourcesMap(listsList, resourcesList);
+        final Map<String, List<String>> pageResourcesMap = getPageResourcesMap(listsList,
+                resourcesList);
         final Map<String, String> resourceTargetMap = getResourceTargetMap(resourcesList);
         for (final String listURI : listsList) {
             rdfBody = TextSequenceMetadata
-                    .getListSequenceMetadata(pageResourcesMap, listURI, resourceTargetMap, collectionPredicate,
+                    .getListSequenceMetadata(pageResourcesMap, listURI, resourceTargetMap,
+                            collectionPredicate,
                             listServiceBaseURI);
             final URI destinationURI = URI.create(listURI);
             try {
@@ -111,13 +114,15 @@ public class PatchListHandler extends AbstractAction implements Progress {
     }
 
     private static Map<String, List<String>> getPageResourcesMap(final ArrayList<String> listsList,
-                                                                 final ArrayList<String> resourcesList) {
+                                                                 final ArrayList<String>
+                                                                         resourcesList) {
         final Map<String, List<String>> pageResourcesMap = new HashMap<>();
         for (final String list : listsList) {
             final ArrayList<String> rl = new ArrayList<>();
             for (final String resource : resourcesList) {
                 final String var1 = substringAfter(list, "list/");
-                final String var2 = leftPad(substringBefore(substringAfter(resource, "word/"), "_"), 3, "0");
+                final String var2 = leftPad(substringBefore(substringAfter(resource, "word/"),
+                        "_"), 3, "0");
                 if (Objects.equals(var1, var2)) {
                     rl.add(resource);
                 }
@@ -137,7 +142,8 @@ public class PatchListHandler extends AbstractAction implements Progress {
 
     private static RDFNode getResourceTarget(final String resourceURI) {
         final ResourceObjectNode resourceObjectNode =
-                ResourceObjectNode.init().resourceURI(resourceURI).resourceProperty(IIIFPredicates.ON).build();
+                ResourceObjectNode.init().resourceURI(resourceURI).resourceProperty
+                        (IIIFPredicates.ON).build();
         final ArrayList<RDFNode> resourceTarget = resourceObjectNode.render();
         if (resourceTarget.isEmpty()) {
             return null;

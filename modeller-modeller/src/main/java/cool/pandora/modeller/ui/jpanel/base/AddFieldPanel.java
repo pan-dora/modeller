@@ -11,6 +11,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller.ui.jpanel.base;
 
 import cool.pandora.modeller.bag.BagInfoField;
@@ -65,41 +66,50 @@ public class AddFieldPanel extends JPanel {
         standardCheckBox.setSelected(true);
         standardCheckBox.addActionListener(new StandardFieldCheckBoxAction());
         GridBagConstraints gbc = LayoutUtil
-                .buildGridBagConstraints(col++, row, 1, 1, 0, 0, GridBagConstraints.NONE, GridBagConstraints.WEST);
+                .buildGridBagConstraints(col++, row, 1, 1, 0, 0, GridBagConstraints.NONE,
+                        GridBagConstraints.WEST);
         add(standardCheckBox, gbc);
 
         // standard field dropdown menu
         final List<String> listModel = getStandardBagFields();
         standardFieldsComboBox = new JComboBox<>(listModel.toArray(new String[listModel.size()]));
-        standardFieldsComboBox.setName(ApplicationContextUtil.getMessage("baginfo.field.fieldlist"));
+        standardFieldsComboBox.setName(ApplicationContextUtil.getMessage("baginfo.field" +
+                ".fieldlist"));
         standardFieldsComboBox.setSelectedItem("");
-        standardFieldsComboBox.setToolTipText(ApplicationContextUtil.getMessage("baginfo.field.fieldlist.help"));
+        standardFieldsComboBox.setToolTipText(ApplicationContextUtil.getMessage("baginfo.field" +
+                ".fieldlist.help"));
         gbc = LayoutUtil
-                .buildGridBagConstraints(col++, row, 1, 1, 0, 0, GridBagConstraints.NONE, GridBagConstraints.WEST);
+                .buildGridBagConstraints(col++, row, 1, 1, 0, 0, GridBagConstraints.NONE,
+                        GridBagConstraints.WEST);
         add(standardFieldsComboBox, gbc);
 
         // custom field name
         customFieldTextField = new JTextField(17);
-        customFieldTextField.setToolTipText(ApplicationContextUtil.getMessage("baginfo.field.name.help"));
+        customFieldTextField.setToolTipText(ApplicationContextUtil.getMessage("baginfo.field.name" +
+                ".help"));
         customFieldTextField.setVisible(false);
         gbc = LayoutUtil
-                .buildGridBagConstraints(col++, row, 1, 1, 0, 0, GridBagConstraints.NONE, GridBagConstraints.WEST);
+                .buildGridBagConstraints(col++, row, 1, 1, 0, 0, GridBagConstraints.NONE,
+                        GridBagConstraints.WEST);
         add(customFieldTextField, gbc);
 
         // field value
         gbc = LayoutUtil
-                .buildGridBagConstraints(col++, row, 1, 1, 0, 0, GridBagConstraints.NONE, GridBagConstraints.WEST);
+                .buildGridBagConstraints(col++, row, 1, 1, 0, 0, GridBagConstraints.NONE,
+                        GridBagConstraints.WEST);
         add(new JLabel(" : "), gbc);
 
         valueField = new JTextField();
-        gbc = LayoutUtil.buildGridBagConstraints(col++, row, 1, 1, 1, 1, GridBagConstraints.HORIZONTAL,
+        gbc = LayoutUtil.buildGridBagConstraints(col++, row, 1, 1, 1, 1, GridBagConstraints
+                        .HORIZONTAL,
                 GridBagConstraints.WEST);
         add(valueField, gbc);
 
         // add field button
         final JButton addFieldButton = new JButton("Add");
         gbc = LayoutUtil
-                .buildGridBagConstraints(col++, row, 1, 1, 0, 0, GridBagConstraints.NONE, GridBagConstraints.WEST);
+                .buildGridBagConstraints(col++, row, 1, 1, 0, 0, GridBagConstraints.NONE,
+                        GridBagConstraints.WEST);
         add(addFieldButton, gbc);
         addFieldButton.addActionListener(new AddFieldAction());
     }

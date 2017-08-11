@@ -11,6 +11,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller.ui.handlers.base;
 
 import cool.pandora.modeller.bag.impl.DefaultBag;
@@ -22,6 +23,8 @@ import javax.swing.AbstractAction;
 import javax.swing.JCheckBox;
 
 /**
+ * HoleyBagHandler.
+ *
  * @author gov.loc
  */
 public class HoleyBagHandler extends AbstractAction {
@@ -30,6 +33,8 @@ public class HoleyBagHandler extends AbstractAction {
     DefaultBag bag;
 
     /**
+     * HoleyBagHandler.
+     *
      * @param bagView BagView
      */
     public HoleyBagHandler(final BagView bagView) {

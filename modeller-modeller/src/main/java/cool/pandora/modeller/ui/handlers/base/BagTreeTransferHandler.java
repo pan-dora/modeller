@@ -11,6 +11,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller.ui.handlers.base;
 
 import java.awt.datatransfer.DataFlavor;
@@ -32,7 +33,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Bag Tree Transfer Handler
+ * Bag Tree Transfer Handler.
  *
  * @author gov.loc
  */
@@ -40,20 +41,22 @@ public class BagTreeTransferHandler extends TransferHandler {
     private static final long serialVersionUID = 1L;
 
     protected static final Logger log = LoggerFactory.getLogger(BagTreeTransferHandler.class);
-    private static final DataFlavor uriListFlavor = new DataFlavor("text/uri-list;class=java.lang.String", null);
+    private static final DataFlavor uriListFlavor = new DataFlavor("text/uri-list;class=java.lang"
+            + ".String", null);
     private DataFlavor nodesFlavor;
     private final DataFlavor[] flavors = new DataFlavor[1];
     private DefaultMutableTreeNode[] nodesToRemove;
 
     /**
-     *
+     * BagTreeTransferHandler.
      */
     public BagTreeTransferHandler() {
         super();
         try {
             final String mimeType =
-                    DataFlavor.javaJVMLocalObjectMimeType + ";class=\"" + DefaultMutableTreeNode[].class.getName() +
-                            "\"";
+                    DataFlavor.javaJVMLocalObjectMimeType + ";class=\""
+                            + DefaultMutableTreeNode[].class.getName()
+                            + "\"";
             nodesFlavor = new DataFlavor(mimeType);
             flavors[0] = nodesFlavor;
         } catch (final ClassNotFoundException e) {
@@ -62,6 +65,8 @@ public class BagTreeTransferHandler extends TransferHandler {
     }
 
     /**
+     * display.
+     *
      * @param s String
      */
     private static void display(final String s) {
@@ -75,7 +80,9 @@ public class BagTreeTransferHandler extends TransferHandler {
     }
 
     /**
-     * @param comp            JComponent
+     * canImport.
+     *
+     * @param comp JComponent
      * @param transferFlavors DataFlavor
      * @return boolean
      */
@@ -103,6 +110,8 @@ public class BagTreeTransferHandler extends TransferHandler {
     }
 
     /**
+     * createTransferable.
+     *
      * @param c JComponent
      * @return NodesTransferable
      */
@@ -116,12 +125,14 @@ public class BagTreeTransferHandler extends TransferHandler {
             // exportDone after a successful drop.
             final List<DefaultMutableTreeNode> copies = new ArrayList<>();
             final List<DefaultMutableTreeNode> toRemove = new ArrayList<>();
-            final DefaultMutableTreeNode node = (DefaultMutableTreeNode) paths[0].getLastPathComponent();
+            final DefaultMutableTreeNode node = (DefaultMutableTreeNode) paths[0]
+                    .getLastPathComponent();
             final DefaultMutableTreeNode copy = copy(node);
             copies.add(copy);
             toRemove.add(node);
             for (int i = 1; i < paths.length; i++) {
-                final DefaultMutableTreeNode next = (DefaultMutableTreeNode) paths[i].getLastPathComponent();
+                final DefaultMutableTreeNode next = (DefaultMutableTreeNode) paths[i]
+                        .getLastPathComponent();
                 // Do not allow higher level nodes to be added to list.
                 if (next.getLevel() < node.getLevel()) {
                     break;
@@ -133,7 +144,8 @@ public class BagTreeTransferHandler extends TransferHandler {
                     toRemove.add(next);
                 }
             }
-            final DefaultMutableTreeNode[] nodes = copies.toArray(new DefaultMutableTreeNode[copies.size()]);
+            final DefaultMutableTreeNode[] nodes = copies.toArray(new
+                    DefaultMutableTreeNode[copies.size()]);
             nodesToRemove = toRemove.toArray(new DefaultMutableTreeNode[toRemove.size()]);
             return new NodesTransferable(nodes);
         }
@@ -141,6 +153,8 @@ public class BagTreeTransferHandler extends TransferHandler {
     }
 
     /**
+     * copy.
+     *
      * Defensive copy used in createTransferable.
      */
     private static DefaultMutableTreeNode copy(final TreeNode node) {
@@ -148,8 +162,10 @@ public class BagTreeTransferHandler extends TransferHandler {
     }
 
     /**
+     * exportDone.
+     *
      * @param source JComponent
-     * @param data   Transferable
+     * @param data Transferable
      * @param action int
      */
     @Override
@@ -164,7 +180,7 @@ public class BagTreeTransferHandler extends TransferHandler {
     }
 
     /**
-     *
+     * NodesTransferable.
      */
     public class NodesTransferable implements Transferable {
         DefaultMutableTreeNode[] nodes;
@@ -174,6 +190,8 @@ public class BagTreeTransferHandler extends TransferHandler {
         }
 
         /**
+         * getTransferData.
+         *
          * @param flavor DataFlavor
          * @return nodes
          * @throws UnsupportedFlavorException Exception
@@ -188,6 +206,8 @@ public class BagTreeTransferHandler extends TransferHandler {
         }
 
         /**
+         * getTransferDataFlavors.
+         *
          * @return flavors
          */
         @Override
@@ -196,6 +216,8 @@ public class BagTreeTransferHandler extends TransferHandler {
         }
 
         /**
+         * isDataFlavorSupported.
+         *
          * @param flavor DataFlavor
          * @return boolean
          */

@@ -11,6 +11,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller.ui.util;
 
 import cool.pandora.modeller.ProfileOptions;
@@ -114,13 +115,14 @@ public class URIResolver {
         }
 
         /**
-         * @param map          Map
+         * @param map Map
          * @param containerKey String
-         * @param resource     String
-         * @param pathType     int
+         * @param resource String
+         * @param pathType int
          * @return URI
          */
-        static URI resolveURI(final Map<String, BagInfoField> map, final String containerKey, final String resource,
+        static URI resolveURI(final Map<String, BagInfoField> map, final String containerKey,
+                              final String resource,
                               final int pathType) {
             final String hostname = getMapValue(map, ProfileOptions.FEDORA_HOSTNAME_KEY);
             Integer port = Integer.parseInt(getMapValue(map, ProfileOptions.PORT_KEY));
@@ -139,7 +141,8 @@ public class URIResolver {
                 case (0):
                     return builder.scheme("http").host(hostname).port(port).build(appKey, restKey);
                 case (1):
-                    return builder.scheme("http").host(hostname).port(port).build(appKey, restKey, collectionRoot);
+                    return builder.scheme("http").host(hostname).port(port).build(appKey,
+                            restKey, collectionRoot);
                 case (2):
                     return builder.scheme("http").host(hostname).port(port)
                             .build(appKey, restKey, collectionRoot, collection);
@@ -149,14 +152,17 @@ public class URIResolver {
                 case (4):
                     final String container4 = getMapValue(map, containerKey);
                     return builder.scheme("http").host(hostname).port(port)
-                            .build(appKey, restKey, collectionRoot, collection, objektID, container4);
+                            .build(appKey, restKey, collectionRoot, collection, objektID,
+                                    container4);
                 case (5):
                     final String container5 = getMapValue(map, containerKey);
                     return builder.scheme("http").host(hostname).port(port)
-                            .build(appKey, restKey, collectionRoot, collection, objektID, container5, resource);
+                            .build(appKey, restKey, collectionRoot, collection, objektID,
+                                    container5, resource);
                 case (6):
                     return builder.scheme("http").host(hostname).port(port)
-                            .build(appKey, restKey, collectionRoot, collection, objektID, manifestLabel);
+                            .build(appKey, restKey, collectionRoot, collection, objektID,
+                                    manifestLabel);
             }
             return null;
         }
@@ -166,7 +172,8 @@ public class URIResolver {
          * @throws URISyntaxException exception
          */
         public URIResolver build() throws URISyntaxException {
-            final URI resolvedURI = resolveURI(this.map, this.containerKey, this.resource, this.pathType);
+            final URI resolvedURI = resolveURI(this.map, this.containerKey, this.resource, this
+                    .pathType);
             return new URIResolver(resolvedURI);
         }
     }

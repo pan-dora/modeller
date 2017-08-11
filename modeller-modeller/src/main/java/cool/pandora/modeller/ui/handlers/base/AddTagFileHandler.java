@@ -11,6 +11,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller.ui.handlers.base;
 
 import cool.pandora.modeller.bag.impl.DefaultBag;
@@ -28,7 +29,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 
 /**
- * Add Tag File Handler
+ * Add Tag File Handler.
  *
  * @author gov.loc
  */
@@ -37,6 +38,8 @@ public class AddTagFileHandler extends AbstractAction {
     BagView bagView;
 
     /**
+     * AddTagFileHandler.
+     *
      * @param bagView BagView
      */
     public AddTagFileHandler(final BagView bagView) {
@@ -45,6 +48,8 @@ public class AddTagFileHandler extends AbstractAction {
     }
 
     /**
+     * actionPerformed.
+     *
      * @param e ActionEvent
      */
     @Override
@@ -53,7 +58,7 @@ public class AddTagFileHandler extends AbstractAction {
     }
 
     /**
-     *
+     * addTagFile.
      */
     private void addTagFile() {
         final File selectFile = new File(File.separator + ".");

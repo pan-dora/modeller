@@ -11,24 +11,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller;
 
 import cool.pandora.modeller.util.RDFCollectionWriter;
-import org.apache.commons.lang3.StringUtils;
-import org.xmlbeam.XBProjector;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+
+import org.apache.commons.lang3.StringUtils;
+
+import org.xmlbeam.XBProjector;
 
 /**
- * DocManifestBuilder
+ * DocManifestBuilder.
  *
  * @author Christopher Johnson
  */
@@ -38,6 +41,7 @@ public class DocManifestBuilder {
     }
 
     /**
+     * gethOCRProjectionFromURL.
      *
      * @param url String
      * @return XBProjector
@@ -48,12 +52,14 @@ public class DocManifestBuilder {
     }
 
     /**
+     * buildValueMap.
      *
      * @param descList List
      * @param hocr hOCRData
      * @return valueMap
      */
-    private static Map<String, Object> buildValueMap(final List<String> descList, final hOCRData hocr) {
+    private static Map<String, Object> buildValueMap(final List<String> descList, final hOCRData
+            hocr) {
         final Map<String, Object> valueMap = new HashMap<>();
         for (final String descId : descList) {
             final Object oNode = hocr.getTitleForId(descId);
@@ -63,6 +69,7 @@ public class DocManifestBuilder {
     }
 
     /**
+     * getAreaMapForhOCRResource.
      *
      * @param hocr hOCRData
      * @return areaMap
@@ -78,22 +85,26 @@ public class DocManifestBuilder {
     }
 
     /**
+     * getAreaRDFSequenceForhOCRResource.
      *
      * @param hocr hOCRData
      * @param resourceURI String
      * @return collection
      * @throws IOException Exception
      */
-    static String getAreaRDFSequenceForhOCRResource(final hOCRData hocr, final String resourceURI) throws IOException {
+    static String getAreaRDFSequenceForhOCRResource(final hOCRData hocr, final String
+            resourceURI) throws IOException {
         final List<String> cAreaIdList = hocr.getCAreaNodeId();
         final RDFCollectionWriter collectionWriter;
         final String collectionPredicate = "http://iiif.io/api/text#hasAreas";
-        collectionWriter = RDFCollectionWriter.collection().idList(cAreaIdList).collectionPredicate(collectionPredicate)
+        collectionWriter = RDFCollectionWriter.collection().idList(cAreaIdList)
+                .collectionPredicate(collectionPredicate)
                 .resourceContainerIRI(resourceURI).build();
         return collectionWriter.render();
     }
 
     /**
+     * getPageIdList.
      *
      * @param hocr hOCRData
      * @return PageNodeId
@@ -103,6 +114,7 @@ public class DocManifestBuilder {
     }
 
     /**
+     * getAreaIdList.
      *
      * @param hocr hOCRData
      * @return CAreaNodeId
@@ -112,6 +124,7 @@ public class DocManifestBuilder {
     }
 
     /**
+     * getLineIdList.
      *
      * @param hocr hOCRData
      * @return LineNodeId
@@ -121,6 +134,7 @@ public class DocManifestBuilder {
     }
 
     /**
+     * getWordIdList.
      *
      * @param hocr hOCRData
      * @return WordNodeId
@@ -130,6 +144,7 @@ public class DocManifestBuilder {
     }
 
     /**
+     * getAreaIdListforPage.
      *
      * @param hocr hOCRData
      * @param id String
@@ -140,6 +155,7 @@ public class DocManifestBuilder {
     }
 
     /**
+     * getLineIdListforArea.
      *
      * @param hocr hOCRData
      * @param id String
@@ -150,16 +166,19 @@ public class DocManifestBuilder {
     }
 
     /**
+     * getBboxForId.
      *
      * @param hocr hOCRData
      * @param id String
      * @return TitleForId
      */
     public static String getBboxForId(final hOCRData hocr, final String id) {
-        return StringUtils.substringBefore(StringUtils.substringAfter(hocr.getTitleForId(id), "bbox "), ";");
+        return StringUtils.substringBefore(StringUtils.substringAfter(hocr.getTitleForId(id),
+                "bbox "), ";");
     }
 
     /**
+     * getCharsForId.
      *
      * @param hocr hOCRData
      * @param id String
@@ -170,6 +189,7 @@ public class DocManifestBuilder {
     }
 
     /**
+     * getWordIdListforLine.
      *
      * @param hocr hOCRData
      * @param id String
@@ -180,6 +200,7 @@ public class DocManifestBuilder {
     }
 
     /**
+     * getWordIdListforPage.
      *
      * @param hocr hOCRData
      * @param id String
@@ -190,6 +211,7 @@ public class DocManifestBuilder {
     }
 
     /**
+     * marshal.
      *
      * @param hocr File
      * @return hocr

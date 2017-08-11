@@ -11,10 +11,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller;
 
 /**
- * Region
+ * Region.
  *
  * @author Christopher Johnson
  */
@@ -23,6 +24,7 @@ public class Region {
     }
 
     /**
+     * region.
      *
      * @return RegionBuilder
      */
@@ -30,10 +32,14 @@ public class Region {
         return new Region.RegionBuilder();
     }
 
+    /**
+     * RegionBuilder.
+     */
     public static class RegionBuilder {
         private String bbox;
 
         /**
+         * bbox.
          *
          * @param bbox String
          * @return this
@@ -44,6 +50,7 @@ public class Region {
         }
 
         /**
+         * build.
          *
          * @return String
          */

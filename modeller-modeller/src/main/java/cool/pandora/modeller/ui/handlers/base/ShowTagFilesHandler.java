@@ -11,18 +11,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller.ui.handlers.base;
-
-import java.awt.event.ActionEvent;
-
-import javax.swing.AbstractAction;
 
 import cool.pandora.modeller.bag.impl.DefaultBag;
 import cool.pandora.modeller.ui.jpanel.base.BagView;
 import cool.pandora.modeller.ui.TagFilesFrame;
 
+import java.awt.event.ActionEvent;
+
+import javax.swing.AbstractAction;
+
+
 /**
- * Show Tag Files Handler
+ * Show Tag Files Handler.
  *
  * @author gov.loc
  */
@@ -32,6 +34,8 @@ public class ShowTagFilesHandler extends AbstractAction {
     DefaultBag bag;
 
     /**
+     * ShowTagFilesHandler.
+     *
      * @param bagView BagView
      */
     public ShowTagFilesHandler(final BagView bagView) {
@@ -47,7 +51,8 @@ public class ShowTagFilesHandler extends AbstractAction {
     private void showTagFiles() {
         bag = bagView.getBag();
         bagView.tagManifestPane.updateCompositePaneTabs(bag);
-        final TagFilesFrame tagFilesFrame = new TagFilesFrame(bagView.getPropertyMessage("bagView.tagFrame.title"));
+        final TagFilesFrame tagFilesFrame = new TagFilesFrame(bagView.getPropertyMessage("bagView"
+                + ".tagFrame.title"));
         tagFilesFrame.addComponents(bagView.tagManifestPane);
         tagFilesFrame.addComponents(bagView.tagManifestPane);
         tagFilesFrame.setVisible(true);

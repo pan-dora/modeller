@@ -11,6 +11,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller.ui.handlers.base;
 
 import cool.pandora.modeller.bag.impl.DefaultBag;
@@ -22,7 +23,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 
 /**
- * Save Bag As Handler
+ * Save Bag As Handler.
  *
  * @author gov.loc
  */
@@ -32,6 +33,8 @@ public class SaveBagAsHandler extends AbstractAction {
     DefaultBag bag;
 
     /**
+     * SaveBagAsHandler.
+     *
      * @param bagView BagView
      */
     public SaveBagAsHandler(final BagView bagView) {
@@ -46,7 +49,8 @@ public class SaveBagAsHandler extends AbstractAction {
 
     void openSaveBagAsFrame() {
         bag = bagView.getBag();
-        final SaveBagFrame saveBagFrame = new SaveBagFrame(bagView, bagView.getPropertyMessage("bag.frame.save"));
+        final SaveBagFrame saveBagFrame = new SaveBagFrame(bagView, bagView.getPropertyMessage
+                ("bag.frame.save"));
         saveBagFrame.setBag(bag);
         saveBagFrame.setVisible(true);
     }

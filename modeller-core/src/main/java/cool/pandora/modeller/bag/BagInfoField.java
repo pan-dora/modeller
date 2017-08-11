@@ -11,6 +11,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller.bag;
 
 import cool.pandora.modeller.ProfileField;
@@ -227,9 +228,12 @@ public class BagInfoField implements Serializable {
 
     @Override
     public String toString() {
-        return "\n" + "Label: " + getLabel() + "\n" + "Name: " + getName() + "\n" + "Value: " + getValue() + "\n" +
-                "Type: " + getComponentType() + "\n" + "Elements: " + getElements() + "\n" + "isRequired: " +
-                isRequired() + "\n" + "isRequiredvalue: " + isRequiredvalue() + "\n" + "isEnabled: " + isEnabled() +
+        return "\n" + "Label: " + getLabel() + "\n" + "Name: " + getName() + "\n" + "Value: " +
+                getValue() + "\n" +
+                "Type: " + getComponentType() + "\n" + "Elements: " + getElements() + "\n" +
+                "isRequired: " +
+                isRequired() + "\n" + "isRequiredvalue: " + isRequiredvalue() + "\n" +
+                "isEnabled: " + isEnabled() +
                 "\n" + "isEditable: " + isEditable() + "\n";
     }
 

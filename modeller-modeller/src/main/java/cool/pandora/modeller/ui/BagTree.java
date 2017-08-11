@@ -11,6 +11,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller.ui;
 
 import cool.pandora.modeller.bag.BaggerFileEntity;
@@ -18,26 +19,27 @@ import cool.pandora.modeller.bag.impl.DefaultBag;
 import cool.pandora.modeller.ui.handlers.base.BagTreeTransferHandler;
 import cool.pandora.modeller.ui.jpanel.base.BagView;
 import gov.loc.repository.bagit.impl.AbstractBagConstants;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import javax.swing.JTree;
-import javax.swing.JTextField;
+import java.awt.Dimension;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
 import javax.swing.DropMode;
+import javax.swing.JTextField;
+import javax.swing.JTree;
 import javax.swing.event.TreeExpansionEvent;
 import javax.swing.event.TreeExpansionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
-import java.awt.Dimension;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Vector;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- * Bag Tree
+ * Bag Tree.
  *
  * @author gov.loc
  */
@@ -49,12 +51,15 @@ public class BagTree extends JTree {
     private int BAGTREE_ROW_MODIFIER = 22;
 
     private String basePath;
-    private DefaultMutableTreeNode parentNode = new DefaultMutableTreeNode(AbstractBagConstants.DATA_DIRECTORY);
+    private DefaultMutableTreeNode parentNode = new DefaultMutableTreeNode(AbstractBagConstants
+            .DATA_DIRECTORY);
     private final ArrayList<DefaultMutableTreeNode> srcNodes = new ArrayList<>();
 
     /**
+     * BagTree.
+     *
      * @param bagView BagView
-     * @param path    String
+     * @param path String
      */
     public BagTree(final BagView bagView, final String path) {
         super();
@@ -64,7 +69,8 @@ public class BagTree extends JTree {
         initialize();
         initListeners();
         final JTextField nameTextField = new JTextField();
-        BAGTREE_ROW_MODIFIER = nameTextField.getFontMetrics(nameTextField.getFont()).getHeight() + 5;
+        BAGTREE_ROW_MODIFIER = nameTextField.getFontMetrics(nameTextField.getFont()).getHeight()
+                + 5;
         this.setDragEnabled(true);
         this.setDropMode(DropMode.ON_OR_INSERT);
         this.setTransferHandler(new BagTreeTransferHandler());
@@ -73,7 +79,7 @@ public class BagTree extends JTree {
     }
 
     /**
-     *
+     * initialize.
      */
     private void initialize() {
         setModel(new DefaultTreeModel(parentNode));
@@ -89,8 +95,10 @@ public class BagTree extends JTree {
     }
 
     /**
-     * @param bag     DefaultBag
-     * @param path    String
+     * populateNodes.
+     *
+     * @param bag DefaultBag
+     * @param path String
      * @param rootSrc File
      */
     public void populateNodes(final DefaultBag bag, final String path, final File rootSrc) {
@@ -136,7 +144,9 @@ public class BagTree extends JTree {
     }
 
     /**
-     * @param file     File
+     * addNodes.
+     *
+     * @param file File
      * @param isParent boolean
      * @return boolean
      */
@@ -157,6 +167,8 @@ public class BagTree extends JTree {
     }
 
     /**
+     * nodeAlreadyExists.
+     *
      * @param path String
      * @return isNodeChild
      */
@@ -168,7 +180,8 @@ public class BagTree extends JTree {
             return true;
         }
         for (int i = 0; i < parentNode.getChildCount(); i++) {
-            final DefaultMutableTreeNode childNode = (DefaultMutableTreeNode) parentNode.getChildAt(i);
+            final DefaultMutableTreeNode childNode = (DefaultMutableTreeNode) parentNode
+                    .getChildAt(i);
             final String child = childNode.toString();
             if (child.equalsIgnoreCase(node)) {
                 isNodeChild = true;
@@ -179,6 +192,8 @@ public class BagTree extends JTree {
     }
 
     /**
+     * addNode.
+     *
      * @param filePath String
      */
     public void addNode(final String filePath) {
@@ -189,10 +204,13 @@ public class BagTree extends JTree {
     }
 
     /**
+     * createNodeTree.
+     *
      * Add nodes from under "dir" into curTop. Highly recursive.
      */
     private static DefaultMutableTreeNode createNodeTree(final DefaultMutableTreeNode curTop,
-                                                         final DefaultMutableTreeNode displayTop, final File dir) {
+                                                         final DefaultMutableTreeNode displayTop,
+                                                         final File dir) {
         final String curPath = dir.getPath();
         final String displayPath = dir.getName();
         final DefaultMutableTreeNode curDir = new DefaultMutableTreeNode(curPath);
@@ -242,6 +260,8 @@ public class BagTree extends JTree {
     }
 
     /**
+     * getTreeSize.
+     *
      * @return Dimension
      */
     Dimension getTreeSize() {
@@ -249,7 +269,7 @@ public class BagTree extends JTree {
     }
 
     /**
-     *
+     * initListeners.
      */
     private void initListeners() {
         addTreeExpansionListener(new TreeExpansionListener() {
@@ -260,6 +280,11 @@ public class BagTree extends JTree {
                 invalidate();
             }
 
+            /**
+             * treeCollapsed.
+             *
+             * @param e TreeExpansionEvent
+             */
             public void treeCollapsed(final TreeExpansionEvent e) {
                 final int rows = BAGTREE_ROW_MODIFIER * getRowCount();
                 log.trace("BagTree rows: {}", rows);
