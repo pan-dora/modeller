@@ -14,6 +14,8 @@
 
 package cool.pandora.modeller.ui.handlers.iiif;
 
+import static org.apache.commons.lang3.exception.ExceptionUtils.getMessage;
+
 import cool.pandora.modeller.ModellerClient;
 import cool.pandora.modeller.ModellerClientFailedException;
 import cool.pandora.modeller.bag.BagInfoField;
@@ -24,8 +26,6 @@ import cool.pandora.modeller.ui.handlers.common.IIIFObjectURI;
 import cool.pandora.modeller.ui.jpanel.base.BagView;
 import cool.pandora.modeller.ui.jpanel.iiif.CreateSequencesFrame;
 import cool.pandora.modeller.ui.util.ApplicationContextUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.awt.event.ActionEvent;
 import java.net.URI;
@@ -33,10 +33,12 @@ import java.util.Map;
 
 import javax.swing.AbstractAction;
 
-import static org.apache.commons.lang3.exception.ExceptionUtils.getMessage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 /**
- * Create Sequences Handler
+ * Create Sequences Handler.
  *
  * @author Christopher Johnson
  */
@@ -46,6 +48,8 @@ public class CreateSequencesHandler extends AbstractAction implements Progress {
     private final BagView bagView;
 
     /**
+     * CreateSequencesHandler.
+     *
      * @param bagView BagView
      */
     public CreateSequencesHandler(final BagView bagView) {

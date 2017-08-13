@@ -17,27 +17,35 @@ package cool.pandora.modeller;
 import java.util.List;
 
 /**
- * Bagger
+ * Bagger.
  *
  * @author gov.loc
  */
 public interface Bagger {
     /**
+     * loadProfiles.
+     *
      * @return profiles
      */
     List<Profile> loadProfiles();
 
     /**
+     * loadProfile.
+     *
      * @param profileName String
      */
     void loadProfile(String profileName);
 
     /**
+     * saveProfile.
+     *
      * @param profile Profile
      */
     void saveProfile(Profile profile);
 
     /**
+     * removeProfile.
+     *
      * @param profile Profile
      */
     void removeProfile(Profile profile);

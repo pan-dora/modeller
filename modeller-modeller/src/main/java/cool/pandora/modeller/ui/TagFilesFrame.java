@@ -29,6 +29,8 @@ public class TagFilesFrame extends JFrame implements ActionListener {
     private static final long serialVersionUID = 1L;
 
     /**
+     * TagFilesFrame.
+     *
      * @param title String
      */
     public TagFilesFrame(final String title) {
@@ -36,6 +38,8 @@ public class TagFilesFrame extends JFrame implements ActionListener {
     }
 
     /**
+     * addComponents.
+     *
      * @param tabs JTabbedPane
      */
     public void addComponents(final JTabbedPane tabs) {
@@ -46,6 +50,8 @@ public class TagFilesFrame extends JFrame implements ActionListener {
     }
 
     /**
+     * actionPerformed.
+     *
      * @param e ActionEvent
      */
     @Override

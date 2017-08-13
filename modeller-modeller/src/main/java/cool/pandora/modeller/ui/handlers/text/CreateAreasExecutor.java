@@ -18,7 +18,7 @@ import cool.pandora.modeller.ui.jpanel.base.BagView;
 import org.springframework.richclient.command.support.AbstractActionCommandExecutor;
 
 /**
- * Create Areas Executor
+ * Create Areas Executor.
  *
  * @author Christopher Johnson
  */
@@ -26,6 +26,8 @@ public class CreateAreasExecutor extends AbstractActionCommandExecutor {
     private final BagView bagView;
 
     /**
+     * CreateAreasExecutor.
+     *
      * @param bagView BagView
      */
     public CreateAreasExecutor(final BagView bagView) {

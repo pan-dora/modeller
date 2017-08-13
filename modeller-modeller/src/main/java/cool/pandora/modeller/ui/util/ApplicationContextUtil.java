@@ -16,16 +16,17 @@ package cool.pandora.modeller.ui.util;
 
 import cool.pandora.modeller.ui.ConsoleView;
 import cool.pandora.modeller.ui.jpanel.base.BagView;
+
+import java.awt.Image;
+import java.util.Locale;
+import javax.swing.UIManager;
+
 import org.springframework.richclient.application.Application;
 import org.springframework.richclient.application.ApplicationServicesLocator;
 import org.springframework.richclient.image.ImageSource;
 
-import javax.swing.UIManager;
-import java.awt.Image;
-import java.util.Locale;
-
 /**
- * ApplicationContextUtil
+ * ApplicationContextUtil.
  *
  * @author loc.gov
  */
@@ -39,6 +40,8 @@ public class ApplicationContextUtil {
     }
 
     /**
+     * getMessage.
+     *
      * @param propertyName String
      * @return message
      */
@@ -48,16 +51,20 @@ public class ApplicationContextUtil {
     }
 
     /**
+     * getImage.
+     *
      * @param imageName String
      * @return imageName
      */
     public static Image getImage(final String imageName) {
-        final ImageSource source = (ImageSource) ApplicationServicesLocator.services().getService
-                (ImageSource.class);
+        final ImageSource source = (ImageSource) ApplicationServicesLocator.services().getService(
+                ImageSource.class);
         return source.getImage(imageName);
     }
 
     /**
+     * getBagView.
+     *
      * @return Application.instance()
      */
     public static BagView getBagView() {
@@ -65,12 +72,14 @@ public class ApplicationContextUtil {
     }
 
     /**
+     * addConsoleMessage.
+     *
      * @param message String
      */
     public static void addConsoleMessage(final String message) {
         final ConsoleView consoleView =
-                (ConsoleView) Application.instance().getApplicationContext().getBean
-                        ("myConsoleView");
+                (ConsoleView) Application.instance().getApplicationContext().getBean(
+                        "myConsoleView");
         consoleView.addConsoleMessages(message);
     }
 

@@ -14,7 +14,11 @@
 
 package cool.pandora.modeller.ui.handlers.iiif;
 
-import org.apache.jena.rdf.model.RDFNode;
+import static org.apache.commons.lang.StringUtils.substringAfter;
+import static org.apache.commons.lang.StringUtils.substringBefore;
+import static org.apache.commons.lang3.StringUtils.leftPad;
+import static org.apache.commons.lang3.exception.ExceptionUtils.getMessage;
+
 import cool.pandora.modeller.ModellerClient;
 import cool.pandora.modeller.ModellerClientFailedException;
 import cool.pandora.modeller.bag.BagInfoField;
@@ -29,26 +33,25 @@ import cool.pandora.modeller.ui.jpanel.iiif.PatchListFrame;
 import cool.pandora.modeller.ui.util.ApplicationContextUtil;
 import cool.pandora.modeller.util.ResourceList;
 import cool.pandora.modeller.util.ResourceObjectNode;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 import java.io.InputStream;
 import java.net.URI;
-import java.util.Map;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
-import static org.apache.commons.lang.StringUtils.substringAfter;
-import static org.apache.commons.lang.StringUtils.substringBefore;
-import static org.apache.commons.lang3.StringUtils.leftPad;
-import static org.apache.commons.lang3.exception.ExceptionUtils.getMessage;
+import javax.swing.AbstractAction;
+
+import org.apache.jena.rdf.model.RDFNode;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- * Patch List Handler
+ * Patch List Handler.
  *
  * @author Christopher Johnson
  */
@@ -58,6 +61,8 @@ public class PatchListHandler extends AbstractAction implements Progress {
     private final BagView bagView;
 
     /**
+     * PatchListHandler.
+     *
      * @param bagView BagView
      */
     public PatchListHandler(final BagView bagView) {
@@ -142,8 +147,8 @@ public class PatchListHandler extends AbstractAction implements Progress {
 
     private static RDFNode getResourceTarget(final String resourceURI) {
         final ResourceObjectNode resourceObjectNode =
-                ResourceObjectNode.init().resourceURI(resourceURI).resourceProperty
-                        (IIIFPredicates.ON).build();
+                ResourceObjectNode.init().resourceURI(resourceURI).resourceProperty(
+                        IIIFPredicates.ON).build();
         final ArrayList<RDFNode> resourceTarget = resourceObjectNode.render();
         if (resourceTarget.isEmpty()) {
             return null;

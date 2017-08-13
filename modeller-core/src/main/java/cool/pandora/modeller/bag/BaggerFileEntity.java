@@ -15,11 +15,12 @@
 package cool.pandora.modeller.bag;
 
 import gov.loc.repository.bagit.utilities.FilenameHelper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.text.MessageFormat;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Bagger needs to know where the file came from so that it can be retrieved:
@@ -29,13 +30,13 @@ import java.text.MessageFormat;
  * If the file is unselected from the BagTree, it is marked to be removed from
  * the bag
  * by setting isIncluded=false.
- * <p>
- * In order to create a bag, all data files to be included are copied to the bag
+ *
+ * <p>In order to create a bag, all data files to be included are copied to the bag
  * data dir.
  * If they already exist they are written over, or deleted if marked as
  * isIncluded=false.
- * <p>
- * If the file comes from a pre-existing bag, then the rootSrc and bagSrc will
+ *
+ * <p>If the file comes from a pre-existing bag, then the rootSrc and bagSrc will
  * be the same,
  * and isInBag=true, otherwise it comes from somewhere else and needs to be
  * placed in the
@@ -59,6 +60,8 @@ public class BaggerFileEntity {
     }
 
     /**
+     * setNormalizedName.
+     *
      * @param name String
      */
     public void setNormalizedName(final String name) {
@@ -66,6 +69,8 @@ public class BaggerFileEntity {
     }
 
     /**
+     * getNormalizedName.
+     *
      * @return normalizedName
      */
     private String getNormalizedName() {
@@ -73,6 +78,8 @@ public class BaggerFileEntity {
     }
 
     /**
+     * setRootParent.
+     *
      * @param file File
      */
     public void setRootParent(final File file) {
@@ -80,6 +87,8 @@ public class BaggerFileEntity {
     }
 
     /**
+     * getRootParent.
+     *
      * @return rootParent
      */
     public File getRootParent() {
@@ -87,6 +96,8 @@ public class BaggerFileEntity {
     }
 
     /**
+     * setRootSrc.
+     *
      * @param file File
      */
     public void setRootSrc(final File file) {
@@ -94,6 +105,8 @@ public class BaggerFileEntity {
     }
 
     /**
+     * getRootSrc.
+     *
      * @return rootSrc
      */
     public File getRootSrc() {
@@ -101,6 +114,8 @@ public class BaggerFileEntity {
     }
 
     /**
+     * setBagSrc.
+     *
      * @param bagDir File
      * @param src File
      */
@@ -112,6 +127,8 @@ public class BaggerFileEntity {
     }
 
     /**
+     * setBagSrc.
+     *
      * @param file File
      */
     public void setBagSrc(final File file) {
@@ -119,6 +136,8 @@ public class BaggerFileEntity {
     }
 
     /**
+     * getBagSrc.
+     *
      * @return bagSrc
      */
     public File getBagSrc() {
@@ -126,6 +145,8 @@ public class BaggerFileEntity {
     }
 
     /**
+     * setIsInBag.
+     *
      * @param b boolean
      */
     public void setIsInBag(final boolean b) {
@@ -133,6 +154,8 @@ public class BaggerFileEntity {
     }
 
     /**
+     * getIsInBag.
+     *
      * @return isInBag
      */
     public boolean getIsInBag() {
@@ -140,6 +163,8 @@ public class BaggerFileEntity {
     }
 
     /**
+     * setIsIncluded.
+     *
      * @param b boolean
      */
     public void setIsIncluded(final boolean b) {
@@ -147,6 +172,8 @@ public class BaggerFileEntity {
     }
 
     /**
+     * getIsIncluded.
+     *
      * @return isIncluded
      */
     public boolean getIsIncluded() {
@@ -154,6 +181,8 @@ public class BaggerFileEntity {
     }
 
     /**
+     * copyRootToBag.
+     *
      * @return success
      */
     public boolean copyRootToBag() {
@@ -165,6 +194,8 @@ public class BaggerFileEntity {
     }
 
     /**
+     * removeBasePath.
+     *
      * @param basePath String
      * @param filename String
      * @return filenameWithoutBasePath
@@ -206,6 +237,8 @@ public class BaggerFileEntity {
     }
 
     /**
+     * removeFileExtension.
+     *
      * @param filename String
      * @return filename (no extension)
      * @throws RuntimeException RuntimeException
@@ -218,6 +251,8 @@ public class BaggerFileEntity {
     }
 
     /**
+     * normalize.
+     *
      * @param filename String
      * @return normalizedFilename
      */

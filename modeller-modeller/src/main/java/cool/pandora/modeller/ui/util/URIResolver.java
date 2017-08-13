@@ -19,13 +19,13 @@ import cool.pandora.modeller.bag.BagInfoField;
 import cool.pandora.modeller.common.uri.IIIFPathTemplate;
 import cool.pandora.modeller.common.uri.Type;
 
-import javax.ws.rs.core.UriBuilder;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Map;
+import javax.ws.rs.core.UriBuilder;
 
 /**
- * URIResolver
+ * URIResolver.
  *
  * @author Christopher Johnson
  */
@@ -37,6 +37,8 @@ public class URIResolver {
     }
 
     /**
+     * resolve.
+     *
      * @return resolvedURI
      */
     public static URIResolver.ContainerURIResolverNormal resolve() {
@@ -44,6 +46,8 @@ public class URIResolver {
     }
 
     /**
+     * render.
+     *
      * @return resolvedURI
      */
     public URI render() {
@@ -60,6 +64,8 @@ public class URIResolver {
         }
 
         /**
+         * map.
+         *
          * @param map Map
          * @return this
          */
@@ -69,6 +75,8 @@ public class URIResolver {
         }
 
         /**
+         * pathType.
+         *
          * @param pathType int
          * @return pathType
          */
@@ -78,6 +86,8 @@ public class URIResolver {
         }
 
         /**
+         * containerKey.
+         *
          * @param containerKey String
          * @return this
          */
@@ -87,6 +97,8 @@ public class URIResolver {
         }
 
         /**
+         * resource.
+         *
          * @param resource String
          * @return this
          */
@@ -96,6 +108,8 @@ public class URIResolver {
         }
 
         /**
+         * getMapValue.
+         *
          * @param map Map
          * @param key String
          * @return IIIFProfileKey
@@ -106,6 +120,8 @@ public class URIResolver {
         }
 
         /**
+         * getObjectIDPath.
+         *
          * @param value int
          * @return Type
          */
@@ -115,6 +131,8 @@ public class URIResolver {
         }
 
         /**
+         * resolveURI.
+         *
          * @param map Map
          * @param containerKey String
          * @param resource String
@@ -163,11 +181,15 @@ public class URIResolver {
                     return builder.scheme("http").host(hostname).port(port)
                             .build(appKey, restKey, collectionRoot, collection, objektID,
                                     manifestLabel);
+                default:
+                    break;
             }
             return null;
         }
 
         /**
+         * build.
+         *
          * @return URIResolver
          * @throws URISyntaxException exception
          */

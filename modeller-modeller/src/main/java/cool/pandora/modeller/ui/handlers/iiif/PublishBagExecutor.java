@@ -14,15 +14,17 @@
 
 package cool.pandora.modeller.ui.handlers.iiif;
 
+import static org.apache.commons.lang3.exception.ExceptionUtils.getMessage;
+
 import cool.pandora.modeller.bag.impl.DefaultBag;
 import cool.pandora.modeller.ui.jpanel.base.BagView;
 import cool.pandora.modeller.ui.util.ApplicationContextUtil;
+
 import org.springframework.richclient.command.support.AbstractActionCommandExecutor;
 
-import static org.apache.commons.lang3.exception.ExceptionUtils.getMessage;
 
 /**
- * Publish Bag Executor
+ * Publish Bag Executor.
  *
  * @author Christopher Johnson
  */
@@ -30,6 +32,8 @@ public class PublishBagExecutor extends AbstractActionCommandExecutor {
     private final BagView bagView;
 
     /**
+     * PublishBagExecutor.
+     *
      * @param bagView BagView
      */
     public PublishBagExecutor(final BagView bagView) {

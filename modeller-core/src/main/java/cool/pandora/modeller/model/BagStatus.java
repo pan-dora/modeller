@@ -15,7 +15,7 @@
 package cool.pandora.modeller.model;
 
 /**
- * BagStatus
+ * BagStatus.
  *
  * @author gov.loc
  */
@@ -28,6 +28,8 @@ public class BagStatus {
     private StatusModel profileComplianceStatus = new StatusModel();
 
     /**
+     * getValidationStatus.
+     *
      * @return validationStatus
      */
     public StatusModel getValidationStatus() {
@@ -35,6 +37,8 @@ public class BagStatus {
     }
 
     /**
+     * setValidationStatus.
+     *
      * @param validationStatus StatusModel
      */
     public void setValidationStatus(final StatusModel validationStatus) {
@@ -42,6 +46,8 @@ public class BagStatus {
     }
 
     /**
+     * getCompletenessStatus.
+     *
      * @return completenessStatus
      */
     public StatusModel getCompletenessStatus() {
@@ -49,6 +55,8 @@ public class BagStatus {
     }
 
     /**
+     * setCompletenessStatus.
+     *
      * @param completenessStatus StatusModel
      */
     public void setCompletenessStatus(final StatusModel completenessStatus) {
@@ -56,6 +64,8 @@ public class BagStatus {
     }
 
     /**
+     * getProfileComplianceStatus.
+     *
      * @return profileComplianceStatus
      */
     public StatusModel getProfileComplianceStatus() {
@@ -63,6 +73,8 @@ public class BagStatus {
     }
 
     /**
+     * setProfileComplianceStatus.
+     *
      * @param profileComplianceStatus StatusModel
      */
     public void setProfileComplianceStatus(final StatusModel profileComplianceStatus) {
@@ -70,6 +82,8 @@ public class BagStatus {
     }
 
     /**
+     * getInstance.
+     *
      * @return instance
      */
     public static BagStatus getInstance() {

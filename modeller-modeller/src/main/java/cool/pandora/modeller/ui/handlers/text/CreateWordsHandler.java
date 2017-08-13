@@ -14,35 +14,36 @@
 
 package cool.pandora.modeller.ui.handlers.text;
 
-import org.apache.commons.lang.StringUtils;
+import static cool.pandora.modeller.DocManifestBuilder.getWordIdList;
+import static org.apache.commons.lang3.exception.ExceptionUtils.getMessage;
+
+import cool.pandora.modeller.DocManifestBuilder;
 import cool.pandora.modeller.ModellerClient;
 import cool.pandora.modeller.ModellerClientFailedException;
-import cool.pandora.modeller.DocManifestBuilder;
-import cool.pandora.modeller.hOCRData;
 import cool.pandora.modeller.ProfileOptions;
 import cool.pandora.modeller.bag.BagInfoField;
 import cool.pandora.modeller.bag.impl.DefaultBag;
+import cool.pandora.modeller.hOCRData;
 import cool.pandora.modeller.ui.Progress;
 import cool.pandora.modeller.ui.jpanel.base.BagView;
 import cool.pandora.modeller.ui.jpanel.text.CreateWordsFrame;
 import cool.pandora.modeller.ui.util.ApplicationContextUtil;
 import cool.pandora.modeller.ui.util.URIResolver;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Map;
+import javax.swing.AbstractAction;
 
-import static org.apache.commons.lang3.exception.ExceptionUtils.getMessage;
-import static cool.pandora.modeller.DocManifestBuilder.getWordIdList;
+import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- * Create Words Handler
+ * Create Words Handler.
  *
  * @author Christopher Johnson
  */
@@ -52,6 +53,8 @@ public class CreateWordsHandler extends AbstractAction implements Progress {
     private final BagView bagView;
 
     /**
+     * CreateWordsHandler.
+     *
      * @param bagView BagView
      */
     public CreateWordsHandler(final BagView bagView) {
@@ -100,6 +103,8 @@ public class CreateWordsHandler extends AbstractAction implements Progress {
     }
 
     /**
+     * getWordContainerURI.
+     *
      * @param map Map
      * @return String
      */

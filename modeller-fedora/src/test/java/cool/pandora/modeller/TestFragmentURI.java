@@ -14,24 +14,23 @@
 
 package cool.pandora.modeller;
 
-import java.io.IOException;
+import java.net.URI;
 
 /**
- * getBboxTest
+ * testFragmentURI.
  *
  * @author Christopher Johnson
  */
-public class getBboxTest {
+public class TestFragmentURI {
 
-    private getBboxTest() {
+    private TestFragmentURI() {
     }
 
-    public static void main(final String[] args) throws IOException {
-        final String url = "resource://data/test_007.hocr";
-        final hOCRData hocr = DocManifestBuilder.gethOCRProjectionFromURL(url);
-
-        final String bbox = DocManifestBuilder.getBboxForId(hocr, "block_1_4");
-        final String region = Region.region().bbox(bbox).build();
-        System.out.println(region);
+    public static void main(final String[] args) {
+        final URI uri =
+                URI.create("http://localhost:8080/fcrepo/rest/collection/test/003/canvas/19#xywh"
+                        + "=2999,1542,62,56");
+        final String out = uri.toString();
+        System.out.println(out);
     }
 }

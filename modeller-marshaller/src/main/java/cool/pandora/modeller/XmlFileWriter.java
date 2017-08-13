@@ -14,18 +14,20 @@
 
 package cool.pandora.modeller;
 
+import java.io.ByteArrayOutputStream;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
-import java.io.ByteArrayOutputStream;
 
 /**
- * XmlFileWriter
+ * XmlFileWriter.
  *
  * @author Christopher Johnson
  */
 public class XmlFileWriter extends ByteArrayOutputStream {
     /**
+     * write.
+     *
      * @return XMLWriterBuilder
      */
     public static XMLWriterBuilder write() {
@@ -36,6 +38,8 @@ public class XmlFileWriter extends ByteArrayOutputStream {
     }
 
     /**
+     * marshal.
+     *
      * @param fileDescriptor ImageFileDescriptor
      * @return marshalled output
      * @throws JAXBException Exception
@@ -53,7 +57,7 @@ public class XmlFileWriter extends ByteArrayOutputStream {
     }
 
     /**
-     *
+     * XMLWriterBuilder.
      */
     public static class XMLWriterBuilder {
         private String collectionId;
@@ -61,6 +65,8 @@ public class XmlFileWriter extends ByteArrayOutputStream {
         private String resourceId;
 
         /**
+         * collectionId.
+         *
          * @param collectionId String
          * @return this
          */
@@ -70,6 +76,8 @@ public class XmlFileWriter extends ByteArrayOutputStream {
         }
 
         /**
+         * objektId.
+         *
          * @param objektId String
          * @return this
          */
@@ -79,6 +87,8 @@ public class XmlFileWriter extends ByteArrayOutputStream {
         }
 
         /**
+         * resourceId.
+         *
          * @param resourceId String
          * @return this
          */
@@ -88,6 +98,8 @@ public class XmlFileWriter extends ByteArrayOutputStream {
         }
 
         /**
+         * build.
+         *
          * @return marshalled output
          * @throws JAXBException Exception
          */

@@ -18,15 +18,15 @@ import cool.pandora.modeller.bag.BagInfoField;
 import cool.pandora.modeller.bag.impl.DefaultBag;
 import cool.pandora.modeller.ui.handlers.common.TextObjectURI;
 import cool.pandora.modeller.ui.jpanel.base.BagView;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.richclient.command.AbstractCommand;
-import org.springframework.richclient.command.ActionCommand;
-import org.springframework.richclient.command.CommandGroup;
-import org.springframework.richclient.core.DefaultMessage;
-import org.springframework.richclient.dialog.TitlePane;
-import org.springframework.richclient.util.GuiStandardUtils;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.net.URI;
+import java.util.Map;
 import javax.swing.AbstractAction;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -36,17 +36,18 @@ import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.net.URI;
-import java.util.Map;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.richclient.command.AbstractCommand;
+import org.springframework.richclient.command.ActionCommand;
+import org.springframework.richclient.command.CommandGroup;
+import org.springframework.richclient.core.DefaultMessage;
+import org.springframework.richclient.dialog.TitlePane;
+import org.springframework.richclient.util.GuiStandardUtils;
 
 /**
- * CreateAreasFrame
+ * CreateAreasFrame.
  *
  * @author Christopher Johnson
  */
@@ -59,6 +60,8 @@ public class CreateAreasFrame extends JFrame implements ActionListener {
     private JTextField hocrResourceField;
 
     /**
+     * CreateAreasFrame.
+     *
      * @param bagView BagView
      * @param title String
      */
@@ -79,6 +82,8 @@ public class CreateAreasFrame extends JFrame implements ActionListener {
     }
 
     /**
+     * createButtonBar.
+     *
      * @return buttonBar
      */
     private JComponent createButtonBar() {
@@ -90,6 +95,8 @@ public class CreateAreasFrame extends JFrame implements ActionListener {
     }
 
     /**
+     * getCommandGroupMembers.
+     *
      * @return AbstractCommand
      */
     private Object[] getCommandGroupMembers() {
@@ -119,6 +126,8 @@ public class CreateAreasFrame extends JFrame implements ActionListener {
     }
 
     /**
+     * getFinishCommandId.
+     *
      * @return DEFAULT_FINISH_COMMAND_ID
      */
     private static String getFinishCommandId() {
@@ -126,6 +135,8 @@ public class CreateAreasFrame extends JFrame implements ActionListener {
     }
 
     /**
+     * getCancelCommandId.
+     *
      * @return DEFAULT_CANCEL_COMMAND_ID
      */
     private static String getCancelCommandId() {
@@ -169,8 +180,8 @@ public class CreateAreasFrame extends JFrame implements ActionListener {
             log.error("Failed to set url label", e);
         }
 
-        final JLabel hocrResourceLabel = new JLabel(bagView.getPropertyMessage("hocrResource" +
-                ".label"));
+        final JLabel hocrResourceLabel = new JLabel(bagView.getPropertyMessage("hocrResource"
+                + ".label"));
         hocrResourceLabel.setToolTipText(bagView.getPropertyMessage("hocrResource.description"));
         hocrResourceField = new JTextField("");
         final String hocrResource = TextObjectURI.gethOCRResourceURI(map);
@@ -222,6 +233,8 @@ public class CreateAreasFrame extends JFrame implements ActionListener {
     }
 
     /**
+     * setBag.
+     *
      * @param bag DefaultBag
      */
     public void setBag(final DefaultBag bag) {
@@ -256,6 +269,8 @@ public class CreateAreasFrame extends JFrame implements ActionListener {
     }
 
     /**
+     * buildConstraints.
+     *
      * @param gbc GridBagConstraints
      * @param x int
      * @param y int
@@ -281,6 +296,8 @@ public class CreateAreasFrame extends JFrame implements ActionListener {
     }
 
     /**
+     * getMessage.
+     *
      * @param property String
      * @return message
      */

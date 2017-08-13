@@ -14,36 +14,36 @@
 
 package cool.pandora.modeller.ui.handlers.iiif;
 
+import static org.apache.commons.lang3.exception.ExceptionUtils.getMessage;
+
+import cool.pandora.modeller.ModellerClient;
+import cool.pandora.modeller.ModellerClientFailedException;
+import cool.pandora.modeller.bag.BagInfoField;
+import cool.pandora.modeller.bag.BaggerFileEntity;
+import cool.pandora.modeller.bag.impl.DefaultBag;
+import cool.pandora.modeller.ui.Progress;
+import cool.pandora.modeller.ui.handlers.common.IIIFObjectURI;
+import cool.pandora.modeller.ui.jpanel.base.BagView;
+import cool.pandora.modeller.ui.jpanel.iiif.UploadBagFrame;
+import cool.pandora.modeller.ui.util.ApplicationContextUtil;
+import cool.pandora.modeller.util.ImageIOUtil;
+
+import gov.loc.repository.bagit.impl.AbstractBagConstants;
+
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.net.URI;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import javax.swing.AbstractAction;
 
-import gov.loc.repository.bagit.impl.AbstractBagConstants;
-import cool.pandora.modeller.ModellerClientFailedException;
-import cool.pandora.modeller.bag.BagInfoField;
-import cool.pandora.modeller.bag.BaggerFileEntity;
-import cool.pandora.modeller.ui.handlers.common.IIIFObjectURI;
-import cool.pandora.modeller.util.ImageIOUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import cool.pandora.modeller.bag.impl.DefaultBag;
-import cool.pandora.modeller.ui.jpanel.base.BagView;
-import cool.pandora.modeller.ui.Progress;
-import cool.pandora.modeller.ui.util.ApplicationContextUtil;
-import cool.pandora.modeller.ui.jpanel.iiif.UploadBagFrame;
-import cool.pandora.modeller.ModellerClient;
-
-import static org.apache.commons.lang3.exception.ExceptionUtils.getMessage;
-
 /**
- * Upload Bag Handler
+ * Upload Bag Handler.
  *
  * @author Christopher Johnson
  */
@@ -53,6 +53,8 @@ public class UploadBagHandler extends AbstractAction implements Progress {
     private final BagView bagView;
 
     /**
+     * UploadBagHandler.
+     *
      * @param bagView BagView
      */
     public UploadBagHandler(final BagView bagView) {

@@ -306,7 +306,7 @@ public class TextCollectionWriter {
          * @return this
          */
         public TextCollectionWriter.RDFCollectionBuilder collectionPredicate(final String
-                                                                                     collectionPredicate) {
+                                                                              collectionPredicate) {
             this.collectionPredicate = collectionPredicate;
             return this;
         }
@@ -318,7 +318,7 @@ public class TextCollectionWriter {
          * @return this
          */
         public TextCollectionWriter.RDFCollectionBuilder resourceContainerIRI(final String
-                                                                                      resourceContainerIRI) {
+                                                                             resourceContainerIRI) {
             this.resourceContainerIRI = resourceContainerIRI;
             return this;
         }

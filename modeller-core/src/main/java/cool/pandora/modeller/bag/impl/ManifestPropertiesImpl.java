@@ -33,7 +33,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * ManifestPropertiesImpl
+ * ManifestPropertiesImpl.
  *
  * @author loc.gov
  */
@@ -70,6 +70,8 @@ public class ManifestPropertiesImpl extends AbstractNameValueMapListBagFile impl
     private final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     /**
+     * ManifestPropertiesImpl.
+     *
      * @param bagFile BagFile
      * @param bagConstants BagConstants
      */
@@ -78,6 +80,8 @@ public class ManifestPropertiesImpl extends AbstractNameValueMapListBagFile impl
     }
 
     /**
+     * ManifestPropertiesImpl.
+     *
      * @param bagConstants BagConstants
      */
     public ManifestPropertiesImpl(final BagConstants bagConstants) {
@@ -131,6 +135,8 @@ public class ManifestPropertiesImpl extends AbstractNameValueMapListBagFile impl
     }
 
     /**
+     * getAttribution.
+     *
      * @return FIELD_ATTRIBUTION
      */
     public String getAttribution() {
@@ -222,6 +228,8 @@ public class ManifestPropertiesImpl extends AbstractNameValueMapListBagFile impl
     }
 
     /**
+     * getOxumPart.
+     *
      * @param part String
      * @return OxumPar
      * @throws ParseException Exception
@@ -299,8 +307,8 @@ public class ManifestPropertiesImpl extends AbstractNameValueMapListBagFile impl
     public void setBaggingDate(final int year, final int month, final int day) {
         try {
             this.setBaggingDate(
-                    this.dateFormat.parse(MessageFormat.format("{0}-{1}-{2}", Integer.toString
-                            (year), month, day)));
+                    this.dateFormat.parse(MessageFormat.format("{0}-{1}-{2}", Integer.toString(
+                            year), month, day)));
 
         } catch (final Exception ex) {
             throw new RuntimeException(ex);
@@ -381,6 +389,8 @@ public class ManifestPropertiesImpl extends AbstractNameValueMapListBagFile impl
     }
 
     /**
+     * containsKeyCaseInsensitive.
+     *
      * @param key String
      * @return boolean
      */
@@ -389,6 +399,8 @@ public class ManifestPropertiesImpl extends AbstractNameValueMapListBagFile impl
     }
 
     /**
+     * getActualKeys.
+     *
      * @param key String
      * @return actualKeys
      */
@@ -403,6 +415,8 @@ public class ManifestPropertiesImpl extends AbstractNameValueMapListBagFile impl
     }
 
     /**
+     * getCaseInsensitive.
+     *
      * @param key String
      * @return key
      */

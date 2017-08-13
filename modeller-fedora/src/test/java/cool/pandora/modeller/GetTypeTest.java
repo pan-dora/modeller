@@ -14,6 +14,8 @@
 
 package cool.pandora.modeller;
 
+import static junit.framework.TestCase.assertEquals;
+
 import cool.pandora.modeller.common.uri.IIIFPathTemplate;
 import cool.pandora.modeller.common.uri.Type;
 
@@ -21,10 +23,9 @@ import java.util.Enumeration;
 
 import org.junit.Test;
 
-import static junit.framework.TestCase.assertEquals;
 
 /**
- * getTypeTest
+ * getTypeTest.
  *
  * @author Christopher Johnson
  */

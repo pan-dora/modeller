@@ -18,15 +18,15 @@ import cool.pandora.modeller.Bagger;
 import cool.pandora.modeller.Profile;
 import cool.pandora.modeller.ProfileField;
 
-import java.util.List;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.Collection;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Map.Entry;
 
 /**
- * BaggerProfileStore
+ * BaggerProfileStore.
  *
  * @author gov.loc
  */
@@ -38,6 +38,8 @@ public class BaggerProfileStore {
     private LinkedHashMap<String, List<ProfileField>> profileFieldsMap = new LinkedHashMap<>();
 
     /**
+     * BaggerProfileStore.
+     *
      * @param bagger Bagger
      */
     public BaggerProfileStore(final Bagger bagger) {
@@ -46,6 +48,8 @@ public class BaggerProfileStore {
     }
 
     /**
+     * getProfile.
+     *
      * @param name String
      * @return profile
      */
@@ -58,6 +62,8 @@ public class BaggerProfileStore {
     }
 
     /**
+     * initializeProfile.
+     *
      * @param bagger Bagger
      */
     private void initializeProfile(final Bagger bagger) {
@@ -82,6 +88,8 @@ public class BaggerProfileStore {
     }
 
     /**
+     * getDefaultProfile.
+     *
      * @return profile value
      */
     public Profile getDefaultProfile() {
@@ -94,6 +102,8 @@ public class BaggerProfileStore {
     }
 
     /**
+     * getInstance.
+     *
      * @return instance
      */
     public static BaggerProfileStore getInstance() {
@@ -101,6 +111,8 @@ public class BaggerProfileStore {
     }
 
     /**
+     * getProfileNames.
+     *
      * @return profile names
      */
     public String[] getProfileNames() {
@@ -108,6 +120,8 @@ public class BaggerProfileStore {
     }
 
     /**
+     * getProfileFields.
+     *
      * @param profileName String
      * @return profileFieldsMap
      */

@@ -14,17 +14,17 @@
 
 package cool.pandora.modeller;
 
-import cool.pandora.modeller.util.RDFCollectionWriter;
-import org.junit.Test;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.stream.IntStream;
-
 import static junit.framework.TestCase.assertNotNull;
 
+import cool.pandora.modeller.util.RDFCollectionWriter;
+
+import java.io.IOException;
+
+import org.junit.Test;
+
+
 /**
- * RdfCollectionWriterTest
+ * RdfCollectionWriterTest.
  *
  * @author Christopher Johnson
  */

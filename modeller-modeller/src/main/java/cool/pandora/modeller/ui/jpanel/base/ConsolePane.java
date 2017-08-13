@@ -18,27 +18,28 @@ import cool.pandora.modeller.model.BagStatus;
 import cool.pandora.modeller.ui.StatusImageLabel;
 import cool.pandora.modeller.ui.util.ApplicationContextUtil;
 import cool.pandora.modeller.ui.util.LayoutUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-
-import javax.swing.JPanel;
-import javax.swing.BorderFactory;
-import javax.swing.JLabel;
-import javax.swing.JTextArea;
-import javax.swing.JScrollPane;
-import javax.swing.border.Border;
-import javax.swing.border.EmptyBorder;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.Document;
-import java.awt.Dimension;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.util.Date;
 
+import javax.swing.BorderFactory;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.Document;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
- * ConsolePane
+ * ConsolePane.
  *
  * @author gov.loc
  */
@@ -56,6 +57,8 @@ public class ConsolePane extends JPanel {
     private JTextArea serializedArea;
 
     /**
+     * ConsolePane.
+     *
      * @param messages String
      */
     public ConsolePane(final String messages) {
@@ -66,7 +69,7 @@ public class ConsolePane extends JPanel {
     }
 
     /**
-     *
+     * createFormControl.
      */
     private void createFormControl() {
         this.setMaximumSize(maxDimension);
@@ -74,7 +77,7 @@ public class ConsolePane extends JPanel {
         GridBagConstraints gbc = LayoutUtil
                 .buildGridBagConstraints(0, 0, 1, 1, 0, 0, GridBagConstraints.HORIZONTAL,
                         GridBagConstraints.WEST);
-        this.add(createStatusPannel(), gbc);
+        this.add(createStatusPanel(), gbc);
 
         gbc = LayoutUtil.buildGridBagConstraints(0, 1, 1, 1, 1, 1, GridBagConstraints.BOTH,
                 GridBagConstraints.CENTER);
@@ -86,9 +89,11 @@ public class ConsolePane extends JPanel {
     }
 
     /**
+     * createStatusPanel.
+     *
      * @return statusPanel
      */
-    private static JPanel createStatusPannel() {
+    private static JPanel createStatusPanel() {
         final JPanel statusPanel = new JPanel();
         statusPanel.setLayout(new GridBagLayout());
         final int row = 0;
@@ -99,8 +104,8 @@ public class ConsolePane extends JPanel {
         final JLabel completeLabel =
                 new JLabel(ApplicationContextUtil.getMessage("compositePane.message.isComplete")
                         + " ");
-        completeLabel.setToolTipText(ApplicationContextUtil.getMessage("consolepane.iscomplete" +
-                ".help"));
+        completeLabel.setToolTipText(ApplicationContextUtil.getMessage("consolepane.iscomplete"
+                + ".help"));
         GridBagConstraints gbc = LayoutUtil
                 .buildGridBagConstraints(col++, row, 1, 1, 0, 0, GridBagConstraints.NONE,
                         GridBagConstraints.WEST);
@@ -114,10 +119,10 @@ public class ConsolePane extends JPanel {
 
         // Validation Status
         final JLabel validationLabel =
-                new JLabel(ApplicationContextUtil.getMessage("compositePane.message.isValid") + "" +
-                        " ");
-        validationLabel.setToolTipText(ApplicationContextUtil.getMessage("consolepane.isvalid" +
-                ".help"));
+                new JLabel(ApplicationContextUtil.getMessage("compositePane.message.isValid") + ""
+                        +  " ");
+        validationLabel.setToolTipText(ApplicationContextUtil.getMessage("consolepane.isvalid"
+                + ".help"));
         gbc = LayoutUtil
                 .buildGridBagConstraints(col++, row, 1, 1, 0, 0, GridBagConstraints.NONE,
                         GridBagConstraints.WEST);
@@ -131,10 +136,10 @@ public class ConsolePane extends JPanel {
 
         // Profile Compliance Status
         final JLabel profileComplianceLabel =
-                new JLabel(ApplicationContextUtil.getMessage("compositePane.message" + "" +
-                        ".isMetadata") + " ");
-        profileComplianceLabel.setToolTipText(ApplicationContextUtil.getMessage("consolepane" +
-                ".ismetadata.help"));
+                new JLabel(ApplicationContextUtil.getMessage("compositePane.message" + ""
+                        + ".isMetadata") + " ");
+        profileComplianceLabel.setToolTipText(ApplicationContextUtil.getMessage("consolepane"
+                + ".ismetadata.help"));
         gbc = LayoutUtil
                 .buildGridBagConstraints(col++, row, 1, 1, 0, 0, GridBagConstraints.NONE,
                         GridBagConstraints.WEST);
@@ -151,6 +156,8 @@ public class ConsolePane extends JPanel {
     }
 
     /**
+     * createConsoleArea.
+     *
      * @return JScrollPane
      */
     private JScrollPane createConsoleArea() {
@@ -169,6 +176,8 @@ public class ConsolePane extends JPanel {
     }
 
     /**
+     * addConsoleMessages.
+     *
      * @param message String
      */
     public void addConsoleMessages(final String message) {
@@ -179,8 +188,8 @@ public class ConsolePane extends JPanel {
 
             if (consoleMessageDoc.getLength() > MAX_CONSOLE_MESSAGE_LENGTH) {
                 try {
-                    consoleMessageDoc.remove(0, consoleMessageDoc.getLength() -
-                            MAX_CONSOLE_MESSAGE_LENGTH);
+                    consoleMessageDoc.remove(0, consoleMessageDoc.getLength()
+                            - MAX_CONSOLE_MESSAGE_LENGTH);
                 } catch (BadLocationException e) {
                     log.error("Could not remove message from console", e);
                     throw new RuntimeException(e);
@@ -192,7 +201,7 @@ public class ConsolePane extends JPanel {
     }
 
     /**
-     *
+     * clearConsoleMessages.
      */
     public void clearConsoleMessages() {
         serializedArea.setText("");

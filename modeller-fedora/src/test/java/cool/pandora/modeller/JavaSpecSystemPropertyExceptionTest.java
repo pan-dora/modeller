@@ -14,26 +14,18 @@
 
 package cool.pandora.modeller;
 
+import org.junit.Test;
 
-import javax.xml.bind.JAXBException;
-import java.io.ByteArrayOutputStream;
+public class JavaSpecSystemPropertyExceptionTest {
 
-/**
- * xmlWriterTest
- *
- * @author Christopher Johnson
- */
-public class xmlWriterTest {
+    @Test(expected = NumberFormatException.class)
+    public void systemPropertyTest() {
+        String jvmVersionString =
+                System.getProperty("java.specification.version");
 
-    private xmlWriterTest() {
-    }
+        int verIndex = jvmVersionString.indexOf("1.");
+        jvmVersionString = jvmVersionString.substring(verIndex+2);
 
-    public static void main(final String[] args) throws JAXBException {
-        final ByteArrayOutputStream out =
-                XmlFileWriter.write().collectionId("test10").objektId("001").resourceId("004")
-                        .build();
-        System.out.println(out);
+        int jvmVersion = Integer.parseInt(jvmVersionString);
     }
 }
-
-

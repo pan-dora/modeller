@@ -14,6 +14,8 @@
 
 package cool.pandora.modeller.ui.handlers.iiif;
 
+import static org.apache.commons.lang3.exception.ExceptionUtils.getMessage;
+
 import cool.pandora.modeller.ModellerClient;
 import cool.pandora.modeller.ModellerClientFailedException;
 import cool.pandora.modeller.ProfileOptions;
@@ -26,12 +28,10 @@ import cool.pandora.modeller.ui.jpanel.base.BagView;
 import cool.pandora.modeller.ui.jpanel.iiif.CreateXmlFilesFrame;
 import cool.pandora.modeller.ui.util.ApplicationContextUtil;
 import cool.pandora.modeller.ui.util.URIResolver;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.awt.event.ActionEvent;
-import java.io.ByteArrayOutputStream;
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Map;
@@ -39,10 +39,11 @@ import java.util.Map;
 import javax.swing.AbstractAction;
 import javax.xml.bind.JAXBException;
 
-import static org.apache.commons.lang3.exception.ExceptionUtils.getMessage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- * Create Xml Files Handler
+ * Create Xml Files Handler.
  *
  * @author Christopher Johnson
  */
@@ -52,6 +53,8 @@ public class CreateXmlFilesHandler extends AbstractAction implements Progress {
     private final BagView bagView;
 
     /**
+     * CreateXmlFilesHandler.
+     *
      * @param bagView BagView
      */
     public CreateXmlFilesHandler(final BagView bagView) {
@@ -100,8 +103,8 @@ public class CreateXmlFilesHandler extends AbstractAction implements Progress {
     void openCreateXmlFilesFrame() {
         final DefaultBag bag = bagView.getBag();
         final CreateXmlFilesFrame createXmlFilesFrame =
-                new CreateXmlFilesFrame(bagView, bagView.getPropertyMessage("bag" + ".frame" +
-                        ".xmlfiles"));
+                new CreateXmlFilesFrame(bagView, bagView.getPropertyMessage("bag" + ".frame"
+                        + ".xmlfiles"));
         createXmlFilesFrame.setBag(bag);
         createXmlFilesFrame.setVisible(true);
     }
@@ -112,8 +115,8 @@ public class CreateXmlFilesHandler extends AbstractAction implements Progress {
             JAXBException {
         final ByteArrayOutputStream xmlFileWriter;
         xmlFileWriter =
-                XmlFileWriter.write().collectionId(collectionId).objektId(objektId).resourceId
-                        (resourceId).build();
+                XmlFileWriter.write().collectionId(collectionId).objektId(objektId).resourceId(
+                        resourceId).build();
         return xmlFileWriter;
     }
 }

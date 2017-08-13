@@ -22,7 +22,7 @@ import java.util.stream.IntStream;
 
 class TestUtils {
 
-    static String StreamToString(InputStream stream) throws IOException {
+    static String streamToString(InputStream stream) throws IOException {
 
         ByteArrayOutputStream result = new ByteArrayOutputStream();
         byte[] buffer = new byte[1024];

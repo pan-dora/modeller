@@ -19,21 +19,22 @@ import cool.pandora.modeller.ui.BagInfoInputPane;
 import cool.pandora.modeller.ui.handlers.base.UpdateBagHandler;
 import cool.pandora.modeller.ui.util.LayoutUtil;
 
-import javax.swing.JPanel;
-import javax.swing.JLabel;
-import javax.swing.JCheckBox;
-import javax.swing.JRadioButton;
-import javax.swing.JButton;
-import javax.swing.JScrollPane;
-import javax.swing.border.Border;
-import javax.swing.border.EmptyBorder;
-import java.awt.Insets;
 import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
+
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
+import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
 
 /**
- * InfoFormsPane
+ * InfoFormsPane.
  *
  * @author gov.loc
  */
@@ -62,6 +63,8 @@ public class InfoFormsPane extends JScrollPane {
     public JRadioButton tarBz2Button;
 
     /**
+     * InfoFormsPane.
+     *
      * @param bagView BagView
      */
     InfoFormsPane(final BagView bagView) {
@@ -73,6 +76,8 @@ public class InfoFormsPane extends JScrollPane {
     }
 
     /**
+     * setProfile.
+     *
      * @param profileName String
      */
     public void setProfile(final String profileName) {
@@ -80,7 +85,7 @@ public class InfoFormsPane extends JScrollPane {
     }
 
     /**
-     *
+     * createUiComponent.
      */
     private void createUiComponent() {
         final JPanel bagSettingsPanel = createSettingsPanel();
@@ -96,8 +101,8 @@ public class InfoFormsPane extends JScrollPane {
         infoPanel.add(bagSettingsPanel, gbc);
 
         bagInfoInputPane = new BagInfoInputPane(bagView);
-        bagInfoInputPane.setToolTipText(bagView.getPropertyMessage("bagView.bagInfoInputPane" +
-                ".help"));
+        bagInfoInputPane.setToolTipText(bagView.getPropertyMessage("bagView.bagInfoInputPane"
+                + ".help"));
         bagInfoInputPane.setEnabled(false);
 
         gbc = LayoutUtil.buildGridBagConstraints(0, 1, 1, 1, 1, 1, GridBagConstraints.BOTH,
@@ -107,6 +112,8 @@ public class InfoFormsPane extends JScrollPane {
     }
 
     /**
+     * createSettingsPanel.
+     *
      * @return contentPane
      */
     private JPanel createSettingsPanel() {
@@ -125,6 +132,8 @@ public class InfoFormsPane extends JScrollPane {
     }
 
     /**
+     * createBagSettingsPanel.
+     *
      * @return pane
      */
     private JPanel createBagSettingsPanel() {
@@ -212,6 +221,8 @@ public class InfoFormsPane extends JScrollPane {
     }
 
     /**
+     * setBagVersion.
+     *
      * @param value String
      */
     public void setBagVersion(final String value) {
@@ -219,6 +230,8 @@ public class InfoFormsPane extends JScrollPane {
     }
 
     /**
+     * getBagVersion.
+     *
      * @return bagVersionValue
      */
     public String getBagVersion() {
@@ -226,6 +239,8 @@ public class InfoFormsPane extends JScrollPane {
     }
 
     /**
+     * setHoley.
+     *
      * @param value String
      */
     public void setHoley(final String value) {
@@ -233,6 +248,8 @@ public class InfoFormsPane extends JScrollPane {
     }
 
     /**
+     * setBagName.
+     *
      * @param name String
      */
     public void setBagName(final String name) {
@@ -243,6 +260,8 @@ public class InfoFormsPane extends JScrollPane {
     }
 
     /**
+     * getBagName.
+     *
      * @return bagNameValue
      */
     public String getBagName() {
@@ -250,7 +269,7 @@ public class InfoFormsPane extends JScrollPane {
     }
 
     /**
-     *
+     * updateInfoForms.
      */
     public void updateInfoForms() {
         bagInfoInputPane.populateForms(bag);
@@ -259,7 +278,7 @@ public class InfoFormsPane extends JScrollPane {
     }
 
     /**
-     *
+     * updateInfoFormsPane.
      */
     public void updateInfoFormsPane() {
         // need to remove something?
@@ -267,8 +286,8 @@ public class InfoFormsPane extends JScrollPane {
         infoPanel.validate();
 
         bagInfoInputPane = new BagInfoInputPane(bagView);
-        bagInfoInputPane.setToolTipText(bagView.getPropertyMessage("bagView.bagInfoInputPane" +
-                ".help"));
+        bagInfoInputPane.setToolTipText(bagView.getPropertyMessage("bagView.bagInfoInputPane"
+                + ".help"));
 
         final GridBagConstraints gbc =
                 LayoutUtil.buildGridBagConstraints(0, 1, 1, 1, 1, 1, GridBagConstraints.BOTH,
@@ -279,6 +298,8 @@ public class InfoFormsPane extends JScrollPane {
     }
 
     /**
+     * showTabPane.
+     *
      * @param i int
      */
     public void showTabPane(final int i) {

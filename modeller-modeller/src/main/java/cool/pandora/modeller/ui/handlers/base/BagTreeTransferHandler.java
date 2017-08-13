@@ -155,7 +155,7 @@ public class BagTreeTransferHandler extends TransferHandler {
     /**
      * copy.
      *
-     * Defensive copy used in createTransferable.
+     * <p>Defensive copy used in createTransferable.
      */
     private static DefaultMutableTreeNode copy(final TreeNode node) {
         return new DefaultMutableTreeNode(node);

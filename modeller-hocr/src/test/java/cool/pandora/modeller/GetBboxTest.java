@@ -17,23 +17,21 @@ package cool.pandora.modeller;
 import java.io.IOException;
 
 /**
- * docManifestBuilderTest
+ * GetBboxTest.
  *
  * @author Christopher Johnson
  */
-public class docManifestBuilderTest {
+public class GetBboxTest {
 
-    private docManifestBuilderTest() {
+    private GetBboxTest() {
     }
 
     public static void main(final String[] args) throws IOException {
-        final String url = "resource://data/001.hocr";
+        final String url = "resource://data/test_007.hocr";
         final hOCRData hocr = DocManifestBuilder.gethOCRProjectionFromURL(url);
-        final String resourceURI = "http://localhost:8080/fcrepo/rest/collection/test/004/area/";
-        final String rdfseq = DocManifestBuilder.getAreaRDFSequenceForhOCRResource(hocr,
-                resourceURI);
-        System.out.println(rdfseq);
-        //Map map = getAreaMapForhOCRResource(hocr);
-        //System.out.println(map);
+
+        final String bbox = DocManifestBuilder.getBboxForId(hocr, "block_1_4");
+        final String region = Region.region().bbox(bbox).build();
+        System.out.println(region);
     }
 }

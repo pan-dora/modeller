@@ -14,21 +14,22 @@
 
 package cool.pandora.modeller;
 
-import org.json.JSONObject;
-import org.json.JSONException;
+import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.json.JSONTokener;
 import org.json.JSONWriter;
 
-import java.io.StringWriter;
-import java.util.LinkedHashMap;
-import java.util.Collection;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Map;
 
 /**
- * Profile
+ * Profile.
  *
  * @author gov.loc
  */
@@ -51,6 +52,8 @@ public class Profile {
     private LinkedHashMap<String, ProfileField> standardFields = new LinkedHashMap<>();
 
     /**
+     * setSendToContact.
+     *
      * @param sendToContact Contact
      */
     private void setSendToContact(final Contact sendToContact) {
@@ -58,6 +61,8 @@ public class Profile {
     }
 
     /**
+     * getSendToContact.
+     *
      * @return sendToContact
      */
     public Contact getSendToContact() {
@@ -65,6 +70,8 @@ public class Profile {
     }
 
     /**
+     * setSendFromContact.
+     *
      * @param sendFromContact Contact
      */
     private void setSendFromContact(final Contact sendFromContact) {
@@ -72,6 +79,8 @@ public class Profile {
     }
 
     /**
+     * getSendFromContact.
+     *
      * @return sendFromContact
      */
     public Contact getSendFromContact() {
@@ -79,6 +88,8 @@ public class Profile {
     }
 
     /**
+     * setOrganization.
+     *
      * @param organization Organization
      */
     private void setOrganization(final Organization organization) {
@@ -86,6 +97,8 @@ public class Profile {
     }
 
     /**
+     * getOrganization.
+     *
      * @return organization
      */
     public Organization getOrganization() {
@@ -93,6 +106,8 @@ public class Profile {
     }
 
     /**
+     * setName.
+     *
      * @param profileName String
      */
     public void setName(final String profileName) {
@@ -100,6 +115,8 @@ public class Profile {
     }
 
     /**
+     * getName.
+     *
      * @return name
      */
     public String getName() {
@@ -107,6 +124,8 @@ public class Profile {
     }
 
     /**
+     * setCustomFields.
+     *
      * @param fields LinkedHashMap
      */
     private void setCustomFields(final LinkedHashMap<String, ProfileField> fields) {
@@ -114,6 +133,8 @@ public class Profile {
     }
 
     /**
+     * getCustomFields.
+     *
      * @return customFields
      */
     public LinkedHashMap<String, ProfileField> getCustomFields() {
@@ -126,6 +147,8 @@ public class Profile {
     }
 
     /**
+     * createProfile.
+     *
      * @param profileJson JSONObject
      * @param profileName String
      * @return profile
@@ -174,6 +197,8 @@ public class Profile {
     }
 
     /**
+     * getFields.
+     *
      * @param fieldsJson JSONObject
      * @return profileFields
      * @throws JSONException exception
@@ -206,6 +231,8 @@ public class Profile {
     }
 
     /**
+     * setStandardFields.
+     *
      * @param standardFields LinkedHashMap
      */
     private void setStandardFields(final LinkedHashMap<String, ProfileField> standardFields) {
@@ -213,6 +240,8 @@ public class Profile {
     }
 
     /**
+     * getStandardFields.
+     *
      * @return standardFields
      */
     public LinkedHashMap<String, ProfileField> getStandardFields() {
@@ -220,13 +249,15 @@ public class Profile {
     }
 
     /**
-     *
+     * setIsDefault.
      */
     public void setIsDefault() {
         this.isDefault = true;
     }
 
     /**
+     * getIsDefault.
+     *
      * @return isDefault
      */
     public boolean getIsDefault() {
@@ -234,6 +265,8 @@ public class Profile {
     }
 
     /**
+     * serialize.
+     *
      * @param jsonWriter JSONWriter
      * @throws JSONException exception
      */
@@ -254,6 +287,8 @@ public class Profile {
     }
 
     /**
+     * seralizeFields.
+     *
      * @param profileFields Collection
      * @return String
      * @throws JSONException exception
@@ -265,14 +300,16 @@ public class Profile {
         filedWriter.object();
         for (final ProfileField field : profileFields) {
             final String fieldStringer = field.serialize();
-            filedWriter.key(field.getFieldName()).value(new JSONObject(new JSONTokener
-                    (fieldStringer)));
+            filedWriter.key(field.getFieldName()).value(new JSONObject(new JSONTokener(
+                    fieldStringer)));
         }
         filedWriter.endObject();
         return writer.toString();
     }
 
     /**
+     * isNoProfile.
+     *
      * @return boolean
      */
     public boolean isNoProfile() {
@@ -280,6 +317,8 @@ public class Profile {
     }
 
     /**
+     * getProfileFields.
+     *
      * @return fields
      */
     public List<ProfileField> getProfileFields() {

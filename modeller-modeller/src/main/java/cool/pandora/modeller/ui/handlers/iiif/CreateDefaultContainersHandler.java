@@ -14,6 +14,20 @@
 
 package cool.pandora.modeller.ui.handlers.iiif;
 
+import static org.apache.commons.lang3.exception.ExceptionUtils.getMessage;
+
+import cool.pandora.modeller.ModellerClient;
+import cool.pandora.modeller.ModellerClientFailedException;
+import cool.pandora.modeller.ProfileOptions;
+import cool.pandora.modeller.bag.BagInfoField;
+import cool.pandora.modeller.bag.impl.DefaultBag;
+import cool.pandora.modeller.ui.Progress;
+import cool.pandora.modeller.ui.handlers.base.SaveBagHandler;
+import cool.pandora.modeller.ui.handlers.common.IIIFObjectURI;
+import cool.pandora.modeller.ui.jpanel.base.BagView;
+import cool.pandora.modeller.ui.jpanel.iiif.CreateDefaultContainersFrame;
+import cool.pandora.modeller.ui.util.ApplicationContextUtil;
+
 import java.awt.event.ActionEvent;
 import java.net.URI;
 import java.util.Arrays;
@@ -22,25 +36,12 @@ import java.util.stream.Stream;
 
 import javax.swing.AbstractAction;
 
-import cool.pandora.modeller.ModellerClientFailedException;
-import cool.pandora.modeller.ProfileOptions;
-import cool.pandora.modeller.bag.BagInfoField;
-import cool.pandora.modeller.ui.handlers.base.SaveBagHandler;
-import cool.pandora.modeller.ui.handlers.common.IIIFObjectURI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import cool.pandora.modeller.bag.impl.DefaultBag;
-import cool.pandora.modeller.ui.jpanel.base.BagView;
-import cool.pandora.modeller.ui.Progress;
-import cool.pandora.modeller.ui.util.ApplicationContextUtil;
-import cool.pandora.modeller.ui.jpanel.iiif.CreateDefaultContainersFrame;
-import cool.pandora.modeller.ModellerClient;
-
-import static org.apache.commons.lang3.exception.ExceptionUtils.getMessage;
 
 /**
- * Create Default Containers Handler
+ * Create Default Containers Handler.
  *
  * @author Christopher Johnson
  */
@@ -50,6 +51,8 @@ public class CreateDefaultContainersHandler extends AbstractAction implements Pr
     private final BagView bagView;
 
     /**
+     * CreateDefaultContainersHandler.
+     *
      * @param bagView BagView
      */
     public CreateDefaultContainersHandler(final BagView bagView) {
@@ -118,8 +121,8 @@ public class CreateDefaultContainersHandler extends AbstractAction implements Pr
     void openCreateDefaultContainersFrame() {
         final DefaultBag bag = bagView.getBag();
         final CreateDefaultContainersFrame createDefaultContainersFrame =
-                new CreateDefaultContainersFrame(bagView, bagView.getPropertyMessage("bag.frame" +
-                        ".put"));
+                new CreateDefaultContainersFrame(bagView, bagView.getPropertyMessage("bag.frame"
+                        + ".put"));
         createDefaultContainersFrame.setBag(bag);
         createDefaultContainersFrame.setVisible(true);
     }

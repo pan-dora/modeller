@@ -14,12 +14,12 @@
 
 package cool.pandora.modeller.ui.handlers.iiif;
 
-import org.springframework.richclient.command.support.AbstractActionCommandExecutor;
-
 import cool.pandora.modeller.ui.jpanel.base.BagView;
 
+import org.springframework.richclient.command.support.AbstractActionCommandExecutor;
+
 /**
- * Create Default Containers Executor
+ * Create Default Containers Executor.
  *
  * @author Christopher Johnson
  */
@@ -27,6 +27,8 @@ public class CreateDefaultContainersExecutor extends AbstractActionCommandExecut
     BagView bagView;
 
     /**
+     * CreateDefaultContainersExecutor.
+     *
      * @param bagView BagView
      */
     public CreateDefaultContainersExecutor(final BagView bagView) {

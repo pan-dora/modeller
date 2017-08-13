@@ -17,6 +17,7 @@ plugins {
 }
 
 allprojects {
+    apply plugin: 'java'
     apply plugin: 'maven'
 
     group = 'cool.pandora'
@@ -27,10 +28,18 @@ allprojects {
         mavenLocal()
     }
 
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.9
+
+    javadoc {
+        options.addStringOption("-add-modules", "java.xml.bind")
+    }
+
     gradle.projectsEvaluated {
         tasks.withType(JavaCompile) {
             options.compilerArgs.add("-Xlint:unchecked")
             options.compilerArgs.add("-Xlint:deprecation")
+            options.compilerArgs.addAll(["--add-modules", "java.se.ee"])
         }
     }
 
@@ -47,37 +56,21 @@ allprojects {
             commitVersionFileOnly = false
         }
     }
-
 }
 
 subprojects {
     apply plugin: 'com.bmuschko.nexus'
-    apply plugin: 'java'
     apply plugin: 'maven-publish'
     apply plugin: 'signing'
     apply plugin: 'checkstyle'
     apply plugin: 'com.github.hierynomus.license'
     apply plugin: 'jacoco'
 
-    group = 'cool.pandora'
-
     ext {
         vendor = 'Pan-dora Ecosystem'
         homepage = 'http://pandora.cool'
         docURL = 'https://github.com/pan-dora/pandora-demo/wiki'
         license = 'Apache 2'
-        sourceCompatibility = 1.8
-        targetCompatibility = 1.8
-    }
-
-    //sign all the bagger jars
-    jar.doLast {
-        ant.signjar(destDir: jar.destinationDir,
-                jar: jar.archivePath,
-                alias: "rdc",
-                keystore: "${rootDir.path}/keystore/bagger.ks",
-                storepass: "bagger-rdc",
-                preservelastmodified: "true")
     }
 
     task processConfig(type: Copy) {
@@ -90,6 +83,12 @@ subprojects {
     task sourceJar(type: Jar) {
         classifier 'sources'
         from sourceSets.main.allSource
+    }
+
+    jar {
+        manifest {
+            attributes 'Main-Class': 'cool.pandora.modeller.ModellerApplication'
+        }
     }
 
     artifacts {
@@ -107,7 +106,7 @@ subprojects {
     }
 
     jacoco {
-        toolVersion = "0.7.6.201602180812"
+        toolVersion = "0.7.9"
     }
 
     license {
@@ -133,6 +132,7 @@ subprojects {
     }
 
     modifyPom {
+        //noinspection GroovyAssignabilityCheck
         project {
             name 'Modeller'
             description 'A BagIt and Fedora Client'
@@ -194,7 +194,7 @@ configurations {
 
 
 dependencies {
-    buildToolsConfig "cool.pandora:pandora-build-tools:0.1.2"
+    buildToolsConfig "cool.pandora:pandora-build-tools:0.1.3"
 }
 
 task processBuildTools(type: Copy) {

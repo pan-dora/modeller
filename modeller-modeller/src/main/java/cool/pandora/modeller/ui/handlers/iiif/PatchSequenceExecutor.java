@@ -14,12 +14,12 @@
 
 package cool.pandora.modeller.ui.handlers.iiif;
 
-import org.springframework.richclient.command.support.AbstractActionCommandExecutor;
-
 import cool.pandora.modeller.ui.jpanel.base.BagView;
 
+import org.springframework.richclient.command.support.AbstractActionCommandExecutor;
+
 /**
- * Patch Sequence Executor
+ * Patch Sequence Executor.
  *
  * @author Christopher Johnson
  */
@@ -27,6 +27,8 @@ public class PatchSequenceExecutor extends AbstractActionCommandExecutor {
     BagView bagView;
 
     /**
+     * PatchSequenceExecutor.
+     *
      * @param bagView BagView
      */
     public PatchSequenceExecutor(final BagView bagView) {

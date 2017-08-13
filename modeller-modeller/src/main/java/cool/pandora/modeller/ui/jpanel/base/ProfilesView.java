@@ -15,15 +15,16 @@
 package cool.pandora.modeller.ui.jpanel.base;
 
 import cool.pandora.modeller.ui.util.ApplicationContextUtil;
+
+import java.awt.BorderLayout;
+import javax.swing.JComponent;
+import javax.swing.JPanel;
+
 import org.springframework.richclient.application.PageComponentContext;
 import org.springframework.richclient.application.support.AbstractView;
 
-import javax.swing.JPanel;
-import javax.swing.JComponent;
-import java.awt.BorderLayout;
-
 /**
- * ProfilesView
+ * ProfilesView.
  *
  * @author gov.loc
  */

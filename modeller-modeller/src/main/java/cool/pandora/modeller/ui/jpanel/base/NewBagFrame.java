@@ -16,8 +16,24 @@ package cool.pandora.modeller.ui.jpanel.base;
 
 import cool.pandora.modeller.ui.util.ApplicationContextUtil;
 import cool.pandora.modeller.ui.util.LayoutUtil;
+
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JComboBox;
+import javax.swing.JComponent;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JSeparator;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import org.springframework.richclient.application.Application;
 import org.springframework.richclient.application.ApplicationPage;
 import org.springframework.richclient.application.PageComponent;
@@ -28,21 +44,8 @@ import org.springframework.richclient.core.DefaultMessage;
 import org.springframework.richclient.dialog.TitlePane;
 import org.springframework.richclient.util.GuiStandardUtils;
 
-import javax.swing.JPanel;
-import javax.swing.JLabel;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JComponent;
-import javax.swing.JSeparator;
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 /**
- * NewBagFrame
+ * NewBagFrame.
  *
  * @author gov.loc
  */
@@ -53,6 +56,8 @@ public class NewBagFrame extends JFrame implements ActionListener {
     private JComboBox<String> profileList;
 
     /**
+     * NewBagFrame.
+     *
      * @param bagView BagView
      * @param title String
      */
@@ -82,6 +87,8 @@ public class NewBagFrame extends JFrame implements ActionListener {
     }
 
     /**
+     * createComponents.
+     *
      * @return pageControl
      */
     private JPanel createComponents() {
@@ -90,8 +97,8 @@ public class NewBagFrame extends JFrame implements ActionListener {
         final JPanel pageControl = new JPanel(new BorderLayout());
         final JPanel titlePaneContainer = new JPanel(new BorderLayout());
         titlePane.setTitle(bagView.getPropertyMessage("NewBagFrame.title"));
-        titlePane.setMessage(new DefaultMessage(bagView.getPropertyMessage("NewBagFrame" +
-                ".description")));
+        titlePane.setMessage(new DefaultMessage(bagView.getPropertyMessage("NewBagFrame"
+                + ".description")));
         titlePaneContainer.add(titlePane.getControl());
         titlePaneContainer.add(new JSeparator(), BorderLayout.SOUTH);
         pageControl.add(titlePaneContainer, BorderLayout.NORTH);
@@ -117,6 +124,8 @@ public class NewBagFrame extends JFrame implements ActionListener {
     }
 
     /**
+     * layoutBagVersionSelection.
+     *
      * @param contentPane JPanel
      * @param row int
      */
@@ -139,6 +148,8 @@ public class NewBagFrame extends JFrame implements ActionListener {
     }
 
     /**
+     * layoutProfileSelection.
+     *
      * @param contentPane JPanel
      * @param row int
      */
@@ -171,6 +182,8 @@ public class NewBagFrame extends JFrame implements ActionListener {
     }
 
     /**
+     * createButtonBar.
+     *
      * @return buttonBar
      */
     protected JComponent createButtonBar() {
@@ -182,6 +195,8 @@ public class NewBagFrame extends JFrame implements ActionListener {
     }
 
     /**
+     * getCommandGroupMembers.
+     *
      * @return AbstractCommand
      */
     protected Object[] getCommandGroupMembers() {
@@ -210,13 +225,15 @@ public class NewBagFrame extends JFrame implements ActionListener {
     }
 
     /**
-     *
+     * hideNewBagFrame.
      */
     private void hideNewBagFrame() {
         this.setVisible(false);
     }
 
     /**
+     * getFinishCommandId.
+     *
      * @return DEFAULT_FINISH_COMMAND_ID
      */
     protected static String getFinishCommandId() {
@@ -224,6 +241,8 @@ public class NewBagFrame extends JFrame implements ActionListener {
     }
 
     /**
+     * getCancelCommandId.
+     *
      * @return DEFAULT_CANCEL_COMMAND_ID
      */
     protected static String getCancelCommandId() {
@@ -239,6 +258,8 @@ public class NewBagFrame extends JFrame implements ActionListener {
     private transient ActionCommand cancelCommand;
 
     /**
+     * actionPerformed.
+     *
      * @param e ActionEvent
      */
     @Override

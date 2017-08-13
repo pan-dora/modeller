@@ -21,22 +21,24 @@ import cool.pandora.modeller.ProfileField;
 import cool.pandora.modeller.bag.BagInfoField;
 import cool.pandora.modeller.bag.BaggerSourceOrganization;
 import cool.pandora.modeller.profile.BaggerProfileStore;
+
 import gov.loc.repository.bagit.BagInfoTxt;
 import gov.loc.repository.bagit.impl.BagInfoTxtImpl;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
-import java.util.Map;
-import java.util.List;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
-import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
- * DefaultBagInfo
+ * DefaultBagInfo.
  *
  * @author loc.gov
  */
@@ -74,6 +76,8 @@ public class DefaultBagInfo implements Serializable {
     private LinkedHashMap<String, BagInfoField> fieldMap = new LinkedHashMap<>();
 
     /**
+     * getBagOrganization.
+     *
      * @return sourceOrganization
      */
     public BaggerSourceOrganization getBagOrganization() {
@@ -81,6 +85,8 @@ public class DefaultBagInfo implements Serializable {
     }
 
     /**
+     * getFieldMap.
+     *
      * @return fieldMap
      */
     public HashMap<String, BagInfoField> getFieldMap() {
@@ -88,6 +94,8 @@ public class DefaultBagInfo implements Serializable {
     }
 
     /**
+     * addField.
+     *
      * @param field BagInfoField
      */
     void addField(final BagInfoField field) {
@@ -95,6 +103,21 @@ public class DefaultBagInfo implements Serializable {
     }
 
     /**
+     * update.
+     *
+     * @param map Map
+     */
+    public void update(final Map<String, String> map) {
+        for (final Entry<String, String> entry : map.entrySet()) {
+            if (fieldMap.get(entry.getKey()) != null) {
+                fieldMap.get(entry.getKey()).setValue(entry.getValue());
+            }
+        }
+    }
+
+    /**
+     * update.
+     *
      * @param bagInfoTxt BagInfoTxt
      */
     public void update(final BagInfoTxt bagInfoTxt) {
@@ -123,6 +146,8 @@ public class DefaultBagInfo implements Serializable {
     }
 
     /**
+     * updateBagInfoFieldMapFromBilBag.
+     *
      * @param bagInfoTxt BagInfoTxt
      */
     private void updateBagInfoFieldMapFromBilBag(final BagInfoTxt bagInfoTxt) {
@@ -135,6 +160,8 @@ public class DefaultBagInfo implements Serializable {
     }
 
     /**
+     * setProfile.
+     *
      * @param profile Profile
      * @param newBag boolean
      */
@@ -165,6 +192,8 @@ public class DefaultBagInfo implements Serializable {
     }
 
     /**
+     * applyProfileToFieldMap.
+     *
      * @param profile Profile
      */
     private void applyProfileToFieldMap(final Profile profile) {
@@ -187,8 +216,8 @@ public class DefaultBagInfo implements Serializable {
                 fieldMap.put(field.getLabel(), field);
             }
 
-            final List<ProfileField> list = BaggerProfileStore.getInstance().getProfileFields
-                    (profile.getName());
+            final List<ProfileField> list = BaggerProfileStore.getInstance().getProfileFields(
+                    profile.getName());
             final LinkedHashMap<String, ProfileField> profileFields = convertToMap(list);
 
             if (fieldMap.size() > 0) {
@@ -255,6 +284,8 @@ public class DefaultBagInfo implements Serializable {
     }
 
     /**
+     * convertToMap.
+     *
      * @param profileFields LinkedHashMap
      * @return filedsToReturn
      */
@@ -271,13 +302,15 @@ public class DefaultBagInfo implements Serializable {
     }
 
     /**
-     *
+     * clearFields.
      */
     void clearFields() {
         fieldMap = new LinkedHashMap<>();
     }
 
     /**
+     * removeField.
+     *
      * @param key String
      */
     void removeField(final String key) {
@@ -285,6 +318,8 @@ public class DefaultBagInfo implements Serializable {
     }
 
     /**
+     * isOrganizationContactField.
+     *
      * @param fieldName String
      * @return boolean
      */
@@ -293,6 +328,8 @@ public class DefaultBagInfo implements Serializable {
     }
 
     /**
+     * isManifestPropertyField.
+     *
      * @param fieldName String
      * @return boolean
      */
@@ -301,6 +338,8 @@ public class DefaultBagInfo implements Serializable {
     }
 
     /**
+     * prepareBilBagInfo.
+     *
      * @param bagInfoTxt BagInfoTxt
      */
     void prepareBilBagInfo(final BagInfoTxt bagInfoTxt) {
@@ -314,6 +353,8 @@ public class DefaultBagInfo implements Serializable {
     }
 
     /**
+     * updateBagInfoTxtWithOrganizationInformation.
+     *
      * @param bagInfoTxt BagInfoTxt
      */
     private void updateBagInfoTxtWithOrganizationInformation(final BagInfoTxt bagInfoTxt) {
@@ -338,8 +379,8 @@ public class DefaultBagInfo implements Serializable {
                     .getFieldValue());
         }
         if (!toContact.getTelephone().getFieldValue().trim().isEmpty()) {
-            bagInfoTxt.put(Contact.FIELD_TO_CONTACT_PHONE, toContact.getTelephone().getFieldValue
-                    ().trim());
+            bagInfoTxt.put(Contact.FIELD_TO_CONTACT_PHONE, toContact.getTelephone().getFieldValue()
+                    .trim());
         }
         if (!toContact.getEmail().getFieldValue().trim().isEmpty()) {
             bagInfoTxt.put(Contact.FIELD_TO_CONTACT_EMAIL, toContact.getEmail().getFieldValue()
@@ -349,6 +390,8 @@ public class DefaultBagInfo implements Serializable {
     }
 
     /**
+     * getToContact.
+     *
      * @return toContact
      */
     public Contact getToContact() {
@@ -356,21 +399,14 @@ public class DefaultBagInfo implements Serializable {
     }
 
     /**
+     * setToContact.
+     *
      * @param toContact Contact
      */
     public void setToContact(final Contact toContact) {
         this.toContact = toContact;
     }
 
-    /**
-     * @param map Map
-     */
-    public void update(final Map<String, String> map) {
-        for (final Entry<String, String> entry : map.entrySet()) {
-            if (fieldMap.get(entry.getKey()) != null) {
-                fieldMap.get(entry.getKey()).setValue(entry.getValue());
-            }
-        }
-    }
+
 
 }

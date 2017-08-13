@@ -14,38 +14,42 @@
 
 package cool.pandora.modeller.ui.handlers.iiif;
 
-import java.awt.event.ActionEvent;
-import java.io.InputStream;
-import java.net.URI;
-import java.util.Map;
-import java.util.List;
-import java.util.Arrays;
-import javax.swing.AbstractAction;
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static org.apache.commons.lang3.StringEscapeUtils.unescapeXml;
+import static org.apache.commons.lang3.exception.ExceptionUtils.getMessage;
 
-import org.apache.commons.io.IOUtils;
+import cool.pandora.modeller.ModellerClient;
 import cool.pandora.modeller.ModellerClientFailedException;
 import cool.pandora.modeller.bag.BagInfoField;
+import cool.pandora.modeller.bag.impl.DefaultBag;
 import cool.pandora.modeller.bag.impl.ManifestPropertiesImpl;
 import cool.pandora.modeller.common.uri.FedoraPrefixes;
 import cool.pandora.modeller.templates.ManifestScope;
 import cool.pandora.modeller.templates.MetadataTemplate;
+import cool.pandora.modeller.ui.Progress;
 import cool.pandora.modeller.ui.handlers.common.IIIFObjectURI;
+import cool.pandora.modeller.ui.jpanel.base.BagView;
 import cool.pandora.modeller.ui.jpanel.iiif.PatchManifestFrame;
+import cool.pandora.modeller.ui.util.ApplicationContextUtil;
+
+import java.awt.event.ActionEvent;
+import java.io.InputStream;
+import java.net.URI;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+
+import javax.swing.AbstractAction;
+
+import org.apache.commons.io.IOUtils;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import cool.pandora.modeller.bag.impl.DefaultBag;
-import cool.pandora.modeller.ui.jpanel.base.BagView;
-import cool.pandora.modeller.ui.Progress;
-import cool.pandora.modeller.ui.util.ApplicationContextUtil;
-import cool.pandora.modeller.ModellerClient;
 
-import static org.apache.commons.lang3.StringEscapeUtils.unescapeXml;
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.apache.commons.lang3.exception.ExceptionUtils.getMessage;
 
 /**
- * Patch Manifest Handler
+ * Patch Manifest Handler.
  *
  * @author Christopher Johnson
  */
@@ -55,6 +59,8 @@ public class PatchManifestHandler extends AbstractAction implements Progress {
     private final BagView bagView;
 
     /**
+     * PatchManifestHandler.
+     *
      * @param bagView BagView
      */
     public PatchManifestHandler(final BagView bagView) {
@@ -90,8 +96,8 @@ public class PatchManifestHandler extends AbstractAction implements Progress {
     void openPatchManifestFrame() {
         final DefaultBag bag = bagView.getBag();
         final PatchManifestFrame patchManifestFrame =
-                new PatchManifestFrame(bagView, bagView.getPropertyMessage("bag.frame.patch" +
-                        ".manifest"));
+                new PatchManifestFrame(bagView, bagView.getPropertyMessage("bag.frame.patch"
+                        + ".manifest"));
         patchManifestFrame.setBag(bag);
         patchManifestFrame.setVisible(true);
     }
@@ -101,8 +107,8 @@ public class PatchManifestHandler extends AbstractAction implements Progress {
                                                    final Map<String, BagInfoField> map) {
 
         final MetadataTemplate metadataTemplate;
-        final List<ManifestScope.Prefix> prefixes = Arrays.asList(new ManifestScope.Prefix
-                        (FedoraPrefixes.RDFS),
+        final List<ManifestScope.Prefix> prefixes = Arrays.asList(new ManifestScope.Prefix(
+                        FedoraPrefixes.RDFS),
                 new ManifestScope.Prefix(FedoraPrefixes.MODE));
 
         final String label = getMapValue(map, ManifestPropertiesImpl.FIELD_LABEL);
@@ -116,12 +122,12 @@ public class PatchManifestHandler extends AbstractAction implements Progress {
         final ManifestScope scope =
                 new ManifestScope().fedoraPrefixes(prefixes).collectionURI(collectionIdURI
                         .toString())
-                        .sequenceURI(sequenceIdURI.toString()).label(label).attribution
-                        (attribution).license(license)
+                        .sequenceURI(sequenceIdURI.toString()).label(label).attribution(
+                        attribution).license(license)
                         .logo(logo).rendering(rendering).author(author).published(published);
 
-        metadataTemplate = MetadataTemplate.template().template("template/sparql-update-manifest" +
-                ".mustache").scope(scope)
+        metadataTemplate = MetadataTemplate.template().template("template/sparql-update-manifest"
+                + ".mustache").scope(scope)
                 .throwExceptionOnFailure().build();
 
         final String metadata = unescapeXml(metadataTemplate.render());

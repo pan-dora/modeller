@@ -14,13 +14,13 @@
 
 package cool.pandora.modeller;
 
+import static junit.framework.TestCase.assertNotNull;
+
 import cool.pandora.modeller.util.TextCollectionWriter;
 import org.junit.Test;
 
-import static junit.framework.TestCase.assertNotNull;
-
 /**
- * TextCollectionWriterTest
+ * TextCollectionWriterTest.
  *
  * @author Christopher Johnson
  */

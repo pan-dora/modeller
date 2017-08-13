@@ -39,6 +39,8 @@ public class ValidateBagHandler extends AbstractAction implements Progress {
     private String messages;
 
     /**
+     * ValidateBagHandler.
+     *
      * @param bagView BagView
      */
     public ValidateBagHandler(final BagView bagView) {

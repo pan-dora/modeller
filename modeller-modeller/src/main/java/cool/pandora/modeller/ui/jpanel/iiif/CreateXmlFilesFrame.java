@@ -18,6 +18,25 @@ import cool.pandora.modeller.bag.BagInfoField;
 import cool.pandora.modeller.bag.impl.DefaultBag;
 import cool.pandora.modeller.ui.handlers.common.IIIFObjectURI;
 import cool.pandora.modeller.ui.jpanel.base.BagView;
+
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.net.URI;
+import java.util.Map;
+import javax.swing.AbstractAction;
+import javax.swing.JComponent;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JSeparator;
+import javax.swing.JTextField;
+import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.richclient.command.AbstractCommand;
@@ -27,26 +46,8 @@ import org.springframework.richclient.core.DefaultMessage;
 import org.springframework.richclient.dialog.TitlePane;
 import org.springframework.richclient.util.GuiStandardUtils;
 
-import javax.swing.JPanel;
-import javax.swing.JLabel;
-import javax.swing.JFrame;
-import javax.swing.JTextField;
-import javax.swing.AbstractAction;
-import javax.swing.JComponent;
-import javax.swing.JSeparator;
-import javax.swing.border.Border;
-import javax.swing.border.EmptyBorder;
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.net.URI;
-import java.util.Map;
-
 /**
- * CreateXmlFilesFrame
+ * CreateXmlFilesFrame.
  *
  * @author Christopher Johnson
  */
@@ -58,6 +59,8 @@ public class CreateXmlFilesFrame extends JFrame implements ActionListener {
     private final JPanel savePanel;
 
     /**
+     * CreateXmlFilesFrame.
+     *
      * @param bagView BagView
      * @param title String
      */
@@ -78,6 +81,8 @@ public class CreateXmlFilesFrame extends JFrame implements ActionListener {
     }
 
     /**
+     * createButtonBar.
+     *
      * @return buttonBar
      */
     private JComponent createButtonBar() {
@@ -89,6 +94,8 @@ public class CreateXmlFilesFrame extends JFrame implements ActionListener {
     }
 
     /**
+     * getCommandGroupMembers.
+     *
      * @return AbstractCommand
      */
     private Object[] getCommandGroupMembers() {
@@ -118,6 +125,8 @@ public class CreateXmlFilesFrame extends JFrame implements ActionListener {
     }
 
     /**
+     * getFinishCommandId.
+     *
      * @return DEFAULT_FINISH_COMMAND_ID
      */
     private static String getFinishCommandId() {
@@ -125,6 +134,8 @@ public class CreateXmlFilesFrame extends JFrame implements ActionListener {
     }
 
     /**
+     * getCancelCommandId.
+     *
      * @return DEFAULT_CANCEL_COMMAND_ID
      */
     private static String getCancelCommandId() {
@@ -147,8 +158,8 @@ public class CreateXmlFilesFrame extends JFrame implements ActionListener {
         final JPanel pageControl = new JPanel(new BorderLayout());
         final JPanel titlePaneContainer = new JPanel(new BorderLayout());
         titlePane.setTitle(bagView.getPropertyMessage("CreateXmlFilesFrame.title"));
-        titlePane.setMessage(new DefaultMessage(bagView.getPropertyMessage("Create Xml Files " +
-                "in:")));
+        titlePane.setMessage(new DefaultMessage(bagView.getPropertyMessage("Create Xml Files "
+                + "in:")));
         titlePaneContainer.add(titlePane.getControl());
         titlePaneContainer.add(new JSeparator(), BorderLayout.SOUTH);
         pageControl.add(titlePaneContainer, BorderLayout.NORTH);
@@ -202,6 +213,8 @@ public class CreateXmlFilesFrame extends JFrame implements ActionListener {
     }
 
     /**
+     * setBag.
+     *
      * @param bag DefaultBag
      */
     public void setBag(final DefaultBag bag) {
@@ -234,6 +247,8 @@ public class CreateXmlFilesFrame extends JFrame implements ActionListener {
     }
 
     /**
+     * buildConstraints.
+     *
      * @param gbc GridBagConstraints
      * @param x int
      * @param y int
@@ -259,6 +274,8 @@ public class CreateXmlFilesFrame extends JFrame implements ActionListener {
     }
 
     /**
+     * getMessage.
+     *
      * @param property String
      * @return message
      */

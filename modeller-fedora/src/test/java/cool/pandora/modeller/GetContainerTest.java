@@ -14,36 +14,36 @@
 
 package cool.pandora.modeller;
 
-import org.apache.jena.rdf.model.ModelFactory;
-import org.apache.jena.rdf.model.Model;
-import org.apache.jena.rdf.model.Property;
-import org.apache.jena.rdf.model.StmtIterator;
-import org.apache.jena.rdf.model.SimpleSelector;
-import org.apache.jena.rdf.model.Statement;
-import org.apache.jena.rdf.model.Resource;
+import static org.apache.commons.lang3.exception.ExceptionUtils.getMessage;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
 
-import static org.apache.commons.lang3.exception.ExceptionUtils.getMessage;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.rdf.model.Property;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.SimpleSelector;
+import org.apache.jena.rdf.model.Statement;
+import org.apache.jena.rdf.model.StmtIterator;
 
 /**
- * getContainerTest
+ * getContainerTest.
  *
  * @author Christopher Johnson
  */
-public class getContainerTest {
+public class GetContainerTest {
 
-    private getContainerTest() {
+    private GetContainerTest() {
     }
 
     public static void main(final String[] args) throws IOException {
         try {
             final String resource = ModellerClient
-                    .doGetContainerResources(URI.create
-                            ("http://localhost:8080/fcrepo/rest/collection/test/001/res"));
+                    .doGetContainerResources(URI.create(
+                            "http://localhost:8080/fcrepo/rest/collection/test/001/res"));
             final Model model = ModelFactory.createDefaultModel();
             model.read(new ByteArrayInputStream(resource.getBytes()), null, "TTL");
             final ArrayList<String> children = getChilden(model);

@@ -16,14 +16,6 @@ package cool.pandora.modeller.ui.jpanel.base;
 
 import cool.pandora.modeller.bag.impl.DefaultBag;
 
-import javax.swing.JPanel;
-import javax.swing.JLabel;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JButton;
-import javax.swing.JTextField;
-import javax.swing.AbstractAction;
-import javax.swing.border.EmptyBorder;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -31,8 +23,18 @@ import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.AbstractAction;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+import javax.swing.border.EmptyBorder;
+
 /**
- * NewItemFrame
+ * NewItemFrame.
  *
  * @author gov.loc
  */
@@ -43,6 +45,8 @@ public class NewItemFrame extends JFrame implements ActionListener {
     private final JComboBox<String> itemList;
 
     /**
+     * NewItemFrame.
+     *
      * @param bagView BagView
      * @param itemList JComboBox
      * @param title String
@@ -61,6 +65,8 @@ public class NewItemFrame extends JFrame implements ActionListener {
     }
 
     /**
+     * createComponents.
+     *
      * @return panel
      */
     private JPanel createComponents() {
@@ -151,6 +157,8 @@ public class NewItemFrame extends JFrame implements ActionListener {
     }
 
     /**
+     * buildConstraints.
+     *
      * @param gbc GridBagConstraints
      * @param x int
      * @param y int

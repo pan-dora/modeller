@@ -14,6 +14,8 @@
 
 package cool.pandora.modeller.ui.handlers.iiif;
 
+import static org.apache.commons.lang3.exception.ExceptionUtils.getMessage;
+
 import cool.pandora.modeller.ModellerClient;
 import cool.pandora.modeller.ModellerClientFailedException;
 import cool.pandora.modeller.bag.BagInfoField;
@@ -24,8 +26,6 @@ import cool.pandora.modeller.ui.handlers.common.IIIFObjectURI;
 import cool.pandora.modeller.ui.jpanel.base.BagView;
 import cool.pandora.modeller.ui.jpanel.iiif.CreateCanvasesFrame;
 import cool.pandora.modeller.ui.util.ApplicationContextUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.awt.event.ActionEvent;
 import java.net.URI;
@@ -34,10 +34,12 @@ import java.util.Map;
 
 import javax.swing.AbstractAction;
 
-import static org.apache.commons.lang3.exception.ExceptionUtils.getMessage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 /**
- * Create Canvases Handler
+ * Create Canvases Handler.
  *
  * @author Christopher Johnson
  */
@@ -47,6 +49,8 @@ public class CreateCanvasesHandler extends AbstractAction implements Progress {
     private final BagView bagView;
 
     /**
+     * CreateCanvasesHandler.
+     *
      * @param bagView BagView
      */
     public CreateCanvasesHandler(final BagView bagView) {
@@ -81,8 +85,8 @@ public class CreateCanvasesHandler extends AbstractAction implements Progress {
     void openCreateCanvasesFrame() {
         final DefaultBag bag = bagView.getBag();
         final CreateCanvasesFrame createCanvasesFrame =
-                new CreateCanvasesFrame(bagView, bagView.getPropertyMessage("bag" + ".frame" +
-                        ".canvas"));
+                new CreateCanvasesFrame(bagView, bagView.getPropertyMessage("bag" + ".frame"
+                        + ".canvas"));
         createCanvasesFrame.setBag(bag);
         createCanvasesFrame.setVisible(true);
     }

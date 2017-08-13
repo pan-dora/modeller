@@ -17,15 +17,16 @@ package cool.pandora.modeller.bag;
 import cool.pandora.modeller.Contact;
 import cool.pandora.modeller.ProfileField;
 import gov.loc.repository.bagit.BagInfoTxt;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Simple JavaBean domain object representing an organization.
- * <p>
- * | (Source-organization: California Digital Library )
+ *
+ * <p>| (Source-organization: California Digital Library )
  * | (Organization-address: 415 20th Street, 4th Floor, Oakland, CA. 94612 )
  * | (Contact-name: A. E. Newman )
  * | (Contact-phone: +1 510-555-1234 )
@@ -45,12 +46,14 @@ public class BaggerSourceOrganization implements Serializable {
     private Contact contact = new Contact(false);
 
     /**
-     *
+     * BaggerSourceOrganization.
      */
     public BaggerSourceOrganization() {
     }
 
     /**
+     * BaggerSourceOrganization.
+     *
      * @param bagInfoTxt BagInfoTxt
      */
     public BaggerSourceOrganization(final BagInfoTxt bagInfoTxt) {
@@ -62,16 +65,16 @@ public class BaggerSourceOrganization implements Serializable {
         } else {
             contact.setContactName(ProfileField.createProfileField(Contact.FIELD_CONTACT_NAME, ""));
         }
-        if (bagInfoTxt.getContactPhone() != null && !bagInfoTxt.getContactPhone().trim().isEmpty
-                ()) {
+        if (bagInfoTxt.getContactPhone() != null && !bagInfoTxt.getContactPhone().trim().isEmpty(
+                )) {
             contact.setTelephone(
                     ProfileField.createProfileField(Contact.FIELD_CONTACT_PHONE, bagInfoTxt
                             .getContactPhone()));
         } else {
             contact.setTelephone(ProfileField.createProfileField(Contact.FIELD_CONTACT_PHONE, ""));
         }
-        if (bagInfoTxt.getContactEmail() != null && !bagInfoTxt.getContactEmail().trim().isEmpty
-                ()) {
+        if (bagInfoTxt.getContactEmail() != null && !bagInfoTxt.getContactEmail().trim().isEmpty(
+                )) {
             contact.setEmail(
                     ProfileField.createProfileField(Contact.FIELD_CONTACT_EMAIL, bagInfoTxt
                             .getContactEmail()));
@@ -94,6 +97,8 @@ public class BaggerSourceOrganization implements Serializable {
     }
 
     /**
+     * getOrganizationName.
+     *
      * @return organizationName
      */
     public String getOrganizationName() {
@@ -101,6 +106,8 @@ public class BaggerSourceOrganization implements Serializable {
     }
 
     /**
+     * setOrganizationName.
+     *
      * @param name String
      */
     public void setOrganizationName(final String name) {
@@ -108,6 +115,8 @@ public class BaggerSourceOrganization implements Serializable {
     }
 
     /**
+     * getOrganizationAddress.
+     *
      * @return organizationAddress
      */
     public String getOrganizationAddress() {
@@ -115,6 +124,8 @@ public class BaggerSourceOrganization implements Serializable {
     }
 
     /**
+     * setOrganizationAddress.
+     *
      * @param address String
      */
     public void setOrganizationAddress(final String address) {
@@ -122,6 +133,8 @@ public class BaggerSourceOrganization implements Serializable {
     }
 
     /**
+     * getContact.
+     *
      * @return contact
      */
     public Contact getContact() {
@@ -129,6 +142,8 @@ public class BaggerSourceOrganization implements Serializable {
     }
 
     /**
+     * setContact.
+     *
      * @param contact Contact
      */
     public void setContact(final Contact contact) {
@@ -140,8 +155,8 @@ public class BaggerSourceOrganization implements Serializable {
         log.info("SourceOrganization.toString");
 
         return this.organizationName + '\n' + this.organizationAddress + '\n' + this.contact
-                .getContactName() + '\n' +
-                this.contact.getTelephone() + '\n' + this.contact.getEmail() + '\n';
+                .getContactName() + '\n'
+                + this.contact.getTelephone() + '\n' + this.contact.getEmail() + '\n';
     }
 
 }

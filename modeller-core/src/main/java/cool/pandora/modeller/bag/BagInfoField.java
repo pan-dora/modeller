@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * BagInfoField
+ * BagInfoField.
  *
  * @author gov.loc
  */
@@ -46,13 +46,15 @@ public class BagInfoField implements Serializable {
     private boolean isProfile = false;
 
     /**
-     *
+     * BagInfoField.
      */
     public BagInfoField() {
 
     }
 
     /**
+     * BagInfoField.
+     *
      * @param projectProfile ProfileField
      */
     public BagInfoField(final ProfileField projectProfile) {
@@ -79,6 +81,8 @@ public class BagInfoField implements Serializable {
     }
 
     /**
+     * setName.
+     *
      * @param n String
      */
     public void setName(final String n) {
@@ -86,6 +90,8 @@ public class BagInfoField implements Serializable {
     }
 
     /**
+     * getName.
+     *
      * @return name
      */
     public String getName() {
@@ -93,6 +99,8 @@ public class BagInfoField implements Serializable {
     }
 
     /**
+     * setLabel.
+     *
      * @param l String
      */
     public void setLabel(final String l) {
@@ -100,6 +108,8 @@ public class BagInfoField implements Serializable {
     }
 
     /**
+     * getLabel.
+     *
      * @return label
      */
     public String getLabel() {
@@ -107,6 +117,8 @@ public class BagInfoField implements Serializable {
     }
 
     /**
+     * setValue.
+     *
      * @param v String
      */
     public void setValue(final String v) {
@@ -114,6 +126,8 @@ public class BagInfoField implements Serializable {
     }
 
     /**
+     * getValue.
+     *
      * @return value
      */
     public String getValue() {
@@ -121,6 +135,8 @@ public class BagInfoField implements Serializable {
     }
 
     /**
+     * setElements.
+     *
      * @param e List
      */
     public void setElements(final List<String> e) {
@@ -128,6 +144,8 @@ public class BagInfoField implements Serializable {
     }
 
     /**
+     * getElements.
+     *
      * @return elements
      */
     public List<String> getElements() {
@@ -135,6 +153,8 @@ public class BagInfoField implements Serializable {
     }
 
     /**
+     * setComponentType.
+     *
      * @param type int
      */
     public void setComponentType(final int type) {
@@ -142,6 +162,8 @@ public class BagInfoField implements Serializable {
     }
 
     /**
+     * getComponentType.
+     *
      * @return componentType
      */
     public int getComponentType() {
@@ -149,6 +171,8 @@ public class BagInfoField implements Serializable {
     }
 
     /**
+     * isEditable.
+     *
      * @param b boolean
      */
     public void isEditable(final boolean b) {
@@ -156,6 +180,8 @@ public class BagInfoField implements Serializable {
     }
 
     /**
+     * isEditable.
+     *
      * @return isEditable
      */
     private boolean isEditable() {
@@ -163,6 +189,8 @@ public class BagInfoField implements Serializable {
     }
 
     /**
+     * isEnabled.
+     *
      * @param b boolean
      */
     public void isEnabled(final boolean b) {
@@ -170,6 +198,8 @@ public class BagInfoField implements Serializable {
     }
 
     /**
+     * isEnabled.
+     *
      * @return isEnabled
      */
     public boolean isEnabled() {
@@ -177,6 +207,8 @@ public class BagInfoField implements Serializable {
     }
 
     /**
+     * isRequired.
+     *
      * @param b boolean
      */
     public void isRequired(final boolean b) {
@@ -184,6 +216,8 @@ public class BagInfoField implements Serializable {
     }
 
     /**
+     * isRequired.
+     *
      * @return isRequired
      */
     public boolean isRequired() {
@@ -191,6 +225,8 @@ public class BagInfoField implements Serializable {
     }
 
     /**
+     * isRequiredvalue.
+     *
      * @param b boolean
      */
     public void isRequiredvalue(final boolean b) {
@@ -198,6 +234,8 @@ public class BagInfoField implements Serializable {
     }
 
     /**
+     * isRequiredvalue.
+     *
      * @return isRequiredvalue
      */
     private boolean isRequiredvalue() {
@@ -205,6 +243,8 @@ public class BagInfoField implements Serializable {
     }
 
     /**
+     * isProfile.
+     *
      * @param b boolean
      */
     public void isProfile(final boolean b) {
@@ -212,6 +252,8 @@ public class BagInfoField implements Serializable {
     }
 
     /**
+     * isProfile.
+     *
      * @return isProfile
      */
     public boolean isProfile() {
@@ -219,6 +261,8 @@ public class BagInfoField implements Serializable {
     }
 
     /**
+     * buildElements.
+     *
      * @param elementList List
      */
     public void buildElements(final List<String> elementList) {
@@ -228,13 +272,13 @@ public class BagInfoField implements Serializable {
 
     @Override
     public String toString() {
-        return "\n" + "Label: " + getLabel() + "\n" + "Name: " + getName() + "\n" + "Value: " +
-                getValue() + "\n" +
-                "Type: " + getComponentType() + "\n" + "Elements: " + getElements() + "\n" +
-                "isRequired: " +
-                isRequired() + "\n" + "isRequiredvalue: " + isRequiredvalue() + "\n" +
-                "isEnabled: " + isEnabled() +
-                "\n" + "isEditable: " + isEditable() + "\n";
+        return "\n" + "Label: " + getLabel() + "\n" + "Name: " + getName() + "\n" + "Value: "
+                + getValue() + "\n"
+                + "Type: " + getComponentType() + "\n" + "Elements: " + getElements() + "\n"
+                + "isRequired: "
+                + isRequired() + "\n" + "isRequiredvalue: " + isRequiredvalue() + "\n"
+                + "isEnabled: " + isEnabled()
+                + "\n" + "isEditable: " + isEditable() + "\n";
     }
 
 }

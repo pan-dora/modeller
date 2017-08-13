@@ -18,8 +18,9 @@ import cool.pandora.modeller.bag.impl.DefaultBag;
 import cool.pandora.modeller.ui.jpanel.base.BagView;
 import gov.loc.repository.bagit.BagFile;
 
-import java.awt.Dimension;
 import java.awt.Color;
+import java.awt.Dimension;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -31,6 +32,7 @@ import javax.swing.event.ChangeListener;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 /**
  * Tag Manifest Pane.
  *
@@ -113,8 +115,8 @@ public class TagManifestPane extends JTabbedPane {
             manifestPaneList.add(manifestPane);
             final JScrollPane manifestScrollPane = new JScrollPane();
             manifestScrollPane.setViewportView(manifestPane);
-            manifestScrollPane.setToolTipText(parentView.getPropertyMessage("compositePane.tab" +
-                    ".manifest.help"));
+            manifestScrollPane.setToolTipText(parentView.getPropertyMessage("compositePane.tab"
+                    + ".manifest.help"));
             manifestScrollPane.setForeground(selectedColor);
             manifestScrollPaneList.add(manifestScrollPane);
             final String tabName = bf.getFilepath();
@@ -137,7 +139,7 @@ public class TagManifestPane extends JTabbedPane {
     /**
      * updateCompositePaneTabs.
      *
-     * setBag must be called before updateTabs is called
+     * <p>setBag must be called before updateTabs is called
      *
      * @param defaultBag DefaultBag
      */

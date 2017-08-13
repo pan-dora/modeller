@@ -18,8 +18,8 @@ import cool.pandora.modeller.Contact;
 
 /**
  * Simple JavaBean domain object representing an organization.
- * <p>
- * | (Source-organization: California Digital Library )
+ *
+ * <p>| (Source-organization: California Digital Library )
  * | (Organization-address: 415 20th Street, 4th Floor, Oakland, CA. 94612 )
  * | (Contact-name: A. E. Newman )
  * | (Contact-phone: +1 510-555-1234 )
@@ -32,6 +32,8 @@ public class BaggerProfile {
     private Contact toContact = new Contact(true);
 
     /**
+     * getOrganization.
+     *
      * @return sourceOrganization
      */
     public BaggerSourceOrganization getOrganization() {
@@ -39,6 +41,8 @@ public class BaggerProfile {
     }
 
     /**
+     * setOrganization.
+     *
      * @param organization BaggerSourceOrganization
      */
     public void setOrganization(final BaggerSourceOrganization organization) {
@@ -46,6 +50,8 @@ public class BaggerProfile {
     }
 
     /**
+     * getSourceContact.
+     *
      * @return contact
      */
     public Contact getSourceContact() {
@@ -53,6 +59,8 @@ public class BaggerProfile {
     }
 
     /**
+     * setSourceContact.
+     *
      * @param contact Contact
      */
     public void setSourceContact(final Contact contact) {
@@ -60,6 +68,8 @@ public class BaggerProfile {
     }
 
     /**
+     * getToContact.
+     *
      * @return toContact
      */
     public Contact getToContact() {
@@ -67,6 +77,8 @@ public class BaggerProfile {
     }
 
     /**
+     * setToContact.
+     *
      * @param contact Contact
      */
     public void setToContact(final Contact contact) {
@@ -74,6 +86,8 @@ public class BaggerProfile {
     }
 
     /**
+     * getSourceOrganization.
+     *
      * @return organizationName
      */
     public String getSourceOrganization() {
@@ -81,6 +95,8 @@ public class BaggerProfile {
     }
 
     /**
+     * setSourceOrganization.
+     *
      * @param name String
      */
     public void setSourceOrganization(final String name) {
@@ -88,6 +104,8 @@ public class BaggerProfile {
     }
 
     /**
+     * getOrganizationAddress.
+     *
      * @return organizationAddress
      */
     public String getOrganizationAddress() {
@@ -95,6 +113,8 @@ public class BaggerProfile {
     }
 
     /**
+     * setOrganizationAddress.
+     *
      * @param address String
      */
     public void setOrganizationAddress(final String address) {
@@ -102,6 +122,8 @@ public class BaggerProfile {
     }
 
     /**
+     * getSrcContactName.
+     *
      * @return contactName
      */
     public String getSrcContactName() {
@@ -109,6 +131,8 @@ public class BaggerProfile {
     }
 
     /**
+     * setSrcContactName.
+     *
      * @param name String
      */
     public void setSrcContactName(final String name) {
@@ -116,6 +140,8 @@ public class BaggerProfile {
     }
 
     /**
+     * getSrcContactPhone.
+     *
      * @return contactPhone
      */
     public String getSrcContactPhone() {
@@ -123,6 +149,8 @@ public class BaggerProfile {
     }
 
     /**
+     * setSrcContactPhone.
+     *
      * @param phone String
      */
     public void setSrcContactPhone(final String phone) {
@@ -130,6 +158,8 @@ public class BaggerProfile {
     }
 
     /**
+     * getSrcContactEmail.
+     *
      * @return contactEmail
      */
     public String getSrcContactEmail() {
@@ -137,6 +167,8 @@ public class BaggerProfile {
     }
 
     /**
+     * setSrcContactEmail.
+     *
      * @param email String
      */
     public void setSrcContactEmail(final String email) {
@@ -144,6 +176,8 @@ public class BaggerProfile {
     }
 
     /**
+     * getToContactName.
+     *
      * @return contactName
      */
     public String getToContactName() {
@@ -151,6 +185,8 @@ public class BaggerProfile {
     }
 
     /**
+     * setToContactName.
+     *
      * @param name String
      */
     public void setToContactName(final String name) {
@@ -158,6 +194,8 @@ public class BaggerProfile {
     }
 
     /**
+     * getToContactPhone.
+     *
      * @return contactPhone
      */
     public String getToContactPhone() {
@@ -165,6 +203,8 @@ public class BaggerProfile {
     }
 
     /**
+     * setToContactPhone.
+     *
      * @param phone String
      */
     public void setToContactPhone(final String phone) {
@@ -172,6 +212,8 @@ public class BaggerProfile {
     }
 
     /**
+     * getToContactEmail.
+     *
      * @return contactEmail
      */
     public String getToContactEmail() {
@@ -179,6 +221,8 @@ public class BaggerProfile {
     }
 
     /**
+     * setToContactEmail.
+     *
      * @param email String
      */
     public void setToContactEmail(final String email) {

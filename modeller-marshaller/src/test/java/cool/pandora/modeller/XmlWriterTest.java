@@ -14,24 +14,25 @@
 
 package cool.pandora.modeller;
 
-
-import java.net.URI;
+import java.io.ByteArrayOutputStream;
+import javax.xml.bind.JAXBException;
 
 /**
- * testFragmentURI
+ * xmlWriterTest.
  *
  * @author Christopher Johnson
  */
-public class testFragmentURI {
+public class XmlWriterTest {
 
-    private testFragmentURI() {
+    private XmlWriterTest() {
     }
 
-    public static void main(final String[] args) {
-        final URI uri =
-                URI.create("http://localhost:8080/fcrepo/rest/collection/test/003/canvas/19#xywh" +
-                        "=2999,1542,62,56");
-        final String out = uri.toString();
+    public static void main(final String[] args) throws JAXBException {
+        final ByteArrayOutputStream out =
+                XmlFileWriter.write().collectionId("test10").objektId("001").resourceId("004")
+                        .build();
         System.out.println(out);
     }
 }
+
+

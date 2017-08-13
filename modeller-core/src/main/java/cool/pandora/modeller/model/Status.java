@@ -15,7 +15,7 @@
 package cool.pandora.modeller.model;
 
 /**
- * Status
+ * Status.
  *
  * @author gov.loc
  */

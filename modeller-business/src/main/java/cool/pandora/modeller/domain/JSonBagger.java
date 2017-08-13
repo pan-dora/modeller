@@ -16,6 +16,23 @@ package cool.pandora.modeller.domain;
 
 import cool.pandora.modeller.Bagger;
 import cool.pandora.modeller.Profile;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.Reader;
+import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
@@ -23,26 +40,11 @@ import org.json.JSONWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
-import java.io.InputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.Reader;
-import java.io.UnsupportedEncodingException;
-import java.io.OutputStreamWriter;
-import java.io.FileOutputStream;
-import java.io.StringWriter;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
- * JSonBagger
- * <p>
- * Provides JSONBagger business object.
+ * JSonBagger.
+ *
+ * <p>Provides JSONBagger business object.
  * Leverages saving and loading cool.pandora.modeller.profiles in JSON format.
  *
  * @author gov.loc
@@ -56,7 +58,7 @@ public class JSonBagger implements Bagger {
     private static final String[] DEFAULT_PROFILES = new String[]{"fedora-iiif-profile.json"};
 
     /**
-     *
+     * JSonBagger.
      */
     public JSonBagger() {
         String homeDir = System.getProperty("user.home");
@@ -72,6 +74,8 @@ public class JSonBagger implements Bagger {
     }
 
     /**
+     * copyDefautprofilesToUserFolder.
+     *
      * @param folder File
      */
     private void copyDefautprofilesToUserFolder(final File folder) {
@@ -94,8 +98,8 @@ public class JSonBagger implements Bagger {
                 log.debug("Checking if {} exists", profile);
                 final File target = new File(folder, profile);
                 if (!target.exists()) {
-                    log.debug("Profile {} does not already exist on the filesystem. Copying it " +
-                            "from jar", profile);
+                    log.debug("Profile {} does not already exist on the filesystem. Copying it "
+                            + "from jar", profile);
                     Files.copy(inputStream, target.toPath());
                 }
             } catch (Exception e) {
@@ -110,6 +114,8 @@ public class JSonBagger implements Bagger {
     }
 
     /**
+     * closeStream.
+     *
      * @param stream InputStream
      */
     private static void closeStream(final InputStream stream) {
@@ -126,6 +132,22 @@ public class JSonBagger implements Bagger {
     public void loadProfile(final String profileName) {
     }
 
+    /**
+     * loadProfile.
+     *
+     * @param reader Reader
+     * @param jsonFileName String
+     * @return profile
+     * @throws JSONException RuntimeException
+     */
+    private static Profile loadProfile(final Reader reader, final String jsonFileName) throws
+            JSONException {
+        final JSONTokener tokenizer = new JSONTokener(reader);
+        final JSONObject jsonObject = new JSONObject(tokenizer);
+
+        return Profile.createProfile(jsonObject, getprofileName(jsonFileName));
+    }
+
     @Override
     public List<Profile> loadProfiles() {
         final File[] profilesFiles = profilesFolder.listFiles();
@@ -133,8 +155,8 @@ public class JSonBagger implements Bagger {
         if (profilesFiles != null) {
             for (final File file : profilesFiles) {
                 try {
-                    final InputStreamReader reader = new InputStreamReader(new FileInputStream
-                            (file), "UTF-8");
+                    final InputStreamReader reader = new InputStreamReader(new FileInputStream(
+                            file), "UTF-8");
                     final Profile profile = loadProfile(reader, file.getName());
                     profilesToReturn.add(profile);
                 } catch (final FileNotFoundException e) {
@@ -155,20 +177,6 @@ public class JSonBagger implements Bagger {
         return profilesToReturn;
     }
 
-    /**
-     * @param reader Reader
-     * @param jsonFileName String
-     * @return profile
-     * @throws JSONException RuntimeException
-     */
-    private static Profile loadProfile(final Reader reader, final String jsonFileName) throws
-            JSONException {
-        final JSONTokener tokenizer = new JSONTokener(reader);
-        final JSONObject jsonObject = new JSONObject(tokenizer);
-
-        return Profile.createProfile(jsonObject, getprofileName(jsonFileName));
-    }
-
     @Override
     public void saveProfile(final Profile profile) {
         if (profile.getName().equals("<no profile>")) {
@@ -178,8 +186,8 @@ public class JSonBagger implements Bagger {
         try {
             final String fileName = getJsonFileName(profile.getName());
             final OutputStreamWriter writer = new OutputStreamWriter(
-                    new FileOutputStream(profilesFolder.getAbsolutePath() + File.separator +
-                            fileName),
+                    new FileOutputStream(profilesFolder.getAbsolutePath() + File.separator
+                            + fileName),
                     Charset.forName("UTF-8"));
             final StringWriter stringWriter = new StringWriter();
             final JSONWriter jsonWriter = new JSONWriter(stringWriter);
@@ -196,7 +204,9 @@ public class JSonBagger implements Bagger {
     }
 
     /**
-     * Returns Profile Name from a JSON File Name.
+     * getprofileName.
+     *
+     * <p>Returns Profile Name from a JSON File Name.
      *
      * @param jsonFileName A JSON file name
      */
@@ -205,6 +215,8 @@ public class JSonBagger implements Bagger {
     }
 
     /**
+     * getJsonFileName.
+     *
      * @param name String
      * @return name
      */
