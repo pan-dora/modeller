@@ -16,7 +16,6 @@ package cool.pandora.modeller.ui.jpanel.base;
 
 import cool.pandora.modeller.Bagger;
 import cool.pandora.modeller.bag.impl.DefaultBag;
-import cool.pandora.modeller.domain.BaggerValidationRulesSource;
 import cool.pandora.modeller.profile.BaggerProfileStore;
 import cool.pandora.modeller.ui.BagTree;
 import cool.pandora.modeller.ui.BagTreePanel;
@@ -133,6 +132,7 @@ import org.springframework.richclient.application.support.AbstractView;
 import org.springframework.richclient.dialog.MessageDialog;
 import org.springframework.richclient.image.ImageSource;
 import org.springframework.richclient.progress.BusyIndicator;
+import org.springframework.rules.RulesSource;
 import org.springframework.util.Assert;
 
 /**
@@ -154,7 +154,6 @@ public class BagView extends AbstractView implements ApplicationListener {
 
     private Bagger bagger;
     private DefaultBag bag;
-    public BaggerValidationRulesSource baggerRules;
     private BaggerProfileStore profileStore;
     public BagTree bagPayloadTree;
     public BagTree bagTagFileTree;
@@ -393,8 +392,6 @@ public class BagView extends AbstractView implements ApplicationListener {
         initializeCommands();
 
         final ApplicationServices services = this.getApplicationServices();
-        final Object rulesSource = services.getService(org.springframework.rules.RulesSource.class);
-        baggerRules = (BaggerValidationRulesSource) rulesSource;
 
         final Color bgColor = new Color(20, 20, 100);
         topButtonPanel = createTopButtonPanel();
@@ -759,7 +756,6 @@ public class BagView extends AbstractView implements ApplicationListener {
      * updateBaggerRules.
      */
     public void updateBaggerRules() {
-        baggerRules.init();
         bag.updateStrategy();
 
     }

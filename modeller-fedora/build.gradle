@@ -1,13 +1,5 @@
 group 'cool.pandora'
 
-apply plugin: 'java'
-
-sourceCompatibility = 1.8
-
-repositories {
-    mavenCentral()
-}
-
 dependencies {
     compile group: 'org.fcrepo.client', name: 'fcrepo-java-client', version: '0.3.0'
     compile group: 'com.github.spullara.mustache.java', name: 'compiler', version: '0.9.3'

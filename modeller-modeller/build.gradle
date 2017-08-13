@@ -27,12 +27,9 @@ dependencies {
             'com.vlsolutions:vldocking:2.1.4',
             'net.sf.nachocalendar:nachocalendar:0.23',
             'org.springframework.richclient:spring-richclient-resources:1.1.0',
-            'org.springframework.richclient:spring-richclient-docking:1.0.0',
-            'org.springframework.richclient:spring-richclient-sandbox:1.0.0',
-            'org.springframework.richclient:spring-richclient-core:1.1.0',
             'org.springframework.richclient:spring-richclient-jdk6:1.1.0',
             'org.springframework.richclient:spring-richclient-vldocking:1.1.0'
-    //cause the maven repo doesn't have this version
+    compile ('org.springframework.richclient:spring-richclient-core:1.1.0') {exclude group: 'org.springframework', module: 'spring-core'}
     compile group: 'com.jgoodies', name: 'forms', version: '1.2.1'
     compile group: 'org.swinglabs', name: 'swingx', version: '1.6.1'
     compile group: 'org.codehaus.groovy', name: 'groovy-all', version: '2.4.7'
@@ -50,11 +47,6 @@ distributions {
             //include the various user guides
             from("doc") {
                 into "doc"
-            }
-
-            //include the keystore used for signing jars
-            from("${rootDir.path}/keystore") {
-                into "keystore"
             }
 
             //include helpful scripts
