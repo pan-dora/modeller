@@ -1,4 +1,5 @@
 import net.researchgate.release.GitAdapter
+import org.apache.tools.ant.filters.ReplaceTokens
 
 buildscript {
     repositories {
@@ -7,6 +8,7 @@ buildscript {
     }
     dependencies {
         classpath 'com.bmuschko:gradle-nexus-plugin:2.3.1'
+        classpath 'com.netflix.nebula:gradle-aggregate-javadocs-plugin:3.0.1'
     }
 }
 
@@ -16,30 +18,85 @@ plugins {
     id 'io.codearte.nexus-staging' version '0.9.0'
 }
 
-allprojects {
-    apply plugin: 'java'
+ext {
+    vendor = 'Pandora Ecosystem'
+    homepage = 'http://cool.pandora'
+    docURL = 'https://github.com/pan-dora/pandora-demo/wiki'
+    license = 'Apache 2'
+}
+
+configurations {
+    buildToolsConfig
+}
+
+dependencies {
+    buildToolsConfig "cool.pandora:pandora-build-tools:0.1.3"
+}
+
+task processBuildTools(type: Copy) {
+    from {
+        configurations.buildToolsConfig.collect {
+            zipTree(it).matching {
+                include 'checkstyle/*.xml'
+                include 'license/*.txt'
+            }
+        }
+    }
+    into 'build'
+}
+
+configure(allprojects) { project ->
     apply plugin: 'maven'
+    apply plugin: 'java'
 
     group = 'cool.pandora'
 
     repositories {
         jcenter()
         mavenCentral()
-        mavenLocal()
+        maven { url "http://spring-rich-c.sourceforge.net/maven2repository" }
+        flatDir {
+            dirs "$rootProject.projectDir/lib"
+        }
     }
 
-    sourceCompatibility = 1.8
+    ext.bagItVersion = "4.12.1"
+    ext.commonsIoVersion = "2.5"
+    ext.commonsLangVersion = "2.6"
+    ext.fcrepoClientVersion = "0.3.0"
+    ext.groovyVersion = "2.4.12"
+    ext.imageIoVersion = "3.2.1"
+    ext.jaiImageIoVersion = "1.3.0"
+    ext.javaxRsApiVersion = "2.0"
+    ext.jenaVersion = "3.1.0"
+    ext.jerseyVersion = "2.23.2"
+    ext.jgoodiesLooksVersion = "2.0.4"
+    ext.jgoodiesVersion = "1.2.1"
+    ext.jsonVersion = "20151123"
+    ext.junitVersion = "4.12"
+    ext.logbackVersion = "1.2.3"
+    ext.mustacheVersion = "0.9.3"
+    ext.nachoCalendarVersion = "0.23"
+    ext.springBootVersion = "1.4.0.RELEASE"
+    ext.springBootLoggingVersion = "1.3.2.RELEASE"
+    ext.springFrameworkVersion = "2.5.1"
+    ext.springRichclientVersion = "1.1.0"
+    ext.swinglabsVersion = "1.6.1"
+    ext.vldockingVersion = "2.1.4"
+    ext.xbeamVersion = "1.4.8"
+
+    sourceCompatibility = 1.9
     targetCompatibility = 1.9
-
-    javadoc {
-        options.addStringOption("-add-modules", "java.xml.bind")
-    }
 
     gradle.projectsEvaluated {
         tasks.withType(JavaCompile) {
             options.compilerArgs.add("-Xlint:unchecked")
             options.compilerArgs.add("-Xlint:deprecation")
             options.compilerArgs.addAll(["--add-modules", "java.se.ee"])
+        }
+
+        tasks.withType(Javadoc) {
+            options.addStringOption("-add-modules", "java.xml.bind")
         }
     }
 
@@ -56,9 +113,11 @@ allprojects {
             commitVersionFileOnly = false
         }
     }
+
+    check.dependsOn processBuildTools
 }
 
-subprojects {
+configure(subprojects) { subproject ->
     apply plugin: 'com.bmuschko.nexus'
     apply plugin: 'maven-publish'
     apply plugin: 'signing'
@@ -83,6 +142,21 @@ subprojects {
     task sourceJar(type: Jar) {
         classifier 'sources'
         from sourceSets.main.allSource
+    }
+
+    def exportedProjects = [
+            ":modeller-business",
+            ":modeller-core",
+            ":modeller-fedora",
+            ":modeller-marshaller",
+            ":modeller-modeller",
+            ":modeller-hocr"
+    ]
+
+    task alljavadoc(type: Javadoc) {
+        source exportedProjects.collect { project(it).sourceSets.main.allJava }
+        classpath = files(exportedProjects.collect { project(it).sourceSets.main.compileClasspath })
+        destinationDir = file("${buildDir}/docs/javadoc")
     }
 
     jar {
@@ -138,12 +212,11 @@ subprojects {
             description 'A BagIt and Fedora Client'
             url 'https://github.com/pan-dora/modeller/'
             inceptionYear '2017'
-            name 'Modeller'
             description 'Modeller'
 
             organization {
-                name project.vendor
-                url project.homepage
+                name vendor
+                url homepage
             }
 
             developers {
@@ -188,26 +261,109 @@ subprojects {
     }
 }
 
-configurations {
-    buildToolsConfig
-}
+project("modeller-modeller") {
+    apply plugin: "application"
 
+    mainClassName = "cool.pandora.modeller.ModellerApplication"
+    applicationDefaultJvmArgs += ["--add-modules=java.se.ee"]
 
-dependencies {
-    buildToolsConfig "cool.pandora:pandora-build-tools:0.1.3"
-}
+    description = """Spring richclient Modeller GUI"""
 
-task processBuildTools(type: Copy) {
-    from {
-        configurations.buildToolsConfig.collect {
-            zipTree(it).matching {
-                include 'checkstyle/*.xml'
-                include 'license/*.txt'
+    jar.baseName = "modeller"
+
+    dependencies {
+        compile project(":modeller-core"),
+                project(":modeller-business"),
+                project(":modeller-fedora"),
+                project(":modeller-marshaller"),
+                project(":modeller-hocr"),
+                "com.vlsolutions:vldocking:${vldockingVersion}",
+                "net.sf.nachocalendar:nachocalendar:${nachoCalendarVersion}",
+                "org.springframework.richclient:spring-richclient-resources:${springRichclientVersion}",
+                "org.springframework.richclient:spring-richclient-jdk6:${springRichclientVersion}",
+                "org.springframework.richclient:spring-richclient-vldocking:${springRichclientVersion}"
+        compile("org.springframework.richclient:spring-richclient-core:${springRichclientVersion}") {
+            exclude group: 'org.springframework', module: 'spring-core'
+        }
+        compile "com.jgoodies:forms:${jgoodiesVersion}"
+        compile "org.swinglabs:swingx:${swinglabsVersion}"
+        compile "org.codehaus.groovy:groovy-all:${groovyVersion}"
+        compile "org.springframework.boot:spring-boot-starter-logging:${springBootVersion}"
+        compile "commons-lang:commons-lang:${commonsLangVersion}"
+        compile "com.github.jai-imageio:jai-imageio-core:${jaiImageIoVersion}"
+        testCompile "junit:junit:${junitVersion}"
+        runtime "com.jgoodies:looks:${jgoodiesLooksVersion}"
+    }
+
+    startScripts {
+        if (project.version == "unspecified") {
+            applicationDefaultJvmArgs += ["-Xdebug", "-Xrunjdwp:server=y,transport=dt_socket,address=4000,suspend=n"]
+        }
+
+        unixStartScriptGenerator.template = resources.text.fromFile(project.projectDir.path + '/customUnixStartScript.txt')
+        windowsStartScriptGenerator.template = resources.text.fromFile(project.projectDir.path + '/customWindowsStartScript.txt')
+    }
+
+    afterEvaluate {
+        configure(tasks.processResources) {
+            eachFile { copyDetails ->
+                if (copyDetails.name == 'about.txt' || copyDetails.name == 'messages.properties') {
+                    filter(ReplaceTokens, tokens: [VERSION: project.version])
+                }
             }
         }
     }
-    into 'build'
 }
 
-check.dependsOn processBuildTools
 
+project("modeller-business") {
+    description = 'Spring richclient bagger business'
+    dependencies {
+        compile "org.springframework.boot:spring-boot-starter-logging:${springBootLoggingVersion}",
+                "org.springframework:spring-core:${springFrameworkVersion}",
+                "org.springframework:spring-beans:${springFrameworkVersion}",
+                "org.springframework:spring-context:${springFrameworkVersion}",
+                "org.json:json:${jsonVersion}"
+    }
+}
+
+project("modeller-core") {
+    dependencies {
+        compile "gov.loc:bagit:${bagItVersion}",
+                project(":modeller-business"),
+                "org.springframework:spring-core:${springFrameworkVersion}",
+                "org.springframework:spring-beans:${springFrameworkVersion}",
+                "org.springframework:spring-context:${springFrameworkVersion}",
+                "org.springframework.boot:spring-boot-starter-logging:${springBootLoggingVersion}"
+    }
+}
+
+project("modeller-fedora") {
+    group 'cool.pandora'
+
+    dependencies {
+        compile "org.fcrepo.client:fcrepo-java-client:${fcrepoClientVersion}"
+        compile "com.github.spullara.mustache.java:compiler:${mustacheVersion}"
+        compile "commons-io:commons-io:${commonsIoVersion}"
+        compile "org.apache.jena:jena-core:${jenaVersion}"
+        compile "org.apache.jena:jena-arq:${jenaVersion}"
+        compile "com.twelvemonkeys.imageio:imageio-tiff:${imageIoVersion}"
+        compile "javax.ws.rs:javax.ws.rs-api:${javaxRsApiVersion}"
+        compile "org.glassfish.jersey.core:jersey-common:${javaxRsApiVersion}"
+        compile "com.github.jai-imageio:jai-imageio-jpeg2000:${jaiImageIoVersion}"
+        testCompile "junit:junit:${junitVersion}"
+        testCompile "ch.qos.logback:logback-classic:${logbackVersion}"
+    }
+
+}
+
+project("modeller-hocr") {
+    dependencies {
+        compile project(":modeller-fedora")
+        compile "commons-io:commons-io:${commonsIoVersion}"
+        compile "org.xmlbeam:xmlprojector:${xbeamVersion}"
+        compile "org.apache.jena:jena-arq:${jenaVersion}"
+        compile "org.apache.jena:jena-core:${jenaVersion}"
+        testCompile "junit:junit:${junitVersion}"
+    }
+}
