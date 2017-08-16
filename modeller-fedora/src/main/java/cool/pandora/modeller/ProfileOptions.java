@@ -42,6 +42,7 @@ public final class ProfileOptions {
     public static final String TEXT_LINE_CONTAINER_KEY = "TextLineContainer";
     public static final String TEXT_WORD_CONTAINER_KEY = "TextWordContainer";
     public static final String LIST_SERVICE_KEY = "ListServiceBaseURI";
+    public static final String SCHEME = "Scheme";
 
     private ProfileOptions() {
     }

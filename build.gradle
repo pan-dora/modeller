@@ -138,7 +138,6 @@ subprojects {
             description 'A BagIt and Fedora Client'
             url 'https://github.com/pan-dora/modeller/'
             inceptionYear '2017'
-            name 'Modeller'
             description 'Modeller'
 
             organization {

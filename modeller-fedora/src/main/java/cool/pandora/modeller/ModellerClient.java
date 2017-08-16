@@ -22,8 +22,17 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.CertificateException;
+
+import javax.net.ssl.SSLContext;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
+import org.apache.http.conn.ssl.TrustSelfSignedStrategy;
+import org.apache.http.ssl.SSLContexts;
 import org.fcrepo.client.FcrepoClient;
 import org.fcrepo.client.FcrepoOperationFailedException;
 import org.fcrepo.client.FcrepoResponse;
@@ -149,7 +158,7 @@ public class ModellerClient {
         final FcrepoClient testClient;
         testClient = FcrepoClient.client().throwExceptionOnFailure().build();
         try (FcrepoResponse response = testClient.get(containerURI).accept("text/turtle").perform(
-                )) {
+        )) {
             return IOUtils.toString(response.getBody(), "UTF-8");
         } catch (FcrepoOperationFailedException e) {
             log.info(getMessage(e));
@@ -158,5 +167,21 @@ public class ModellerClient {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static SSLConnectionSocketFactory getSSLFactory() throws CertificateException,
+            NoSuchAlgorithmException, KeyStoreException, IOException, KeyManagementException {
+        SSLContext sslcontext = SSLContexts.custom()
+                .loadTrustMaterial(new File(ModellerClient.class.getResource("/modeller.jks")
+                                .getFile(
+                                )), "changeme".toCharArray(),
+                        new TrustSelfSignedStrategy())
+                .build();
+        SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(
+                sslcontext,
+                new String[]{"TLSv1"},
+                null,
+                SSLConnectionSocketFactory.getDefaultHostnameVerifier());
+        return sslsf;
     }
 }

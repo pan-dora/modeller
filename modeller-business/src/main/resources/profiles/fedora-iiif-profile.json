@@ -7,9 +7,15 @@
       }
     },
     {
+      "Scheme": {
+        "fieldRequired": true,
+        "defaultValue": "https"
+      }
+    },
+    {
       "Port": {
         "fieldRequired": false,
-        "defaultValue": "8080"
+        "defaultValue": "8443"
       }
     },
     {
