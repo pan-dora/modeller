@@ -19,13 +19,13 @@ import cool.pandora.modeller.bag.BagInfoField;
 import cool.pandora.modeller.common.uri.IIIFPathTemplate;
 import cool.pandora.modeller.common.uri.Type;
 
-import javax.ws.rs.core.UriBuilder;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Map;
+import javax.ws.rs.core.UriBuilder;
 
 /**
- * URIResolver
+ * URIResolver.
  *
  * @author Christopher Johnson
  */
@@ -37,6 +37,8 @@ public class URIResolver {
     }
 
     /**
+     * resolve.
+     *
      * @return resolvedURI
      */
     public static URIResolver.ContainerURIResolverNormal resolve() {
@@ -44,6 +46,8 @@ public class URIResolver {
     }
 
     /**
+     * render.
+     *
      * @return resolvedURI
      */
     public URI render() {
@@ -60,6 +64,8 @@ public class URIResolver {
         }
 
         /**
+         * map.
+         *
          * @param map Map
          * @return this
          */
@@ -69,6 +75,8 @@ public class URIResolver {
         }
 
         /**
+         * pathType.
+         *
          * @param pathType int
          * @return pathType
          */
@@ -78,6 +86,8 @@ public class URIResolver {
         }
 
         /**
+         * containerKey.
+         *
          * @param containerKey String
          * @return this
          */
@@ -87,6 +97,8 @@ public class URIResolver {
         }
 
         /**
+         * resource.
+         *
          * @param resource String
          * @return this
          */
@@ -96,6 +108,8 @@ public class URIResolver {
         }
 
         /**
+         * getMapValue.
+         *
          * @param map Map
          * @param key String
          * @return IIIFProfileKey
@@ -106,6 +120,8 @@ public class URIResolver {
         }
 
         /**
+         * getObjectIDPath.
+         *
          * @param value int
          * @return Type
          */
@@ -115,6 +131,8 @@ public class URIResolver {
         }
 
         /**
+         * resolveURI.
+         *
          * @param map Map
          * @param containerKey String
          * @param resource String
@@ -135,39 +153,44 @@ public class URIResolver {
             final String collection = getMapValue(map, ProfileOptions.COLLECTION_ID_KEY);
             final String objektID = getMapValue(map, ProfileOptions.OBJEKT_ID_KEY);
             final String manifestLabel = getMapValue(map, ProfileOptions.MANIFEST_RESOURCE_LABEL);
+            final String scheme = getMapValue(map, ProfileOptions.SCHEME);
             final Type path = getObjectIDPath(pathType);
             final UriBuilder builder = UriBuilder.fromPath(path.toString());
             switch (pathType) {
                 case (0):
-                    return builder.scheme("http").host(hostname).port(port).build(appKey, restKey);
+                    return builder.scheme(scheme).host(hostname).port(port).build(appKey, restKey);
                 case (1):
-                    return builder.scheme("http").host(hostname).port(port).build(appKey,
+                    return builder.scheme(scheme).host(hostname).port(port).build(appKey,
                             restKey, collectionRoot);
                 case (2):
-                    return builder.scheme("http").host(hostname).port(port)
+                    return builder.scheme(scheme).host(hostname).port(port)
                             .build(appKey, restKey, collectionRoot, collection);
                 case (3):
-                    return builder.scheme("http").host(hostname).port(port)
+                    return builder.scheme(scheme).host(hostname).port(port)
                             .build(appKey, restKey, collectionRoot, collection, objektID);
                 case (4):
                     final String container4 = getMapValue(map, containerKey);
-                    return builder.scheme("http").host(hostname).port(port)
+                    return builder.scheme(scheme).host(hostname).port(port)
                             .build(appKey, restKey, collectionRoot, collection, objektID,
                                     container4);
                 case (5):
                     final String container5 = getMapValue(map, containerKey);
-                    return builder.scheme("http").host(hostname).port(port)
+                    return builder.scheme(scheme).host(hostname).port(port)
                             .build(appKey, restKey, collectionRoot, collection, objektID,
                                     container5, resource);
                 case (6):
-                    return builder.scheme("http").host(hostname).port(port)
+                    return builder.scheme(scheme).host(hostname).port(port)
                             .build(appKey, restKey, collectionRoot, collection, objektID,
                                     manifestLabel);
+                default:
+                    break;
             }
             return null;
         }
 
         /**
+         * build.
+         *
          * @return URIResolver
          * @throws URISyntaxException exception
          */

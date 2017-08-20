@@ -14,8 +14,8 @@
 
 package cool.pandora.modeller;
 
-import javax.swing.JOptionPane;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

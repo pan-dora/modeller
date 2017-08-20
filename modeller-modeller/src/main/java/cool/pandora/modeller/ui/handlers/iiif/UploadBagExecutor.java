@@ -18,7 +18,7 @@ import cool.pandora.modeller.ui.jpanel.base.BagView;
 import org.springframework.richclient.command.support.AbstractActionCommandExecutor;
 
 /**
- * Upload Bag Executor
+ * Upload Bag Executor.
  *
  * @author Christopher Johnson
  */
@@ -26,6 +26,8 @@ public class UploadBagExecutor extends AbstractActionCommandExecutor {
     BagView bagView;
 
     /**
+     * UploadBagExecutor.
+     *
      * @param bagView BagView
      */
     public UploadBagExecutor(final BagView bagView) {

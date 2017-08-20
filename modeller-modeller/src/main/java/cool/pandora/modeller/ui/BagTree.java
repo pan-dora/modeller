@@ -46,9 +46,9 @@ import org.slf4j.LoggerFactory;
 public class BagTree extends JTree {
     private static final long serialVersionUID = -5361474872106399068L;
     protected static final Logger log = LoggerFactory.getLogger(BagTree.class);
-    private final int BAGTREE_WIDTH = 400;
-    private int BAGTREE_HEIGHT = 160;
-    private int BAGTREE_ROW_MODIFIER = 22;
+    private final int bagtreeWidth = 400;
+    private int bagtreeHeight = 160;
+    private int bagtreeRowModifier = 22;
 
     private String basePath;
     private DefaultMutableTreeNode parentNode = new DefaultMutableTreeNode(AbstractBagConstants
@@ -69,7 +69,7 @@ public class BagTree extends JTree {
         initialize();
         initListeners();
         final JTextField nameTextField = new JTextField();
-        BAGTREE_ROW_MODIFIER = nameTextField.getFontMetrics(nameTextField.getFont()).getHeight()
+        bagtreeRowModifier = nameTextField.getFontMetrics(nameTextField.getFont()).getHeight()
                 + 5;
         this.setDragEnabled(true);
         this.setDropMode(DropMode.ON_OR_INSERT);
@@ -137,7 +137,7 @@ public class BagTree extends JTree {
                 }
             }
             log.debug("BagTree rows: {}", payload.size());
-            BAGTREE_HEIGHT = BAGTREE_ROW_MODIFIER * (payload.size() + 1);
+            bagtreeHeight = bagtreeRowModifier * (payload.size() + 1);
             setPreferredSize(getTreeSize());
             invalidate();
         }
@@ -206,7 +206,7 @@ public class BagTree extends JTree {
     /**
      * createNodeTree.
      *
-     * Add nodes from under "dir" into curTop. Highly recursive.
+     * <p>Add nodes from under "dir" into curTop. Highly recursive.
      */
     private static DefaultMutableTreeNode createNodeTree(final DefaultMutableTreeNode curTop,
                                                          final DefaultMutableTreeNode displayTop,
@@ -265,7 +265,7 @@ public class BagTree extends JTree {
      * @return Dimension
      */
     Dimension getTreeSize() {
-        return new Dimension(BAGTREE_WIDTH, BAGTREE_HEIGHT);
+        return new Dimension(bagtreeWidth, bagtreeHeight);
     }
 
     /**
@@ -274,9 +274,9 @@ public class BagTree extends JTree {
     private void initListeners() {
         addTreeExpansionListener(new TreeExpansionListener() {
             public void treeExpanded(final TreeExpansionEvent e) {
-                final int rows = BAGTREE_ROW_MODIFIER * getRowCount();
+                final int rows = bagtreeRowModifier * getRowCount();
                 log.trace("BagTree rows: {}", rows);
-                setPreferredSize(new Dimension(BAGTREE_WIDTH, rows));
+                setPreferredSize(new Dimension(bagtreeWidth, rows));
                 invalidate();
             }
 
@@ -286,9 +286,9 @@ public class BagTree extends JTree {
              * @param e TreeExpansionEvent
              */
             public void treeCollapsed(final TreeExpansionEvent e) {
-                final int rows = BAGTREE_ROW_MODIFIER * getRowCount();
+                final int rows = bagtreeRowModifier * getRowCount();
                 log.trace("BagTree rows: {}", rows);
-                setPreferredSize(new Dimension(BAGTREE_WIDTH, rows));
+                setPreferredSize(new Dimension(bagtreeWidth, rows));
                 invalidate();
             }
         });

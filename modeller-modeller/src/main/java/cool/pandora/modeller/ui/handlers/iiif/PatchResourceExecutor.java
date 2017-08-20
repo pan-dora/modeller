@@ -18,7 +18,7 @@ import cool.pandora.modeller.ui.jpanel.base.BagView;
 import org.springframework.richclient.command.support.AbstractActionCommandExecutor;
 
 /**
- * Patch Resource Executor
+ * Patch Resource Executor.
  *
  * @author Christopher Johnson
  */
@@ -26,6 +26,8 @@ public class PatchResourceExecutor extends AbstractActionCommandExecutor {
     BagView bagView;
 
     /**
+     * PatchResourceExecutor.
+     *
      * @param bagView BagView
      */
     public PatchResourceExecutor(final BagView bagView) {

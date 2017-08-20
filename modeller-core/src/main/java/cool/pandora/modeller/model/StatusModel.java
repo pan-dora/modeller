@@ -18,7 +18,7 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 /**
- * StatusModel
+ * StatusModel.
  *
  * @author gov.loc
  */
@@ -29,6 +29,8 @@ public class StatusModel {
     private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 
     /**
+     * getStatus.
+     *
      * @return status
      */
     public Status getStatus() {
@@ -36,6 +38,8 @@ public class StatusModel {
     }
 
     /**
+     * setStatus.
+     *
      * @param status Status
      */
     public void setStatus(final Status status) {
@@ -45,6 +49,8 @@ public class StatusModel {
     }
 
     /**
+     * addPropertyChangeListener.
+     *
      * @param listener PropertyChangeListener
      */
     public void addPropertyChangeListener(final PropertyChangeListener listener) {
@@ -52,6 +58,8 @@ public class StatusModel {
     }
 
     /**
+     * removePropertyChangeListener.
+     *
      * @param listener PropertyChangeListener
      */
     public void removePropertyChangeListener(final PropertyChangeListener listener) {

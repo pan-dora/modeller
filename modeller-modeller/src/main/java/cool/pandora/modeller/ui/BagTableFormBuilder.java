@@ -38,6 +38,8 @@ import org.springframework.richclient.layout.TableLayoutBuilder;
  */
 public class BagTableFormBuilder extends TableFormBuilder {
     /**
+     * BagTableFormBuilder.
+     *
      * @param bindingFactory BindingFactory
      */
     public BagTableFormBuilder(final BindingFactory bindingFactory) {

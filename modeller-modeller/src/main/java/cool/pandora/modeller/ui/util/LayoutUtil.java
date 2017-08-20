@@ -17,7 +17,7 @@ package cool.pandora.modeller.ui.util;
 import java.awt.GridBagConstraints;
 
 /**
- * LayoutUtil
+ * LayoutUtil.
  *
  * @author loc.gov
  */
@@ -27,6 +27,8 @@ public class LayoutUtil {
     }
 
     /**
+     * GridBagConstraints.
+     *
      * @param x int
      * @param y int
      * @param w int
@@ -35,6 +37,7 @@ public class LayoutUtil {
      * @param wy int
      * @param fill int
      * @param anchor int
+     * @return gbc
      */
     public static GridBagConstraints buildGridBagConstraints(final int x, final int y, final int
             w, final int h,

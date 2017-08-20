@@ -19,36 +19,38 @@ import cool.pandora.modeller.bag.impl.DefaultBag;
 import cool.pandora.modeller.ui.BagTableFormBuilder;
 import cool.pandora.modeller.ui.NoTabTextArea;
 import cool.pandora.modeller.ui.util.LayoutUtil;
+
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Set;
+
+import javax.swing.AbstractAction;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JSeparator;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.binding.form.FormModel;
 import org.springframework.richclient.form.AbstractForm;
 
-
-import javax.swing.JPanel;
-import javax.swing.JComboBox;
-import javax.swing.JTextField;
-import javax.swing.JComponent;
-import javax.swing.ImageIcon;
-import javax.swing.JSeparator;
-import javax.swing.JLabel;
-import javax.swing.JButton;
-import javax.swing.JTextArea;
-import javax.swing.AbstractAction;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import javax.swing.border.EmptyBorder;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
-
 /**
- * BagInfoForm
+ * BagInfoForm.
  *
  * @author gov.loc
  */
@@ -64,6 +66,8 @@ public class BagInfoForm extends AbstractForm implements FocusListener {
     private AddFieldPanel addFieldPannel;
 
     /**
+     * BagInfoForm.
+     *
      * @param formModel FormModel
      * @param bagView BagView
      * @param map HashMap
@@ -76,6 +80,8 @@ public class BagInfoForm extends AbstractForm implements FocusListener {
     }
 
     /**
+     * setBagView.
+     *
      * @param bagView BagView
      */
     public void setBagView(final BagView bagView) {
@@ -162,8 +168,8 @@ public class BagInfoForm extends AbstractForm implements FocusListener {
                     }
                     break;
                 case BagInfoField.TEXTFIELD_COMPONENT:
-                    final JComponent[] flist = formBuilder.add(field.isRequired(), field.getLabel
-                            (), removeButton);
+                    final JComponent[] flist = formBuilder.add(field.isRequired(), field.getLabel(
+                            ), removeButton);
                     final JComponent comp = flist[index];
                     comp.setEnabled(field.isEnabled());
                     comp.addFocusListener(this);
@@ -246,6 +252,8 @@ public class BagInfoForm extends AbstractForm implements FocusListener {
     }
 
     /**
+     * getField.
+     *
      * @param key String
      * @return field
      */
@@ -262,6 +270,8 @@ public class BagInfoForm extends AbstractForm implements FocusListener {
     }
 
     /**
+     * getBagInfoMap.
+     *
      * @return map
      */
     public HashMap<String, String> getBagInfoMap() {

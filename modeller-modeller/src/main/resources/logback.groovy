@@ -18,5 +18,5 @@ appender("File-Appender", FileAppender) {
     }
 }
 
-logger("org.apache.http", INFO, ["File-Appender"])
+logger("org.apache.http", DEBUG, ["File-Appender"], false)
 root(DEBUG, ["STDOUT"])

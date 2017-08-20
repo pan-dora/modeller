@@ -14,47 +14,47 @@
 
 package cool.pandora.modeller.ui.handlers.iiif;
 
-import java.awt.event.ActionEvent;
-import java.io.InputStream;
-import java.net.URI;
-import java.util.Map;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Arrays;
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static org.apache.commons.lang.StringUtils.substringAfter;
+import static org.apache.commons.lang3.StringEscapeUtils.unescapeXml;
+import static org.apache.commons.lang3.exception.ExceptionUtils.getMessage;
 
-import javax.swing.AbstractAction;
-
-import org.apache.commons.io.IOUtils;
+import cool.pandora.modeller.ModellerClient;
 import cool.pandora.modeller.ModellerClientFailedException;
 import cool.pandora.modeller.bag.BagInfoField;
+import cool.pandora.modeller.bag.impl.DefaultBag;
 import cool.pandora.modeller.common.uri.FedoraPrefixes;
 import cool.pandora.modeller.common.uri.FedoraResources;
 import cool.pandora.modeller.common.uri.IIIFPredicates;
 import cool.pandora.modeller.common.uri.IIIFPrefixes;
 import cool.pandora.modeller.templates.CanvasScope;
 import cool.pandora.modeller.templates.MetadataTemplate;
+import cool.pandora.modeller.ui.Progress;
 import cool.pandora.modeller.ui.handlers.common.IIIFObjectURI;
+import cool.pandora.modeller.ui.jpanel.base.BagView;
 import cool.pandora.modeller.ui.jpanel.iiif.PatchCanvasFrame;
-import cool.pandora.modeller.util.ResourceList;
+import cool.pandora.modeller.ui.util.ApplicationContextUtil;
 import cool.pandora.modeller.util.ResourceIntegerValue;
+import cool.pandora.modeller.util.ResourceList;
+
+import java.awt.event.ActionEvent;
+import java.io.InputStream;
+import java.net.URI;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.swing.AbstractAction;
+
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import cool.pandora.modeller.bag.impl.DefaultBag;
-import cool.pandora.modeller.ui.jpanel.base.BagView;
-import cool.pandora.modeller.ui.Progress;
-import cool.pandora.modeller.ui.util.ApplicationContextUtil;
-import cool.pandora.modeller.ModellerClient;
-
-import static org.apache.commons.lang.StringUtils.substringAfter;
-import static org.apache.commons.lang3.StringEscapeUtils.unescapeXml;
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.apache.commons.lang3.exception.ExceptionUtils.getMessage;
-
 /**
- * Patch Canvas Handler
+ * Patch Canvas Handler.
  *
  * @author Christopher Johnson
  */
@@ -64,6 +64,8 @@ public class PatchCanvasHandler extends AbstractAction implements Progress {
     private final BagView bagView;
 
     /**
+     * PatchCanvasHandler.
+     *
      * @param bagView BagView
      */
     public PatchCanvasHandler(final BagView bagView) {
@@ -104,8 +106,8 @@ public class PatchCanvasHandler extends AbstractAction implements Progress {
 
         InputStream rdfBody;
         for (final String canvasURI : canvasesList) {
-            rdfBody = getCanvasMetadata(canvasResourceMap.get(canvasURI), canvasListMap.get
-                    (canvasURI));
+            rdfBody = getCanvasMetadata(canvasResourceMap.get(canvasURI), canvasListMap.get(
+                    canvasURI));
             final URI destinationURI = URI.create(canvasURI);
             try {
                 ModellerClient.doPatch(destinationURI, rdfBody);
@@ -130,10 +132,10 @@ public class PatchCanvasHandler extends AbstractAction implements Progress {
 
         final MetadataTemplate metadataTemplate;
         final List<CanvasScope.Prefix> prefixes =
-                Arrays.asList(new CanvasScope.Prefix(FedoraPrefixes.RDFS), new CanvasScope.Prefix
-                                (FedoraPrefixes.MODE),
-                        new CanvasScope.Prefix(IIIFPrefixes.SC), new CanvasScope.Prefix
-                                (IIIFPrefixes.OA),
+                Arrays.asList(new CanvasScope.Prefix(FedoraPrefixes.RDFS), new CanvasScope.Prefix(
+                                FedoraPrefixes.MODE),
+                        new CanvasScope.Prefix(IIIFPrefixes.SC), new CanvasScope.Prefix(
+                                IIIFPrefixes.OA),
                         new CanvasScope.Prefix(IIIFPrefixes.EXIF));
 
         final ResourceIntegerValue resourceHeight =
@@ -147,12 +149,12 @@ public class PatchCanvasHandler extends AbstractAction implements Progress {
         final int reswidth = resourceWidth.render().get(0);
 
         final String canvasLabel = substringAfter(listURI, "list/");
-        final CanvasScope scope = new CanvasScope().fedoraPrefixes(prefixes).resourceURI
-                (resourceURI).listURI(listURI)
+        final CanvasScope scope = new CanvasScope().fedoraPrefixes(prefixes).resourceURI(
+                resourceURI).listURI(listURI)
                 .canvasLabel(canvasLabel).canvasHeight(resheight).canvasWidth(reswidth);
 
-        metadataTemplate = MetadataTemplate.template().template("template/sparql-update-canvas" +
-                ".mustache").scope(scope)
+        metadataTemplate = MetadataTemplate.template().template("template/sparql-update-canvas"
+                + ".mustache").scope(scope)
                 .throwExceptionOnFailure().build();
 
         final String metadata = unescapeXml(metadataTemplate.render());

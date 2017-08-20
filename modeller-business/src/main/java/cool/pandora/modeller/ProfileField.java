@@ -14,18 +14,19 @@
 
 package cool.pandora.modeller;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.json.JSONWriter;
-
 import java.io.Serializable;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.JSONWriter;
+
+
 /**
- * ProfileField
+ * ProfileField.
  *
  * @author gov.loc
  */
@@ -40,18 +41,20 @@ public class ProfileField implements Serializable {
     private boolean isRequired;
     private boolean isValueRequired;
 
-    private final static String FIELD_REQUIRED_VALUE = "requiredValue";
-    private final static String FIELD_REQUIRED = "fieldRequired";
-    private final static String FIELD_TYPE = "fieldType";
-    private final static String FIELD_READ_ONLY = "isReadOnly";
-    private final static String FIELD_DEFAULT_VALUE = "defaultValue";
-    private final static String FIELD_VALUE_LIST = "valueList";
+    private static final String FIELD_REQUIRED_VALUE = "requiredValue";
+    private static final String FIELD_REQUIRED = "fieldRequired";
+    private static final String FIELD_TYPE = "fieldType";
+    private static final String FIELD_READ_ONLY = "isReadOnly";
+    private static final String FIELD_DEFAULT_VALUE = "defaultValue";
+    private static final String FIELD_VALUE_LIST = "valueList";
 
     void setFieldName(final String s) {
         this.fieldName = s;
     }
 
     /**
+     * getFieldName.
+     *
      * @return fieldName
      */
     public String getFieldName() {
@@ -59,6 +62,8 @@ public class ProfileField implements Serializable {
     }
 
     /**
+     * setIsRequired.
+     *
      * @param b boolean
      */
     private void setIsRequired(final boolean b) {
@@ -66,6 +71,8 @@ public class ProfileField implements Serializable {
     }
 
     /**
+     * getIsRequired.
+     *
      * @return isRequired
      */
     public boolean getIsRequired() {
@@ -73,6 +80,8 @@ public class ProfileField implements Serializable {
     }
 
     /**
+     * setFieldValue.
+     *
      * @param s String
      */
     public void setFieldValue(final String s) {
@@ -80,6 +89,8 @@ public class ProfileField implements Serializable {
     }
 
     /**
+     * getFieldValue.
+     *
      * @return fieldValue
      */
     public String getFieldValue() {
@@ -87,6 +98,8 @@ public class ProfileField implements Serializable {
     }
 
     /**
+     * setElements.
+     *
      * @param s List
      */
     private void setElements(final List<String> s) {
@@ -94,6 +107,8 @@ public class ProfileField implements Serializable {
     }
 
     /**
+     * getElements.
+     *
      * @return elements
      */
     public List<String> getElements() {
@@ -101,6 +116,8 @@ public class ProfileField implements Serializable {
     }
 
     /**
+     * setFieldType.
+     *
      * @param s String
      */
     private void setFieldType(final String s) {
@@ -108,6 +125,8 @@ public class ProfileField implements Serializable {
     }
 
     /**
+     * getFieldType.
+     *
      * @return fieldType
      */
     public String getFieldType() {
@@ -115,6 +134,8 @@ public class ProfileField implements Serializable {
     }
 
     /**
+     * setIsValueRequired.
+     *
      * @param b boolean
      */
     public void setIsValueRequired(final boolean b) {
@@ -122,6 +143,8 @@ public class ProfileField implements Serializable {
     }
 
     /**
+     * getIsValueRequired.
+     *
      * @return isValueRequired
      */
     public boolean getIsValueRequired() {
@@ -134,6 +157,8 @@ public class ProfileField implements Serializable {
     }
 
     /**
+     * setReadOnly.
+     *
      * @param isReadOnly boolean
      */
     private void setReadOnly(final boolean isReadOnly) {
@@ -141,6 +166,8 @@ public class ProfileField implements Serializable {
     }
 
     /**
+     * isReadOnly.
+     *
      * @return isReadOnly
      */
     public boolean isReadOnly() {
@@ -148,6 +175,8 @@ public class ProfileField implements Serializable {
     }
 
     /**
+     * createProfileField.
+     *
      * @param profileFieldJson JSONObject
      * @param name String
      * @return profileField
@@ -198,6 +227,8 @@ public class ProfileField implements Serializable {
     }
 
     /**
+     * createProfileField.
+     *
      * @param name String
      * @param value String
      * @return profileField
@@ -210,6 +241,8 @@ public class ProfileField implements Serializable {
     }
 
     /**
+     * serialize.
+     *
      * @return String
      * @throws JSONException RuntimeException
      */

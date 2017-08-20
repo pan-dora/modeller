@@ -14,13 +14,13 @@
 
 package cool.pandora.modeller;
 
+import java.io.Serializable;
+import java.io.StringWriter;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 import org.json.JSONWriter;
-
-import java.io.Serializable;
-import java.io.StringWriter;
 
 /**
  * | (Contact-Name: Edna Janssen )
@@ -49,12 +49,14 @@ public class Contact implements Serializable {
     private static final String FIELD_JSON_EMAIL = "email";
 
     /**
-     *
+     * Contact.
      */
     public Contact() {
     }
 
     /**
+     * Contact.
+     *
      * @param isSentTo boolean
      */
     public Contact(final boolean isSentTo) {
@@ -73,6 +75,8 @@ public class Contact implements Serializable {
     }
 
     /**
+     * getContactName.
+     *
      * @return contactName
      */
     public ProfileField getContactName() {
@@ -80,6 +84,8 @@ public class Contact implements Serializable {
     }
 
     /**
+     * setContactName.
+     *
      * @param name contactName
      */
     public void setContactName(final ProfileField name) {
@@ -87,6 +93,8 @@ public class Contact implements Serializable {
     }
 
     /**
+     * getTelephone.
+     *
      * @return telephone
      */
     public ProfileField getTelephone() {
@@ -94,6 +102,8 @@ public class Contact implements Serializable {
     }
 
     /**
+     * setTelephone.
+     *
      * @param telephone telephone
      */
     public void setTelephone(final ProfileField telephone) {
@@ -101,6 +111,8 @@ public class Contact implements Serializable {
     }
 
     /**
+     * getEmail.
+     *
      * @return email
      */
     public ProfileField getEmail() {
@@ -108,6 +120,8 @@ public class Contact implements Serializable {
     }
 
     /**
+     * setEmail.
+     *
      * @param email email
      */
     public void setEmail(final ProfileField email) {
@@ -127,6 +141,8 @@ public class Contact implements Serializable {
     }
 
     /**
+     * createContact.
+     *
      * @param contactSendToJson JSONObject
      * @param sendTo boolean
      * @return contact

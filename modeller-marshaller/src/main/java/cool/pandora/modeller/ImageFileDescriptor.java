@@ -18,7 +18,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- * ImageFileDescriptor
+ * ImageFileDescriptor.
  *
  * @author Christopher Johnson
  */
@@ -28,6 +28,8 @@ public class ImageFileDescriptor {
     private String id;
 
     /**
+     * setId.
+     *
      * @param id String
      */
     @XmlElement
@@ -36,6 +38,8 @@ public class ImageFileDescriptor {
     }
 
     /**
+     * getId.
+     *
      * @return id
      */
     public String getId() {

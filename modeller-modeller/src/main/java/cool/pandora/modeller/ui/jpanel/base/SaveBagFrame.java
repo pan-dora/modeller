@@ -16,6 +16,33 @@ package cool.pandora.modeller.ui.jpanel.base;
 
 import cool.pandora.modeller.bag.impl.DefaultBag;
 import gov.loc.repository.bagit.Manifest.Algorithm;
+
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.util.ArrayList;
+
+import javax.swing.AbstractAction;
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JComponent;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JSeparator;
+import javax.swing.JTextField;
+import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.richclient.command.AbstractCommand;
@@ -25,33 +52,8 @@ import org.springframework.richclient.core.DefaultMessage;
 import org.springframework.richclient.dialog.TitlePane;
 import org.springframework.richclient.util.GuiStandardUtils;
 
-import javax.swing.JPanel;
-import javax.swing.JLabel;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JButton;
-import javax.swing.JTextField;
-import javax.swing.AbstractAction;
-import javax.swing.JRadioButton;
-import javax.swing.JComponent;
-import javax.swing.JCheckBox;
-import javax.swing.ButtonGroup;
-import javax.swing.JFileChooser;
-import javax.swing.JSeparator;
-import javax.swing.border.EmptyBorder;
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import javax.swing.border.Border;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.File;
-import java.util.ArrayList;
-
 /**
- * SaveBagFrame
+ * SaveBagFrame.
  *
  * @author gov.loc
  */
@@ -74,6 +76,8 @@ public class SaveBagFrame extends JFrame implements ActionListener {
     JRadioButton tarBz2Button;
 
     /**
+     * SaveBagFrame.
+     *
      * @param bagView BagView
      * @param title String
      */
@@ -94,6 +98,8 @@ public class SaveBagFrame extends JFrame implements ActionListener {
     }
 
     /**
+     * createButtonBar.
+     *
      * @return buttonBar
      */
     protected JComponent createButtonBar() {
@@ -105,6 +111,8 @@ public class SaveBagFrame extends JFrame implements ActionListener {
     }
 
     /**
+     * getCommandGroupMembers.
+     *
      * @return AbstractCommand
      */
     protected Object[] getCommandGroupMembers() {
@@ -112,7 +120,9 @@ public class SaveBagFrame extends JFrame implements ActionListener {
     }
 
     /**
-     * Initialize the standard commands needed on a Dialog: Ok/Cancel.
+     * initStandardCommands.
+     *
+     * <p>Initialize the standard commands needed on a Dialog: Ok/Cancel.
      */
     private void initStandardCommands() {
         finishCommand = new ActionCommand(getFinishCommandId()) {
@@ -157,8 +167,8 @@ public class SaveBagFrame extends JFrame implements ActionListener {
         final JPanel pageControl = new JPanel(new BorderLayout());
         final JPanel titlePaneContainer = new JPanel(new BorderLayout());
         titlePane.setTitle(bagView.getPropertyMessage("SaveBagFrame.title"));
-        titlePane.setMessage(new DefaultMessage(bagView.getPropertyMessage("Define the Bag " +
-                "settings")));
+        titlePane.setMessage(new DefaultMessage(bagView.getPropertyMessage("Define the Bag "
+                + "settings")));
         titlePaneContainer.add(titlePane.getControl());
         titlePaneContainer.add(new JSeparator(), BorderLayout.SOUTH);
         pageControl.add(titlePaneContainer, BorderLayout.NORTH);
@@ -182,8 +192,8 @@ public class SaveBagFrame extends JFrame implements ActionListener {
         // Holey bag control
         final JLabel holeyLabel = new JLabel(bagView.getPropertyMessage("bag.label.isholey"));
         holeyLabel.setToolTipText(bagView.getPropertyMessage("bag.isholey.help"));
-        final JCheckBox holeyCheckbox = new JCheckBox(bagView.getPropertyMessage("bag.checkbox" +
-                ".isholey"));
+        final JCheckBox holeyCheckbox = new JCheckBox(bagView.getPropertyMessage("bag.checkbox"
+                + ".isholey"));
         holeyCheckbox.setBorder(border);
         holeyCheckbox.addActionListener(new HoleyBagHandler());
         holeyCheckbox.setToolTipText(bagView.getPropertyMessage("bag.isholey.help"));
@@ -288,8 +298,8 @@ public class SaveBagFrame extends JFrame implements ActionListener {
         isPayloadCheckbox.addActionListener(new PayloadManifestHandler());
         isPayloadCheckbox.setToolTipText(getMessage("bag.ispayload.help"));
 
-        final JLabel payAlgorithmLabel = new JLabel(bagView.getPropertyMessage("bag.label" +
-                ".payalgorithm"));
+        final JLabel payAlgorithmLabel = new JLabel(bagView.getPropertyMessage("bag.label"
+                + ".payalgorithm"));
         payAlgorithmLabel.setToolTipText(getMessage("bag.payalgorithm.help"));
         final JComboBox<String> payAlgorithmList =
                 new JComboBox<String>(listModel.toArray(new String[listModel.size()]));
@@ -417,6 +427,8 @@ public class SaveBagFrame extends JFrame implements ActionListener {
     }
 
     /**
+     * setBag.
+     *
      * @param bag DefaultBag
      */
     public void setBag(final DefaultBag bag) {
@@ -483,9 +495,9 @@ public class SaveBagFrame extends JFrame implements ActionListener {
             fs.setDialogTitle("Save Bag As");
             final DefaultBag bag = bagView.getBag();
             fs.setCurrentDirectory(bag.getRootDir());
-            if (bag.getName() != null &&
-                    !bag.getName().equalsIgnoreCase(bagView.getPropertyMessage("bag.label" + "" +
-                            ".noname"))) {
+            if (bag.getName() != null
+                    && !bag.getName().equalsIgnoreCase(bagView.getPropertyMessage("bag.label" + ""
+                            + ".noname"))) {
                 String selectedName = bag.getName();
                 if (bag.getSerialMode() == DefaultBag.ZIP_MODE) {
                     selectedName += "." + DefaultBag.ZIP_LABEL;
@@ -513,17 +525,17 @@ public class SaveBagFrame extends JFrame implements ActionListener {
 
         @Override
         public void actionPerformed(final ActionEvent e) {
-            if (bagNameField.getText().trim().isEmpty() ||
-                    bagNameField.getText().equalsIgnoreCase(bagView.getPropertyMessage("bag.label" +
-                            ".noname"))) {
-                BagView.showWarningErrorDialog("Error - bag not saved", "The bag must have a file" +
-                        " name.");
+            if (bagNameField.getText().trim().isEmpty()
+                   || bagNameField.getText().equalsIgnoreCase(bagView.getPropertyMessage("bag.label"
+                            + ".noname"))) {
+                BagView.showWarningErrorDialog("Error - bag not saved", "The bag must have a file"
+                        + " name.");
                 return;
             }
             if (bagView.getBag().isHoley()) {
                 if (urlField.getText().trim().isEmpty()) {
-                    BagView.showWarningErrorDialog("Error - bag not saved", "A holey bag must " +
-                            "have a URL value.");
+                    BagView.showWarningErrorDialog("Error - bag not saved", "A holey bag must "
+                            + "have a URL value.");
                     return;
                 }
                 bagView.getBag().getFetch().setBaseURL(urlField.getText().trim());

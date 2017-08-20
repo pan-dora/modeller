@@ -20,17 +20,18 @@ import cool.pandora.modeller.bag.BaggerFetch;
 import cool.pandora.modeller.model.BagStatus;
 import cool.pandora.modeller.model.Status;
 import cool.pandora.modeller.profile.BaggerProfileStore;
-import gov.loc.repository.bagit.BagFactory;
-import gov.loc.repository.bagit.BagInfoTxt;
-import gov.loc.repository.bagit.PreBag;
-import gov.loc.repository.bagit.FetchTxt;
+
 import gov.loc.repository.bagit.Bag;
-import gov.loc.repository.bagit.BagItTxt;
-import gov.loc.repository.bagit.Manifest;
-import gov.loc.repository.bagit.BagFile;
+import gov.loc.repository.bagit.BagFactory;
 import gov.loc.repository.bagit.BagFactory.Version;
+import gov.loc.repository.bagit.BagFile;
+import gov.loc.repository.bagit.BagInfoTxt;
+import gov.loc.repository.bagit.BagItTxt;
+import gov.loc.repository.bagit.FetchTxt;
 import gov.loc.repository.bagit.FetchTxt.FilenameSizeUrl;
+import gov.loc.repository.bagit.Manifest;
 import gov.loc.repository.bagit.Manifest.Algorithm;
+import gov.loc.repository.bagit.PreBag;
 import gov.loc.repository.bagit.transformer.HolePuncher;
 import gov.loc.repository.bagit.transformer.impl.DefaultCompleter;
 import gov.loc.repository.bagit.transformer.impl.HolePuncherImpl;
@@ -40,21 +41,23 @@ import gov.loc.repository.bagit.verify.impl.CompleteVerifierImpl;
 import gov.loc.repository.bagit.verify.impl.RequiredBagInfoTxtFieldsVerifier;
 import gov.loc.repository.bagit.verify.impl.ValidVerifierImpl;
 import gov.loc.repository.bagit.writer.Writer;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+import java.util.StringTokenizer;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
-import java.util.Set;
-import java.util.Map;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.StringTokenizer;
-import java.util.HashMap;
-import java.util.Map.Entry;
 
 /**
- * DefaultBag
+ * DefaultBag.
  *
  * @author loc.gov
  */
@@ -113,13 +116,15 @@ public class DefaultBag {
     private String listServiceURI;
 
     /**
-     *
+     * DefaultBag.
      */
     public DefaultBag() {
         this(null, Version.V0_96.versionString);
     }
 
     /**
+     * DefaultBag.
+     *
      * @param rootDir File
      * @param version String
      */
@@ -129,6 +134,8 @@ public class DefaultBag {
     }
 
     /**
+     * display.
+     *
      * @param s String
      */
     private void display(final String s) {
@@ -136,6 +143,8 @@ public class DefaultBag {
     }
 
     /**
+     * init.
+     *
      * @param dir File
      */
     private void init(final File dir) {
@@ -188,7 +197,7 @@ public class DefaultBag {
     }
 
     /**
-     *
+     * initializeBilBag.
      */
     private void initializeBilBag() {
         BagInfoTxt bagInfoTxt = bilBag.getBagInfoTxt();
@@ -211,6 +220,8 @@ public class DefaultBag {
     }
 
     /**
+     * createPreBag.
+     *
      * @param data File
      */
     public void createPreBag(final File data) {
@@ -221,7 +232,9 @@ public class DefaultBag {
 
     /**
      * Makes BIL API call to create Bag in place and
-     * adding .keep files in empty Pay load folders
+     * adding .keep files in empty Pay load folders.
+     *
+     * @param data File
      */
     public void createPreBagAddKeepFilesToEmptyFolders(final File data) {
         final BagFactory bagFactory = new BagFactory();
@@ -230,6 +243,8 @@ public class DefaultBag {
     }
 
     /**
+     * getBagFile.
+     *
      * @return bagFile
      */
     public File getBagFile() {
@@ -237,6 +252,8 @@ public class DefaultBag {
     }
 
     /**
+     * setBagFile.
+     *
      * @param fname File
      */
     private void setBagFile(final File fname) {
@@ -244,6 +261,8 @@ public class DefaultBag {
     }
 
     /**
+     * getDataDirectory.
+     *
      * @return dataDirectory
      */
     public String getDataDirectory() {
@@ -251,7 +270,7 @@ public class DefaultBag {
     }
 
     /**
-     *
+     * resetStatus.
      */
     private static void resetStatus() {
         isComplete(Status.UNKNOWN);
@@ -260,6 +279,8 @@ public class DefaultBag {
     }
 
     /**
+     * setVersion.
+     *
      * @param v String
      */
     public void setVersion(final String v) {
@@ -267,6 +288,8 @@ public class DefaultBag {
     }
 
     /**
+     * getVersion.
+     *
      * @return versionString
      */
     public String getVersion() {
@@ -274,6 +297,8 @@ public class DefaultBag {
     }
 
     /**
+     * setName.
+     *
      * @param name String
      */
     public void setName(final String name) {
@@ -286,6 +311,8 @@ public class DefaultBag {
     }
 
     /**
+     * getName.
+     *
      * @return name
      */
     public String getName() {
@@ -293,6 +320,8 @@ public class DefaultBag {
     }
 
     /**
+     * hasText.
+     *
      * @param b boolean
      */
     public void hasText(final boolean b) {
@@ -300,6 +329,8 @@ public class DefaultBag {
     }
 
     /**
+     * hasText.
+     *
      * @return hasText
      */
     public boolean hasText() {
@@ -307,6 +338,8 @@ public class DefaultBag {
     }
 
     /**
+     * setSequenceID.
+     *
      * @param sequenceID String
      */
     public void setSequenceID(final String sequenceID) {
@@ -314,6 +347,8 @@ public class DefaultBag {
     }
 
     /**
+     * getSequenceID.
+     *
      * @return sequenceID
      */
     public String getSequenceID() {
@@ -321,6 +356,8 @@ public class DefaultBag {
     }
 
     /**
+     * sethOCRResource.
+     *
      * @param hOCRResource String
      */
     public void sethOCRResource(final String hOCRResource) {
@@ -328,6 +365,8 @@ public class DefaultBag {
     }
 
     /**
+     * gethOCRResource.
+     *
      * @return hOCRResource
      */
     public String gethOCRResource() {
@@ -335,6 +374,8 @@ public class DefaultBag {
     }
 
     /**
+     * setListServiceBaseURI.
+     *
      * @param listServiceURI String
      */
     public void setListServiceBaseURI(final String listServiceURI) {
@@ -342,6 +383,8 @@ public class DefaultBag {
     }
 
     /**
+     * getListServiceBaseURI.
+     *
      * @return listServiceURI
      */
     public String getListServiceBaseURI() {
@@ -349,6 +392,8 @@ public class DefaultBag {
     }
 
     /**
+     * setSize.
+     *
      * @param size long
      */
     public void setSize(final long size) {
@@ -356,6 +401,8 @@ public class DefaultBag {
     }
 
     /**
+     * getSize.
+     *
      * @return size
      */
     public long getSize() {
@@ -363,7 +410,7 @@ public class DefaultBag {
     }
 
     /**
-     * This directory contains either the bag directory or serialized bag file
+     * This directory contains either the bag directory or serialized bag file.
      *
      * @param rootDir File
      */
@@ -372,6 +419,8 @@ public class DefaultBag {
     }
 
     /**
+     * getRootDir.
+     *
      * @return rootDir
      */
     public File getRootDir() {
@@ -379,6 +428,8 @@ public class DefaultBag {
     }
 
     /**
+     * isHoley.
+     *
      * @param b boolean
      */
     public void isHoley(final boolean b) {
@@ -386,6 +437,8 @@ public class DefaultBag {
     }
 
     /**
+     * isHoley.
+     *
      * @return isHoley
      */
     public boolean isHoley() {
@@ -393,6 +446,8 @@ public class DefaultBag {
     }
 
     /**
+     * isSerial.
+     *
      * @param b boolean
      */
     public void isSerial(final boolean b) {
@@ -400,6 +455,8 @@ public class DefaultBag {
     }
 
     /**
+     * isSerial.
+     *
      * @return isSerial
      */
     public boolean isSerial() {
@@ -407,6 +464,8 @@ public class DefaultBag {
     }
 
     /**
+     * setSerialMode.
+     *
      * @param m short
      */
     public void setSerialMode(final short m) {
@@ -414,6 +473,8 @@ public class DefaultBag {
     }
 
     /**
+     * getSerialMode.
+     *
      * @return serialMode
      */
     public short getSerialMode() {
@@ -421,6 +482,8 @@ public class DefaultBag {
     }
 
     /**
+     * isNoProject.
+     *
      * @return isNoProfile
      */
     private boolean isNoProject() {
@@ -428,6 +491,8 @@ public class DefaultBag {
     }
 
     /**
+     * isBuildTagManifest.
+     *
      * @param b boolean
      */
     public void isBuildTagManifest(final boolean b) {
@@ -435,6 +500,8 @@ public class DefaultBag {
     }
 
     /**
+     * isBuildTagManifest.
+     *
      * @return isBuildTagManifest
      */
     public boolean isBuildTagManifest() {
@@ -442,6 +509,8 @@ public class DefaultBag {
     }
 
     /**
+     * isBuildPayloadManifest.
+     *
      * @param b boolean
      */
     public void isBuildPayloadManifest(final boolean b) {
@@ -449,6 +518,8 @@ public class DefaultBag {
     }
 
     /**
+     * isBuildPayloadManifest.
+     *
      * @return isBuildPayloadManifest
      */
     public boolean isBuildPayloadManifest() {
@@ -456,6 +527,8 @@ public class DefaultBag {
     }
 
     /**
+     * setTagManifestAlgorithm.
+     *
      * @param s String
      */
     public void setTagManifestAlgorithm(final String s) {
@@ -463,6 +536,8 @@ public class DefaultBag {
     }
 
     /**
+     * getTagManifestAlgorithm.
+     *
      * @return tagManifestAlgorithm
      */
     public String getTagManifestAlgorithm() {
@@ -470,6 +545,8 @@ public class DefaultBag {
     }
 
     /**
+     * setPayloadManifestAlgorithm.
+     *
      * @param s String
      */
     public void setPayloadManifestAlgorithm(final String s) {
@@ -477,6 +554,8 @@ public class DefaultBag {
     }
 
     /**
+     * getPayloadManifestAlgorithm.
+     *
      * @return payloadManifestAlgorithm
      */
     public String getPayloadManifestAlgorithm() {
@@ -487,7 +566,7 @@ public class DefaultBag {
     /**
      * Setter Method
      * for the passed value associated with the ".keep Files in Empty Folder(s):"
-     * Check Box
+     * Check Box.
      *
      * @param b boolean
      */
@@ -498,13 +577,17 @@ public class DefaultBag {
     /**
      * Getter Method
      * for the value return value associated with the
-     * "Add .keep Files To Empty Folder" Check Box
+     * "Add .keep Files To Empty Folder" Check Box.
+     *
+     * @return this.isAddKeepFilesToEmptyFolders
      */
     public boolean isAddKeepFilesToEmptyFolders() {
         return this.isAddKeepFilesToEmptyFolders;
     }
 
     /**
+     * isValidateOnSave.
+     *
      * @param b boolean
      */
     public void isValidateOnSave(final boolean b) {
@@ -512,6 +595,8 @@ public class DefaultBag {
     }
 
     /**
+     * isValidateOnSave.
+     *
      * @return isValidateOnSave
      */
     public boolean isValidateOnSave() {
@@ -519,6 +604,8 @@ public class DefaultBag {
     }
 
     /**
+     * isComplete.
+     *
      * @param status Status
      */
     private static void isComplete(final Status status) {
@@ -526,6 +613,8 @@ public class DefaultBag {
     }
 
     /**
+     * isValid.
+     *
      * @param status Status
      */
     private static void isValid(final Status status) {
@@ -533,6 +622,8 @@ public class DefaultBag {
     }
 
     /**
+     * isValidMetadata.
+     *
      * @param status Status
      */
     private static void isValidMetadata(final Status status) {
@@ -540,6 +631,8 @@ public class DefaultBag {
     }
 
     /**
+     * isSerialized.
+     *
      * @param b boolean
      */
     private void isSerialized(final boolean b) {
@@ -547,6 +640,8 @@ public class DefaultBag {
     }
 
     /**
+     * isSerialized.
+     *
      * @return isSerialized
      */
     public boolean isSerialized() {
@@ -554,6 +649,8 @@ public class DefaultBag {
     }
 
     /**
+     * updateBagInfo.
+     *
      * @param map Map
      */
     public void updateBagInfo(final Map<String, String> map) {
@@ -563,6 +660,8 @@ public class DefaultBag {
     }
 
     /**
+     * getInfo.
+     *
      * @return bagInfo
      */
     public DefaultBagInfo getInfo() {
@@ -570,6 +669,8 @@ public class DefaultBag {
     }
 
     /**
+     * getBagInfoContent.
+     *
      * @return bicontent
      */
     public String getBagInfoContent() {
@@ -581,6 +682,8 @@ public class DefaultBag {
     }
 
     /**
+     * getBaseUrl.
+     *
      * @param fetchTxt FetchTxt
      * @return baseUrl
      */
@@ -609,6 +712,8 @@ public class DefaultBag {
     }
 
     /**
+     * setFetch.
+     *
      * @param fetch BaggerFetch
      */
     public void setFetch(final BaggerFetch fetch) {
@@ -616,6 +721,8 @@ public class DefaultBag {
     }
 
     /**
+     * getFetch.
+     *
      * @return fetch
      */
     public BaggerFetch getFetch() {
@@ -626,6 +733,8 @@ public class DefaultBag {
     }
 
     /**
+     * getFetchPayload.
+     *
      * @return list
      */
     public List<String> getFetchPayload() {
@@ -645,6 +754,8 @@ public class DefaultBag {
     }
 
     /**
+     * getDataContent.
+     *
      * @return dataContent
      */
     public String getDataContent() {
@@ -671,6 +782,8 @@ public class DefaultBag {
     }
 
     /**
+     * getDataSize.
+     *
      * @return totalSize
      */
     public long getDataSize() {
@@ -678,6 +791,8 @@ public class DefaultBag {
     }
 
     /**
+     * getDataNumber.
+     *
      * @return size
      */
     public int getDataNumber() {
@@ -685,7 +800,7 @@ public class DefaultBag {
     }
 
     /**
-     *
+     * clearProfile.
      */
     private void clearProfile() {
         final Profile noProfile = new Profile();
@@ -695,6 +810,8 @@ public class DefaultBag {
     }
 
     /**
+     * setProfile.
+     *
      * @param profile Profile
      * @param newBag boolean
      */
@@ -704,6 +821,8 @@ public class DefaultBag {
     }
 
     /**
+     * getProfile.
+     *
      * @return profile
      */
     public Profile getProfile() {
@@ -711,6 +830,8 @@ public class DefaultBag {
     }
 
     /**
+     * getPayloadPaths.
+     *
      * @return pathList
      */
     public List<String> getPayloadPaths() {
@@ -725,6 +846,8 @@ public class DefaultBag {
     }
 
     /**
+     * addTagFile.
+     *
      * @param f File
      */
     public void addTagFile(final File f) {
@@ -742,6 +865,8 @@ public class DefaultBag {
     }
 
     /**
+     * write.
+     *
      * @param bw Writer
      * @return messages
      */
@@ -781,6 +906,8 @@ public class DefaultBag {
     }
 
     /**
+     * completeBag.
+     *
      * @param completeVerifier CompleteVerifierImpl
      * @return messages
      */
@@ -816,6 +943,8 @@ public class DefaultBag {
     }
 
     /**
+     * validateMetadata.
+     *
      * @return messages
      */
     public String validateMetadata() {
@@ -833,6 +962,8 @@ public class DefaultBag {
     }
 
     /**
+     * validateBag.
+     *
      * @param validVerifier ValidVerifierImpl
      * @return messages
      */
@@ -865,6 +996,8 @@ public class DefaultBag {
     }
 
     /**
+     * fileStripSuffix.
+     *
      * @param filename String
      * @return String
      */
@@ -874,6 +1007,8 @@ public class DefaultBag {
     }
 
     /**
+     * writeBag.
+     *
      * @param bw Writer
      * @return null
      */
@@ -978,13 +1113,15 @@ public class DefaultBag {
     }
 
     /**
-     *
+     * updateStrategy.
      */
     public void updateStrategy() {
         bagStrategy = getBagInfoStrategy();
     }
 
     /**
+     * getBagInfoStrategy.
+     *
      * @return RequiredBagInfoTxtFieldsVerifier
      */
     private Verifier getBagInfoStrategy() {
@@ -1004,7 +1141,7 @@ public class DefaultBag {
     }
 
     /**
-     *
+     * generateManifestFiles.
      */
     private void generateManifestFiles() {
         final DefaultCompleter completer = new DefaultCompleter(new BagFactory());
@@ -1051,7 +1188,7 @@ public class DefaultBag {
     }
 
     /**
-     *
+     * clear.
      */
     public void clear() {
         clearProfile();
@@ -1060,6 +1197,8 @@ public class DefaultBag {
     }
 
     /**
+     * addField.
+     *
      * @param field BagInfoField
      */
     public void addField(final BagInfoField field) {
@@ -1070,6 +1209,8 @@ public class DefaultBag {
     }
 
     /**
+     * removeBagInfoField.
+     *
      * @param key String
      */
     public void removeBagInfoField(final String key) {
@@ -1080,6 +1221,8 @@ public class DefaultBag {
     }
 
     /**
+     * addFileToPayload.
+     *
      * @param file File
      */
     public void addFileToPayload(final File file) {
@@ -1090,6 +1233,8 @@ public class DefaultBag {
     }
 
     /**
+     * getTags.
+     *
      * @return tags
      */
     public Collection<BagFile> getTags() {
@@ -1097,6 +1242,8 @@ public class DefaultBag {
     }
 
     /**
+     * removeBagFile.
+     *
      * @param fileName String
      */
     public void removeBagFile(final String fileName) {
@@ -1107,6 +1254,8 @@ public class DefaultBag {
     }
 
     /**
+     * removePayloadDirectory.
+     *
      * @param fileName String
      */
     public void removePayloadDirectory(final String fileName) {
@@ -1116,6 +1265,8 @@ public class DefaultBag {
     }
 
     /**
+     * getPayload.
+     *
      * @return payload
      */
     public Collection<BagFile> getPayload() {
@@ -1123,6 +1274,8 @@ public class DefaultBag {
     }
 
     /**
+     * getFetchTxt.
+     *
      * @return fetchtext
      */
     public FetchTxt getFetchTxt() {
@@ -1130,7 +1283,7 @@ public class DefaultBag {
     }
 
     /**
-     *
+     * changeToDirty.
      */
     private void changeToDirty() {
         this.dirty = true;
@@ -1138,7 +1291,7 @@ public class DefaultBag {
     }
 
     /**
-     *
+     * prepareBilBagInfoIfDirty.
      */
     private void prepareBilBagInfoIfDirty() {
         if (dirty) {

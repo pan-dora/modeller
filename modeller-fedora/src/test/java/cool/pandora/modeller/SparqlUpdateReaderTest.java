@@ -14,17 +14,18 @@
 
 package cool.pandora.modeller;
 
-import org.apache.commons.io.IOUtils;
-import org.junit.Test;
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static junit.framework.TestCase.assertEquals;
 
 import java.io.IOException;
 import java.io.InputStream;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static junit.framework.TestCase.assertEquals;
+import org.apache.commons.io.IOUtils;
+import org.junit.Test;
+
 
 /**
- * SparqlUpdateReaderTest
+ * SparqlUpdateReaderTest.
  *
  * @author Christopher Johnson
  */
@@ -42,7 +43,7 @@ public class SparqlUpdateReaderTest {
             System.out.println("#### ---- Write as application/sparql-update");
             System.out.println(requestBody);
             InputStream is = getClass().getResourceAsStream("/requestBody_out.txt");
-            String out = TestUtils.StreamToString(is);
+            String out = TestUtils.streamToString(is);
             assertEquals(requestBody, out);
         } catch (final IOException ex) {
             System.out.println(ex.getMessage());

@@ -14,33 +14,35 @@
 
 package cool.pandora.modeller.ui.handlers.text;
 
-import org.apache.commons.lang.StringUtils;
+import static cool.pandora.modeller.DocManifestBuilder.getPageIdList;
+import static org.apache.commons.lang3.exception.ExceptionUtils.getMessage;
+
+import cool.pandora.modeller.DocManifestBuilder;
 import cool.pandora.modeller.ModellerClient;
 import cool.pandora.modeller.ModellerClientFailedException;
-import cool.pandora.modeller.DocManifestBuilder;
-import cool.pandora.modeller.hOCRData;
 import cool.pandora.modeller.bag.BagInfoField;
 import cool.pandora.modeller.bag.impl.DefaultBag;
+import cool.pandora.modeller.hOCRData;
 import cool.pandora.modeller.ui.Progress;
 import cool.pandora.modeller.ui.handlers.common.TextObjectURI;
 import cool.pandora.modeller.ui.jpanel.base.BagView;
 import cool.pandora.modeller.ui.jpanel.text.CreatePagesFrame;
 import cool.pandora.modeller.ui.util.ApplicationContextUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.net.URI;
 import java.util.List;
 import java.util.Map;
 
-import static org.apache.commons.lang3.exception.ExceptionUtils.getMessage;
-import static cool.pandora.modeller.DocManifestBuilder.getPageIdList;
+import javax.swing.AbstractAction;
+
+import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- * Create Pages Handler
+ * Create Pages Handler.
  *
  * @author Christopher Johnson
  */
@@ -50,6 +52,8 @@ public class CreatePagesHandler extends AbstractAction implements Progress {
     private final BagView bagView;
 
     /**
+     * CreatePagesHandler.
+     *
      * @param bagView BagView
      */
     public CreatePagesHandler(final BagView bagView) {

@@ -14,8 +14,9 @@
 
 package cool.pandora.modeller.ui.handlers.common;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static org.apache.commons.lang3.StringEscapeUtils.unescapeXml;
 
-import org.apache.commons.io.IOUtils;
 import cool.pandora.modeller.common.uri.FedoraPrefixes;
 import cool.pandora.modeller.common.uri.IIIFPredicates;
 import cool.pandora.modeller.common.uri.IIIFPrefixes;
@@ -33,11 +34,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.apache.commons.lang3.StringEscapeUtils.unescapeXml;
+import org.apache.commons.io.IOUtils;
 
 /**
- * Text Sequence Metadata
+ * Text Sequence Metadata.
  *
  * @author Christopher Johnson
  */
@@ -47,6 +47,8 @@ public class TextSequenceMetadata {
     }
 
     /**
+     * getTextSequenceMetadata.
+     *
      * @param resourceIDList Map
      * @param pageId String
      * @param canvasRegionURI String
@@ -62,22 +64,22 @@ public class TextSequenceMetadata {
                                                       final URI resourceContainerIRI) {
         final ArrayList<String> idList = new ArrayList<>(resourceIDList.get(pageId));
         final TextCollectionWriter collectionWriter;
-        collectionWriter = TextCollectionWriter.collection().idList(idList).collectionPredicate
-                (collectionPredicate)
+        collectionWriter = TextCollectionWriter.collection().idList(idList).collectionPredicate(
+                collectionPredicate)
                 .resourceContainerIRI(resourceContainerIRI.toString()).canvasURI(canvasRegionURI)
                 .build();
 
         final String collection = collectionWriter.render();
         final MetadataTemplate metadataTemplate;
-        final List<CollectionScope.Prefix> prefixes = Arrays.asList(new CollectionScope.Prefix
-                        (FedoraPrefixes.RDFS),
+        final List<CollectionScope.Prefix> prefixes = Arrays.asList(new CollectionScope.Prefix(
+                        FedoraPrefixes.RDFS),
                 new CollectionScope.Prefix(FedoraPrefixes.MODE));
 
         final CollectionScope scope = new CollectionScope().fedoraPrefixes(prefixes)
                 .sequenceGraph(collection);
 
-        metadataTemplate = MetadataTemplate.template().template("template/sparql-update-seq" +
-                ".mustache").scope(scope)
+        metadataTemplate = MetadataTemplate.template().template("template/sparql-update-seq"
+                + ".mustache").scope(scope)
                 .throwExceptionOnFailure().build();
 
         final String metadata = unescapeXml(metadataTemplate.render());
@@ -85,6 +87,8 @@ public class TextSequenceMetadata {
     }
 
     /**
+     * getListSequenceMetadata.
+     *
      * @param resourceIDList Map
      * @param listURI String
      * @param resourceTargetMap Map
@@ -109,25 +113,25 @@ public class TextSequenceMetadata {
 
         final String serviceURI = listServiceBaseURI + listURI;
         final ServiceNodeWriter serviceNodeWriter;
-        serviceNodeWriter = ServiceNodeWriter.init().serviceURI(serviceURI).servicePredicate
-                (IIIFPredicates.SERVICE)
+        serviceNodeWriter = ServiceNodeWriter.init().serviceURI(serviceURI).servicePredicate(
+                IIIFPredicates.SERVICE)
                 .serviceType("http://localhost:3000/listcontext.json").build();
         final String serviceNode = serviceNodeWriter.render();
 
 
         final MetadataTemplate metadataTemplate;
         final List<ListScope.Prefix> prefixes =
-                Arrays.asList(new ListScope.Prefix(FedoraPrefixes.RDFS), new ListScope.Prefix
-                                (FedoraPrefixes.MODE),
-                        new ListScope.Prefix(IIIFPrefixes.SVCS), new ListScope.Prefix
-                                (IIIFPrefixes.SC));
+                Arrays.asList(new ListScope.Prefix(FedoraPrefixes.RDFS), new ListScope.Prefix(
+                                FedoraPrefixes.MODE),
+                        new ListScope.Prefix(IIIFPrefixes.SVCS), new ListScope.Prefix(
+                                IIIFPrefixes.SC));
 
         final ListScope scope =
-                new ListScope().fedoraPrefixes(prefixes).sequenceGraph(collection).serviceNode
-                        (serviceNode);
+                new ListScope().fedoraPrefixes(prefixes).sequenceGraph(collection).serviceNode(
+                        serviceNode);
 
-        metadataTemplate = MetadataTemplate.template().template("template/sparql-update-list" +
-                ".mustache").scope(scope)
+        metadataTemplate = MetadataTemplate.template().template("template/sparql-update-list"
+                + ".mustache").scope(scope)
                 .throwExceptionOnFailure().build();
 
         final String metadata = unescapeXml(metadataTemplate.render());

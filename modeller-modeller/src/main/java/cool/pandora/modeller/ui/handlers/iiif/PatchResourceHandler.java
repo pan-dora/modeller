@@ -14,6 +14,29 @@
 
 package cool.pandora.modeller.ui.handlers.iiif;
 
+import static cool.pandora.modeller.common.uri.FedoraResources.FCRMETADATA;
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static org.apache.commons.lang3.exception.ExceptionUtils.getMessage;
+
+import cool.pandora.modeller.ModellerClient;
+import cool.pandora.modeller.ModellerClientFailedException;
+import cool.pandora.modeller.ProfileOptions;
+import cool.pandora.modeller.bag.BagInfoField;
+import cool.pandora.modeller.bag.BaggerFileEntity;
+import cool.pandora.modeller.bag.impl.DefaultBag;
+import cool.pandora.modeller.common.uri.FedoraPrefixes;
+import cool.pandora.modeller.common.uri.IIIFPrefixes;
+import cool.pandora.modeller.templates.MetadataTemplate;
+import cool.pandora.modeller.templates.ResourceScope;
+import cool.pandora.modeller.ui.Progress;
+import cool.pandora.modeller.ui.handlers.common.IIIFObjectURI;
+import cool.pandora.modeller.ui.jpanel.base.BagView;
+import cool.pandora.modeller.ui.jpanel.iiif.PatchResourceFrame;
+import cool.pandora.modeller.ui.util.ApplicationContextUtil;
+import cool.pandora.modeller.util.ImageIOUtil;
+
+import gov.loc.repository.bagit.impl.AbstractBagConstants;
+
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.io.File;
@@ -26,34 +49,15 @@ import java.util.Map;
 
 import javax.swing.AbstractAction;
 
-import gov.loc.repository.bagit.impl.AbstractBagConstants;
 import org.apache.commons.io.IOUtils;
-import cool.pandora.modeller.ModellerClientFailedException;
-import cool.pandora.modeller.ProfileOptions;
-import cool.pandora.modeller.bag.BagInfoField;
-import cool.pandora.modeller.bag.BaggerFileEntity;
-import cool.pandora.modeller.common.uri.FedoraPrefixes;
-import cool.pandora.modeller.common.uri.IIIFPrefixes;
-import cool.pandora.modeller.templates.ResourceScope;
-import cool.pandora.modeller.templates.MetadataTemplate;
-import cool.pandora.modeller.ui.handlers.common.IIIFObjectURI;
-import cool.pandora.modeller.util.ImageIOUtil;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import cool.pandora.modeller.bag.impl.DefaultBag;
-import cool.pandora.modeller.ui.jpanel.base.BagView;
-import cool.pandora.modeller.ui.Progress;
-import cool.pandora.modeller.ui.util.ApplicationContextUtil;
-import cool.pandora.modeller.ui.jpanel.iiif.PatchResourceFrame;
-import cool.pandora.modeller.ModellerClient;
 
-import static org.apache.commons.lang3.exception.ExceptionUtils.getMessage;
-import static cool.pandora.modeller.common.uri.FedoraResources.FCRMETADATA;
-import static java.nio.charset.StandardCharsets.UTF_8;
 
 /**
- * Patch Resource Handler
+ * Patch Resource Handler.
  *
  * @author Christopher Johnson
  */
@@ -63,6 +67,8 @@ public class PatchResourceHandler extends AbstractAction implements Progress {
     private final BagView bagView;
 
     /**
+     * PatchResourceHandler.
+     *
      * @param bagView BagView
      */
     public PatchResourceHandler(final BagView bagView) {
@@ -144,21 +150,21 @@ public class PatchResourceHandler extends AbstractAction implements Progress {
                                                    final String formatName, final int iw, final
                                                    int ih) {
         final MetadataTemplate metadataTemplate;
-        final List<ResourceScope.Prefix> prefixes = Arrays.asList(new ResourceScope.Prefix
-                        (FedoraPrefixes.RDFS),
-                new ResourceScope.Prefix(FedoraPrefixes.MODE), new ResourceScope.Prefix
-                        (IIIFPrefixes.DC),
-                new ResourceScope.Prefix(IIIFPrefixes.SVCS), new ResourceScope.Prefix
-                        (IIIFPrefixes.EXIF),
+        final List<ResourceScope.Prefix> prefixes = Arrays.asList(new ResourceScope.Prefix(
+                        FedoraPrefixes.RDFS),
+                new ResourceScope.Prefix(FedoraPrefixes.MODE), new ResourceScope.Prefix(
+                        IIIFPrefixes.DC),
+                new ResourceScope.Prefix(IIIFPrefixes.SVCS), new ResourceScope.Prefix(
+                        IIIFPrefixes.EXIF),
                 new ResourceScope.Prefix(IIIFPrefixes.DCTYPES));
 
         final ResourceScope scope =
-                new ResourceScope().fedoraPrefixes(prefixes).filename(filename).serviceURI
-                        (getServiceURI(map, filename))
+                new ResourceScope().fedoraPrefixes(prefixes).filename(filename).serviceURI(
+                        getServiceURI(map, filename))
                         .formatName(formatName).imgHeight(ih).imgWidth(iw);
 
-        metadataTemplate = MetadataTemplate.template().template("template/sparql-update-res" +
-                ".mustache").scope(scope)
+        metadataTemplate = MetadataTemplate.template().template("template/sparql-update-res"
+                + ".mustache").scope(scope)
                 .throwExceptionOnFailure().build();
 
         final String metadata = metadataTemplate.render();
@@ -169,10 +175,10 @@ public class PatchResourceHandler extends AbstractAction implements Progress {
             filename) {
         final String separator = "_";
         final String serviceURI = getMapValue(map, ProfileOptions.IIIF_SERVICE_KEY);
-        final String path = getMapValue(map, ProfileOptions.COLLECTION_ROOT_KEY) + separator +
-                getMapValue(map, ProfileOptions.COLLECTION_ID_KEY) + separator +
-                getMapValue(map, ProfileOptions.OBJEKT_ID_KEY) + separator +
-                getMapValue(map, ProfileOptions.RESOURCE_CONTAINER_KEY) + separator + filename;
+        final String path = getMapValue(map, ProfileOptions.COLLECTION_ROOT_KEY) + separator
+                + getMapValue(map, ProfileOptions.COLLECTION_ID_KEY) + separator
+                + getMapValue(map, ProfileOptions.OBJEKT_ID_KEY) + separator
+                + getMapValue(map, ProfileOptions.RESOURCE_CONTAINER_KEY) + separator + filename;
         return serviceURI + path.replace("tif", "jp2");
     }
 

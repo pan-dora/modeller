@@ -20,3 +20,10 @@ The workflow:
 7. Create list, canvas sequence, and manifest sparql-update request bodies 
 using UI form
 9. PATCH IIIF model containers with metadata.
+
+## Java 9
+To run in Java 9, add the VM option `"--add-modules java.se.ee"`.
+
+## Building
+`$ ./gradlew clean build`
+

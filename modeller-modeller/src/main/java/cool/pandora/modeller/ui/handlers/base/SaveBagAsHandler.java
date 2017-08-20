@@ -49,8 +49,8 @@ public class SaveBagAsHandler extends AbstractAction {
 
     void openSaveBagAsFrame() {
         bag = bagView.getBag();
-        final SaveBagFrame saveBagFrame = new SaveBagFrame(bagView, bagView.getPropertyMessage
-                ("bag.frame.save"));
+        final SaveBagFrame saveBagFrame = new SaveBagFrame(bagView, bagView.getPropertyMessage(
+                "bag.frame.save"));
         saveBagFrame.setBag(bag);
         saveBagFrame.setVisible(true);
     }

@@ -18,7 +18,7 @@ import cool.pandora.modeller.ui.jpanel.base.BagView;
 import org.springframework.richclient.command.support.AbstractActionCommandExecutor;
 
 /**
- * Patch Areas Executor
+ * Patch Areas Executor.
  *
  * @author Christopher Johnson
  */
@@ -26,6 +26,8 @@ public class PatchAreasExecutor extends AbstractActionCommandExecutor {
     private final BagView bagView;
 
     /**
+     * PatchAreasExecutor.
+     *
      * @param bagView BagView
      */
     public PatchAreasExecutor(final BagView bagView) {

@@ -17,17 +17,18 @@ package cool.pandora.modeller.ui.jpanel.base;
 import cool.pandora.modeller.Contact;
 import cool.pandora.modeller.Organization;
 import cool.pandora.modeller.ui.BagTableFormBuilder;
-import org.springframework.binding.form.FormModel;
-import org.springframework.richclient.form.AbstractForm;
 
-import javax.swing.JPanel;
-import javax.swing.JComponent;
 import java.awt.BorderLayout;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import javax.swing.JComponent;
+import javax.swing.JPanel;
+
+import org.springframework.binding.form.FormModel;
+import org.springframework.richclient.form.AbstractForm;
 
 /**
- * OrganizationProfileForm
+ * OrganizationProfileForm.
  *
  * @author gov.loc
  */
@@ -38,6 +39,8 @@ public class OrganizationProfileForm extends AbstractForm implements FocusListen
     private final BagView bagView;
 
     /**
+     * OrganizationProfileForm.
+     *
      * @param formModel FormModel
      * @param bagView BagView
      */
@@ -57,6 +60,8 @@ public class OrganizationProfileForm extends AbstractForm implements FocusListen
     }
 
     /**
+     * createFormFields.
+     *
      * @return fieldForm
      */
     private JComponent createFormFields() {
@@ -135,6 +140,8 @@ public class OrganizationProfileForm extends AbstractForm implements FocusListen
     }
 
     /**
+     * requestFocusInWindow.
+     *
      * @return contactName
      */
     public boolean requestFocusInWindow() {

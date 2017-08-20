@@ -14,7 +14,12 @@
 
 package cool.pandora.modeller.ui.handlers.common;
 
-import org.apache.commons.lang.StringUtils;
+import static cool.pandora.modeller.DocManifestBuilder.getAreaIdListforPage;
+import static cool.pandora.modeller.DocManifestBuilder.getBboxForId;
+import static cool.pandora.modeller.DocManifestBuilder.getLineIdListforArea;
+import static cool.pandora.modeller.DocManifestBuilder.getWordIdListforLine;
+import static cool.pandora.modeller.DocManifestBuilder.getWordIdListforPage;
+
 import cool.pandora.modeller.CanvasPageMap;
 import cool.pandora.modeller.DocManifestBuilder;
 import cool.pandora.modeller.PageIdMap;
@@ -26,14 +31,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static cool.pandora.modeller.DocManifestBuilder.getBboxForId;
-import static cool.pandora.modeller.DocManifestBuilder.getAreaIdListforPage;
-import static cool.pandora.modeller.DocManifestBuilder.getLineIdListforArea;
-import static cool.pandora.modeller.DocManifestBuilder.getWordIdListforLine;
-import static cool.pandora.modeller.DocManifestBuilder.getWordIdListforPage;
+import org.apache.commons.lang.StringUtils;
 
 /**
- * Node Map
+ * Node Map.
  *
  * @author Christopher Johnson
  */
@@ -43,6 +44,8 @@ public final class NodeMap {
     }
 
     /**
+     * getBBoxMap.
+     *
      * @param hocr hOCRData
      * @param pageIdList List
      * @return Map
@@ -58,6 +61,8 @@ public final class NodeMap {
     }
 
     /**
+     * getBBoxAreaMap.
+     *
      * @param hocr hOCRData
      * @param areaIdList List
      * @return Map
@@ -73,6 +78,8 @@ public final class NodeMap {
     }
 
     /**
+     * getBBoxLineMap.
+     *
      * @param hocr hOCRData
      * @param lineIdList List
      * @return Map
@@ -88,6 +95,8 @@ public final class NodeMap {
     }
 
     /**
+     * getBBoxWordMap.
+     *
      * @param hocr hOCRData
      * @param wordIdList List
      * @return Map
@@ -103,6 +112,8 @@ public final class NodeMap {
     }
 
     /**
+     * getCharWordMap.
+     *
      * @param hocr hOCRData
      * @param wordIdList List
      * @return Map
@@ -118,6 +129,8 @@ public final class NodeMap {
     }
 
     /**
+     * getCanvasPageMap.
+     *
      * @param pageIdList List
      * @param canvasContainerURI URI
      * @return Map
@@ -136,6 +149,8 @@ public final class NodeMap {
     }
 
     /**
+     * getPageIdMap.
+     *
      * @param pageIdList String
      * @return Map
      */
@@ -151,6 +166,8 @@ public final class NodeMap {
     }
 
     /**
+     * getAreaIdMap.
+     *
      * @param hocr hOCRData
      * @param pageIdList List
      * @return Map
@@ -172,6 +189,8 @@ public final class NodeMap {
     }
 
     /**
+     * getLineIdMap.
+     *
      * @param hocr hOCRData
      * @param areaIdList List
      * @return Map
@@ -193,6 +212,8 @@ public final class NodeMap {
     }
 
     /**
+     * getWordIdMap.
+     *
      * @param hocr hOCRData
      * @param lineIdList List
      * @return Map
@@ -214,6 +235,8 @@ public final class NodeMap {
     }
 
     /**
+     * getWordsForPageMap.
+     *
      * @param hocr hOCRData
      * @param pageIdList List
      * @return Map

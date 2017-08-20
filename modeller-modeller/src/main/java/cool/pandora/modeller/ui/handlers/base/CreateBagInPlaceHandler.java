@@ -17,9 +17,9 @@ package cool.pandora.modeller.ui.handlers.base;
 import cool.pandora.modeller.Profile;
 import cool.pandora.modeller.bag.impl.DefaultBag;
 import cool.pandora.modeller.bag.impl.DefaultBagInfo;
+import cool.pandora.modeller.ui.Progress;
 import cool.pandora.modeller.ui.jpanel.base.BagView;
 import cool.pandora.modeller.ui.jpanel.base.NewBagInPlaceFrame;
-import cool.pandora.modeller.ui.Progress;
 
 import gov.loc.repository.bagit.BagFactory;
 
@@ -45,6 +45,8 @@ public class CreateBagInPlaceHandler extends AbstractAction implements Progress 
     private final BagView bagView;
 
     /**
+     * CreateBagInPlaceHandler.
+     *
      * @param bagView BagView
      */
     public CreateBagInPlaceHandler(final BagView bagView) {
@@ -64,8 +66,8 @@ public class CreateBagInPlaceHandler extends AbstractAction implements Progress 
 
     void createBagInPlace() {
         final NewBagInPlaceFrame newBagInPlaceFrame =
-                new NewBagInPlaceFrame(bagView, bagView.getPropertyMessage("bag" + ".frame" + "" +
-                        ".newbaginplace"));
+                new NewBagInPlaceFrame(bagView, bagView.getPropertyMessage("bag" + ".frame" + ""
+                        + ".newbaginplace"));
         newBagInPlaceFrame.setBag(bagView.getBag());
         newBagInPlaceFrame.setVisible(true);
     }

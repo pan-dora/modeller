@@ -14,20 +14,22 @@
 
 package cool.pandora.modeller.ui.handlers.common;
 
+import static cool.pandora.modeller.ui.util.URIResolver.ContainerURIResolverNormal.getMapValue;
+
 import cool.pandora.modeller.ProfileOptions;
 import cool.pandora.modeller.bag.BagInfoField;
 import cool.pandora.modeller.ui.util.URIResolver;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Map;
 
-import static cool.pandora.modeller.ui.util.URIResolver.ContainerURIResolverNormal.getMapValue;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 /**
- * IIIF Object URI
+ * IIIF Object URI.
  *
  * @author Christopher Johnson
  */
@@ -39,6 +41,8 @@ public final class IIIFObjectURI {
     protected static final Logger log = LoggerFactory.getLogger(TextObjectURI.class);
 
     /**
+     * buildContainerURI.
+     *
      * @param map Map
      * @param containerKey String
      * @return URI
@@ -57,6 +61,8 @@ public final class IIIFObjectURI {
     }
 
     /**
+     * getCollectionIdURI.
+     *
      * @param map Map
      * @return URI
      */
@@ -72,6 +78,8 @@ public final class IIIFObjectURI {
     }
 
     /**
+     * getObjektURI.
+     *
      * @param map Map
      * @return URI
      */
@@ -87,6 +95,8 @@ public final class IIIFObjectURI {
     }
 
     /**
+     * getManifestResource.
+     *
      * @param map Map
      * @return URI
      */
@@ -102,6 +112,8 @@ public final class IIIFObjectURI {
     }
 
     /**
+     * getSequenceContainerURI.
+     *
      * @param map Map
      * @return URI
      */
@@ -119,6 +131,8 @@ public final class IIIFObjectURI {
     }
 
     /**
+     * getSequenceObjectURI.
+     *
      * @param map Map
      * @param sequenceID String
      * @return URI
@@ -138,6 +152,8 @@ public final class IIIFObjectURI {
     }
 
     /**
+     * getCanvasContainerURI.
+     *
      * @param map Map
      * @return URI
      */
@@ -155,6 +171,8 @@ public final class IIIFObjectURI {
     }
 
     /**
+     * getCanvasObjectURI.
+     *
      * @param map Map
      * @param resourceID String
      * @return URI
@@ -174,6 +192,8 @@ public final class IIIFObjectURI {
     }
 
     /**
+     * getListContainerURI.
+     *
      * @param map Map
      * @return URI
      */
@@ -191,6 +211,8 @@ public final class IIIFObjectURI {
     }
 
     /**
+     * getListObjectURI.
+     *
      * @param map Map
      * @param resourceID String
      * @return URI
@@ -211,6 +233,8 @@ public final class IIIFObjectURI {
     }
 
     /**
+     * getResourceContainerURI.
+     *
      * @param map Map
      * @return URI
      */
@@ -228,6 +252,8 @@ public final class IIIFObjectURI {
     }
 
     /**
+     * getDestinationURI.
+     *
      * @param map Map
      * @param filename String
      * @return URI
@@ -247,6 +273,8 @@ public final class IIIFObjectURI {
     }
 
     /**
+     * getListServiceBaseURI.
+     *
      * @param map Map
      * @return String
      */

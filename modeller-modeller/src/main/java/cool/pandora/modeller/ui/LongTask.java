@@ -67,7 +67,7 @@ public class LongTask implements ProgressListener {
     /**
      * go.
      *
-     * Called from ProgressBarDemo to start the task.
+     * <p>Called from ProgressBarDemo to start the task.
      */
     public void go() {
         final SwingWorker worker = new SwingWorker(this) {
@@ -98,7 +98,9 @@ public class LongTask implements ProgressListener {
     /**
      * isDone.
      *
-     * Called from ProgressBarDemo to find out if the task has completed.
+     * <p>Called from ProgressBarDemo to find out if the task has completed.
+     *
+     * @return done
      */
     public boolean isDone() {
         return done;
@@ -115,7 +117,7 @@ public class LongTask implements ProgressListener {
     /**
      * reportProgress.
      *
-     * should be thread-safe
+     * <p>should be thread-safe
      *
      * @param activity String
      * @param item Object

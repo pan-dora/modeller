@@ -14,15 +14,16 @@
 
 package cool.pandora.modeller;
 
+import java.io.StringWriter;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 import org.json.JSONWriter;
 
-import java.io.StringWriter;
 
 /**
- * Organization
+ * Organization.
  *
  * @author gov.loc
  */
@@ -34,7 +35,7 @@ public class Organization {
     private static final String FIELD_ORGANIZATION_ADDRESS = "Organization-Address";
 
     /**
-     *
+     * Organization.
      */
     public Organization() {
         name = new ProfileField();
@@ -44,6 +45,8 @@ public class Organization {
     }
 
     /**
+     * setName.
+     *
      * @param n name
      */
     public void setName(final ProfileField n) {
@@ -51,6 +54,8 @@ public class Organization {
     }
 
     /**
+     * getName.
+     *
      * @return name
      */
     public ProfileField getName() {
@@ -58,6 +63,8 @@ public class Organization {
     }
 
     /**
+     * setAddress.
+     *
      * @param a address
      */
     private void setAddress(final ProfileField a) {
@@ -65,6 +72,8 @@ public class Organization {
     }
 
     /**
+     * getAddress.
+     *
      * @return address
      */
     public ProfileField getAddress() {
@@ -77,6 +86,8 @@ public class Organization {
     }
 
     /**
+     * toString.
+     *
      * @param inline boolean
      * @return String
      */
@@ -92,6 +103,8 @@ public class Organization {
     }
 
     /**
+     * createOrganization.
+     *
      * @param organizationJson JSONObject
      * @return organization
      * @throws JSONException exception
@@ -102,8 +115,8 @@ public class Organization {
         ProfileField address = null;
         if (organizationJson != null) {
             if (organizationJson.has(FIELD_SOURCE_ORGANIZATION)) {
-                final JSONObject jsonObjectOrgName = (JSONObject) organizationJson.get
-                        (FIELD_SOURCE_ORGANIZATION);
+                final JSONObject jsonObjectOrgName = (JSONObject) organizationJson.get(
+                        FIELD_SOURCE_ORGANIZATION);
                 if (jsonObjectOrgName != null) {
                     name = ProfileField.createProfileField(jsonObjectOrgName,
                             FIELD_SOURCE_ORGANIZATION);
@@ -111,8 +124,8 @@ public class Organization {
             }
 
             if (organizationJson.has(FIELD_ORGANIZATION_ADDRESS)) {
-                final JSONObject jsonObjectOrgAddr = (JSONObject) organizationJson.get
-                        (FIELD_ORGANIZATION_ADDRESS);
+                final JSONObject jsonObjectOrgAddr = (JSONObject) organizationJson.get(
+                        FIELD_ORGANIZATION_ADDRESS);
                 if (jsonObjectOrgAddr != null) {
                     address = ProfileField.createProfileField(jsonObjectOrgAddr,
                             FIELD_ORGANIZATION_ADDRESS);

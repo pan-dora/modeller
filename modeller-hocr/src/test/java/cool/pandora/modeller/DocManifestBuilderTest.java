@@ -15,30 +15,25 @@
 package cool.pandora.modeller;
 
 import java.io.IOException;
-import java.net.URI;
-import java.util.List;
-
-import static cool.pandora.modeller.DocManifestBuilder.getPageIdList;
 
 /**
- * canvasPageMapTest
+ * DocManifestBuilderTest.
  *
  * @author Christopher Johnson
  */
-public class canvasPageMapTest {
+public class DocManifestBuilderTest {
 
-    private canvasPageMapTest() {
+    private DocManifestBuilderTest() {
     }
 
     public static void main(final String[] args) throws IOException {
-        final List<String> pageIdList;
-        final String url = "resource://data/test_007.hocr";
+        final String url = "resource://data/001.hocr";
         final hOCRData hocr = DocManifestBuilder.gethOCRProjectionFromURL(url);
-        pageIdList = getPageIdList(hocr);
-        final CanvasPageMap canvasPageMap = CanvasPageMap.init()
-                .canvasContainerURI(URI.create
-                        ("http://localhost:8080/fcrepo/rest/collection/test/007/canvas"))
-                .pageIdList(pageIdList).build();
-        System.out.println(canvasPageMap);
+        final String resourceURI = "http://localhost:8080/fcrepo/rest/collection/test/004/area/";
+        final String rdfseq = DocManifestBuilder.getAreaRDFSequenceForhOCRResource(hocr,
+                resourceURI);
+        System.out.println(rdfseq);
+        //Map map = getAreaMapForhOCRResource(hocr);
+        //System.out.println(map);
     }
 }

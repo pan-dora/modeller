@@ -14,13 +14,13 @@
 
 package cool.pandora.modeller.bag;
 
+import java.io.Serializable;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.Serializable;
-
 /**
- * BaggerFetch
+ * BaggerFetch.
  *
  * @author Jon Steinbach
  */
@@ -34,13 +34,15 @@ public class BaggerFetch implements Serializable {
     private String userPassword;
 
     /**
-     *
+     * BaggerFetch.
      */
     public BaggerFetch() {
         log.debug("BaggerFetch");
     }
 
     /**
+     * setBaseURL.
+     *
      * @param url String
      */
     public void setBaseURL(final String url) {
@@ -48,6 +50,8 @@ public class BaggerFetch implements Serializable {
     }
 
     /**
+     * getBaseURL.
+     *
      * @return baseURL
      */
     public String getBaseURL() {
@@ -55,6 +59,8 @@ public class BaggerFetch implements Serializable {
     }
 
     /**
+     * setUserName.
+     *
      * @param username String
      */
     public void setUserName(final String username) {
@@ -62,6 +68,8 @@ public class BaggerFetch implements Serializable {
     }
 
     /**
+     * getUserName.
+     *
      * @return userName
      */
     public String getUserName() {
@@ -69,6 +77,8 @@ public class BaggerFetch implements Serializable {
     }
 
     /**
+     * setUserPassword.
+     *
      * @param password String
      */
     public void setUserPassword(final String password) {
@@ -76,6 +86,8 @@ public class BaggerFetch implements Serializable {
     }
 
     /**
+     * getUserPassword.
+     *
      * @return userPassword
      */
     public String getUserPassword() {

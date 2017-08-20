@@ -14,21 +14,22 @@
 
 package cool.pandora.modeller.ui.handlers.common;
 
+import static cool.pandora.modeller.ui.util.URIResolver.ContainerURIResolverNormal.getMapValue;
 
 import cool.pandora.modeller.ProfileOptions;
 import cool.pandora.modeller.bag.BagInfoField;
 import cool.pandora.modeller.ui.util.URIResolver;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Map;
 
-import static cool.pandora.modeller.ui.util.URIResolver.ContainerURIResolverNormal.getMapValue;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 /**
- * Text Object URI
+ * Text Object URI.
  *
  * @author Christopher Johnson
  */
@@ -39,6 +40,8 @@ public class TextObjectURI {
     }
 
     /**
+     * gethOCRResourceURI.
+     *
      * @param map Map
      * @return String
      */
@@ -47,6 +50,8 @@ public class TextObjectURI {
     }
 
     /**
+     * getPageContainerURI.
+     *
      * @param map Map
      * @return String
      */
@@ -65,6 +70,8 @@ public class TextObjectURI {
     }
 
     /**
+     * getAreaContainerURI.
+     *
      * @param map Map
      * @return String
      */
@@ -83,6 +90,8 @@ public class TextObjectURI {
     }
 
     /**
+     * getLineContainerURI.
+     *
      * @param map Map
      * @return String
      */
@@ -101,6 +110,8 @@ public class TextObjectURI {
     }
 
     /**
+     * getWordContainerURI.
+     *
      * @param map Map
      * @return String
      */
@@ -119,7 +130,10 @@ public class TextObjectURI {
     }
 
     /**
+     * getPageObjectURI.
+     *
      * @param map Map
+     * @param resourceID String
      * @return String
      */
     public static URI getPageObjectURI(final Map<String, BagInfoField> map, final String
@@ -137,7 +151,10 @@ public class TextObjectURI {
     }
 
     /**
+     * getAreaObjectURI.
+     *
      * @param map Map
+     * @param resourceID String
      * @return String
      */
     public static URI getAreaObjectURI(final Map<String, BagInfoField> map, final String
@@ -155,6 +172,9 @@ public class TextObjectURI {
     }
 
     /**
+     * getLineObjectURI.
+     *
+     * @param resourceID String
      * @param map Map
      * @return String
      */
@@ -173,6 +193,9 @@ public class TextObjectURI {
     }
 
     /**
+     * getWordObjectURI.
+     *
+     * @param resourceID String
      * @param map Map
      * @return String
      */

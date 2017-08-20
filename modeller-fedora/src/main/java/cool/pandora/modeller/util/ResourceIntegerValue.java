@@ -126,7 +126,7 @@ public class ResourceIntegerValue {
          * @return this
          */
         public ResourceIntegerValue.ResourceValueBuilder resourceProperty(final String
-                                                                                  resourceProperty) {
+                                                                                 resourceProperty) {
             this.resourceProperty = resourceProperty;
             return this;
         }

@@ -14,17 +14,25 @@
 
 package cool.pandora.modeller.ui.handlers.text;
 
-import org.apache.commons.io.IOUtils;
+import static cool.pandora.modeller.DocManifestBuilder.getPageIdList;
+import static cool.pandora.modeller.DocManifestBuilder.getWordIdList;
+import static cool.pandora.modeller.ui.handlers.common.NodeMap.getCanvasPageMap;
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static org.apache.commons.lang.StringUtils.substringAfter;
+import static org.apache.commons.lang.StringUtils.substringBefore;
+import static org.apache.commons.lang3.StringEscapeUtils.unescapeXml;
+import static org.apache.commons.lang3.exception.ExceptionUtils.getMessage;
+
+import cool.pandora.modeller.CanvasRegionURI;
+import cool.pandora.modeller.DocManifestBuilder;
 import cool.pandora.modeller.ModellerClient;
 import cool.pandora.modeller.ModellerClientFailedException;
-import cool.pandora.modeller.DocManifestBuilder;
-import cool.pandora.modeller.hOCRData;
-import cool.pandora.modeller.CanvasRegionURI;
 import cool.pandora.modeller.Region;
 import cool.pandora.modeller.bag.BagInfoField;
 import cool.pandora.modeller.bag.impl.DefaultBag;
 import cool.pandora.modeller.common.uri.FedoraPrefixes;
 import cool.pandora.modeller.common.uri.IIIFPrefixes;
+import cool.pandora.modeller.hOCRData;
 import cool.pandora.modeller.templates.MetadataTemplate;
 import cool.pandora.modeller.templates.WordScope;
 import cool.pandora.modeller.ui.Progress;
@@ -34,10 +42,7 @@ import cool.pandora.modeller.ui.handlers.common.TextObjectURI;
 import cool.pandora.modeller.ui.jpanel.base.BagView;
 import cool.pandora.modeller.ui.jpanel.text.PatchWordsFrame;
 import cool.pandora.modeller.ui.util.ApplicationContextUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.io.InputStream;
@@ -45,18 +50,16 @@ import java.net.URI;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import javax.swing.AbstractAction;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.apache.commons.lang.StringUtils.substringAfter;
-import static org.apache.commons.lang.StringUtils.substringBefore;
-import static org.apache.commons.lang3.StringEscapeUtils.unescapeXml;
-import static org.apache.commons.lang3.exception.ExceptionUtils.getMessage;
-import static cool.pandora.modeller.DocManifestBuilder.getPageIdList;
-import static cool.pandora.modeller.DocManifestBuilder.getWordIdList;
-import static cool.pandora.modeller.ui.handlers.common.NodeMap.getCanvasPageMap;
+import org.apache.commons.io.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+
 
 /**
- * Patch Words Handler
+ * Patch Words Handler.
  *
  * @author Christopher Johnson
  */
@@ -66,6 +69,8 @@ public class PatchWordsHandler extends AbstractAction implements Progress {
     private final BagView bagView;
 
     /**
+     * PatchWordsHandler.
+     *
      * @param bagView BagView
      */
     public PatchWordsHandler(final BagView bagView) {
@@ -137,13 +142,15 @@ public class PatchWordsHandler extends AbstractAction implements Progress {
     void openPatchWordsFrame() {
         final DefaultBag bag = bagView.getBag();
         final PatchWordsFrame patchWordsFrame =
-                new PatchWordsFrame(bagView, bagView.getPropertyMessage("bag.frame" + ".patch" +
-                        ".words"));
+                new PatchWordsFrame(bagView, bagView.getPropertyMessage("bag.frame" + ".patch"
+                        + ".words"));
         patchWordsFrame.setBag(bag);
         patchWordsFrame.setVisible(true);
     }
 
     /**
+     * getWordMetadata.
+     *
      * @param canvasRegionURI String
      * @param wordContainerURI String
      * @param chars String
@@ -154,8 +161,8 @@ public class PatchWordsHandler extends AbstractAction implements Progress {
                                                final String chars) {
         final MetadataTemplate metadataTemplate;
         final List<WordScope.Prefix> prefixes =
-                Arrays.asList(new WordScope.Prefix(FedoraPrefixes.RDFS), new WordScope.Prefix
-                                (FedoraPrefixes.MODE),
+                Arrays.asList(new WordScope.Prefix(FedoraPrefixes.RDFS), new WordScope.Prefix(
+                                FedoraPrefixes.MODE),
                         new WordScope.Prefix(IIIFPrefixes.OA), new WordScope.Prefix(IIIFPrefixes
                                 .CNT),
                         new WordScope.Prefix(IIIFPrefixes.SC), new WordScope.Prefix(IIIFPrefixes
@@ -164,8 +171,8 @@ public class PatchWordsHandler extends AbstractAction implements Progress {
         final WordScope scope = new WordScope().fedoraPrefixes(prefixes).canvasURI(canvasRegionURI)
                 .resourceContainerURI(wordContainerURI).chars(chars.replace("\"", "\\\""));
 
-        metadataTemplate = MetadataTemplate.template().template("template/sparql-update-word" +
-                ".mustache").scope(scope)
+        metadataTemplate = MetadataTemplate.template().template("template/sparql-update-word"
+                + ".mustache").scope(scope)
                 .throwExceptionOnFailure().build();
 
         final String metadata = unescapeXml(metadataTemplate.render());
