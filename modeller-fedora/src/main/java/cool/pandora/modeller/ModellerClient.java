@@ -89,8 +89,7 @@ public class ModellerClient {
      * @throws ModellerClientFailedException Throwable
      */
     public static void doStreamPut(final URI destinationURI, final ByteArrayInputStream
-            resourceFile,
-                                   final String contentType) throws ModellerClientFailedException {
+            resourceFile, final String contentType) throws ModellerClientFailedException {
         final FcrepoClient testClient;
         testClient = FcrepoClient.client().throwExceptionOnFailure().build();
         try {

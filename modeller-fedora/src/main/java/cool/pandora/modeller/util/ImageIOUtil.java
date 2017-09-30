@@ -83,19 +83,25 @@ public class ImageIOUtil {
      */
     public static String getImageMIMEType(final File resourceFile) {
         registerAllServicesProviders();
-
+        String mimeType = null;
         try (ImageInputStream in = ImageIO.createImageInputStream(resourceFile)) {
             final Iterator<ImageReader> readers = ImageIO.getImageReaders(in);
             if (readers.hasNext()) {
                 final ImageReader reader = readers.next();
                 try {
-                    String formatName = reader.getFormatName();
-                    //hack to set JP2 mime type
-                    if (Objects.equals(formatName, "jpeg 2000")) {
-                        formatName = "jp2";
+                    final String formatName = reader.getFormatName();
+                    switch (formatName) {
+                        case("tif"):
+                           mimeType = IMAGE + "tiff";
+                           break;
+                        case("jpeg 2000"):
+                            mimeType = IMAGE + "jp2";
+                            break;
+                        default:
+                            break;    
                     }
                     reader.setInput(in);
-                    return IMAGE + formatName;
+                    return mimeType;
                 } finally {
                     reader.dispose();
                 }
