@@ -18,7 +18,6 @@ import cool.pandora.modeller.bag.BagInfoField;
 import cool.pandora.modeller.bag.impl.DefaultBag;
 import cool.pandora.modeller.ui.handlers.common.IIIFObjectURI;
 import cool.pandora.modeller.ui.jpanel.base.BagView;
-
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -36,7 +35,6 @@ import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.richclient.command.AbstractCommand;
@@ -53,17 +51,21 @@ import org.springframework.richclient.util.GuiStandardUtils;
  */
 public class PatchListFrame extends JFrame implements ActionListener {
     protected static final Logger log = LoggerFactory.getLogger(PatchListFrame.class);
+    protected static final String DEFAULT_FINISH_COMMAND_ID = "okCommand";
+    protected static final String DEFAULT_CANCEL_COMMAND_ID = "cancelCommand";
     private static final long serialVersionUID = 1L;
+    private final JPanel savePanel;
     transient BagView bagView;
     private Map<String, BagInfoField> map;
-    private final JPanel savePanel;
     private JTextField listServiceField;
+    private transient ActionCommand finishCommand;
+    private transient ActionCommand cancelCommand;
 
     /**
      * PatchListFrame.
      *
      * @param bagView BagView
-     * @param title String
+     * @param title   String
      */
     public PatchListFrame(final BagView bagView, final String title) {
         super(title);
@@ -82,13 +84,57 @@ public class PatchListFrame extends JFrame implements ActionListener {
     }
 
     /**
+     * getFinishCommandId.
+     *
+     * @return DEFAULT_FINISH_COMMAND_ID
+     */
+    private static String getFinishCommandId() {
+        return DEFAULT_FINISH_COMMAND_ID;
+    }
+
+    /**
+     * getCancelCommandId.
+     *
+     * @return DEFAULT_CANCEL_COMMAND_ID
+     */
+    private static String getCancelCommandId() {
+        return DEFAULT_CANCEL_COMMAND_ID;
+    }
+
+    /**
+     * buildConstraints.
+     *
+     * @param gbc    GridBagConstraints
+     * @param x      int
+     * @param y      int
+     * @param w      int
+     * @param h      int
+     * @param wx     int
+     * @param wy     int
+     * @param fill   int
+     * @param anchor int
+     */
+    private static void buildConstraints(final GridBagConstraints gbc, final int x, final int y,
+                                         final int w, final int h, final int wx, final int wy,
+                                         final int fill, final int anchor) {
+        gbc.gridx = x; // start cell in a row
+        gbc.gridy = y; // start cell in a column
+        gbc.gridwidth = w; // how many column does the control occupy in the row
+        gbc.gridheight = h; // how many column does the control occupy in the column
+        gbc.weightx = wx; // relative horizontal size
+        gbc.weighty = wy; // relative vertical size
+        gbc.fill = fill; // the way how the control fills cells
+        gbc.anchor = anchor; // alignment
+    }
+
+    /**
      * createButtonBar.
      *
      * @return buttonBar
      */
     private JComponent createButtonBar() {
-        final CommandGroup dialogCommandGroup = CommandGroup.createCommandGroup(null,
-                getCommandGroupMembers());
+        final CommandGroup dialogCommandGroup =
+                CommandGroup.createCommandGroup(null, getCommandGroupMembers());
         final JComponent buttonBar = dialogCommandGroup.createButtonBar();
         GuiStandardUtils.attachDialogBorder(buttonBar);
         return buttonBar;
@@ -125,32 +171,6 @@ public class PatchListFrame extends JFrame implements ActionListener {
         };
     }
 
-    /**
-     * getFinishCommandId.
-     *
-     * @return DEFAULT_FINISH_COMMAND_ID
-     */
-    private static String getFinishCommandId() {
-        return DEFAULT_FINISH_COMMAND_ID;
-    }
-
-    /**
-     * getCancelCommandId.
-     *
-     * @return DEFAULT_CANCEL_COMMAND_ID
-     */
-    private static String getCancelCommandId() {
-        return DEFAULT_CANCEL_COMMAND_ID;
-    }
-
-    protected static final String DEFAULT_FINISH_COMMAND_ID = "okCommand";
-
-    protected static final String DEFAULT_CANCEL_COMMAND_ID = "cancelCommand";
-
-    private transient ActionCommand finishCommand;
-
-    private transient ActionCommand cancelCommand;
-
     private JPanel createComponents() {
         final Border border = new EmptyBorder(5, 5, 5, 5);
 
@@ -180,8 +200,8 @@ public class PatchListFrame extends JFrame implements ActionListener {
             log.error("Failed to set url label", e);
         }
 
-        final JLabel listServiceLabel = new JLabel(bagView.getPropertyMessage("listServiceLabel"
-                + ".label"));
+        final JLabel listServiceLabel =
+                new JLabel(bagView.getPropertyMessage("listServiceLabel" + ".label"));
         listServiceLabel.setToolTipText(bagView.getPropertyMessage("listServiceLabel.description"));
         listServiceField = new JTextField("");
         final String listService = IIIFObjectURI.getListServiceBaseURI(map);
@@ -199,8 +219,8 @@ public class PatchListFrame extends JFrame implements ActionListener {
         int row = 0;
 
         row++;
-        buildConstraints(glbc, 0, row, 1, 1, 1, 50, GridBagConstraints.NONE, GridBagConstraints
-                .WEST);
+        buildConstraints(glbc, 0, row, 1, 1, 1, 50, GridBagConstraints.NONE,
+                GridBagConstraints.WEST);
         layout.setConstraints(urlLabel, glbc);
         panel.add(urlLabel);
         buildConstraints(glbc, 1, row, 1, 1, 80, 50, GridBagConstraints.HORIZONTAL,
@@ -208,8 +228,8 @@ public class PatchListFrame extends JFrame implements ActionListener {
         layout.setConstraints(urlField, glbc);
         panel.add(urlField);
         row++;
-        buildConstraints(glbc, 0, row, 1, 1, 1, 50, GridBagConstraints.NONE, GridBagConstraints
-                .WEST);
+        buildConstraints(glbc, 0, row, 1, 1, 1, 50, GridBagConstraints.NONE,
+                GridBagConstraints.WEST);
         layout.setConstraints(listServiceLabel, glbc);
         panel.add(listServiceLabel);
         buildConstraints(glbc, 1, row, 1, 1, 80, 50, GridBagConstraints.HORIZONTAL,
@@ -217,8 +237,8 @@ public class PatchListFrame extends JFrame implements ActionListener {
         layout.setConstraints(listServiceField, glbc);
         panel.add(listServiceField);
         row++;
-        buildConstraints(glbc, 0, row, 1, 1, 1, 50, GridBagConstraints.NONE, GridBagConstraints
-                .WEST);
+        buildConstraints(glbc, 0, row, 1, 1, 1, 50, GridBagConstraints.NONE,
+                GridBagConstraints.WEST);
         buildConstraints(glbc, 1, row, 2, 1, 80, 50, GridBagConstraints.HORIZONTAL,
                 GridBagConstraints.CENTER);
 
@@ -247,6 +267,16 @@ public class PatchListFrame extends JFrame implements ActionListener {
         repaint();
     }
 
+    /**
+     * getMessage.
+     *
+     * @param property String
+     * @return message
+     */
+    private String getMessage(final String property) {
+        return bagView.getPropertyMessage(property);
+    }
+
     private class OkPatchListHandler extends AbstractAction {
         private static final long serialVersionUID = 1L;
 
@@ -266,42 +296,5 @@ public class PatchListFrame extends JFrame implements ActionListener {
         public void actionPerformed(final ActionEvent e) {
             setVisible(false);
         }
-    }
-
-    /**
-     * buildConstraints.
-     *
-     * @param gbc GridBagConstraints
-     * @param x int
-     * @param y int
-     * @param w int
-     * @param h int
-     * @param wx int
-     * @param wy int
-     * @param fill int
-     * @param anchor int
-     */
-    private static void buildConstraints(final GridBagConstraints gbc, final int x, final int y,
-                                         final int w,
-                                         final int h, final int wx, final int wy, final int fill,
-                                         final int anchor) {
-        gbc.gridx = x; // start cell in a row
-        gbc.gridy = y; // start cell in a column
-        gbc.gridwidth = w; // how many column does the control occupy in the row
-        gbc.gridheight = h; // how many column does the control occupy in the column
-        gbc.weightx = wx; // relative horizontal size
-        gbc.weighty = wy; // relative vertical size
-        gbc.fill = fill; // the way how the control fills cells
-        gbc.anchor = anchor; // alignment
-    }
-
-    /**
-     * getMessage.
-     *
-     * @param property String
-     * @return message
-     */
-    private String getMessage(final String property) {
-        return bagView.getPropertyMessage(property);
     }
 }

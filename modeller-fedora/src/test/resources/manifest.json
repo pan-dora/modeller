@@ -1,0 +1,85 @@
+[
+  {
+    "@id": "_:b0",
+    "http://www.w3.org/1999/02/22-rdf-syntax-ns#value": [
+      {
+        "@value": ""
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@value": "Published"
+      }
+    ]
+  },
+  {
+    "@id": "_:b4",
+    "http://www.w3.org/1999/02/22-rdf-syntax-ns#value": [
+      {
+        "@value": ""
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@value": "Author"
+      }
+    ]
+  },
+  {
+    "@id": "http://trellis:8080/repository/node/collection/test/001/manifest",
+    "@type": [
+      "http://iiif.io/api/presentation/2#Manifest"
+    ],
+    "http://purl.org/dc/terms/isPartOf": [
+      {
+        "@id": "http://localhost:8080/repository/node/collection/test"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@value": ""
+      }
+    ],
+    "http://iiif.io/api/presentation/2#attributionLabel": [
+      {
+        "@value": ""
+      }
+    ],
+    "http://purl.org/dc/terms/rights": [
+      {
+        "@id": "http://trellis:8080/repository/node/collection/test/001/manifest"
+      }
+    ],
+    "http://xmlns.com/foaf/0.1/logo": [
+      {
+        "@id": "http://trellis:8080/repository/node/collection/test/001/manifest"
+      }
+    ],
+    "http://rdfs.org/sioc/services#has_service": [
+      {
+        "@list": []
+      }
+    ],
+    "http://iiif.io/api/presentation/2#hasSequences": [
+      {
+        "@list": [
+          {
+            "@id": "http://localhost:8080/repository/node/collection/test/001/sequence/normal"
+          }
+        ]
+      }
+    ],
+    "http://iiif.io/api/presentation/2#metadataLabels": [
+      {
+        "@list": [
+          {
+            "@id": "_:b4"
+          },
+          {
+            "@id": "_:b0"
+          }
+        ]
+      }
+    ]
+  }
+]

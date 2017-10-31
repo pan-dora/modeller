@@ -20,7 +20,6 @@ import cool.pandora.modeller.common.uri.FedoraPrefixes;
 import cool.pandora.modeller.common.uri.IIIFPrefixes;
 import cool.pandora.modeller.templates.MetadataTemplate;
 import cool.pandora.modeller.templates.WordScope;
-
 import java.util.Arrays;
 import java.util.List;
 
@@ -44,19 +43,19 @@ public class WordScopeTest {
         final String chars = "blah&quot;blah&quot;blah";
 
         final List<WordScope.Prefix> prefixes =
-                Arrays.asList(new WordScope.Prefix(FedoraPrefixes.RDFS), new WordScope.Prefix(
-                                FedoraPrefixes.MODE),
-                        new WordScope.Prefix(IIIFPrefixes.OA), new WordScope.Prefix(IIIFPrefixes
-                                .CNT),
-                        new WordScope.Prefix(IIIFPrefixes.SC), new WordScope.Prefix(IIIFPrefixes
-                                .DCTYPES));
+                Arrays.asList(new WordScope.Prefix(FedoraPrefixes.RDFS),
+                        new WordScope.Prefix(FedoraPrefixes.MODE),
+                        new WordScope.Prefix(IIIFPrefixes.OA),
+                        new WordScope.Prefix(IIIFPrefixes.CNT),
+                        new WordScope.Prefix(IIIFPrefixes.SC),
+                        new WordScope.Prefix(IIIFPrefixes.DCTYPES));
 
         final WordScope scope = new WordScope().fedoraPrefixes(prefixes).canvasURI(canvasRegionURI)
                 .resourceContainerURI(wordContainerURI).chars(chars.replace("&quot;", "\\\""));
 
-        metadataTemplate = MetadataTemplate.template().template("template/sparql-update-word"
-                + ".mustache").scope(scope)
-                .throwExceptionOnFailure().build();
+        metadataTemplate =
+                MetadataTemplate.template().template("template/sparql-update-word" + ".mustache")
+                        .scope(scope).throwExceptionOnFailure().build();
 
         final String metadata = unescapeXml(metadataTemplate.render());
         System.out.println(metadata);

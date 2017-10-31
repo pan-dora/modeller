@@ -24,7 +24,6 @@ import cool.pandora.modeller.ModellerClientFailedException;
 import cool.pandora.modeller.bag.BagInfoField;
 import cool.pandora.modeller.bag.impl.DefaultBag;
 import cool.pandora.modeller.common.uri.FedoraPrefixes;
-import cool.pandora.modeller.common.uri.FedoraResources;
 import cool.pandora.modeller.common.uri.IIIFPredicates;
 import cool.pandora.modeller.common.uri.IIIFPrefixes;
 import cool.pandora.modeller.templates.CanvasScope;
@@ -36,7 +35,6 @@ import cool.pandora.modeller.ui.jpanel.iiif.PatchCanvasFrame;
 import cool.pandora.modeller.ui.util.ApplicationContextUtil;
 import cool.pandora.modeller.util.ResourceIntegerValue;
 import cool.pandora.modeller.util.ResourceList;
-
 import java.awt.event.ActionEvent;
 import java.io.InputStream;
 import java.net.URI;
@@ -46,9 +44,7 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.swing.AbstractAction;
-
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -71,6 +67,39 @@ public class PatchCanvasHandler extends AbstractAction implements Progress {
     public PatchCanvasHandler(final BagView bagView) {
         super();
         this.bagView = bagView;
+    }
+
+    private static InputStream getCanvasMetadata(final String resourceURI, final String listURI) {
+
+        final MetadataTemplate metadataTemplate;
+        final List<CanvasScope.Prefix> prefixes =
+                Arrays.asList(new CanvasScope.Prefix(FedoraPrefixes.RDFS),
+                        new CanvasScope.Prefix(FedoraPrefixes.MODE),
+                        new CanvasScope.Prefix(IIIFPrefixes.SC),
+                        new CanvasScope.Prefix(IIIFPrefixes.OA),
+                        new CanvasScope.Prefix(IIIFPrefixes.EXIF));
+
+        final ResourceIntegerValue resourceHeight =
+                ResourceIntegerValue.init().resourceURI(resourceURI)
+                        .resourceProperty(IIIFPredicates.HEIGHT).build();
+        final int resheight = resourceHeight.render().get(0);
+
+        final ResourceIntegerValue resourceWidth =
+                ResourceIntegerValue.init().resourceURI(resourceURI)
+                        .resourceProperty(IIIFPredicates.WIDTH).build();
+        final int reswidth = resourceWidth.render().get(0);
+
+        final String canvasLabel = substringAfter(listURI, "list/");
+        final CanvasScope scope =
+                new CanvasScope().fedoraPrefixes(prefixes).resourceURI(resourceURI).listURI(listURI)
+                        .canvasLabel(canvasLabel).canvasHeight(resheight).canvasWidth(reswidth);
+
+        metadataTemplate =
+                MetadataTemplate.template().template("template/sparql-update-canvas" + ".mustache")
+                        .scope(scope).throwExceptionOnFailure().build();
+
+        final String metadata = unescapeXml(metadataTemplate.render());
+        return IOUtils.toInputStream(metadata, UTF_8);
     }
 
     @Override
@@ -106,8 +135,8 @@ public class PatchCanvasHandler extends AbstractAction implements Progress {
 
         InputStream rdfBody;
         for (final String canvasURI : canvasesList) {
-            rdfBody = getCanvasMetadata(canvasResourceMap.get(canvasURI), canvasListMap.get(
-                    canvasURI));
+            rdfBody = getCanvasMetadata(canvasResourceMap.get(canvasURI),
+                    canvasListMap.get(canvasURI));
             final URI destinationURI = URI.create(canvasURI);
             try {
                 ModellerClient.doPatch(destinationURI, rdfBody);
@@ -125,40 +154,6 @@ public class PatchCanvasHandler extends AbstractAction implements Progress {
                 new PatchCanvasFrame(bagView, bagView.getPropertyMessage("bag.frame.patch.canvas"));
         patchCanvasFrame.setBag(bag);
         patchCanvasFrame.setVisible(true);
-    }
-
-
-    private static InputStream getCanvasMetadata(final String resourceURI, final String listURI) {
-
-        final MetadataTemplate metadataTemplate;
-        final List<CanvasScope.Prefix> prefixes =
-                Arrays.asList(new CanvasScope.Prefix(FedoraPrefixes.RDFS), new CanvasScope.Prefix(
-                                FedoraPrefixes.MODE),
-                        new CanvasScope.Prefix(IIIFPrefixes.SC), new CanvasScope.Prefix(
-                                IIIFPrefixes.OA),
-                        new CanvasScope.Prefix(IIIFPrefixes.EXIF));
-
-        final ResourceIntegerValue resourceHeight =
-                ResourceIntegerValue.init().resourceURI(resourceURI + FedoraResources.FCRMETADATA)
-                        .resourceProperty(IIIFPredicates.HEIGHT).build();
-        final int resheight = resourceHeight.render().get(0);
-
-        final ResourceIntegerValue resourceWidth =
-                ResourceIntegerValue.init().resourceURI(resourceURI + FedoraResources.FCRMETADATA)
-                        .resourceProperty(IIIFPredicates.WIDTH).build();
-        final int reswidth = resourceWidth.render().get(0);
-
-        final String canvasLabel = substringAfter(listURI, "list/");
-        final CanvasScope scope = new CanvasScope().fedoraPrefixes(prefixes).resourceURI(
-                resourceURI).listURI(listURI)
-                .canvasLabel(canvasLabel).canvasHeight(resheight).canvasWidth(reswidth);
-
-        metadataTemplate = MetadataTemplate.template().template("template/sparql-update-canvas"
-                + ".mustache").scope(scope)
-                .throwExceptionOnFailure().build();
-
-        final String metadata = unescapeXml(metadataTemplate.render());
-        return IOUtils.toInputStream(metadata, UTF_8);
     }
 
 }

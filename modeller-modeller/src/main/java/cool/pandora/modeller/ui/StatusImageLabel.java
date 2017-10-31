@@ -17,7 +17,6 @@ package cool.pandora.modeller.ui;
 import cool.pandora.modeller.model.Status;
 import cool.pandora.modeller.model.StatusModel;
 import cool.pandora.modeller.ui.util.ApplicationContextUtil;
-
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import javax.swing.ImageIcon;

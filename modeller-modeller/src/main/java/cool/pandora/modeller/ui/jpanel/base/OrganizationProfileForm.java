@@ -17,13 +17,11 @@ package cool.pandora.modeller.ui.jpanel.base;
 import cool.pandora.modeller.Contact;
 import cool.pandora.modeller.Organization;
 import cool.pandora.modeller.ui.BagTableFormBuilder;
-
 import java.awt.BorderLayout;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
-
 import org.springframework.binding.form.FormModel;
 import org.springframework.richclient.form.AbstractForm;
 
@@ -34,15 +32,14 @@ import org.springframework.richclient.form.AbstractForm;
  */
 public class OrganizationProfileForm extends AbstractForm implements FocusListener {
     private static final String PROFILE_FORM_PAGE = "profilePage";
-
-    private JComponent contactName;
     private final BagView bagView;
+    private JComponent contactName;
 
     /**
      * OrganizationProfileForm.
      *
      * @param formModel FormModel
-     * @param bagView BagView
+     * @param bagView   BagView
      */
     public OrganizationProfileForm(final FormModel formModel, final BagView bagView) {
         super(formModel, PROFILE_FORM_PAGE);

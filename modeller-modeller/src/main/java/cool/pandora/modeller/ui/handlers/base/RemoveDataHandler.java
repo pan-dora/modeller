@@ -18,16 +18,13 @@ import cool.pandora.modeller.bag.BaggerFileEntity;
 import cool.pandora.modeller.bag.impl.DefaultBag;
 import cool.pandora.modeller.ui.jpanel.base.BagView;
 import cool.pandora.modeller.ui.util.ApplicationContextUtil;
-
 import java.awt.event.ActionEvent;
 import java.io.File;
-
 import javax.swing.AbstractAction;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreePath;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -85,8 +82,8 @@ public class RemoveDataHandler extends AbstractAction {
                 if (fileName != null && !fileName.isEmpty()) {
                     try {
                         bag.removeBagFile(fileName);
-                        ApplicationContextUtil.addConsoleMessage("Payload data removed: "
-                                + fileName);
+                        ApplicationContextUtil
+                                .addConsoleMessage("Payload data removed: " + fileName);
                         if (node instanceof MutableTreeNode) {
                             model.removeNodeFromParent((MutableTreeNode) node);
                         } else {
@@ -99,14 +96,14 @@ public class RemoveDataHandler extends AbstractAction {
                             if (node instanceof MutableTreeNode) {
                                 model.removeNodeFromParent((MutableTreeNode) node);
                             } else {
-                                final DefaultMutableTreeNode aNode = new DefaultMutableTreeNode(
-                                        node);
+                                final DefaultMutableTreeNode aNode =
+                                        new DefaultMutableTreeNode(node);
                                 model.removeNodeFromParent(aNode);
                             }
                         } catch (final Exception ex) {
                             message = "Error trying to remove: " + fileName + "\n";
-                            BagView.showWarningErrorDialog("Error - file not removed", message
-                                    + ex.getMessage());
+                            BagView.showWarningErrorDialog("Error - file not removed",
+                                    message + ex.getMessage());
                         }
                     }
                 }

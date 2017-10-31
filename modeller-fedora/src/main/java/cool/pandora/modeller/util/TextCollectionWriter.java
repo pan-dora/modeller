@@ -20,13 +20,11 @@ import static org.apache.jena.riot.writer.WriterConst.RDF_Nil;
 import static org.apache.jena.riot.writer.WriterConst.RDF_Rest;
 
 import cool.pandora.modeller.common.uri.IIIFPredicates;
-
 import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-
 import org.apache.jena.graph.Node;
 import org.apache.jena.query.Dataset;
 import org.apache.jena.query.DatasetFactory;
@@ -45,37 +43,18 @@ import org.apache.jena.riot.lang.BlankNodeAllocatorHash;
  * @author Christopher Johnson
  */
 public class TextCollectionWriter {
-    /**
-     * returns collection object.
-     *
-     * @return RDFCollectionBuilder
-     */
-    public static RDFCollectionBuilder collection() {
-        return new RDFCollectionBuilder();
-    }
-
     private final ByteArrayOutputStream rdfCollection;
-
-    /**
-     * renders collection to string.
-     *
-     * @return rdfCollection
-     */
-    public String render() {
-        return this.rdfCollection.toString();
-    }
 
     /**
      * constructs model.
      *
-     * @param idList List
-     * @param collectionPredicate String
+     * @param idList               List
+     * @param collectionPredicate  String
      * @param resourceContainerIRI String
-     * @param canvasURI String
+     * @param canvasURI            String
      */
-    TextCollectionWriter(final List<String> idList, final String collectionPredicate, final
-    String resourceContainerIRI,
-                         final String canvasURI) {
+    TextCollectionWriter(final List<String> idList, final String collectionPredicate,
+                         final String resourceContainerIRI, final String canvasURI) {
 
         final Model model = ModelFactory.createDefaultModel();
         final Map<String, Node> bnodeMap = getBNodeKeyMap(idList);
@@ -174,10 +153,19 @@ public class TextCollectionWriter {
     }
 
     /**
+     * returns collection object.
+     *
+     * @return RDFCollectionBuilder
+     */
+    public static RDFCollectionBuilder collection() {
+        return new RDFCollectionBuilder();
+    }
+
+    /**
      * getIDPos.
      *
      * @param idList List
-     * @param id String
+     * @param id     String
      * @return id position
      */
     private static int getIDPos(final List<String> idList, final String id) {
@@ -208,7 +196,7 @@ public class TextCollectionWriter {
     /**
      * getObjNodeFromPrevIndex.
      *
-     * @param pos int
+     * @param pos      int
      * @param bnodeMap Map
      * @return object Node
      */
@@ -221,12 +209,12 @@ public class TextCollectionWriter {
     /**
      * getSubjNodeForCurrentIndex.
      *
-     * @param pos int
+     * @param pos      int
      * @param bnodeMap Map
      * @return subject Node
      */
-    private static Node getSubjNodeForCurrentIndex(final int pos, final Map<String, Node>
-            bnodeMap) {
+    private static Node getSubjNodeForCurrentIndex(final int pos,
+                                                   final Map<String, Node> bnodeMap) {
         final String objKey = String.valueOf(pos) + ":subj";
         return bnodeMap.get(objKey);
     }
@@ -234,7 +222,7 @@ public class TextCollectionWriter {
     /**
      * getObjNodeForCurrentIndex.
      *
-     * @param pos int
+     * @param pos      int
      * @param bnodeMap Map
      * @return object Node
      */
@@ -270,12 +258,21 @@ public class TextCollectionWriter {
      * getResourceURI.
      *
      * @param resourceContainerIRI String
-     * @param resourceID String
+     * @param resourceID           String
      * @return resourceURI
      */
-    private static String getResourceURI(final String resourceContainerIRI, final String
-            resourceID) {
+    private static String getResourceURI(final String resourceContainerIRI,
+                                         final String resourceID) {
         return resourceContainerIRI + resourceID;
+    }
+
+    /**
+     * renders collection to string.
+     *
+     * @return rdfCollection
+     */
+    public String render() {
+        return this.rdfCollection.toString();
     }
 
     /**
@@ -305,8 +302,8 @@ public class TextCollectionWriter {
          * @param collectionPredicate String
          * @return this
          */
-        public TextCollectionWriter.RDFCollectionBuilder collectionPredicate(final String
-                                                                              collectionPredicate) {
+        public TextCollectionWriter.RDFCollectionBuilder collectionPredicate(
+                final String collectionPredicate) {
             this.collectionPredicate = collectionPredicate;
             return this;
         }
@@ -317,8 +314,8 @@ public class TextCollectionWriter {
          * @param resourceContainerIRI String
          * @return this
          */
-        public TextCollectionWriter.RDFCollectionBuilder resourceContainerIRI(final String
-                                                                             resourceContainerIRI) {
+        public TextCollectionWriter.RDFCollectionBuilder resourceContainerIRI(
+                final String resourceContainerIRI) {
             this.resourceContainerIRI = resourceContainerIRI;
             return this;
         }
@@ -340,9 +337,8 @@ public class TextCollectionWriter {
          * @return TextCollectionWriter
          */
         public TextCollectionWriter build() {
-            return new TextCollectionWriter(this.idList, this.collectionPredicate, this
-                    .resourceContainerIRI,
-                    this.canvasURI);
+            return new TextCollectionWriter(this.idList, this.collectionPredicate,
+                    this.resourceContainerIRI, this.canvasURI);
         }
 
         /**

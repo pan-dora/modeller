@@ -28,6 +28,15 @@ public class ImageFileDescriptor {
     private String id;
 
     /**
+     * getId.
+     *
+     * @return id
+     */
+    public String getId() {
+        return id;
+    }
+
+    /**
      * setId.
      *
      * @param id String
@@ -35,15 +44,6 @@ public class ImageFileDescriptor {
     @XmlElement
     void setId(final String id) {
         this.id = id;
-    }
-
-    /**
-     * getId.
-     *
-     * @return id
-     */
-    public String getId() {
-        return id;
     }
 
 }

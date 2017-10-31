@@ -18,13 +18,11 @@ import static org.apache.commons.lang3.exception.ExceptionUtils.getMessage;
 
 import cool.pandora.modeller.ModellerClient;
 import cool.pandora.modeller.ModellerClientFailedException;
-
 import java.io.ByteArrayInputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.Property;
@@ -40,30 +38,12 @@ import org.apache.jena.rdf.model.StmtIterator;
  * @author Christopher Johnson
  */
 public class ResourceIntegerValue {
-    /**
-     * init.
-     *
-     * @return ResourceValueBuilder
-     */
-    public static ResourceIntegerValue.ResourceValueBuilder init() {
-        return new ResourceIntegerValue.ResourceValueBuilder();
-    }
-
     private List<Integer> resourceValue;
-
-    /**
-     * render.
-     *
-     * @return resourceValue
-     */
-    public List<Integer> render() {
-        return this.resourceValue;
-    }
 
     /**
      * ResourceIntegerValue.
      *
-     * @param resourceURI String
+     * @param resourceURI      String
      * @param resourceProperty String
      */
     ResourceIntegerValue(final String resourceURI, final String resourceProperty) {
@@ -71,8 +51,9 @@ public class ResourceIntegerValue {
         try {
             final String resource = ModellerClient.doGetContainerResources(new URI(resourceURI));
             final Model model = ModelFactory.createDefaultModel();
-            model.read(new ByteArrayInputStream(resource != null ? resource.getBytes() : new
-                    byte[0]), null, "TTL");
+            model.read(
+                    new ByteArrayInputStream(resource != null ? resource.getBytes() : new byte[0]),
+                    null, "TTL");
             this.resourceValue = getValue(model, resourceProperty);
         } catch (ModellerClientFailedException e) {
             System.out.println(getMessage(e));
@@ -82,22 +63,40 @@ public class ResourceIntegerValue {
     }
 
     /**
+     * init.
+     *
+     * @return ResourceValueBuilder
+     */
+    public static ResourceIntegerValue.ResourceValueBuilder init() {
+        return new ResourceIntegerValue.ResourceValueBuilder();
+    }
+
+    /**
      * getValue.
      *
-     * @param model Model
+     * @param model            Model
      * @param resourceProperty String
      * @return retval
      */
     private static ArrayList<Integer> getValue(final Model model, final String resourceProperty) {
         final Property property = model.getProperty(resourceProperty);
         final ArrayList<Integer> retval = new ArrayList<>();
-        final StmtIterator it = model.listStatements(new SimpleSelector(null, property,
-                (Resource) null));
+        final StmtIterator it =
+                model.listStatements(new SimpleSelector(null, property, (Resource) null));
         while (it.hasNext()) {
             final Statement st = it.next();
             retval.add(st.getInt());
         }
         return retval;
+    }
+
+    /**
+     * render.
+     *
+     * @return resourceValue
+     */
+    public List<Integer> render() {
+        return this.resourceValue;
     }
 
     /**
@@ -125,8 +124,8 @@ public class ResourceIntegerValue {
          * @param resourceProperty String
          * @return this
          */
-        public ResourceIntegerValue.ResourceValueBuilder resourceProperty(final String
-                                                                                 resourceProperty) {
+        public ResourceIntegerValue.ResourceValueBuilder resourceProperty(
+                final String resourceProperty) {
             this.resourceProperty = resourceProperty;
             return this;
         }

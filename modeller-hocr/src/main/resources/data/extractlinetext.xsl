@@ -1,7 +1,6 @@
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                xmlns:hocr="http://www.purl.org/hocr#" xmlns:functx="http://www.functx.com"
-                xmlns:saxon="http://saxon.sf.net/" xmlns:xs="http://www.w3.org/2001/XMLSchema"
-                extension-element-prefixes="saxon" version="2.0"
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:hocr="http://www.purl.org/hocr#"
+                xmlns:functx="http://www.functx.com" xmlns:saxon="http://saxon.sf.net/"
+                xmlns:xs="http://www.w3.org/2001/XMLSchema" extension-element-prefixes="saxon" version="2.0"
                 xpath-default-namespace="http://www.w3.org/1999/xhtml">
     <xsl:output method="xml" indent="yes"/>
     <xsl:strip-space elements="*"/>

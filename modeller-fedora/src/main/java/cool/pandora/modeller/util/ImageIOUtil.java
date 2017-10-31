@@ -17,14 +17,11 @@ package cool.pandora.modeller.util;
 import static cool.pandora.modeller.common.uri.FedoraResources.IMAGE;
 
 import com.github.jaiimageio.jpeg2000.impl.J2KImageWriterSpi;
-
 import com.twelvemonkeys.imageio.plugins.tiff.TIFFImageWriterSpi;
-
 import java.awt.Dimension;
 import java.io.File;
 import java.io.IOException;
 import java.util.Iterator;
-import java.util.Objects;
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
 import javax.imageio.spi.IIORegistry;
@@ -91,14 +88,14 @@ public class ImageIOUtil {
                 try {
                     final String formatName = reader.getFormatName();
                     switch (formatName) {
-                        case("tif"):
-                           mimeType = IMAGE + "tiff";
-                           break;
-                        case("jpeg 2000"):
+                        case ("tif"):
+                            mimeType = IMAGE + "tiff";
+                            break;
+                        case ("jpeg 2000"):
                             mimeType = IMAGE + "jp2";
                             break;
                         default:
-                            break;    
+                            break;
                     }
                     reader.setInput(in);
                     return mimeType;

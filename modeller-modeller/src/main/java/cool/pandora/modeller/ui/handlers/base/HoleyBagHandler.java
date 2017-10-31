@@ -16,9 +16,7 @@ package cool.pandora.modeller.ui.handlers.base;
 
 import cool.pandora.modeller.bag.impl.DefaultBag;
 import cool.pandora.modeller.ui.jpanel.base.BagView;
-
 import java.awt.event.ActionEvent;
-
 import javax.swing.AbstractAction;
 import javax.swing.JCheckBox;
 

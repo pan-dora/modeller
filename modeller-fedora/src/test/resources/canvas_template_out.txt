@@ -2,19 +2,40 @@
         PREFIX mode: <http://www.modeshape.org/1.0>
 
     INSERT {
-    <> <http://iiif.io/api/presentation/2#hasImageAnnotations> _:c14n18 .
-_:c14n18 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> _:c14n12 .
-_:c14n12 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/oa#Annotation> .
-_:c14n12 <http://www.w3.org/ns/oa#hasBody> <http://localhost:8080/fcrepo/rest/collection/test/001/res/001.tif> .
-_:c14n12 <http://www.w3.org/ns/oa#hasTarget> <> .
-_:c14n12 <http://www.w3.org/ns/oa#motivatedBy> <http://iiif.io/api/presentation/2#painting> .
-_:c14n18 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> <http://www.w3.org/1999/02/22-rdf-syntax-ns#nil> .
-<> <http://iiif.io/api/presentation/2#hasLists> _:c14n7 .
-_:c14n7 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> <http://localhost:8080/fcrepo/rest/collection/test/001/list/001> .
-_:c14n7 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> <http://www.w3.org/1999/02/22-rdf-syntax-ns#nil> .
-<> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://iiif.io/api/presentation/2#Canvas> .
-<> <http://www.w3.org/2000/01/rdf-schema#label> "te&amp;quot;st" .
-<> <http://www.w3.org/2003/12/exif/ns#height> "3000"^^<http://www.w3.org/2001/XMLSchema#integer> .
-<> <http://www.w3.org/2003/12/exif/ns#width> "2000"^^<http://www.w3.org/2001/XMLSchema#integer> .
+    <>
+<http://iiif.io/api/presentation/2#hasImageAnnotations> _:c14n18 .
+_:c14n18
+<http://www.w3.org/1999/02/22-rdf-syntax-ns#first> _:c14n12 .
+_:c14n12
+<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>
+<http://www.w3.org/ns/oa#Annotation> .
+_:c14n12
+<http://www.w3.org/ns/oa#hasBody> <http://localhost:8080/fcrepo/rest/collection/test/001/res/001.tif> .
+_:c14n12
+<http://www.w3.org/ns/oa#hasTarget> <> .
+_:c14n12
+<http://www.w3.org/ns/oa#motivatedBy>
+<http://iiif.io/api/presentation/2#painting> .
+_:c14n18
+<http://www.w3.org/1999/02/22-rdf-syntax-ns#rest>
+<http://www.w3.org/1999/02/22-rdf-syntax-ns#nil> .
+<>
+<http://iiif.io/api/presentation/2#hasLists> _:c14n7 .
+_:c14n7
+<http://www.w3.org/1999/02/22-rdf-syntax-ns#first> <http://localhost:8080/fcrepo/rest/collection/test/001/list/001> .
+_:c14n7
+<http://www.w3.org/1999/02/22-rdf-syntax-ns#rest>
+<http://www.w3.org/1999/02/22-rdf-syntax-ns#nil> .
+<>
+<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>
+<http://iiif.io/api/presentation/2#Canvas> .
+<>
+<http://www.w3.org/2000/01/rdf-schema#label> "te&amp;quot;st" .
+<>
+<http://www.w3.org/2003/12/exif/ns#height> "3000"^^
+<http://www.w3.org/2001/XMLSchema#integer> .
+<>
+<http://www.w3.org/2003/12/exif/ns#width> "2000"^^
+<http://www.w3.org/2001/XMLSchema#integer> .
     } WHERE {}
 

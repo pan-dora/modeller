@@ -15,7 +15,6 @@
 package cool.pandora.modeller;
 
 import java.util.List;
-
 import org.xmlbeam.annotation.XBRead;
 
 /**

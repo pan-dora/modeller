@@ -22,7 +22,6 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -72,6 +71,27 @@ public class CanvasPageMap {
         }
 
         /**
+         * getMap.
+         *
+         * @param pageIdList         List
+         * @param canvasContainerURI URI
+         * @return canvasPageMap
+         */
+        static Map<String, String> getMap(final List<String> pageIdList,
+                                          final URI canvasContainerURI) {
+            final ResourceList canvasList = new ResourceList(canvasContainerURI);
+            final ArrayList<String> canvasesList = canvasList.getResourceList();
+            final Iterator<String> i1 = pageIdList.iterator();
+            final Iterator<String> i2 = canvasesList.iterator();
+            final Map<String, String> canvasPageMap = new LinkedHashMap<>();
+            while (i1.hasNext() && i2.hasNext()) {
+                final String pageId = StringUtils.substringAfter(i1.next(), "_");
+                canvasPageMap.put(pageId, i2.next());
+            }
+            return canvasPageMap;
+        }
+
+        /**
          * pageIdList.
          *
          * @param pageIdList List
@@ -94,35 +114,14 @@ public class CanvasPageMap {
         }
 
         /**
-         * getMap.
-         *
-         * @param pageIdList List
-         * @param canvasContainerURI URI
-         * @return canvasPageMap
-         */
-        static Map<String, String> getMap(final List<String> pageIdList, final URI
-                canvasContainerURI) {
-            final ResourceList canvasList = new ResourceList(canvasContainerURI);
-            final ArrayList<String> canvasesList = canvasList.getResourceList();
-            final Iterator<String> i1 = pageIdList.iterator();
-            final Iterator<String> i2 = canvasesList.iterator();
-            final Map<String, String> canvasPageMap = new LinkedHashMap<>();
-            while (i1.hasNext() && i2.hasNext()) {
-                final String pageId = StringUtils.substringAfter(i1.next(), "_");
-                canvasPageMap.put(pageId, i2.next());
-            }
-            return canvasPageMap;
-        }
-
-        /**
          * build.
          *
          * @return CanvasPageMap
          * @throws IOException Exception
          */
         public CanvasPageMap build() throws IOException {
-            final Map<String, String> canvasPageMap = getMap(this.pageIdList, this
-                    .canvasContainerURI);
+            final Map<String, String> canvasPageMap =
+                    getMap(this.pageIdList, this.canvasContainerURI);
             return new CanvasPageMap(canvasPageMap);
         }
 

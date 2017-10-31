@@ -15,7 +15,6 @@
 package cool.pandora.modeller.ui;
 
 import javax.swing.JScrollPane;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,8 +24,8 @@ import org.slf4j.LoggerFactory;
  * @author gov.loc
  */
 public class BagTreePanel extends JScrollPane {
-    private static final long serialVersionUID = 5134745573017768256L;
     protected static final Logger log = LoggerFactory.getLogger(BagTreePanel.class);
+    private static final long serialVersionUID = 5134745573017768256L;
     private BagTree bagTree;
 
     /**

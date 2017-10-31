@@ -19,7 +19,6 @@ import cool.pandora.modeller.bag.impl.DefaultBagInfo;
 import cool.pandora.modeller.bag.impl.ManifestPropertiesImpl;
 import cool.pandora.modeller.ui.util.ApplicationContextUtil;
 import cool.pandora.modeller.ui.util.LayoutUtil;
-
 import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -36,7 +35,6 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -47,9 +45,8 @@ import org.slf4j.LoggerFactory;
  */
 public class AddFieldPanel extends JPanel {
 
-    private static final long serialVersionUID = 1L;
     protected static final Logger log = LoggerFactory.getLogger(AddFieldPanel.class);
-
+    private static final long serialVersionUID = 1L;
     private final JCheckBox standardCheckBox;
     private final JComboBox<String> standardFieldsComboBox;
     private final JTextField customFieldTextField;
@@ -74,64 +71,41 @@ public class AddFieldPanel extends JPanel {
         // standard field dropdown menu
         final List<String> listModel = getStandardBagFields();
         standardFieldsComboBox = new JComboBox<>(listModel.toArray(new String[listModel.size()]));
-        standardFieldsComboBox.setName(ApplicationContextUtil.getMessage("baginfo.field"
-                + ".fieldlist"));
+        standardFieldsComboBox
+                .setName(ApplicationContextUtil.getMessage("baginfo.field" + ".fieldlist"));
         standardFieldsComboBox.setSelectedItem("");
-        standardFieldsComboBox.setToolTipText(ApplicationContextUtil.getMessage("baginfo.field"
-                + ".fieldlist.help"));
-        gbc = LayoutUtil
-                .buildGridBagConstraints(col++, row, 1, 1, 0, 0, GridBagConstraints.NONE,
-                        GridBagConstraints.WEST);
+        standardFieldsComboBox.setToolTipText(
+                ApplicationContextUtil.getMessage("baginfo.field" + ".fieldlist.help"));
+        gbc = LayoutUtil.buildGridBagConstraints(col++, row, 1, 1, 0, 0, GridBagConstraints.NONE,
+                GridBagConstraints.WEST);
         add(standardFieldsComboBox, gbc);
 
         // custom field name
         customFieldTextField = new JTextField(17);
-        customFieldTextField.setToolTipText(ApplicationContextUtil.getMessage("baginfo.field.name"
-                + ".help"));
+        customFieldTextField
+                .setToolTipText(ApplicationContextUtil.getMessage("baginfo.field.name" + ".help"));
         customFieldTextField.setVisible(false);
-        gbc = LayoutUtil
-                .buildGridBagConstraints(col++, row, 1, 1, 0, 0, GridBagConstraints.NONE,
-                        GridBagConstraints.WEST);
+        gbc = LayoutUtil.buildGridBagConstraints(col++, row, 1, 1, 0, 0, GridBagConstraints.NONE,
+                GridBagConstraints.WEST);
         add(customFieldTextField, gbc);
 
         // field value
-        gbc = LayoutUtil
-                .buildGridBagConstraints(col++, row, 1, 1, 0, 0, GridBagConstraints.NONE,
-                        GridBagConstraints.WEST);
+        gbc = LayoutUtil.buildGridBagConstraints(col++, row, 1, 1, 0, 0, GridBagConstraints.NONE,
+                GridBagConstraints.WEST);
         add(new JLabel(" : "), gbc);
 
         valueField = new JTextField();
-        gbc = LayoutUtil.buildGridBagConstraints(col++, row, 1, 1, 1, 1, GridBagConstraints
-                        .HORIZONTAL,
-                GridBagConstraints.WEST);
+        gbc = LayoutUtil
+                .buildGridBagConstraints(col++, row, 1, 1, 1, 1, GridBagConstraints.HORIZONTAL,
+                        GridBagConstraints.WEST);
         add(valueField, gbc);
 
         // add field button
         final JButton addFieldButton = new JButton("Add");
-        gbc = LayoutUtil
-                .buildGridBagConstraints(col++, row, 1, 1, 0, 0, GridBagConstraints.NONE,
-                        GridBagConstraints.WEST);
+        gbc = LayoutUtil.buildGridBagConstraints(col++, row, 1, 1, 0, 0, GridBagConstraints.NONE,
+                GridBagConstraints.WEST);
         add(addFieldButton, gbc);
         addFieldButton.addActionListener(new AddFieldAction());
-    }
-
-    private class StandardFieldCheckBoxAction extends AbstractAction {
-        private static final long serialVersionUID = 1L;
-
-        @Override
-        public void actionPerformed(final ActionEvent e) {
-            final JCheckBox checkbox = (JCheckBox) e.getSource();
-            final boolean standardFieldSelected = checkbox.isSelected();
-            if (standardFieldSelected) {
-                standardFieldsComboBox.setVisible(true);
-                standardFieldsComboBox.requestFocus();
-                customFieldTextField.setVisible(false);
-            } else {
-                standardFieldsComboBox.setVisible(false);
-                customFieldTextField.setVisible(true);
-                customFieldTextField.requestFocus();
-            }
-        }
     }
 
     private static List<String> getStandardBagFields() {
@@ -153,8 +127,8 @@ public class AddFieldPanel extends JPanel {
                 // list on the Bag-Info tab.
                 // This would prevent the BagInfo.txt values generated by Bagger to be
                 // overwritten
-                if (!DefaultBagInfo.isOrganizationContactField(field.getName())
-                        && (!DefaultBagInfo.isManifestPropertyField(field.getName()))
+                if (!DefaultBagInfo.isOrganizationContactField(field.getName()) && (!DefaultBagInfo
+                        .isManifestPropertyField(field.getName()))
                         && standardFieldName.compareTo("Bag-Size") != 0
                         && standardFieldName.compareTo("Payload-Oxum") != 0) {
                     log.debug("adding standard field: {}", standardFieldName);
@@ -170,24 +144,6 @@ public class AddFieldPanel extends JPanel {
         final Component[] components = getComponents();
         for (final Component component : components) {
             component.setEnabled(enabled);
-        }
-    }
-
-    private class AddFieldAction extends AbstractAction {
-        private static final long serialVersionUID = 1L;
-
-        @Override
-        public void actionPerformed(final ActionEvent e) {
-            final BagView bagView = ApplicationContextUtil.getBagView();
-
-            final BagInfoField field = createBagInfoField();
-
-            if (field != null) {
-                bagView.getBag().addField(field);
-                // TODO use observer pattern
-                bagView.infoInputPane.updateInfoFormsPane();
-                bagView.infoInputPane.bagInfoInputPane.requestFocus();
-            }
         }
     }
 
@@ -218,6 +174,43 @@ public class AddFieldPanel extends JPanel {
 
     private boolean isStandardField() {
         return standardCheckBox.isSelected();
+    }
+
+    private class StandardFieldCheckBoxAction extends AbstractAction {
+        private static final long serialVersionUID = 1L;
+
+        @Override
+        public void actionPerformed(final ActionEvent e) {
+            final JCheckBox checkbox = (JCheckBox) e.getSource();
+            final boolean standardFieldSelected = checkbox.isSelected();
+            if (standardFieldSelected) {
+                standardFieldsComboBox.setVisible(true);
+                standardFieldsComboBox.requestFocus();
+                customFieldTextField.setVisible(false);
+            } else {
+                standardFieldsComboBox.setVisible(false);
+                customFieldTextField.setVisible(true);
+                customFieldTextField.requestFocus();
+            }
+        }
+    }
+
+    private class AddFieldAction extends AbstractAction {
+        private static final long serialVersionUID = 1L;
+
+        @Override
+        public void actionPerformed(final ActionEvent e) {
+            final BagView bagView = ApplicationContextUtil.getBagView();
+
+            final BagInfoField field = createBagInfoField();
+
+            if (field != null) {
+                bagView.getBag().addField(field);
+                // TODO use observer pattern
+                bagView.infoInputPane.updateInfoFormsPane();
+                bagView.infoInputPane.bagInfoInputPane.requestFocus();
+            }
+        }
     }
 
 }

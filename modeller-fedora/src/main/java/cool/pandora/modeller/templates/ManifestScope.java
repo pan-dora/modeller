@@ -151,20 +151,29 @@ public class ManifestScope extends Scope {
      */
     List<Item> items() {
         return Collections.singletonList(
-                new Item(this.prefixes, this.collectionURI, this.sequenceURI, this.label, this
-                        .attribution,
-                        this.license, this.logo, this.rendering, this.author, this.published));
+                new Item(this.prefixes, this.collectionURI, this.sequenceURI, this.label,
+                        this.attribution, this.license, this.logo, this.rendering, this.author,
+                        this.published));
     }
 
     /**
      * Item.
      */
     private static class Item {
+        List<Prefix> prefixes;
+        String collectionURI;
+        String sequenceURI;
+        String attribution;
+        String label;
+        String license;
+        String logo;
+        String rendering;
+        String author;
+        String published;
+
         Item(final List<Prefix> prefixes, final String collectionURI, final String sequenceURI,
-             final String label,
-             final String attribution, final String license, final String logo, final String
-                     rendering,
-             final String author, final String published) {
+             final String label, final String attribution, final String license, final String logo,
+             final String rendering, final String author, final String published) {
             this.prefixes = prefixes;
             this.collectionURI = collectionURI;
             this.sequenceURI = sequenceURI;
@@ -177,23 +186,14 @@ public class ManifestScope extends Scope {
             this.published = published;
 
         }
-
-        List<Prefix> prefixes;
-        String collectionURI;
-        String sequenceURI;
-        String attribution;
-        String label;
-        String license;
-        String logo;
-        String rendering;
-        String author;
-        String published;
     }
 
     /**
      * Prefix.
      */
     public static class Prefix {
+        String prefix;
+
         /**
          * Prefix.
          *
@@ -202,8 +202,6 @@ public class ManifestScope extends Scope {
         public Prefix(final String prefix) {
             this.prefix = prefix;
         }
-
-        String prefix;
     }
 
 }

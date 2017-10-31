@@ -15,14 +15,12 @@
 package cool.pandora.modeller.ui.jpanel.base;
 
 import cool.pandora.modeller.bag.impl.DefaultBag;
-
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -30,7 +28,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-
 import javax.swing.border.EmptyBorder;
 
 /**
@@ -40,19 +37,19 @@ import javax.swing.border.EmptyBorder;
  */
 public class NewItemFrame extends JFrame implements ActionListener {
     private static final long serialVersionUID = 1L;
-    private JTextField itemName;
-    JPanel itemPanel;
     private final JComboBox<String> itemList;
+    JPanel itemPanel;
+    private JTextField itemName;
 
     /**
      * NewItemFrame.
      *
-     * @param bagView BagView
+     * @param bagView  BagView
      * @param itemList JComboBox
-     * @param title String
+     * @param title    String
      */
-    public NewItemFrame(final BagView bagView, final JComboBox<String> itemList, final String
-            title) {
+    public NewItemFrame(final BagView bagView, final JComboBox<String> itemList,
+                        final String title) {
         super(title);
         this.itemList = itemList;
         final DefaultBag bag = bagView.getBag();
@@ -62,6 +59,32 @@ public class NewItemFrame extends JFrame implements ActionListener {
         addPanel.setPreferredSize(preferredDimension);
         getContentPane().add(addPanel, BorderLayout.CENTER);
         pack();
+    }
+
+    /**
+     * buildConstraints.
+     *
+     * @param gbc    GridBagConstraints
+     * @param x      int
+     * @param y      int
+     * @param w      int
+     * @param h      int
+     * @param wx     int
+     * @param wy     int
+     * @param fill   int
+     * @param anchor int
+     */
+    private static void buildConstraints(final GridBagConstraints gbc, final int x, final int y,
+                                         final int w, final int h, final int wx, final int wy,
+                                         final int fill, final int anchor) {
+        gbc.gridx = x; // start cell in a row
+        gbc.gridy = y; // start cell in a column
+        gbc.gridwidth = w; // how many column does the control occupy in the row
+        gbc.gridheight = h; // how many column does the control occupy in the column
+        gbc.weightx = wx; // relative horizontal size
+        gbc.weighty = wy; // relative vertical size
+        gbc.fill = fill; // the way how the control fills cells
+        gbc.anchor = anchor; // alignment
     }
 
     /**
@@ -100,11 +123,11 @@ public class NewItemFrame extends JFrame implements ActionListener {
                 GridBagConstraints.CENTER);
         layout.setConstraints(itemPanel, glbc);
         row++;
-        buildConstraints(glbc, 0, row, 1, 1, 20, 50, GridBagConstraints.NONE, GridBagConstraints
-                .WEST);
+        buildConstraints(glbc, 0, row, 1, 1, 20, 50, GridBagConstraints.NONE,
+                GridBagConstraints.WEST);
         layout.setConstraints(cancelButton, glbc);
-        buildConstraints(glbc, 1, row, 1, 1, 80, 50, GridBagConstraints.NONE, GridBagConstraints
-                .CENTER);
+        buildConstraints(glbc, 1, row, 1, 1, 80, 50, GridBagConstraints.NONE,
+                GridBagConstraints.CENTER);
         layout.setConstraints(okButton, glbc);
 
         final JPanel panel = new JPanel(layout);
@@ -154,33 +177,6 @@ public class NewItemFrame extends JFrame implements ActionListener {
         public void actionPerformed(final ActionEvent e) {
             setVisible(false);
         }
-    }
-
-    /**
-     * buildConstraints.
-     *
-     * @param gbc GridBagConstraints
-     * @param x int
-     * @param y int
-     * @param w int
-     * @param h int
-     * @param wx int
-     * @param wy int
-     * @param fill int
-     * @param anchor int
-     */
-    private static void buildConstraints(final GridBagConstraints gbc, final int x, final int y,
-                                         final int w,
-                                         final int h, final int wx, final int wy, final int fill,
-                                         final int anchor) {
-        gbc.gridx = x; // start cell in a row
-        gbc.gridy = y; // start cell in a column
-        gbc.gridwidth = w; // how many column does the control occupy in the row
-        gbc.gridheight = h; // how many column does the control occupy in the column
-        gbc.weightx = wx; // relative horizontal size
-        gbc.weighty = wy; // relative vertical size
-        gbc.fill = fill; // the way how the control fills cells
-        gbc.anchor = anchor; // alignment
     }
 
 }

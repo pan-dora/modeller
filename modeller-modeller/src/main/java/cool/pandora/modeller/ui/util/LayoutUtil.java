@@ -29,20 +29,19 @@ public class LayoutUtil {
     /**
      * GridBagConstraints.
      *
-     * @param x int
-     * @param y int
-     * @param w int
-     * @param h int
-     * @param wx int
-     * @param wy int
-     * @param fill int
+     * @param x      int
+     * @param y      int
+     * @param w      int
+     * @param h      int
+     * @param wx     int
+     * @param wy     int
+     * @param fill   int
      * @param anchor int
      * @return gbc
      */
-    public static GridBagConstraints buildGridBagConstraints(final int x, final int y, final int
-            w, final int h,
-                                                             final int wx, final int wy, final
-                                                             int fill,
+    public static GridBagConstraints buildGridBagConstraints(final int x, final int y, final int w,
+                                                             final int h, final int wx,
+                                                             final int wy, final int fill,
                                                              final int anchor) {
         final GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = x; // start cell in a row

@@ -22,54 +22,8 @@ import cool.pandora.modeller.ui.BagTreePanel;
 import cool.pandora.modeller.ui.LongTask;
 import cool.pandora.modeller.ui.Progress;
 import cool.pandora.modeller.ui.TagManifestPane;
-
-import cool.pandora.modeller.ui.handlers.base.AddDataExecutor;
-import cool.pandora.modeller.ui.handlers.base.AddDataHandler;
-import cool.pandora.modeller.ui.handlers.base.AddTagFileHandler;
-import cool.pandora.modeller.ui.handlers.base.ClearBagExecutor;
-import cool.pandora.modeller.ui.handlers.base.ClearBagHandler;
-import cool.pandora.modeller.ui.handlers.base.CompleteBagHandler;
-import cool.pandora.modeller.ui.handlers.base.CompleteExecutor;
-import cool.pandora.modeller.ui.handlers.base.CreateBagInPlaceExecutor;
-import cool.pandora.modeller.ui.handlers.base.CreateBagInPlaceHandler;
-import cool.pandora.modeller.ui.handlers.base.OpenBagHandler;
-import cool.pandora.modeller.ui.handlers.base.OpenExecutor;
-import cool.pandora.modeller.ui.handlers.base.RemoveDataHandler;
-import cool.pandora.modeller.ui.handlers.base.RemoveTagFileHandler;
-import cool.pandora.modeller.ui.handlers.base.SaveBagAsExecutor;
-import cool.pandora.modeller.ui.handlers.base.SaveBagAsHandler;
-import cool.pandora.modeller.ui.handlers.base.SaveBagExecutor;
-import cool.pandora.modeller.ui.handlers.base.SaveBagHandler;
-import cool.pandora.modeller.ui.handlers.base.ShowTagFilesHandler;
-import cool.pandora.modeller.ui.handlers.base.StartExecutor;
-import cool.pandora.modeller.ui.handlers.base.StartNewBagHandler;
-import cool.pandora.modeller.ui.handlers.base.ValidateBagHandler;
-import cool.pandora.modeller.ui.handlers.base.ValidateExecutor;
-
-import cool.pandora.modeller.ui.handlers.iiif.CreateCanvasesExecutor;
-import cool.pandora.modeller.ui.handlers.iiif.CreateCanvasesHandler;
-import cool.pandora.modeller.ui.handlers.iiif.CreateDefaultContainersExecutor;
-import cool.pandora.modeller.ui.handlers.iiif.CreateDefaultContainersHandler;
-import cool.pandora.modeller.ui.handlers.iiif.CreateListsExecutor;
-import cool.pandora.modeller.ui.handlers.iiif.CreateListsHandler;
-import cool.pandora.modeller.ui.handlers.iiif.CreateSequencesExecutor;
-import cool.pandora.modeller.ui.handlers.iiif.CreateSequencesHandler;
-import cool.pandora.modeller.ui.handlers.iiif.CreateXmlFilesExecutor;
-import cool.pandora.modeller.ui.handlers.iiif.CreateXmlFilesHandler;
-import cool.pandora.modeller.ui.handlers.iiif.PatchCanvasExecutor;
-import cool.pandora.modeller.ui.handlers.iiif.PatchCanvasHandler;
-import cool.pandora.modeller.ui.handlers.iiif.PatchListExecutor;
-import cool.pandora.modeller.ui.handlers.iiif.PatchListHandler;
-import cool.pandora.modeller.ui.handlers.iiif.PatchManifestExecutor;
-import cool.pandora.modeller.ui.handlers.iiif.PatchManifestHandler;
-import cool.pandora.modeller.ui.handlers.iiif.PatchResourceExecutor;
-import cool.pandora.modeller.ui.handlers.iiif.PatchResourceHandler;
-import cool.pandora.modeller.ui.handlers.iiif.PatchSequenceExecutor;
-import cool.pandora.modeller.ui.handlers.iiif.PatchSequenceHandler;
-import cool.pandora.modeller.ui.handlers.iiif.PublishBagExecutor;
-import cool.pandora.modeller.ui.handlers.iiif.UploadBagExecutor;
-import cool.pandora.modeller.ui.handlers.iiif.UploadBagHandler;
-
+import cool.pandora.modeller.ui.handlers.base.*;
+import cool.pandora.modeller.ui.handlers.iiif.*;
 import cool.pandora.modeller.ui.handlers.text.CreateAreasExecutor;
 import cool.pandora.modeller.ui.handlers.text.CreateAreasHandler;
 import cool.pandora.modeller.ui.handlers.text.CreateLinesExecutor;
@@ -87,11 +41,9 @@ import cool.pandora.modeller.ui.handlers.text.PatchPagesHandler;
 import cool.pandora.modeller.ui.handlers.text.PatchWordsExecutor;
 import cool.pandora.modeller.ui.handlers.text.PatchWordsHandler;
 import cool.pandora.modeller.ui.util.LayoutUtil;
-
 import gov.loc.repository.bagit.BagFile;
 import gov.loc.repository.bagit.Cancellable;
 import gov.loc.repository.bagit.impl.AbstractBagConstants;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -107,7 +59,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.util.Collection;
-
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -119,10 +70,8 @@ import javax.swing.SwingConstants;
 import javax.swing.Timer;
 import javax.swing.border.LineBorder;
 import javax.swing.tree.TreePath;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -133,7 +82,6 @@ import org.springframework.richclient.application.support.AbstractView;
 import org.springframework.richclient.dialog.MessageDialog;
 import org.springframework.richclient.image.ImageSource;
 import org.springframework.richclient.progress.BusyIndicator;
-import org.springframework.rules.RulesSource;
 import org.springframework.util.Assert;
 
 /**
@@ -147,28 +95,37 @@ public class BagView extends AbstractView implements ApplicationListener {
     private static final int ONE_SECOND = 1000;
     private final int defaultWidth = 1024;
     private final int defaultHeight = 768;
-
-    private ProgressMonitor progressMonitor;
+    private final Timer timer = new Timer(ONE_SECOND / 10, null);
+    private final CreateDefaultContainersExecutor createDefaultContainersExecutor =
+            new CreateDefaultContainersExecutor(this);
+    private final UploadBagExecutor uploadBagExecutor = new UploadBagExecutor(this);
+    private final PatchResourceExecutor patchResourceExecutor = new PatchResourceExecutor(this);
+    private final CreateListsExecutor createListsExecutor = new CreateListsExecutor(this);
+    private final CreateCanvasesExecutor createCanvasesExecutor = new CreateCanvasesExecutor(this);
+    private final CreateSequencesExecutor createSequencesExecutor =
+            new CreateSequencesExecutor(this);
+    private final PatchSequenceExecutor patchSequenceExecutor = new PatchSequenceExecutor(this);
+    private final PatchCanvasExecutor patchCanvasExecutor = new PatchCanvasExecutor(this);
+    private final PatchManifestExecutor patchManifestExecutor = new PatchManifestExecutor(this);
+    private final CreateXmlFilesExecutor createXmlFilesExecutor = new CreateXmlFilesExecutor(this);
+    private final PatchListExecutor patchListExecutor = new PatchListExecutor(this);
+    private final CreatePagesExecutor createPagesExecutor = new CreatePagesExecutor(this);
+    private final CreateAreasExecutor createAreasExecutor = new CreateAreasExecutor(this);
+    private final CreateLinesExecutor createLinesExecutor = new CreateLinesExecutor(this);
+    private final CreateWordsExecutor createWordsExecutor = new CreateWordsExecutor(this);
+    private final PatchPagesExecutor patchPagesExecutor = new PatchPagesExecutor(this);
+    private final PatchAreasExecutor patchAreasExecutor = new PatchAreasExecutor(this);
+    private final PatchLinesExecutor patchLinesExecutor = new PatchLinesExecutor(this);
+    private final PatchWordsExecutor patchWordsExecutor = new PatchWordsExecutor(this);
+    private final PublishBagExecutor publishBagExecutor = new PublishBagExecutor(this);
     public LongTask task;
     public Cancellable longRunningProcess = null;
-    private final Timer timer = new Timer(ONE_SECOND / 10, null);
-
-    private Bagger bagger;
-    private DefaultBag bag;
-    private BaggerProfileStore profileStore;
     public BagTree bagPayloadTree;
     public BagTree bagTagFileTree;
-
-    private File bagRootPath;
-
     public TagManifestPane tagManifestPane;
     public InfoFormsPane infoInputPane;
     public BagTreePanel bagPayloadTreePanel;
     public BagTreePanel bagTagFileTreePanel;
-
-    private JPanel bagButtonPanel;
-    private JPanel topButtonPanel;
-
     public StartNewBagHandler startNewBagHandler;
     public StartExecutor startExecutor = new StartExecutor(this);
     public OpenBagHandler openBagHandler;
@@ -187,51 +144,35 @@ public class BagView extends AbstractView implements ApplicationListener {
     public ClearBagExecutor clearExecutor = new ClearBagExecutor(this);
     public AddDataHandler addDataHandler;
     public AddDataExecutor addDataExecutor = new AddDataExecutor(this);
+    public CreateDefaultContainersHandler createDefaultContainersHandler;
+    public UploadBagHandler uploadBagHandler;
+    public PatchResourceHandler patchResourceHandler;
+    public CreateListsHandler createListsHandler;
+    public CreateCanvasesHandler createCanvasesHandler;
+    public CreateSequencesHandler createSequencesHandler;
+    public PatchSequenceHandler patchSequenceHandler;
+    public PatchCanvasHandler patchCanvasHandler;
+    public PatchManifestHandler patchManifestHandler;
+    public CreateXmlFilesHandler createXmlFilesHandler;
+    public PatchListHandler patchListHandler;
+    public CreatePagesHandler createPagesHandler;
+    public CreateAreasHandler createAreasHandler;
+    public CreateLinesHandler createLinesHandler;
+    public CreateWordsHandler createWordsHandler;
+    public PatchPagesHandler patchPagesHandler;
+    public PatchAreasHandler patchAreasHandler;
+    public PatchLinesHandler patchLinesHandler;
+    public PatchWordsHandler patchWordsHandler;
+    private ProgressMonitor progressMonitor;
+    private Bagger bagger;
+    private DefaultBag bag;
+    private BaggerProfileStore profileStore;
+    private File bagRootPath;
+    private JPanel bagButtonPanel;
+    private JPanel topButtonPanel;
     private RemoveDataHandler removeDataHandler;
     private RemoveTagFileHandler removeTagFileHandler;
     private AddTagFileHandler addTagFileHandler;
-    public CreateDefaultContainersHandler createDefaultContainersHandler;
-    private final CreateDefaultContainersExecutor createDefaultContainersExecutor =
-            new CreateDefaultContainersExecutor(this);
-    public UploadBagHandler uploadBagHandler;
-    private final UploadBagExecutor uploadBagExecutor = new UploadBagExecutor(this);
-    public PatchResourceHandler patchResourceHandler;
-    private final PatchResourceExecutor patchResourceExecutor = new PatchResourceExecutor(this);
-    public CreateListsHandler createListsHandler;
-    private final CreateListsExecutor createListsExecutor = new CreateListsExecutor(this);
-    public CreateCanvasesHandler createCanvasesHandler;
-    private final CreateCanvasesExecutor createCanvasesExecutor = new CreateCanvasesExecutor(this);
-    public CreateSequencesHandler createSequencesHandler;
-    private final CreateSequencesExecutor createSequencesExecutor = new CreateSequencesExecutor(
-            this);
-    public PatchSequenceHandler patchSequenceHandler;
-    private final PatchSequenceExecutor patchSequenceExecutor = new PatchSequenceExecutor(this);
-    public PatchCanvasHandler patchCanvasHandler;
-    private final PatchCanvasExecutor patchCanvasExecutor = new PatchCanvasExecutor(this);
-    public PatchManifestHandler patchManifestHandler;
-    private final PatchManifestExecutor patchManifestExecutor = new PatchManifestExecutor(this);
-    public CreateXmlFilesHandler createXmlFilesHandler;
-    private final CreateXmlFilesExecutor createXmlFilesExecutor = new CreateXmlFilesExecutor(this);
-    public PatchListHandler patchListHandler;
-    private final PatchListExecutor patchListExecutor = new PatchListExecutor(this);
-    public CreatePagesHandler createPagesHandler;
-    private final CreatePagesExecutor createPagesExecutor = new CreatePagesExecutor(this);
-    public CreateAreasHandler createAreasHandler;
-    private final CreateAreasExecutor createAreasExecutor = new CreateAreasExecutor(this);
-    public CreateLinesHandler createLinesHandler;
-    private final CreateLinesExecutor createLinesExecutor = new CreateLinesExecutor(this);
-    public CreateWordsHandler createWordsHandler;
-    private final CreateWordsExecutor createWordsExecutor = new CreateWordsExecutor(this);
-    public PatchPagesHandler patchPagesHandler;
-    private final PatchPagesExecutor patchPagesExecutor = new PatchPagesExecutor(this);
-    public PatchAreasHandler patchAreasHandler;
-    private final PatchAreasExecutor patchAreasExecutor = new PatchAreasExecutor(this);
-    public PatchLinesHandler patchLinesHandler;
-    private final PatchLinesExecutor patchLinesExecutor = new PatchLinesExecutor(this);
-    public PatchWordsHandler patchWordsHandler;
-    private final PatchWordsExecutor patchWordsExecutor = new PatchWordsExecutor(this);
-    private final PublishBagExecutor publishBagExecutor = new PublishBagExecutor(this);
-
     private JLabel addDataToolBarAction;
     private JLabel removeDataToolBarAction;
     private JLabel viewTagFilesToolbarAction;
@@ -243,8 +184,43 @@ public class BagView extends AbstractView implements ApplicationListener {
      */
     public BagView() {
         ((ConfigurableApplicationContext) Application.instance().getApplicationContext())
-                .getBeanFactory()
-                .registerSingleton("myBagView", this);
+                .getBeanFactory().registerSingleton("myBagView", this);
+    }
+
+    /**
+     * display.
+     *
+     * @param s String
+     */
+    private static void display(final String s) {
+        log.info(s);
+    }
+
+    /**
+     * showWarningErrorDialog.
+     *
+     * @param title String
+     * @param msg   String
+     */
+    public static void showWarningErrorDialog(final String title, final String msg) {
+        final MessageDialog dialog = new MessageDialog(title, msg);
+        dialog.showDialog();
+    }
+
+    /**
+     * statusBarEnd.
+     */
+    public static void statusBarEnd() {
+        BusyIndicator.clearAt(Application.instance().getActiveWindow().getControl());
+    }
+
+    /**
+     * getBagger.
+     *
+     * @return this.bagger
+     */
+    public Bagger getBagger() {
+        return this.bagger;
     }
 
     /**
@@ -258,12 +234,12 @@ public class BagView extends AbstractView implements ApplicationListener {
     }
 
     /**
-     * getBagger.
+     * getBag.
      *
-     * @return this.bagger
+     * @return this.bag
      */
-    public Bagger getBagger() {
-        return this.bagger;
+    public DefaultBag getBag() {
+        return this.bag;
     }
 
     /**
@@ -276,12 +252,12 @@ public class BagView extends AbstractView implements ApplicationListener {
     }
 
     /**
-     * getBag.
+     * getBagRootPath.
      *
-     * @return this.bag
+     * @return this.bagRootPath
      */
-    public DefaultBag getBag() {
-        return this.bag;
+    public File getBagRootPath() {
+        return this.bagRootPath;
     }
 
     /**
@@ -291,15 +267,6 @@ public class BagView extends AbstractView implements ApplicationListener {
      */
     public void setBagRootPath(final File f) {
         this.bagRootPath = f;
-    }
-
-    /**
-     * getBagRootPath.
-     *
-     * @return this.bagRootPath
-     */
-    public File getBagRootPath() {
-        return this.bagRootPath;
     }
 
     /**
@@ -321,15 +288,6 @@ public class BagView extends AbstractView implements ApplicationListener {
     }
 
     /**
-     * display.
-     *
-     * @param s String
-     */
-    private static void display(final String s) {
-        log.info(s);
-    }
-
-    /**
      * getPropertyImage.
      *
      * @param name String
@@ -342,15 +300,6 @@ public class BagView extends AbstractView implements ApplicationListener {
     }
 
     /**
-     * setBagPayloadTree.
-     *
-     * @param bagTree BagTree
-     */
-    public void setBagPayloadTree(final BagTree bagTree) {
-        this.bagPayloadTree = bagTree;
-    }
-
-    /**
      * getBagPayloadTree.
      *
      * @return this.bagPayloadTree
@@ -360,12 +309,12 @@ public class BagView extends AbstractView implements ApplicationListener {
     }
 
     /**
-     * setBagTagFileTree.
+     * setBagPayloadTree.
      *
      * @param bagTree BagTree
      */
-    public void setBagTagFileTree(final BagTree bagTree) {
-        this.bagTagFileTree = bagTree;
+    public void setBagPayloadTree(final BagTree bagTree) {
+        this.bagPayloadTree = bagTree;
     }
 
     /**
@@ -375,6 +324,15 @@ public class BagView extends AbstractView implements ApplicationListener {
      */
     public BagTree getBagTagFileTree() {
         return this.bagTagFileTree;
+    }
+
+    /**
+     * setBagTagFileTree.
+     *
+     * @param bagTree BagTree
+     */
+    public void setBagTagFileTree(final BagTree bagTree) {
+        this.bagTagFileTree = bagTree;
     }
 
     /**
@@ -564,8 +522,8 @@ public class BagView extends AbstractView implements ApplicationListener {
 
             @Override
             public void mouseExited(final MouseEvent e) {
-                addDataToolBarAction.setBorder(new LineBorder(addDataToolBarAction.getBackground(
-                        ), 1));
+                addDataToolBarAction
+                        .setBorder(new LineBorder(addDataToolBarAction.getBackground(), 1));
             }
 
             @Override
@@ -580,8 +538,8 @@ public class BagView extends AbstractView implements ApplicationListener {
         removeDataToolBarAction = new JLabel("");
         removeDataToolBarAction.setEnabled(false);
         removeDataToolBarAction.setHorizontalAlignment(SwingConstants.CENTER);
-        removeDataToolBarAction.setBorder(new LineBorder(removeDataToolBarAction.getBackground(),
-                1));
+        removeDataToolBarAction
+                .setBorder(new LineBorder(removeDataToolBarAction.getBackground(), 1));
         removeDataToolBarAction.setIcon(getPropertyImage("Bag_Content.minus.icon"));
         removeDataToolBarAction.setToolTipText(getMessage("bagView.payloadTree.remove.tooltip"));
         buttonPanel.add(removeDataToolBarAction);
@@ -596,8 +554,8 @@ public class BagView extends AbstractView implements ApplicationListener {
 
             @Override
             public void mouseExited(final MouseEvent e) {
-                removeDataToolBarAction.setBorder(new LineBorder(removeDataToolBarAction
-                        .getBackground(), 1));
+                removeDataToolBarAction
+                        .setBorder(new LineBorder(removeDataToolBarAction.getBackground(), 1));
             }
 
             @Override
@@ -635,11 +593,11 @@ public class BagView extends AbstractView implements ApplicationListener {
         viewTagFilesToolbarAction = new JLabel("");
         viewTagFilesToolbarAction.setEnabled(false);
         viewTagFilesToolbarAction.setHorizontalAlignment(SwingConstants.CENTER);
-        viewTagFilesToolbarAction.setBorder(new LineBorder(viewTagFilesToolbarAction
-                .getBackground(), 1));
+        viewTagFilesToolbarAction
+                .setBorder(new LineBorder(viewTagFilesToolbarAction.getBackground(), 1));
         viewTagFilesToolbarAction.setIcon(getPropertyImage("Bag_ViewTagFile.icon"));
-        viewTagFilesToolbarAction.setToolTipText(getMessage("bagView.TagFilesTree.viewfile"
-                + ".tooltip"));
+        viewTagFilesToolbarAction
+                .setToolTipText(getMessage("bagView.TagFilesTree.viewfile" + ".tooltip"));
 
         viewTagFilesToolbarAction.addMouseListener(new MouseAdapter() {
 
@@ -652,8 +610,8 @@ public class BagView extends AbstractView implements ApplicationListener {
 
             @Override
             public void mouseExited(final MouseEvent e) {
-                viewTagFilesToolbarAction.setBorder(new LineBorder(viewTagFilesToolbarAction
-                        .getBackground(), 1));
+                viewTagFilesToolbarAction
+                        .setBorder(new LineBorder(viewTagFilesToolbarAction.getBackground(), 1));
             }
 
             @Override
@@ -668,11 +626,11 @@ public class BagView extends AbstractView implements ApplicationListener {
         addTagFileToolBarAction = new JLabel("");
         addTagFileToolBarAction.setEnabled(false);
         addTagFileToolBarAction.setHorizontalAlignment(SwingConstants.CENTER);
-        addTagFileToolBarAction.setBorder(new LineBorder(addTagFileToolBarAction.getBackground(),
-                1));
+        addTagFileToolBarAction
+                .setBorder(new LineBorder(addTagFileToolBarAction.getBackground(), 1));
         addTagFileToolBarAction.setIcon(getPropertyImage("Bag_Content.add.icon"));
-        addTagFileToolBarAction.setToolTipText(getMessage("bagView.TagFilesTree.addbutton"
-                + ".tooltip"));
+        addTagFileToolBarAction
+                .setToolTipText(getMessage("bagView.TagFilesTree.addbutton" + ".tooltip"));
 
         addTagFileToolBarAction.addMouseListener(new MouseAdapter() {
 
@@ -685,8 +643,8 @@ public class BagView extends AbstractView implements ApplicationListener {
 
             @Override
             public void mouseExited(final MouseEvent e) {
-                addTagFileToolBarAction.setBorder(new LineBorder(addTagFileToolBarAction
-                        .getBackground(), 1));
+                addTagFileToolBarAction
+                        .setBorder(new LineBorder(addTagFileToolBarAction.getBackground(), 1));
             }
 
             @Override
@@ -701,11 +659,11 @@ public class BagView extends AbstractView implements ApplicationListener {
         removeTagFileToolbarAction = new JLabel("");
         removeTagFileToolbarAction.setEnabled(false);
         removeTagFileToolbarAction.setHorizontalAlignment(SwingConstants.CENTER);
-        removeTagFileToolbarAction.setBorder(new LineBorder(removeTagFileToolbarAction
-                .getBackground(), 1));
+        removeTagFileToolbarAction
+                .setBorder(new LineBorder(removeTagFileToolbarAction.getBackground(), 1));
         removeTagFileToolbarAction.setIcon(getPropertyImage("Bag_Content.minus.icon"));
-        removeTagFileToolbarAction.setToolTipText(getMessage("bagView.TagFilesTree.remove"
-                + ".tooltip"));
+        removeTagFileToolbarAction
+                .setToolTipText(getMessage("bagView.TagFilesTree.remove" + ".tooltip"));
 
         buttonPanel.add(removeTagFileToolbarAction);
         removeTagFileToolbarAction.addMouseListener(new MouseAdapter() {
@@ -719,8 +677,8 @@ public class BagView extends AbstractView implements ApplicationListener {
 
             @Override
             public void mouseExited(final MouseEvent e) {
-                removeTagFileToolbarAction.setBorder(new LineBorder(removeTagFileToolbarAction
-                        .getBackground(), 1));
+                removeTagFileToolbarAction
+                        .setBorder(new LineBorder(removeTagFileToolbarAction.getBackground(), 1));
             }
 
             @Override
@@ -759,17 +717,6 @@ public class BagView extends AbstractView implements ApplicationListener {
     public void updateBaggerRules() {
         bag.updateStrategy();
 
-    }
-
-    /**
-     * showWarningErrorDialog.
-     *
-     * @param title String
-     * @param msg String
-     */
-    public static void showWarningErrorDialog(final String title, final String msg) {
-        final MessageDialog dialog = new MessageDialog(title, msg);
-        dialog.showDialog();
     }
 
     /**
@@ -1082,50 +1029,14 @@ public class BagView extends AbstractView implements ApplicationListener {
     }
 
     /**
-     * TimerListener.
-     *
-     * <p>The actionPerformed method in this class
-     * is called each time the Timer "goes off".
-     */
-    class TimerListener implements ActionListener {
-        /**
-         * actionPerformed.
-         *
-         * @param evt ActionEvent
-         */
-        @Override
-        public void actionPerformed(final ActionEvent evt) {
-            // check if task is completed or user has clicked cancel button
-            if (task.hasUserTriedToCancel() || task.isDone()) {
-                // we are done
-                progressMonitor.close();
-                Toolkit.getDefaultToolkit().beep();
-                timer.stop();
-                log.info("Stopped the timer");
-                // getting an array of Action Listeners from Timer Listener (will have
-                // only one element)
-                final ActionListener[] als = timer.getListeners(ActionListener.class);
-                // Removing Action Listener from timer
-                if (als.length > 0) {
-                    timer.removeActionListener(als[0]);
-                }
-                if (longRunningProcess != null && !task.isDone()) {
-                    log.info("Trying to cancel the long running process: {}", longRunningProcess);
-                    longRunningProcess.cancel();
-                }
-            }
-        }
-    }
-
-    /**
      * statusBarBegin.
      *
-     * @param progress Progress
-     * @param message String
+     * @param progress          Progress
+     * @param message           String
      * @param activityMonitored String
      */
-    public void statusBarBegin(final Progress progress, final String message, final String
-            activityMonitored) {
+    public void statusBarBegin(final Progress progress, final String message,
+                               final String activityMonitored) {
         BusyIndicator.showAt(Application.instance().getActiveWindow().getControl());
         task = new LongTask();
         task.setActivityMonitored(activityMonitored);
@@ -1133,8 +1044,9 @@ public class BagView extends AbstractView implements ApplicationListener {
 
         timer.addActionListener(new TimerListener());
 
-        progressMonitor = new ProgressMonitor(this.getControl(), message, "Preparing the "
-                + "operation...", 0, 1);
+        progressMonitor =
+                new ProgressMonitor(this.getControl(), message, "Preparing the " + "operation...",
+                        0, 1);
         progressMonitor.setMillisToDecideToPopup(ONE_SECOND);
         task.setMonitor(progressMonitor);
 
@@ -1143,17 +1055,10 @@ public class BagView extends AbstractView implements ApplicationListener {
     }
 
     /**
-     * statusBarEnd.
-     */
-    public static void statusBarEnd() {
-        BusyIndicator.clearAt(Application.instance().getActiveWindow().getControl());
-    }
-
-    /**
      * registerTreeListener.
      *
      * @param label String
-     * @param tree JTree
+     * @param tree  JTree
      */
     public void registerTreeListener(final String label, final JTree tree) {
         if (AbstractBagConstants.DATA_DIRECTORY.equals(label)) {
@@ -1258,5 +1163,41 @@ public class BagView extends AbstractView implements ApplicationListener {
             validateExecutor.setEnabled(false);
         }
         validateExecutor.setEnabled(true);
+    }
+
+    /**
+     * TimerListener.
+     *
+     * <p>The actionPerformed method in this class
+     * is called each time the Timer "goes off".
+     */
+    class TimerListener implements ActionListener {
+        /**
+         * actionPerformed.
+         *
+         * @param evt ActionEvent
+         */
+        @Override
+        public void actionPerformed(final ActionEvent evt) {
+            // check if task is completed or user has clicked cancel button
+            if (task.hasUserTriedToCancel() || task.isDone()) {
+                // we are done
+                progressMonitor.close();
+                Toolkit.getDefaultToolkit().beep();
+                timer.stop();
+                log.info("Stopped the timer");
+                // getting an array of Action Listeners from Timer Listener (will have
+                // only one element)
+                final ActionListener[] als = timer.getListeners(ActionListener.class);
+                // Removing Action Listener from timer
+                if (als.length > 0) {
+                    timer.removeActionListener(als[0]);
+                }
+                if (longRunningProcess != null && !task.isDone()) {
+                    log.info("Trying to cancel the long running process: {}", longRunningProcess);
+                    longRunningProcess.cancel();
+                }
+            }
+        }
     }
 }

@@ -18,9 +18,7 @@ import static junit.framework.TestCase.assertEquals;
 
 import cool.pandora.modeller.common.uri.IIIFPathTemplate;
 import cool.pandora.modeller.common.uri.Type;
-
 import java.util.Enumeration;
-
 import org.junit.Test;
 
 
@@ -38,7 +36,7 @@ public class GetTypeTest {
         final Enumeration e = Type.elements(IIIFPathTemplate.class);
         final Type path = Type.getByValue(IIIFPathTemplate.class, 0);
         System.out.println(path);
-        String out = "/{FedoraAppRoot}/{RestServletURI}/";
+        String out = "/{RepositoryPartition}/{ResourceBaseContext}";
         assertEquals(path.toString(), out);
     }
 }

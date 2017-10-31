@@ -11,23 +11,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package cool.pandora.modeller;
 
-import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
-import org.junit.Test;
+import static cool.pandora.modeller.ModellerClient.getSSLFactory;
 
 import java.io.IOException;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
-
-import static cool.pandora.modeller.ModellerClient.getSSLFactory;
+import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
+import org.junit.Test;
 
 public class GetSSLFactoryTest {
     @Test
-    public void getSSLFactoryTest() throws CertificateException, NoSuchAlgorithmException,
-            KeyStoreException, KeyManagementException, IOException {
+    public void getSSLFactoryTest()
+            throws CertificateException, NoSuchAlgorithmException, KeyStoreException,
+            KeyManagementException, IOException {
         SSLConnectionSocketFactory sslsf;
         sslsf = getSSLFactory();
     }

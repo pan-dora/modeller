@@ -17,7 +17,6 @@ package cool.pandora.modeller.profile;
 import cool.pandora.modeller.Bagger;
 import cool.pandora.modeller.Profile;
 import cool.pandora.modeller.ProfileField;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -45,6 +44,15 @@ public class BaggerProfileStore {
     public BaggerProfileStore(final Bagger bagger) {
         initializeProfile(bagger);
         instance = this;
+    }
+
+    /**
+     * getInstance.
+     *
+     * @return instance
+     */
+    public static BaggerProfileStore getInstance() {
+        return instance;
     }
 
     /**
@@ -99,15 +107,6 @@ public class BaggerProfileStore {
             }
         }
         return null;
-    }
-
-    /**
-     * getInstance.
-     *
-     * @return instance
-     */
-    public static BaggerProfileStore getInstance() {
-        return instance;
     }
 
     /**

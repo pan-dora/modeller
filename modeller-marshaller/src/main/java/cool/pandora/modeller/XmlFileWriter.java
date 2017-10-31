@@ -25,6 +25,9 @@ import javax.xml.bind.Marshaller;
  * @author Christopher Johnson
  */
 public class XmlFileWriter extends ByteArrayOutputStream {
+    protected XmlFileWriter() {
+    }
+
     /**
      * write.
      *
@@ -34,9 +37,6 @@ public class XmlFileWriter extends ByteArrayOutputStream {
         return new XMLWriterBuilder();
     }
 
-    protected XmlFileWriter() {
-    }
-
     /**
      * marshal.
      *
@@ -44,8 +44,8 @@ public class XmlFileWriter extends ByteArrayOutputStream {
      * @return marshalled output
      * @throws JAXBException Exception
      */
-    private static ByteArrayOutputStream marshal(final ImageFileDescriptor fileDescriptor) throws
-            JAXBException {
+    private static ByteArrayOutputStream marshal(final ImageFileDescriptor fileDescriptor)
+            throws JAXBException {
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
         final JAXBContext jaxbContext = JAXBContext.newInstance(ImageFileDescriptor.class);
         final Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
@@ -104,8 +104,8 @@ public class XmlFileWriter extends ByteArrayOutputStream {
          * @throws JAXBException Exception
          */
         public ByteArrayOutputStream build() throws JAXBException {
-            final String descriptor = this.collectionId + "." + this.objektId + "." + this
-                    .resourceId;
+            final String descriptor =
+                    this.collectionId + "." + this.objektId + "." + this.resourceId;
             final ImageFileDescriptor fileDescriptor = new ImageFileDescriptor();
             fileDescriptor.setId(descriptor);
             return XmlFileWriter.marshal(fileDescriptor);

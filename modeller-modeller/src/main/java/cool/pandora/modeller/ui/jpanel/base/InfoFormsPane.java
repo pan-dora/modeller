@@ -18,12 +18,10 @@ import cool.pandora.modeller.bag.impl.DefaultBag;
 import cool.pandora.modeller.ui.BagInfoInputPane;
 import cool.pandora.modeller.ui.handlers.base.UpdateBagHandler;
 import cool.pandora.modeller.ui.util.LayoutUtil;
-
 import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
@@ -42,16 +40,10 @@ public class InfoFormsPane extends JScrollPane {
     private static final long serialVersionUID = -5988111446773491301L;
     private final BagView bagView;
     private final DefaultBag bag;
-    private JPanel infoPanel;
-    protected JPanel serializeGroupPanel;
-
     public BagInfoInputPane bagInfoInputPane;
     public UpdateBagHandler updateBagHandler;
-
-    private JLabel bagNameValue;
     public JButton removeProjectButton;
     public JLabel bagVersionValue;
-    private JLabel bagProfileValue;
     public JLabel holeyValue;
     public JLabel serializeLabel;
     public JLabel serializeValue;
@@ -61,6 +53,10 @@ public class InfoFormsPane extends JScrollPane {
     public JRadioButton tarButton;
     public JRadioButton tarGzButton;
     public JRadioButton tarBz2Button;
+    protected JPanel serializeGroupPanel;
+    private JPanel infoPanel;
+    private JLabel bagNameValue;
+    private JLabel bagProfileValue;
 
     /**
      * InfoFormsPane.
@@ -101,8 +97,8 @@ public class InfoFormsPane extends JScrollPane {
         infoPanel.add(bagSettingsPanel, gbc);
 
         bagInfoInputPane = new BagInfoInputPane(bagView);
-        bagInfoInputPane.setToolTipText(bagView.getPropertyMessage("bagView.bagInfoInputPane"
-                + ".help"));
+        bagInfoInputPane
+                .setToolTipText(bagView.getPropertyMessage("bagView.bagInfoInputPane" + ".help"));
         bagInfoInputPane.setEnabled(false);
 
         gbc = LayoutUtil.buildGridBagConstraints(0, 1, 1, 1, 1, 1, GridBagConstraints.BOTH,
@@ -151,9 +147,8 @@ public class InfoFormsPane extends JScrollPane {
         pane.add(lblBagName, gbc);
 
         bagNameValue = new JLabel(bagView.getPropertyMessage("bag.label.noname"));
-        gbc = LayoutUtil
-                .buildGridBagConstraints(1, row, 3, 1, 3, 1, GridBagConstraints.HORIZONTAL,
-                        GridBagConstraints.WEST);
+        gbc = LayoutUtil.buildGridBagConstraints(1, row, 3, 1, 3, 1, GridBagConstraints.HORIZONTAL,
+                GridBagConstraints.WEST);
         gbc.insets = new Insets(0, 0, 5, 5);
         pane.add(bagNameValue, gbc);
 
@@ -166,9 +161,8 @@ public class InfoFormsPane extends JScrollPane {
         pane.add(bagProfileLabel, gbc);
 
         bagProfileValue = new JLabel("");
-        gbc = LayoutUtil
-                .buildGridBagConstraints(1, row, 1, 1, 1, 1, GridBagConstraints.HORIZONTAL,
-                        GridBagConstraints.WEST);
+        gbc = LayoutUtil.buildGridBagConstraints(1, row, 1, 1, 1, 1, GridBagConstraints.HORIZONTAL,
+                GridBagConstraints.WEST);
         gbc.insets = new Insets(0, 0, 5, 5);
         pane.add(bagProfileValue, gbc);
 
@@ -181,9 +175,8 @@ public class InfoFormsPane extends JScrollPane {
         pane.add(bagVersionLabel, gbc);
 
         bagVersionValue = new JLabel("");
-        gbc = LayoutUtil
-                .buildGridBagConstraints(3, row, 1, 1, 1, 1, GridBagConstraints.HORIZONTAL,
-                        GridBagConstraints.WEST);
+        gbc = LayoutUtil.buildGridBagConstraints(3, row, 1, 1, 1, 1, GridBagConstraints.HORIZONTAL,
+                GridBagConstraints.WEST);
         gbc.insets = new Insets(0, 0, 5, 5);
         pane.add(bagVersionValue, gbc);
 
@@ -197,9 +190,8 @@ public class InfoFormsPane extends JScrollPane {
         pane.add(holeyLabel, gbc);
 
         holeyValue = new JLabel("");
-        gbc = LayoutUtil
-                .buildGridBagConstraints(1, row, 1, 1, 1, 1, GridBagConstraints.HORIZONTAL,
-                        GridBagConstraints.WEST);
+        gbc = LayoutUtil.buildGridBagConstraints(1, row, 1, 1, 1, 1, GridBagConstraints.HORIZONTAL,
+                GridBagConstraints.WEST);
         gbc.insets = new Insets(0, 0, 5, 5);
         pane.add(holeyValue, gbc);
 
@@ -212,21 +204,11 @@ public class InfoFormsPane extends JScrollPane {
         pane.add(serializeLabel, gbc);
 
         serializeValue = new JLabel("");
-        gbc = LayoutUtil
-                .buildGridBagConstraints(3, row, 1, 1, 1, 1, GridBagConstraints.HORIZONTAL,
-                        GridBagConstraints.WEST);
+        gbc = LayoutUtil.buildGridBagConstraints(3, row, 1, 1, 1, 1, GridBagConstraints.HORIZONTAL,
+                GridBagConstraints.WEST);
         gbc.insets = new Insets(0, 0, 5, 5);
         pane.add(serializeValue, gbc);
         return pane;
-    }
-
-    /**
-     * setBagVersion.
-     *
-     * @param value String
-     */
-    public void setBagVersion(final String value) {
-        bagVersionValue.setText(value);
     }
 
     /**
@@ -239,12 +221,30 @@ public class InfoFormsPane extends JScrollPane {
     }
 
     /**
+     * setBagVersion.
+     *
+     * @param value String
+     */
+    public void setBagVersion(final String value) {
+        bagVersionValue.setText(value);
+    }
+
+    /**
      * setHoley.
      *
      * @param value String
      */
     public void setHoley(final String value) {
         holeyValue.setText(value);
+    }
+
+    /**
+     * getBagName.
+     *
+     * @return bagNameValue
+     */
+    public String getBagName() {
+        return bagNameValue.getText();
     }
 
     /**
@@ -257,15 +257,6 @@ public class InfoFormsPane extends JScrollPane {
             return;
         }
         bagNameValue.setText(name);
-    }
-
-    /**
-     * getBagName.
-     *
-     * @return bagNameValue
-     */
-    public String getBagName() {
-        return bagNameValue.getText();
     }
 
     /**
@@ -286,11 +277,11 @@ public class InfoFormsPane extends JScrollPane {
         infoPanel.validate();
 
         bagInfoInputPane = new BagInfoInputPane(bagView);
-        bagInfoInputPane.setToolTipText(bagView.getPropertyMessage("bagView.bagInfoInputPane"
-                + ".help"));
+        bagInfoInputPane
+                .setToolTipText(bagView.getPropertyMessage("bagView.bagInfoInputPane" + ".help"));
 
-        final GridBagConstraints gbc =
-                LayoutUtil.buildGridBagConstraints(0, 1, 1, 1, 1, 1, GridBagConstraints.BOTH,
+        final GridBagConstraints gbc = LayoutUtil
+                .buildGridBagConstraints(0, 1, 1, 1, 1, 1, GridBagConstraints.BOTH,
                         GridBagConstraints.WEST);
         infoPanel.add(bagInfoInputPane, gbc);
 

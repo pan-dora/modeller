@@ -17,9 +17,7 @@ package cool.pandora.modeller.ui.handlers.iiif;
 import cool.pandora.modeller.bag.BaggerFileEntity;
 import cool.pandora.modeller.bag.impl.DefaultBag;
 import cool.pandora.modeller.ui.jpanel.base.BagView;
-
 import gov.loc.repository.bagit.impl.AbstractBagConstants;
-
 import java.util.ArrayList;
 import java.util.List;
 

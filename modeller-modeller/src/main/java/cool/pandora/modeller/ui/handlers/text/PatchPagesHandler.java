@@ -35,7 +35,6 @@ import cool.pandora.modeller.ui.handlers.common.TextSequenceMetadata;
 import cool.pandora.modeller.ui.jpanel.base.BagView;
 import cool.pandora.modeller.ui.jpanel.text.PatchPagesFrame;
 import cool.pandora.modeller.ui.util.ApplicationContextUtil;
-
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.io.InputStream;
@@ -43,9 +42,7 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
 import javax.swing.AbstractAction;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -115,8 +112,8 @@ public class PatchPagesHandler extends AbstractAction implements Progress {
             final String hOCRPageId = pageIdMap.get(pageId);
             final String bbox = bboxmap.get(hOCRPageId);
             final String region = Region.region().bbox(bbox).build();
-            final String canvasRegionURI = CanvasRegionURI.regionuri().region(region).canvasURI(
-                    canvasURI).build();
+            final String canvasRegionURI =
+                    CanvasRegionURI.regionuri().region(region).canvasURI(canvasURI).build();
 
             rdfBody = TextSequenceMetadata
                     .getTextSequenceMetadata(areaIdmap, pageId, canvasRegionURI,
@@ -133,9 +130,8 @@ public class PatchPagesHandler extends AbstractAction implements Progress {
 
     void openPatchPagesFrame() {
         final DefaultBag bag = bagView.getBag();
-        final PatchPagesFrame patchPagesFrame =
-                new PatchPagesFrame(bagView, bagView.getPropertyMessage("bag.frame" + ".patch"
-                        + ".pages"));
+        final PatchPagesFrame patchPagesFrame = new PatchPagesFrame(bagView,
+                bagView.getPropertyMessage("bag.frame" + ".patch" + ".pages"));
         patchPagesFrame.setBag(bag);
         patchPagesFrame.setVisible(true);
     }

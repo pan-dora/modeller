@@ -20,7 +20,6 @@ import cool.pandora.modeller.bag.BaggerFetch;
 import cool.pandora.modeller.model.BagStatus;
 import cool.pandora.modeller.model.Status;
 import cool.pandora.modeller.profile.BaggerProfileStore;
-
 import gov.loc.repository.bagit.Bag;
 import gov.loc.repository.bagit.BagFactory;
 import gov.loc.repository.bagit.BagFactory.Version;
@@ -41,7 +40,6 @@ import gov.loc.repository.bagit.verify.impl.CompleteVerifierImpl;
 import gov.loc.repository.bagit.verify.impl.RequiredBagInfoTxtFieldsVerifier;
 import gov.loc.repository.bagit.verify.impl.ValidVerifierImpl;
 import gov.loc.repository.bagit.writer.Writer;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -51,7 +49,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.StringTokenizer;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -62,20 +59,20 @@ import org.slf4j.LoggerFactory;
  * @author loc.gov
  */
 public class DefaultBag {
-    protected static final Logger log = LoggerFactory.getLogger(DefaultBag.class);
     public static final long KB = 1024;
     public static final long MB = 1048576;
     public static final long GB = 1073741824;
     public static final long MAX_SIZE = 104857600; // 100 MB
     public static final short NO_MODE = 0;
     public static final short ZIP_MODE = 1;
+    public static final String NO_LABEL = "none";
+    public static final String ZIP_LABEL = "zip";
+    public static final String GZ_LABEL = "gz";
+    protected static final Logger log = LoggerFactory.getLogger(DefaultBag.class);
     private static final short TAR_MODE = 2;
     private static final short TAR_GZ_MODE = 3;
     private static final short TAR_BZ2_MODE = 4;
-    public static final String NO_LABEL = "none";
-    public static final String ZIP_LABEL = "zip";
     private static final String TAR_LABEL = "tar";
-    public static final String GZ_LABEL = "gz";
     private static final String TAR_GZ_LABEL = "tar.gz";
     private static final String TAR_BZ2_LABEL = "tar.bz2";
 
@@ -131,6 +128,83 @@ public class DefaultBag {
     public DefaultBag(final File rootDir, final String version) {
         this.versionString = version;
         init(rootDir);
+    }
+
+    /**
+     * resetStatus.
+     */
+    private static void resetStatus() {
+        isComplete(Status.UNKNOWN);
+        isValid(Status.UNKNOWN);
+        isValidMetadata(Status.UNKNOWN);
+    }
+
+    /**
+     * isComplete.
+     *
+     * @param status Status
+     */
+    private static void isComplete(final Status status) {
+        BagStatus.getInstance().getCompletenessStatus().setStatus(status);
+    }
+
+    /**
+     * isValid.
+     *
+     * @param status Status
+     */
+    private static void isValid(final Status status) {
+        BagStatus.getInstance().getValidationStatus().setStatus(status);
+    }
+
+    /**
+     * isValidMetadata.
+     *
+     * @param status Status
+     */
+    private static void isValidMetadata(final Status status) {
+        BagStatus.getInstance().getProfileComplianceStatus().setStatus(status);
+    }
+
+    /**
+     * getBaseUrl.
+     *
+     * @param fetchTxt FetchTxt
+     * @return baseUrl
+     */
+    private static String getBaseUrl(final FetchTxt fetchTxt) {
+        final String httpToken = "http:";
+        final String delimToken = "bagit";
+        String baseUrl = "";
+        try {
+            if (fetchTxt != null && !fetchTxt.isEmpty()) {
+                final FilenameSizeUrl fsu = fetchTxt.get(0);
+                if (fsu != null) {
+                    final String url = fsu.getUrl();
+                    baseUrl = url;
+                    final String[] list = url.split(delimToken);
+                    for (final String s : list) {
+                        if (s.trim().startsWith(httpToken)) {
+                            baseUrl = s;
+                        }
+                    }
+                }
+            }
+        } catch (final Exception e) {
+            log.error("Failed to get base URL", e);
+        }
+        return baseUrl;
+    }
+
+    /**
+     * fileStripSuffix.
+     *
+     * @param filename String
+     * @return String
+     */
+    private static String fileStripSuffix(final String filename) {
+        final StringTokenizer st = new StringTokenizer(filename, ".");
+        return st.nextToken();
     }
 
     /**
@@ -270,12 +344,12 @@ public class DefaultBag {
     }
 
     /**
-     * resetStatus.
+     * getVersion.
+     *
+     * @return versionString
      */
-    private static void resetStatus() {
-        isComplete(Status.UNKNOWN);
-        isValid(Status.UNKNOWN);
-        isValidMetadata(Status.UNKNOWN);
+    public String getVersion() {
+        return this.versionString;
     }
 
     /**
@@ -288,12 +362,12 @@ public class DefaultBag {
     }
 
     /**
-     * getVersion.
+     * getName.
      *
-     * @return versionString
+     * @return name
      */
-    public String getVersion() {
-        return this.versionString;
+    public String getName() {
+        return this.name;
     }
 
     /**
@@ -303,20 +377,11 @@ public class DefaultBag {
      */
     public void setName(final String name) {
         final String[] list = name.split("\\.");
-        String split_name = null;
+        String splitName = null;
         if (list.length > 0) {
-            split_name = list[0];
+            splitName = list[0];
         }
-        this.name = split_name;
-    }
-
-    /**
-     * getName.
-     *
-     * @return name
-     */
-    public String getName() {
-        return this.name;
+        this.name = splitName;
     }
 
     /**
@@ -338,15 +403,6 @@ public class DefaultBag {
     }
 
     /**
-     * setSequenceID.
-     *
-     * @param sequenceID String
-     */
-    public void setSequenceID(final String sequenceID) {
-        this.sequenceID = sequenceID;
-    }
-
-    /**
      * getSequenceID.
      *
      * @return sequenceID
@@ -356,12 +412,12 @@ public class DefaultBag {
     }
 
     /**
-     * sethOCRResource.
+     * setSequenceID.
      *
-     * @param hOCRResource String
+     * @param sequenceID String
      */
-    public void sethOCRResource(final String hOCRResource) {
-        this.hOCRResource = hOCRResource;
+    public void setSequenceID(final String sequenceID) {
+        this.sequenceID = sequenceID;
     }
 
     /**
@@ -374,12 +430,12 @@ public class DefaultBag {
     }
 
     /**
-     * setListServiceBaseURI.
+     * sethOCRResource.
      *
-     * @param listServiceURI String
+     * @param hOCRResource String
      */
-    public void setListServiceBaseURI(final String listServiceURI) {
-        this.listServiceURI = listServiceURI;
+    public void sethOCRResource(final String hOCRResource) {
+        this.hOCRResource = hOCRResource;
     }
 
     /**
@@ -392,12 +448,12 @@ public class DefaultBag {
     }
 
     /**
-     * setSize.
+     * setListServiceBaseURI.
      *
-     * @param size long
+     * @param listServiceURI String
      */
-    public void setSize(final long size) {
-        this.size = size;
+    public void setListServiceBaseURI(final String listServiceURI) {
+        this.listServiceURI = listServiceURI;
     }
 
     /**
@@ -410,12 +466,12 @@ public class DefaultBag {
     }
 
     /**
-     * This directory contains either the bag directory or serialized bag file.
+     * setSize.
      *
-     * @param rootDir File
+     * @param size long
      */
-    public void setRootDir(final File rootDir) {
-        this.rootDir = rootDir;
+    public void setSize(final long size) {
+        this.size = size;
     }
 
     /**
@@ -425,6 +481,15 @@ public class DefaultBag {
      */
     public File getRootDir() {
         return this.rootDir;
+    }
+
+    /**
+     * This directory contains either the bag directory or serialized bag file.
+     *
+     * @param rootDir File
+     */
+    public void setRootDir(final File rootDir) {
+        this.rootDir = rootDir;
     }
 
     /**
@@ -464,21 +529,21 @@ public class DefaultBag {
     }
 
     /**
-     * setSerialMode.
-     *
-     * @param m short
-     */
-    public void setSerialMode(final short m) {
-        this.serialMode = m;
-    }
-
-    /**
      * getSerialMode.
      *
      * @return serialMode
      */
     public short getSerialMode() {
         return this.serialMode;
+    }
+
+    /**
+     * setSerialMode.
+     *
+     * @param m short
+     */
+    public void setSerialMode(final short m) {
+        this.serialMode = m;
     }
 
     /**
@@ -527,15 +592,6 @@ public class DefaultBag {
     }
 
     /**
-     * setTagManifestAlgorithm.
-     *
-     * @param s String
-     */
-    public void setTagManifestAlgorithm(final String s) {
-        this.tagManifestAlgorithm = s;
-    }
-
-    /**
      * getTagManifestAlgorithm.
      *
      * @return tagManifestAlgorithm
@@ -545,12 +601,12 @@ public class DefaultBag {
     }
 
     /**
-     * setPayloadManifestAlgorithm.
+     * setTagManifestAlgorithm.
      *
      * @param s String
      */
-    public void setPayloadManifestAlgorithm(final String s) {
-        this.payloadManifestAlgorithm = s;
+    public void setTagManifestAlgorithm(final String s) {
+        this.tagManifestAlgorithm = s;
     }
 
     /**
@@ -562,6 +618,14 @@ public class DefaultBag {
         return this.payloadManifestAlgorithm;
     }
 
+    /**
+     * setPayloadManifestAlgorithm.
+     *
+     * @param s String
+     */
+    public void setPayloadManifestAlgorithm(final String s) {
+        this.payloadManifestAlgorithm = s;
+    }
 
     /**
      * Setter Method
@@ -601,33 +665,6 @@ public class DefaultBag {
      */
     public boolean isValidateOnSave() {
         return this.isValidateOnSave;
-    }
-
-    /**
-     * isComplete.
-     *
-     * @param status Status
-     */
-    private static void isComplete(final Status status) {
-        BagStatus.getInstance().getCompletenessStatus().setStatus(status);
-    }
-
-    /**
-     * isValid.
-     *
-     * @param status Status
-     */
-    private static void isValid(final Status status) {
-        BagStatus.getInstance().getValidationStatus().setStatus(status);
-    }
-
-    /**
-     * isValidMetadata.
-     *
-     * @param status Status
-     */
-    private static void isValidMetadata(final Status status) {
-        BagStatus.getInstance().getProfileComplianceStatus().setStatus(status);
     }
 
     /**
@@ -682,45 +719,6 @@ public class DefaultBag {
     }
 
     /**
-     * getBaseUrl.
-     *
-     * @param fetchTxt FetchTxt
-     * @return baseUrl
-     */
-    private static String getBaseUrl(final FetchTxt fetchTxt) {
-        final String httpToken = "http:";
-        final String delimToken = "bagit";
-        String baseUrl = "";
-        try {
-            if (fetchTxt != null && !fetchTxt.isEmpty()) {
-                final FilenameSizeUrl fsu = fetchTxt.get(0);
-                if (fsu != null) {
-                    final String url = fsu.getUrl();
-                    baseUrl = url;
-                    final String[] list = url.split(delimToken);
-                    for (final String s : list) {
-                        if (s.trim().startsWith(httpToken)) {
-                            baseUrl = s;
-                        }
-                    }
-                }
-            }
-        } catch (final Exception e) {
-            log.error("Failed to get base URL", e);
-        }
-        return baseUrl;
-    }
-
-    /**
-     * setFetch.
-     *
-     * @param fetch BaggerFetch
-     */
-    public void setFetch(final BaggerFetch fetch) {
-        this.fetch = fetch;
-    }
-
-    /**
      * getFetch.
      *
      * @return fetch
@@ -730,6 +728,15 @@ public class DefaultBag {
             this.fetch = new BaggerFetch();
         }
         return this.fetch;
+    }
+
+    /**
+     * setFetch.
+     *
+     * @param fetch BaggerFetch
+     */
+    public void setFetch(final BaggerFetch fetch) {
+        this.fetch = fetch;
     }
 
     /**
@@ -813,7 +820,7 @@ public class DefaultBag {
      * setProfile.
      *
      * @param profile Profile
-     * @param newBag boolean
+     * @param newBag  boolean
      */
     public void setProfile(final Profile profile, final boolean newBag) {
         this.profile = profile;
@@ -996,17 +1003,6 @@ public class DefaultBag {
     }
 
     /**
-     * fileStripSuffix.
-     *
-     * @param filename String
-     * @return String
-     */
-    private static String fileStripSuffix(final String filename) {
-        final StringTokenizer st = new StringTokenizer(filename, ".");
-        return st.nextToken();
-    }
-
-    /**
      * writeBag.
      *
      * @param bw Writer
@@ -1146,17 +1142,17 @@ public class DefaultBag {
     private void generateManifestFiles() {
         final DefaultCompleter completer = new DefaultCompleter(new BagFactory());
         if (this.isBuildPayloadManifest) {
-            if (this.payloadManifestAlgorithm.equalsIgnoreCase(Manifest.Algorithm
-                    .MD5.bagItAlgorithm)) {
+            if (this.payloadManifestAlgorithm
+                    .equalsIgnoreCase(Manifest.Algorithm.MD5.bagItAlgorithm)) {
                 completer.setPayloadManifestAlgorithm(Algorithm.MD5);
-            } else if (this.payloadManifestAlgorithm.equalsIgnoreCase(Manifest.Algorithm
-                    .SHA1.bagItAlgorithm)) {
+            } else if (this.payloadManifestAlgorithm
+                    .equalsIgnoreCase(Manifest.Algorithm.SHA1.bagItAlgorithm)) {
                 completer.setPayloadManifestAlgorithm(Algorithm.SHA1);
-            } else if (this.payloadManifestAlgorithm.equalsIgnoreCase(Manifest.Algorithm
-                    .SHA256.bagItAlgorithm)) {
+            } else if (this.payloadManifestAlgorithm
+                    .equalsIgnoreCase(Manifest.Algorithm.SHA256.bagItAlgorithm)) {
                 completer.setPayloadManifestAlgorithm(Algorithm.SHA256);
-            } else if (this.payloadManifestAlgorithm.equalsIgnoreCase(Manifest.Algorithm
-                    .SHA512.bagItAlgorithm)) {
+            } else if (this.payloadManifestAlgorithm
+                    .equalsIgnoreCase(Manifest.Algorithm.SHA512.bagItAlgorithm)) {
                 completer.setPayloadManifestAlgorithm(Algorithm.SHA512);
             } else {
                 completer.setPayloadManifestAlgorithm(Algorithm.MD5);
@@ -1168,14 +1164,14 @@ public class DefaultBag {
             completer.setGenerateTagManifest(true);
             if (this.tagManifestAlgorithm.equalsIgnoreCase(Manifest.Algorithm.MD5.bagItAlgorithm)) {
                 completer.setTagManifestAlgorithm(Algorithm.MD5);
-            } else if (this.tagManifestAlgorithm.equalsIgnoreCase(Manifest.Algorithm
-                    .SHA1.bagItAlgorithm)) {
+            } else if (this.tagManifestAlgorithm
+                    .equalsIgnoreCase(Manifest.Algorithm.SHA1.bagItAlgorithm)) {
                 completer.setTagManifestAlgorithm(Algorithm.SHA1);
-            } else if (this.tagManifestAlgorithm.equalsIgnoreCase(Manifest.Algorithm
-                    .SHA256.bagItAlgorithm)) {
+            } else if (this.tagManifestAlgorithm
+                    .equalsIgnoreCase(Manifest.Algorithm.SHA256.bagItAlgorithm)) {
                 completer.setTagManifestAlgorithm(Algorithm.SHA256);
-            } else if (this.tagManifestAlgorithm.equalsIgnoreCase(Manifest.Algorithm
-                    .SHA512.bagItAlgorithm)) {
+            } else if (this.tagManifestAlgorithm
+                    .equalsIgnoreCase(Manifest.Algorithm.SHA512.bagItAlgorithm)) {
                 completer.setTagManifestAlgorithm(Algorithm.SHA512);
             } else {
                 completer.setTagManifestAlgorithm(Algorithm.MD5);

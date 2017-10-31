@@ -20,17 +20,14 @@ import cool.pandora.modeller.bag.impl.DefaultBagInfo;
 import cool.pandora.modeller.ui.jpanel.base.BagInfoForm;
 import cool.pandora.modeller.ui.jpanel.base.BagView;
 import cool.pandora.modeller.ui.jpanel.base.OrganizationProfileForm;
-
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.util.HashMap;
-
 import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
 import javax.swing.InputMap;
 import javax.swing.JTabbedPane;
 import javax.swing.KeyStroke;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.binding.form.HierarchicalFormModel;
@@ -42,9 +39,8 @@ import org.springframework.richclient.form.FormModelHelper;
  * @author gov.loc
  */
 public class BagInfoInputPane extends JTabbedPane {
-    private static final long serialVersionUID = 1L;
     protected static final Logger log = LoggerFactory.getLogger(BagInfoInputPane.class);
-
+    private static final long serialVersionUID = 1L;
     private final BagView bagView;
     private DefaultBag defaultBag;
     private BaggerProfile bagProfile;
@@ -84,6 +80,15 @@ public class BagInfoInputPane extends JTabbedPane {
     }
 
     /**
+     * updateProject.
+     *
+     * @param bagView BagView
+     */
+    public static void updateProject(final BagView bagView) {
+        bagView.infoInputPane.updateInfoFormsPane();
+    }
+
+    /**
      * enableForms.
      *
      * @param b boolean
@@ -114,17 +119,15 @@ public class BagInfoInputPane extends JTabbedPane {
         bagProfile.setOrganization(bagInfo.getBagOrganization());
         bagProfile.setToContact(bagInfo.getToContact());
 
-        final HierarchicalFormModel profileFormModel = FormModelHelper.createCompoundFormModel(
-                bagProfile);
-        profileForm =
-                new OrganizationProfileForm(FormModelHelper.createChildPageFormModel(
-                        profileFormModel, null), bagView);
+        final HierarchicalFormModel profileFormModel =
+                FormModelHelper.createCompoundFormModel(bagProfile);
+        profileForm = new OrganizationProfileForm(
+                FormModelHelper.createChildPageFormModel(profileFormModel, null), bagView);
 
-        final HierarchicalFormModel infoFormModel = FormModelHelper.createCompoundFormModel(
-                bagInfo);
-        bagInfoForm = new BagInfoForm(FormModelHelper.createChildPageFormModel(infoFormModel,
-                null), bagView,
-                bagInfo.getFieldMap());
+        final HierarchicalFormModel infoFormModel =
+                FormModelHelper.createCompoundFormModel(bagInfo);
+        bagInfoForm = new BagInfoForm(FormModelHelper.createChildPageFormModel(infoFormModel, null),
+                bagView, bagInfo.getFieldMap());
 
         createTabbedUiComponentsWithForms();
     }
@@ -139,8 +142,8 @@ public class BagInfoInputPane extends JTabbedPane {
         // invalidate();
         validate();
         setName("Profile");
-        bagInfoForm.getControl().setToolTipText(bagView.getPropertyMessage("infoinputpane.tab"
-                + ".details.help"));
+        bagInfoForm.getControl()
+                .setToolTipText(bagView.getPropertyMessage("infoinputpane.tab" + ".details.help"));
         addTab(bagView.getPropertyMessage("infoInputPane.tab.details"), bagInfoForm.getControl());
         profileForm.getControl().setToolTipText("Profile Form");
     }
@@ -187,15 +190,6 @@ public class BagInfoInputPane extends JTabbedPane {
         invalidate();
         repaint();
 
-    }
-
-    /**
-     * updateProject.
-     *
-     * @param bagView BagView
-     */
-    public static void updateProject(final BagView bagView) {
-        bagView.infoInputPane.updateInfoFormsPane();
     }
 
     private void updateBagInfo(final DefaultBag bag) {

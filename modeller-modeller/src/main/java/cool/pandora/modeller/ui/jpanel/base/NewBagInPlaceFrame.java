@@ -17,7 +17,6 @@ package cool.pandora.modeller.ui.jpanel.base;
 import cool.pandora.modeller.bag.impl.DefaultBag;
 import cool.pandora.modeller.ui.util.ApplicationContextUtil;
 import cool.pandora.modeller.ui.util.LayoutUtil;
-
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -25,7 +24,6 @@ import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -38,7 +36,6 @@ import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.richclient.application.Application;
@@ -58,19 +55,23 @@ import org.springframework.richclient.util.GuiStandardUtils;
  */
 public class NewBagInPlaceFrame extends JFrame implements ActionListener {
     protected static final Logger log = LoggerFactory.getLogger(NewBagInPlaceFrame.class);
+    protected static final String DEFAULT_FINISH_COMMAND_ID = "okCommand";
+    protected static final String DEFAULT_CANCEL_COMMAND_ID = "cancelCommand";
     private static final long serialVersionUID = 1L;
     private final transient BagView bagView;
-    private transient DefaultBag bag = null;
     private final JPanel createPanel;
+    private transient DefaultBag bag = null;
     private JTextField bagNameField;
     private File bagFile;
     private JComboBox<String> profileList;
+    private transient ActionCommand finishCommand;
+    private transient ActionCommand cancelCommand;
 
     /**
      * NewBagInPlaceFrame.
      *
      * @param bagView BagView
-     * @param title String
+     * @param title   String
      */
     public NewBagInPlaceFrame(final BagView bagView, final String title) {
         super(title);
@@ -97,6 +98,38 @@ public class NewBagInPlaceFrame extends JFrame implements ActionListener {
     }
 
     /**
+     * layoutSpacer.
+     *
+     * @param contentPanel JPanel
+     * @param row          int
+     */
+    private static void layoutSpacer(final JPanel contentPanel, final int row) {
+        GridBagConstraints glbc = new GridBagConstraints();
+        glbc = LayoutUtil.buildGridBagConstraints(0, row, 1, 1, 1, 50, GridBagConstraints.NONE,
+                GridBagConstraints.WEST);
+        final JLabel spacerLabel = new JLabel("");
+        contentPanel.add(spacerLabel, glbc);
+    }
+
+    /**
+     * getFinishCommandId.
+     *
+     * @return DEFAULT_FINISH_COMMAND_ID
+     */
+    protected static String getFinishCommandId() {
+        return DEFAULT_FINISH_COMMAND_ID;
+    }
+
+    /**
+     * getCancelCommandId.
+     *
+     * @return DEFAULT_CANCEL_COMMAND_ID
+     */
+    protected static String getCancelCommandId() {
+        return DEFAULT_CANCEL_COMMAND_ID;
+    }
+
+    /**
      * createComponents.
      *
      * @return pageControl
@@ -108,8 +141,8 @@ public class NewBagInPlaceFrame extends JFrame implements ActionListener {
         final JPanel pageControl = new JPanel(new BorderLayout());
         final JPanel titlePaneContainer = new JPanel(new BorderLayout());
         titlePane.setTitle(bagView.getPropertyMessage("NewBagInPlace.title"));
-        titlePane.setMessage(new DefaultMessage(bagView.getPropertyMessage("NewBagInPlace"
-                + ".description")));
+        titlePane.setMessage(
+                new DefaultMessage(bagView.getPropertyMessage("NewBagInPlace" + ".description")));
         titlePaneContainer.add(titlePane.getControl());
         titlePaneContainer.add(new JSeparator(), BorderLayout.SOUTH);
         pageControl.add(titlePaneContainer, BorderLayout.NORTH);
@@ -137,7 +170,7 @@ public class NewBagInPlaceFrame extends JFrame implements ActionListener {
      * layoutSelectDataContent.
      *
      * @param contentPanel JPanel
-     * @param row int
+     * @param row          int
      */
     private void layoutSelectDataContent(final JPanel contentPanel, final int row) {
 
@@ -157,14 +190,12 @@ public class NewBagInPlaceFrame extends JFrame implements ActionListener {
         bagNameField.setEnabled(false);
 
         GridBagConstraints glbc = new GridBagConstraints();
-        glbc = LayoutUtil
-                .buildGridBagConstraints(0, row, 1, 1, 1, 50, GridBagConstraints.NONE,
-                        GridBagConstraints.WEST);
+        glbc = LayoutUtil.buildGridBagConstraints(0, row, 1, 1, 1, 50, GridBagConstraints.NONE,
+                GridBagConstraints.WEST);
         contentPanel.add(location, glbc);
 
-        glbc = LayoutUtil
-                .buildGridBagConstraints(2, row, 1, 1, 1, 50, GridBagConstraints.NONE,
-                        GridBagConstraints.EAST);
+        glbc = LayoutUtil.buildGridBagConstraints(2, row, 1, 1, 1, 50, GridBagConstraints.NONE,
+                GridBagConstraints.EAST);
         contentPanel.add(saveAsButton, glbc);
 
         glbc = LayoutUtil
@@ -178,7 +209,7 @@ public class NewBagInPlaceFrame extends JFrame implements ActionListener {
      * layoutProfileSelectionContent.
      *
      * @param contentPane JPanel
-     * @param row int
+     * @param row         int
      */
     private void layoutProfileSelectionContent(final JPanel contentPane, final int row) {
         // content
@@ -198,40 +229,13 @@ public class NewBagInPlaceFrame extends JFrame implements ActionListener {
                 .buildGridBagConstraints(0, row, 1, 1, 5, 50, GridBagConstraints.HORIZONTAL,
                         GridBagConstraints.WEST);
         contentPane.add(bagProfileLabel, glbc);
-        glbc = LayoutUtil.buildGridBagConstraints(1, row, 1, 1, 40, 50, GridBagConstraints
-                        .HORIZONTAL,
-                GridBagConstraints.CENTER);
-        contentPane.add(profileList, glbc);
         glbc = LayoutUtil
-                .buildGridBagConstraints(2, row, 1, 1, 40, 50, GridBagConstraints.NONE,
-                        GridBagConstraints.EAST);
+                .buildGridBagConstraints(1, row, 1, 1, 40, 50, GridBagConstraints.HORIZONTAL,
+                        GridBagConstraints.CENTER);
+        contentPane.add(profileList, glbc);
+        glbc = LayoutUtil.buildGridBagConstraints(2, row, 1, 1, 40, 50, GridBagConstraints.NONE,
+                GridBagConstraints.EAST);
         contentPane.add(spacerLabel, glbc);
-    }
-
-    /**
-     * AddKeepFilesToEmptyFoldersHandler.
-     *
-     * <p>The actionPerformed method in this class
-     * is called each time the ".keep Files in Empty Folder(s):" Check Box
-     * is Selected
-     */
-    private class AddKeepFilesToEmptyFoldersHandler extends AbstractAction {
-        private static final long serialVersionUID = 1L;
-
-        @Override
-        public void actionPerformed(final ActionEvent e) {
-
-            final JCheckBox cb = (JCheckBox) e.getSource();
-
-            // Determine status
-            final boolean isSelected = cb.isSelected();
-            if (isSelected) {
-                bagView.getBag().isAddKeepFilesToEmptyFolders(true);
-                bagView.infoInputPane.serializeValue.setText("true");
-            } else {
-                bagView.getBag().isAddKeepFilesToEmptyFolders(false);
-            }
-        }
     }
 
     /**
@@ -244,14 +248,13 @@ public class NewBagInPlaceFrame extends JFrame implements ActionListener {
         // Delete Empty Folder(s)
         final JLabel addKeepFilesToEmptyFoldersCheckBoxLabel =
                 new JLabel(bagView.getPropertyMessage("bag.label" + ".addkeepfilestoemptyfolders"));
-        addKeepFilesToEmptyFoldersCheckBoxLabel
-                .setToolTipText(bagView.getPropertyMessage("bag" + ".addkeepfilestoemptyfolders"
-                        + ".help"));
-        final JCheckBox addKeepFilesToEmptyFoldersCheckBox = new JCheckBox(bagView
-                .getPropertyMessage(""));
+        addKeepFilesToEmptyFoldersCheckBoxLabel.setToolTipText(
+                bagView.getPropertyMessage("bag" + ".addkeepfilestoemptyfolders" + ".help"));
+        final JCheckBox addKeepFilesToEmptyFoldersCheckBox =
+                new JCheckBox(bagView.getPropertyMessage(""));
         addKeepFilesToEmptyFoldersCheckBox.setSelected(bag.isAddKeepFilesToEmptyFolders());
-        addKeepFilesToEmptyFoldersCheckBox.addActionListener(new
-                AddKeepFilesToEmptyFoldersHandler());
+        addKeepFilesToEmptyFoldersCheckBox
+                .addActionListener(new AddKeepFilesToEmptyFoldersHandler());
 
         GridBagConstraints glbc = new GridBagConstraints();
 
@@ -260,29 +263,13 @@ public class NewBagInPlaceFrame extends JFrame implements ActionListener {
                 .buildGridBagConstraints(0, row, 1, 1, 5, 50, GridBagConstraints.HORIZONTAL,
                         GridBagConstraints.WEST);
         contentPane.add(addKeepFilesToEmptyFoldersCheckBoxLabel, glbc);
-        glbc = LayoutUtil.buildGridBagConstraints(1, row, 1, 1, 40, 50, GridBagConstraints
-                        .HORIZONTAL,
-                GridBagConstraints.CENTER);
+        glbc = LayoutUtil
+                .buildGridBagConstraints(1, row, 1, 1, 40, 50, GridBagConstraints.HORIZONTAL,
+                        GridBagConstraints.CENTER);
         contentPane.add(addKeepFilesToEmptyFoldersCheckBox, glbc);
-        glbc = LayoutUtil
-                .buildGridBagConstraints(2, row, 1, 1, 40, 50, GridBagConstraints.NONE,
-                        GridBagConstraints.EAST);
+        glbc = LayoutUtil.buildGridBagConstraints(2, row, 1, 1, 40, 50, GridBagConstraints.NONE,
+                GridBagConstraints.EAST);
         contentPane.add(spacerLabel, glbc);
-    }
-
-    /**
-     * layoutSpacer.
-     *
-     * @param contentPanel JPanel
-     * @param row int
-     */
-    private static void layoutSpacer(final JPanel contentPanel, final int row) {
-        GridBagConstraints glbc = new GridBagConstraints();
-        glbc = LayoutUtil
-                .buildGridBagConstraints(0, row, 1, 1, 1, 50, GridBagConstraints.NONE,
-                        GridBagConstraints.WEST);
-        final JLabel spacerLabel = new JLabel("");
-        contentPanel.add(spacerLabel, glbc);
     }
 
     /**
@@ -291,8 +278,8 @@ public class NewBagInPlaceFrame extends JFrame implements ActionListener {
      * @return buttonBar
      */
     protected JComponent createButtonBar() {
-        final CommandGroup dialogCommandGroup = CommandGroup.createCommandGroup(null,
-                getCommandGroupMembers());
+        final CommandGroup dialogCommandGroup =
+                CommandGroup.createCommandGroup(null, getCommandGroupMembers());
         final JComponent buttonBar = dialogCommandGroup.createButtonBar();
         GuiStandardUtils.attachDialogBorder(buttonBar);
         return buttonBar;
@@ -331,32 +318,6 @@ public class NewBagInPlaceFrame extends JFrame implements ActionListener {
     }
 
     /**
-     * getFinishCommandId.
-     *
-     * @return DEFAULT_FINISH_COMMAND_ID
-     */
-    protected static String getFinishCommandId() {
-        return DEFAULT_FINISH_COMMAND_ID;
-    }
-
-    /**
-     * getCancelCommandId.
-     *
-     * @return DEFAULT_CANCEL_COMMAND_ID
-     */
-    protected static String getCancelCommandId() {
-        return DEFAULT_CANCEL_COMMAND_ID;
-    }
-
-    protected static final String DEFAULT_FINISH_COMMAND_ID = "okCommand";
-
-    protected static final String DEFAULT_CANCEL_COMMAND_ID = "cancelCommand";
-
-    private transient ActionCommand finishCommand;
-
-    private transient ActionCommand cancelCommand;
-
-    /**
      * setBag.
      *
      * @param bag DefaultBag
@@ -370,6 +331,32 @@ public class NewBagInPlaceFrame extends JFrame implements ActionListener {
     public void actionPerformed(final ActionEvent e) {
         invalidate();
         repaint();
+    }
+
+    /**
+     * AddKeepFilesToEmptyFoldersHandler.
+     *
+     * <p>The actionPerformed method in this class
+     * is called each time the ".keep Files in Empty Folder(s):" Check Box
+     * is Selected
+     */
+    private class AddKeepFilesToEmptyFoldersHandler extends AbstractAction {
+        private static final long serialVersionUID = 1L;
+
+        @Override
+        public void actionPerformed(final ActionEvent e) {
+
+            final JCheckBox cb = (JCheckBox) e.getSource();
+
+            // Determine status
+            final boolean isSelected = cb.isSelected();
+            if (isSelected) {
+                bagView.getBag().isAddKeepFilesToEmptyFolders(true);
+                bagView.infoInputPane.serializeValue.setText("true");
+            } else {
+                bagView.getBag().isAddKeepFilesToEmptyFolders(false);
+            }
+        }
     }
 
     /**
@@ -391,9 +378,8 @@ public class NewBagInPlaceFrame extends JFrame implements ActionListener {
                 fs.setCurrentDirectory(bagView.getBagRootPath().getParentFile());
             }
             fs.setCurrentDirectory(bag.getRootDir());
-            if (bag.getName() != null
-                    && !bag.getName().equalsIgnoreCase(bagView.getPropertyMessage("bag.label" + ""
-                            + ".noname"))) {
+            if (bag.getName() != null && !bag.getName()
+                    .equalsIgnoreCase(bagView.getPropertyMessage("bag.label" + "" + ".noname"))) {
                 String selectedName = bag.getName();
                 if (bag.getSerialMode() == DefaultBag.ZIP_MODE) {
                     selectedName += "." + DefaultBag.ZIP_LABEL;
@@ -430,12 +416,11 @@ public class NewBagInPlaceFrame extends JFrame implements ActionListener {
             log.info("BagVersionFrame.OkNewBagHandler");
             setVisible(false);
             if (bagView.getBag().isAddKeepFilesToEmptyFolders()) {
-                bagView.createBagInPlaceHandler
-                        .createPreBagAddKeepFilesToEmptyFolders(bagFile, (String) profileList
-                                .getSelectedItem());
+                bagView.createBagInPlaceHandler.createPreBagAddKeepFilesToEmptyFolders(bagFile,
+                        (String) profileList.getSelectedItem());
             } else {
-                bagView.createBagInPlaceHandler.createPreBag(bagFile, (String) profileList
-                        .getSelectedItem());
+                bagView.createBagInPlaceHandler
+                        .createPreBag(bagFile, (String) profileList.getSelectedItem());
             }
         }
     }

@@ -20,7 +20,6 @@ import static org.apache.commons.lang3.exception.ExceptionUtils.getMessage;
 import cool.pandora.modeller.DocManifestBuilder;
 import cool.pandora.modeller.ModellerClient;
 import cool.pandora.modeller.ModellerClientFailedException;
-
 import cool.pandora.modeller.bag.BagInfoField;
 import cool.pandora.modeller.bag.impl.DefaultBag;
 import cool.pandora.modeller.hOCRData;
@@ -29,16 +28,13 @@ import cool.pandora.modeller.ui.handlers.common.TextObjectURI;
 import cool.pandora.modeller.ui.jpanel.base.BagView;
 import cool.pandora.modeller.ui.jpanel.text.CreateAreasFrame;
 import cool.pandora.modeller.ui.util.ApplicationContextUtil;
-
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.net.URI;
 import java.util.List;
 import java.util.Map;
 import javax.swing.AbstractAction;
-
 import org.apache.commons.lang.StringUtils;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -35,9 +35,8 @@ public class CanvasPageMapTest {
         final String url = "resource://data/test_007.hocr";
         final hOCRData hocr = DocManifestBuilder.gethOCRProjectionFromURL(url);
         pageIdList = getPageIdList(hocr);
-        final CanvasPageMap canvasPageMap = CanvasPageMap.init()
-                .canvasContainerURI(URI.create(
-                        "http://localhost:8080/fcrepo/rest/collection/test/007/canvas"))
+        final CanvasPageMap canvasPageMap = CanvasPageMap.init().canvasContainerURI(
+                URI.create("http://localhost:8080/fcrepo/rest/collection/test/007/canvas"))
                 .pageIdList(pageIdList).build();
         System.out.println(canvasPageMap);
     }

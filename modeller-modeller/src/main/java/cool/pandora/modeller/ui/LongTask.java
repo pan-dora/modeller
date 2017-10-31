@@ -17,7 +17,6 @@ package cool.pandora.modeller.ui;
 import gov.loc.repository.bagit.ProgressListener;
 import java.text.MessageFormat;
 import javax.swing.ProgressMonitor;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -120,20 +119,19 @@ public class LongTask implements ProgressListener {
      * <p>should be thread-safe
      *
      * @param activity String
-     * @param item Object
-     * @param count Long
-     * @param total Long
+     * @param item     Object
+     * @param count    Long
+     * @param total    Long
      */
     @Override
-    public synchronized void reportProgress(final String activity, final Object item, final Long
-            count,
-                                            final Long total) {
+    public synchronized void reportProgress(final String activity, final Object item,
+                                            final Long count, final Long total) {
         if (count == null || total == null) {
             log.error("reportProgress received null info: count={}, total={}", count, total);
         } else {
             if (activityMonitored == null || activityMonitored.equals(activity)) {
-                final String message = MessageFormat.format("{0} ({2} of {3}) {1} ", activity,
-                        item, count, total);
+                final String message =
+                        MessageFormat.format("{0} ({2} of {3}) {1} ", activity, item, count, total);
                 this.progressMonitor.setNote(message);
                 this.progressMonitor.setMaximum(total.intValue());
                 this.progressMonitor.setProgress(count.intValue());

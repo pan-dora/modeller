@@ -15,7 +15,6 @@
 package cool.pandora.modeller.util;
 
 import java.io.ByteArrayOutputStream;
-
 import org.apache.jena.query.Dataset;
 import org.apache.jena.query.DatasetFactory;
 import org.apache.jena.rdf.model.Model;
@@ -31,35 +30,17 @@ import org.apache.jena.riot.RDFDataMgr;
  * @author Christopher Johnson
  */
 public class ServiceNodeWriter {
-    /**
-     * init.
-     *
-     * @return ServiceNodeBuilder
-     */
-    public static ServiceNodeBuilder init() {
-        return new ServiceNodeBuilder();
-    }
-
     private final ByteArrayOutputStream serviceNode;
-
-    /**
-     * render.
-     *
-     * @return serviceNode
-     */
-    public String render() {
-        return this.serviceNode.toString();
-    }
 
     /**
      * ServiceNodeWriter.
      *
-     * @param serviceURI String
+     * @param serviceURI       String
      * @param servicePredicate String
-     * @param serviceType String
+     * @param serviceType      String
      */
-    ServiceNodeWriter(final String serviceURI, final String servicePredicate, final String
-            serviceType) {
+    ServiceNodeWriter(final String serviceURI, final String servicePredicate,
+                      final String serviceType) {
         final Model model = ModelFactory.createDefaultModel();
         final Resource s = model.createResource(getIdentitySubject());
         final Property p = model.createProperty(servicePredicate);
@@ -70,6 +51,33 @@ public class ServiceNodeWriter {
         dataset.addNamedModel("http://iiif.service", model);
         this.serviceNode = new ByteArrayOutputStream();
         RDFDataMgr.write(this.serviceNode, model, Lang.NTRIPLES);
+    }
+
+    /**
+     * init.
+     *
+     * @return ServiceNodeBuilder
+     */
+    public static ServiceNodeBuilder init() {
+        return new ServiceNodeBuilder();
+    }
+
+    /**
+     * getIdentitySubject.
+     *
+     * @return identity
+     */
+    private static String getIdentitySubject() {
+        return "";
+    }
+
+    /**
+     * render.
+     *
+     * @return serviceNode
+     */
+    public String render() {
+        return this.serviceNode.toString();
     }
 
     /**
@@ -97,8 +105,8 @@ public class ServiceNodeWriter {
          * @param servicePredicate String
          * @return this
          */
-        public ServiceNodeWriter.ServiceNodeBuilder servicePredicate(final String
-                                                                             servicePredicate) {
+        public ServiceNodeWriter.ServiceNodeBuilder servicePredicate(
+                final String servicePredicate) {
             this.servicePredicate = servicePredicate;
             return this;
         }
@@ -123,14 +131,5 @@ public class ServiceNodeWriter {
             return new ServiceNodeWriter(this.serviceURI, this.servicePredicate, this.serviceType);
         }
 
-    }
-
-    /**
-     * getIdentitySubject.
-     *
-     * @return identity
-     */
-    private static String getIdentitySubject() {
-        return "";
     }
 }

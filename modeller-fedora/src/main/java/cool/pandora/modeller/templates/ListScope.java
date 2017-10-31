@@ -66,37 +66,38 @@ public class ListScope extends Scope {
      * @return Item
      */
     List<Item> items() {
-        return Collections.singletonList(new Item(this.prefixes, this.sequenceGraph, this
-                .serviceNode));
+        return Collections
+                .singletonList(new Item(this.prefixes, this.sequenceGraph, this.serviceNode));
     }
 
     /**
      * Item.
      */
     static class Item {
+        List<Prefix> prefixes;
+        String sequenceGraph;
+        String serviceNode;
+
         Item(final List<Prefix> prefixes, final String sequenceGraph, final String serviceNode) {
             this.prefixes = prefixes;
             this.sequenceGraph = sequenceGraph;
             this.serviceNode = serviceNode;
         }
-
-        List<Prefix> prefixes;
-        String sequenceGraph;
-        String serviceNode;
     }
 
     /**
      * Prefix.
      */
     public static class Prefix {
+        String prefix;
+
         /**
          * Prefix.
+         *
          * @param prefix String
          */
         public Prefix(final String prefix) {
             this.prefix = prefix;
         }
-
-        String prefix;
     }
 }

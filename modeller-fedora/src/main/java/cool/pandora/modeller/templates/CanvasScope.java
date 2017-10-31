@@ -103,18 +103,23 @@ public class CanvasScope extends Scope {
      */
     List<Item> items() {
         return Collections.singletonList(
-                new Item(this.prefixes, this.resourceURI, this.listURI, this.canvasLabel, this
-                        .canvasHeight,
-                        this.canvasWidth));
+                new Item(this.prefixes, this.resourceURI, this.listURI, this.canvasLabel,
+                        this.canvasHeight, this.canvasWidth));
     }
 
     /**
      * Item.
      */
     static class Item {
-        Item(final List<Prefix> prefixes, final String resourceURI, final String listURI, final
-        String canvasLabel,
-             final int canvasHeight, final int canvasWidth) {
+        List<Prefix> prefixes;
+        String resourceURI;
+        String listURI;
+        String canvasLabel;
+        int canvasHeight;
+        int canvasWidth;
+
+        Item(final List<Prefix> prefixes, final String resourceURI, final String listURI,
+             final String canvasLabel, final int canvasHeight, final int canvasWidth) {
             this.prefixes = prefixes;
             this.resourceURI = resourceURI;
             this.listURI = listURI;
@@ -122,19 +127,14 @@ public class CanvasScope extends Scope {
             this.canvasHeight = canvasHeight;
             this.canvasWidth = canvasWidth;
         }
-
-        List<Prefix> prefixes;
-        String resourceURI;
-        String listURI;
-        String canvasLabel;
-        int canvasHeight;
-        int canvasWidth;
     }
 
     /**
      * Prefix.
      */
     public static class Prefix {
+        String prefix;
+
         /**
          * Prefix.
          *
@@ -143,7 +143,5 @@ public class CanvasScope extends Scope {
         public Prefix(final String prefix) {
             this.prefix = prefix;
         }
-
-        String prefix;
     }
 }

@@ -14,7 +14,6 @@
 
 package cool.pandora.modeller.ui.handlers.iiif;
 
-import static cool.pandora.modeller.common.uri.FedoraResources.FCRMETADATA;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.apache.commons.lang3.exception.ExceptionUtils.getMessage;
 
@@ -34,9 +33,7 @@ import cool.pandora.modeller.ui.jpanel.base.BagView;
 import cool.pandora.modeller.ui.jpanel.iiif.PatchResourceFrame;
 import cool.pandora.modeller.ui.util.ApplicationContextUtil;
 import cool.pandora.modeller.util.ImageIOUtil;
-
 import gov.loc.repository.bagit.impl.AbstractBagConstants;
-
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.io.File;
@@ -46,14 +43,10 @@ import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-
 import javax.swing.AbstractAction;
-
 import org.apache.commons.io.IOUtils;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 
 
 /**
@@ -74,6 +67,51 @@ public class PatchResourceHandler extends AbstractAction implements Progress {
     public PatchResourceHandler(final BagView bagView) {
         super();
         this.bagView = bagView;
+    }
+
+    private static String getDestinationURI(final URI resourceContainer, final String filename) {
+        return resourceContainer.toString() + "/" + filename;
+    }
+
+    private static InputStream getResourceMetadata(final Map<String, BagInfoField> map,
+                                                   final String filename, final String formatName,
+                                                   final int iw, final int ih) {
+        final MetadataTemplate metadataTemplate;
+        final List<ResourceScope.Prefix> prefixes =
+                Arrays.asList(new ResourceScope.Prefix(FedoraPrefixes.RDFS),
+                        new ResourceScope.Prefix(FedoraPrefixes.MODE),
+                        new ResourceScope.Prefix(IIIFPrefixes.DC),
+                        new ResourceScope.Prefix(IIIFPrefixes.SVCS),
+                        new ResourceScope.Prefix(IIIFPrefixes.EXIF),
+                        new ResourceScope.Prefix(IIIFPrefixes.DCTYPES));
+
+        final ResourceScope scope = new ResourceScope().fedoraPrefixes(prefixes).filename(filename)
+                .serviceURI(getServiceURI(map, filename)).formatName(formatName).imgHeight(ih)
+                .imgWidth(iw);
+
+        metadataTemplate =
+                MetadataTemplate.template().template("template/sparql-update-res" + ".mustache")
+                        .scope(scope).throwExceptionOnFailure().build();
+
+        final String metadata = metadataTemplate.render();
+        return IOUtils.toInputStream(metadata, UTF_8);
+    }
+
+    private static String getServiceURI(final Map<String, BagInfoField> map,
+                                        final String filename) {
+        final String separator = "_";
+        final String serviceURI = getMapValue(map, ProfileOptions.IIIF_SERVICE_KEY);
+        final String path =
+                getMapValue(map, ProfileOptions.COLLECTION_ROOT_KEY) + separator + getMapValue(map,
+                        ProfileOptions.COLLECTION_ID_KEY) + separator + getMapValue(map,
+                        ProfileOptions.OBJEKT_ID_KEY) + separator + getMapValue(map,
+                        ProfileOptions.RESOURCE_CONTAINER_KEY) + separator + filename;
+        return serviceURI + path.replace("tif", "jp2");
+    }
+
+    private static String getMapValue(final Map<String, BagInfoField> map, final String key) {
+        final BagInfoField IIIFProfileKey = map.get(key);
+        return IIIFProfileKey.getValue();
     }
 
     @Override
@@ -139,52 +177,6 @@ public class PatchResourceHandler extends AbstractAction implements Progress {
                 new PatchResourceFrame(bagView, bagView.getPropertyMessage("bag" + ".frame.patch"));
         patchResourcesFrame.setBag(bag);
         patchResourcesFrame.setVisible(true);
-    }
-
-    private static String getDestinationURI(final URI resourceContainer, final String filename) {
-        return resourceContainer.toString() + filename + FCRMETADATA;
-    }
-
-    private static InputStream getResourceMetadata(final Map<String, BagInfoField> map, final
-    String filename,
-                                                   final String formatName, final int iw, final
-                                                   int ih) {
-        final MetadataTemplate metadataTemplate;
-        final List<ResourceScope.Prefix> prefixes = Arrays.asList(new ResourceScope.Prefix(
-                        FedoraPrefixes.RDFS),
-                new ResourceScope.Prefix(FedoraPrefixes.MODE), new ResourceScope.Prefix(
-                        IIIFPrefixes.DC),
-                new ResourceScope.Prefix(IIIFPrefixes.SVCS), new ResourceScope.Prefix(
-                        IIIFPrefixes.EXIF),
-                new ResourceScope.Prefix(IIIFPrefixes.DCTYPES));
-
-        final ResourceScope scope =
-                new ResourceScope().fedoraPrefixes(prefixes).filename(filename).serviceURI(
-                        getServiceURI(map, filename))
-                        .formatName(formatName).imgHeight(ih).imgWidth(iw);
-
-        metadataTemplate = MetadataTemplate.template().template("template/sparql-update-res"
-                + ".mustache").scope(scope)
-                .throwExceptionOnFailure().build();
-
-        final String metadata = metadataTemplate.render();
-        return IOUtils.toInputStream(metadata, UTF_8);
-    }
-
-    private static String getServiceURI(final Map<String, BagInfoField> map, final String
-            filename) {
-        final String separator = "_";
-        final String serviceURI = getMapValue(map, ProfileOptions.IIIF_SERVICE_KEY);
-        final String path = getMapValue(map, ProfileOptions.COLLECTION_ROOT_KEY) + separator
-                + getMapValue(map, ProfileOptions.COLLECTION_ID_KEY) + separator
-                + getMapValue(map, ProfileOptions.OBJEKT_ID_KEY) + separator
-                + getMapValue(map, ProfileOptions.RESOURCE_CONTAINER_KEY) + separator + filename;
-        return serviceURI + path.replace("tif", "jp2");
-    }
-
-    private static String getMapValue(final Map<String, BagInfoField> map, final String key) {
-        final BagInfoField IIIFProfileKey = map.get(key);
-        return IIIFProfileKey.getValue();
     }
 
 }

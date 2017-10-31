@@ -42,7 +42,6 @@ import cool.pandora.modeller.ui.handlers.common.TextObjectURI;
 import cool.pandora.modeller.ui.jpanel.base.BagView;
 import cool.pandora.modeller.ui.jpanel.text.PatchWordsFrame;
 import cool.pandora.modeller.ui.util.ApplicationContextUtil;
-
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.io.InputStream;
@@ -51,11 +50,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import javax.swing.AbstractAction;
-
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 
 
 /**
@@ -76,6 +73,36 @@ public class PatchWordsHandler extends AbstractAction implements Progress {
     public PatchWordsHandler(final BagView bagView) {
         super();
         this.bagView = bagView;
+    }
+
+    /**
+     * getWordMetadata.
+     *
+     * @param canvasRegionURI  String
+     * @param wordContainerURI String
+     * @param chars            String
+     * @return InputStream
+     */
+    private static InputStream getWordMetadata(final String canvasRegionURI,
+                                               final String wordContainerURI, final String chars) {
+        final MetadataTemplate metadataTemplate;
+        final List<WordScope.Prefix> prefixes =
+                Arrays.asList(new WordScope.Prefix(FedoraPrefixes.RDFS),
+                        new WordScope.Prefix(FedoraPrefixes.MODE),
+                        new WordScope.Prefix(IIIFPrefixes.OA),
+                        new WordScope.Prefix(IIIFPrefixes.CNT),
+                        new WordScope.Prefix(IIIFPrefixes.SC),
+                        new WordScope.Prefix(IIIFPrefixes.DCTYPES));
+
+        final WordScope scope = new WordScope().fedoraPrefixes(prefixes).canvasURI(canvasRegionURI)
+                .resourceContainerURI(wordContainerURI).chars(chars.replace("\"", "\\\""));
+
+        metadataTemplate =
+                MetadataTemplate.template().template("template/sparql-update-word" + ".mustache")
+                        .scope(scope).throwExceptionOnFailure().build();
+
+        final String metadata = unescapeXml(metadataTemplate.render());
+        return IOUtils.toInputStream(metadata, UTF_8);
     }
 
     @Override
@@ -123,8 +150,8 @@ public class PatchWordsHandler extends AbstractAction implements Progress {
                 final String bbox = bboxmap.get(wordId);
                 final String chars = charmap.get(wordId);
                 final String region = Region.region().bbox(bbox).build();
-                final String canvasRegionURI = CanvasRegionURI.regionuri().region(region)
-                        .canvasURI(canvasURI).build();
+                final String canvasRegionURI =
+                        CanvasRegionURI.regionuri().region(region).canvasURI(canvasURI).build();
                 if (canvasRegionURI != null & chars != null & wordContainerURI != null) {
                     rdfBody = getWordMetadata(canvasRegionURI, wordContainerURI.toString(), chars);
                     try {
@@ -141,41 +168,9 @@ public class PatchWordsHandler extends AbstractAction implements Progress {
 
     void openPatchWordsFrame() {
         final DefaultBag bag = bagView.getBag();
-        final PatchWordsFrame patchWordsFrame =
-                new PatchWordsFrame(bagView, bagView.getPropertyMessage("bag.frame" + ".patch"
-                        + ".words"));
+        final PatchWordsFrame patchWordsFrame = new PatchWordsFrame(bagView,
+                bagView.getPropertyMessage("bag.frame" + ".patch" + ".words"));
         patchWordsFrame.setBag(bag);
         patchWordsFrame.setVisible(true);
-    }
-
-    /**
-     * getWordMetadata.
-     *
-     * @param canvasRegionURI String
-     * @param wordContainerURI String
-     * @param chars String
-     * @return InputStream
-     */
-    private static InputStream getWordMetadata(final String canvasRegionURI, final String
-            wordContainerURI,
-                                               final String chars) {
-        final MetadataTemplate metadataTemplate;
-        final List<WordScope.Prefix> prefixes =
-                Arrays.asList(new WordScope.Prefix(FedoraPrefixes.RDFS), new WordScope.Prefix(
-                                FedoraPrefixes.MODE),
-                        new WordScope.Prefix(IIIFPrefixes.OA), new WordScope.Prefix(IIIFPrefixes
-                                .CNT),
-                        new WordScope.Prefix(IIIFPrefixes.SC), new WordScope.Prefix(IIIFPrefixes
-                                .DCTYPES));
-
-        final WordScope scope = new WordScope().fedoraPrefixes(prefixes).canvasURI(canvasRegionURI)
-                .resourceContainerURI(wordContainerURI).chars(chars.replace("\"", "\\\""));
-
-        metadataTemplate = MetadataTemplate.template().template("template/sparql-update-word"
-                + ".mustache").scope(scope)
-                .throwExceptionOnFailure().build();
-
-        final String metadata = unescapeXml(metadataTemplate.render());
-        return IOUtils.toInputStream(metadata, UTF_8);
     }
 }

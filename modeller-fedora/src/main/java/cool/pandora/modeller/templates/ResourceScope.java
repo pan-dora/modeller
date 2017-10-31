@@ -103,18 +103,23 @@ public class ResourceScope extends Scope {
      */
     List<Item> items() {
         return Collections.singletonList(
-                new Item(this.prefixes, this.filename, this.serviceURI, this.formatName, this
-                        .imgHeight,
-                        this.imgWidth));
+                new Item(this.prefixes, this.filename, this.serviceURI, this.formatName,
+                        this.imgHeight, this.imgWidth));
     }
 
     /**
      * Item.
      */
     static class Item {
-        Item(final List<Prefix> prefixes, final String filename, final String serviceURI, final
-        String formatName,
-             final int imgHeight, final int imgWidth) {
+        List<Prefix> prefixes;
+        String filename;
+        String serviceURI;
+        String formatName;
+        int imgHeight;
+        int imgWidth;
+
+        Item(final List<Prefix> prefixes, final String filename, final String serviceURI,
+             final String formatName, final int imgHeight, final int imgWidth) {
             this.prefixes = prefixes;
             this.filename = filename;
             this.serviceURI = serviceURI;
@@ -122,19 +127,14 @@ public class ResourceScope extends Scope {
             this.imgHeight = imgHeight;
             this.imgWidth = imgWidth;
         }
-
-        List<Prefix> prefixes;
-        String filename;
-        String serviceURI;
-        String formatName;
-        int imgHeight;
-        int imgWidth;
     }
 
     /**
      * Prefix.
      */
     public static class Prefix {
+        String prefix;
+
         /**
          * Prefix.
          *
@@ -143,7 +143,5 @@ public class ResourceScope extends Scope {
         public Prefix(final String prefix) {
             this.prefix = prefix;
         }
-
-        String prefix;
     }
 }

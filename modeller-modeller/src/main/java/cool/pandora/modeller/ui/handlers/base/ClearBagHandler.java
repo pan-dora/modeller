@@ -19,12 +19,9 @@ import cool.pandora.modeller.ui.BagTree;
 import cool.pandora.modeller.ui.jpanel.base.BagView;
 import cool.pandora.modeller.ui.util.ApplicationContextUtil;
 import gov.loc.repository.bagit.impl.AbstractBagConstants;
-
 import java.awt.event.ActionEvent;
 import java.io.File;
-
 import javax.swing.AbstractAction;
-
 import org.springframework.richclient.dialog.CloseAction;
 import org.springframework.richclient.dialog.ConfirmationDialog;
 
@@ -95,8 +92,8 @@ public class ClearBagHandler extends AbstractAction {
         bag.clear();
         bagView.bagPayloadTree = new BagTree(bagView, AbstractBagConstants.DATA_DIRECTORY);
         bagView.bagPayloadTreePanel.refresh(bagView.bagPayloadTree);
-        bagView.bagTagFileTree = new BagTree(bagView, ApplicationContextUtil.getMessage("bag"
-                + ".label.noname"));
+        bagView.bagTagFileTree =
+                new BagTree(bagView, ApplicationContextUtil.getMessage("bag" + ".label.noname"));
         bagView.bagTagFileTreePanel.refresh(bagView.bagTagFileTree);
         bagView.infoInputPane.setBagName(bag.getName());
         bagView.infoInputPane.updateInfoForms();
@@ -122,11 +119,11 @@ public class ClearBagHandler extends AbstractAction {
         bagView.setBag(bag);
     }
 
-    private void setConfirmSaveFlag(final boolean confirmSaveFlag) {
-        this.confirmSaveFlag = confirmSaveFlag;
-    }
-
     private boolean isConfirmSaveFlag() {
         return confirmSaveFlag;
+    }
+
+    private void setConfirmSaveFlag(final boolean confirmSaveFlag) {
+        this.confirmSaveFlag = confirmSaveFlag;
     }
 }

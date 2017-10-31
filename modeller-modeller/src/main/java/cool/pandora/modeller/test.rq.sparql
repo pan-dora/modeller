@@ -1,0 +1,5 @@
+SELECT (COUNT(?label) AS ?labelcount)
+WHERE { ?manifest sc:hasSequences ?seqid .
+?seqid rdf:first ?sequence .
+?sequence rdfs:label ?label
+}

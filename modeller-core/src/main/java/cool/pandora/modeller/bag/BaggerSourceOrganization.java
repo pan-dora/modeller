@@ -17,9 +17,7 @@ package cool.pandora.modeller.bag;
 import cool.pandora.modeller.Contact;
 import cool.pandora.modeller.ProfileField;
 import gov.loc.repository.bagit.BagInfoTxt;
-
 import java.io.Serializable;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,10 +33,8 @@ import org.slf4j.LoggerFactory;
  * @author Jon Steinbach
  */
 public class BaggerSourceOrganization implements Serializable {
-    private static final long serialVersionUID = 1L;
-
     protected static final Logger log = LoggerFactory.getLogger(BaggerSourceOrganization.class);
-
+    private static final long serialVersionUID = 1L;
     private String organizationName = "";
 
     private String organizationAddress = "";
@@ -59,31 +55,28 @@ public class BaggerSourceOrganization implements Serializable {
     public BaggerSourceOrganization(final BagInfoTxt bagInfoTxt) {
         contact = new Contact(false);
         if (bagInfoTxt.getContactName() != null && !bagInfoTxt.getContactName().trim().isEmpty()) {
-            contact.setContactName(
-                    ProfileField.createProfileField(Contact.FIELD_CONTACT_NAME, bagInfoTxt
-                            .getContactName()));
+            contact.setContactName(ProfileField
+                    .createProfileField(Contact.FIELD_CONTACT_NAME, bagInfoTxt.getContactName()));
         } else {
             contact.setContactName(ProfileField.createProfileField(Contact.FIELD_CONTACT_NAME, ""));
         }
-        if (bagInfoTxt.getContactPhone() != null && !bagInfoTxt.getContactPhone().trim().isEmpty(
-                )) {
-            contact.setTelephone(
-                    ProfileField.createProfileField(Contact.FIELD_CONTACT_PHONE, bagInfoTxt
-                            .getContactPhone()));
+        if (bagInfoTxt.getContactPhone() != null && !bagInfoTxt.getContactPhone().trim()
+                .isEmpty()) {
+            contact.setTelephone(ProfileField
+                    .createProfileField(Contact.FIELD_CONTACT_PHONE, bagInfoTxt.getContactPhone()));
         } else {
             contact.setTelephone(ProfileField.createProfileField(Contact.FIELD_CONTACT_PHONE, ""));
         }
-        if (bagInfoTxt.getContactEmail() != null && !bagInfoTxt.getContactEmail().trim().isEmpty(
-                )) {
-            contact.setEmail(
-                    ProfileField.createProfileField(Contact.FIELD_CONTACT_EMAIL, bagInfoTxt
-                            .getContactEmail()));
+        if (bagInfoTxt.getContactEmail() != null && !bagInfoTxt.getContactEmail().trim()
+                .isEmpty()) {
+            contact.setEmail(ProfileField
+                    .createProfileField(Contact.FIELD_CONTACT_EMAIL, bagInfoTxt.getContactEmail()));
         } else {
             contact.setEmail(ProfileField.createProfileField(Contact.FIELD_CONTACT_EMAIL, ""));
         }
 
-        if (bagInfoTxt.getSourceOrganization() != null && !bagInfoTxt.getSourceOrganization()
-                .trim().isEmpty()) {
+        if (bagInfoTxt.getSourceOrganization() != null && !bagInfoTxt.getSourceOrganization().trim()
+                .isEmpty()) {
             setOrganizationName(bagInfoTxt.getSourceOrganization());
         } else {
             setOrganizationName("");
@@ -155,8 +148,8 @@ public class BaggerSourceOrganization implements Serializable {
         log.info("SourceOrganization.toString");
 
         return this.organizationName + '\n' + this.organizationAddress + '\n' + this.contact
-                .getContactName() + '\n'
-                + this.contact.getTelephone() + '\n' + this.contact.getEmail() + '\n';
+                .getContactName() + '\n' + this.contact.getTelephone() + '\n' + this.contact
+                .getEmail() + '\n';
     }
 
 }

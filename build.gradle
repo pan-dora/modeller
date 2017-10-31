@@ -298,8 +298,10 @@ project("modeller-modeller") {
             applicationDefaultJvmArgs += ["-Xdebug", "-Xrunjdwp:server=y,transport=dt_socket,address=4000,suspend=n"]
         }
 
-        unixStartScriptGenerator.template = resources.text.fromFile(project.projectDir.path + '/customUnixStartScript.txt')
-        windowsStartScriptGenerator.template = resources.text.fromFile(project.projectDir.path + '/customWindowsStartScript.txt')
+        unixStartScriptGenerator.template = resources.text.fromFile(project.projectDir.path + '/customUnixStartScript' +
+                '.txt')
+        windowsStartScriptGenerator.template = resources.text.fromFile(project.projectDir.path +
+                '/customWindowsStartScript.txt')
     }
 
     afterEvaluate {

@@ -36,7 +36,6 @@ import cool.pandora.modeller.ui.handlers.common.TextSequenceMetadata;
 import cool.pandora.modeller.ui.jpanel.base.BagView;
 import cool.pandora.modeller.ui.jpanel.text.PatchAreasFrame;
 import cool.pandora.modeller.ui.util.ApplicationContextUtil;
-
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.io.InputStream;
@@ -44,9 +43,7 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
 import javax.swing.AbstractAction;
-
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -119,8 +116,8 @@ public class PatchAreasHandler extends AbstractAction implements Progress {
             final String hOCRAreaId = "block_" + areaId;
             final String bbox = bboxmap.get(hOCRAreaId);
             final String region = Region.region().bbox(bbox).build();
-            final String canvasRegionURI = CanvasRegionURI.regionuri().region(region).canvasURI(
-                    canvasURI).build();
+            final String canvasRegionURI =
+                    CanvasRegionURI.regionuri().region(region).canvasURI(canvasURI).build();
 
             rdfBody = TextSequenceMetadata
                     .getTextSequenceMetadata(lineIdmap, areaId, canvasRegionURI,
@@ -138,9 +135,8 @@ public class PatchAreasHandler extends AbstractAction implements Progress {
 
     void openPatchAreasFrame() {
         final DefaultBag bag = bagView.getBag();
-        final PatchAreasFrame patchAreasFrame =
-                new PatchAreasFrame(bagView, bagView.getPropertyMessage("bag.frame" + ".patch"
-                        + ".areas"));
+        final PatchAreasFrame patchAreasFrame = new PatchAreasFrame(bagView,
+                bagView.getPropertyMessage("bag.frame" + ".patch" + ".areas"));
         patchAreasFrame.setBag(bag);
         patchAreasFrame.setVisible(true);
     }

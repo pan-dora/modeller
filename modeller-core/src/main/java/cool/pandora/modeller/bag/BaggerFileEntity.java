@@ -15,10 +15,8 @@
 package cool.pandora.modeller.bag;
 
 import gov.loc.repository.bagit.utilities.FilenameHelper;
-
 import java.io.File;
 import java.text.MessageFormat;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -54,145 +52,6 @@ public class BaggerFileEntity {
     private boolean isInBag = false;
     private boolean isIncluded = true;
 
-    @Override
-    public String toString() {
-        return this.getNormalizedName();
-    }
-
-    /**
-     * setNormalizedName.
-     *
-     * @param name String
-     */
-    public void setNormalizedName(final String name) {
-        this.normalizedName = name;
-    }
-
-    /**
-     * getNormalizedName.
-     *
-     * @return normalizedName
-     */
-    private String getNormalizedName() {
-        return this.normalizedName;
-    }
-
-    /**
-     * setRootParent.
-     *
-     * @param file File
-     */
-    public void setRootParent(final File file) {
-        this.rootParent = file;
-    }
-
-    /**
-     * getRootParent.
-     *
-     * @return rootParent
-     */
-    public File getRootParent() {
-        return this.rootParent;
-    }
-
-    /**
-     * setRootSrc.
-     *
-     * @param file File
-     */
-    public void setRootSrc(final File file) {
-        this.rootSrc = file;
-    }
-
-    /**
-     * getRootSrc.
-     *
-     * @return rootSrc
-     */
-    public File getRootSrc() {
-        return this.rootSrc;
-    }
-
-    /**
-     * setBagSrc.
-     *
-     * @param bagDir File
-     * @param src File
-     */
-    public void setBagSrc(final File bagDir, final File src) {
-        // TODO given the bag location, create the location the src file will exist
-        // within the bag data directory, e.g. strip off parent of src and replace
-        // it with the bag data dir
-        this.bagSrc = new File(bagDir, src.getPath());
-    }
-
-    /**
-     * setBagSrc.
-     *
-     * @param file File
-     */
-    public void setBagSrc(final File file) {
-        this.bagSrc = file;
-    }
-
-    /**
-     * getBagSrc.
-     *
-     * @return bagSrc
-     */
-    public File getBagSrc() {
-        return this.bagSrc;
-    }
-
-    /**
-     * setIsInBag.
-     *
-     * @param b boolean
-     */
-    public void setIsInBag(final boolean b) {
-        this.isInBag = b;
-    }
-
-    /**
-     * getIsInBag.
-     *
-     * @return isInBag
-     */
-    public boolean getIsInBag() {
-        return this.isInBag;
-    }
-
-    /**
-     * setIsIncluded.
-     *
-     * @param b boolean
-     */
-    public void setIsIncluded(final boolean b) {
-        this.isIncluded = b;
-    }
-
-    /**
-     * getIsIncluded.
-     *
-     * @return isIncluded
-     */
-    public boolean getIsIncluded() {
-        return this.isIncluded;
-    }
-
-    /**
-     * copyRootToBag.
-     *
-     * @return success
-     */
-    public boolean copyRootToBag() {
-        final boolean success = false;
-
-        // TODO perform the copy
-        this.isInBag = true;
-        return success;
-    }
-
     /**
      * removeBasePath.
      *
@@ -201,8 +60,8 @@ public class BaggerFileEntity {
      * @return filenameWithoutBasePath
      * @throws RuntimeException RuntimeException
      */
-    public static String removeBasePath(final String basePath, final String filename) throws
-            RuntimeException {
+    public static String removeBasePath(final String basePath, final String filename)
+            throws RuntimeException {
         if (filename == null) {
             throw new RuntimeException("Cannot remove basePath from null");
         }
@@ -213,9 +72,8 @@ public class BaggerFileEntity {
             filenameWithoutBasePath = normFilename;
         } else {
             if (!normFilename.startsWith(normBasePath)) {
-                throw new RuntimeException(
-                        MessageFormat.format("Cannot remove basePath {0} from {1}", basePath,
-                                filename));
+                throw new RuntimeException(MessageFormat
+                        .format("Cannot remove basePath {0} from {1}", basePath, filename));
             }
             if (normBasePath.equals(normFilename)) {
                 filenameWithoutBasePath = "";
@@ -230,9 +88,8 @@ public class BaggerFileEntity {
                 log.trace("filenamewithoutbasepath: {}", filenameWithoutBasePath);
             }
         }
-        log.debug(MessageFormat
-                .format("Removing {0} from {1} resulted in {2}", basePath, filename,
-                        filenameWithoutBasePath));
+        log.debug(MessageFormat.format("Removing {0} from {1} resulted in {2}", basePath, filename,
+                filenameWithoutBasePath));
         return filenameWithoutBasePath;
     }
 
@@ -258,5 +115,145 @@ public class BaggerFileEntity {
      */
     public static String normalize(final String filename) {
         return FilenameHelper.normalizePathSeparators(filename);
+    }
+
+    @Override
+    public String toString() {
+        return this.getNormalizedName();
+    }
+
+    /**
+     * getNormalizedName.
+     *
+     * @return normalizedName
+     */
+    private String getNormalizedName() {
+        return this.normalizedName;
+    }
+
+    /**
+     * setNormalizedName.
+     *
+     * @param name String
+     */
+    public void setNormalizedName(final String name) {
+        this.normalizedName = name;
+    }
+
+    /**
+     * getRootParent.
+     *
+     * @return rootParent
+     */
+    public File getRootParent() {
+        return this.rootParent;
+    }
+
+    /**
+     * setRootParent.
+     *
+     * @param file File
+     */
+    public void setRootParent(final File file) {
+        this.rootParent = file;
+    }
+
+    /**
+     * getRootSrc.
+     *
+     * @return rootSrc
+     */
+    public File getRootSrc() {
+        return this.rootSrc;
+    }
+
+    /**
+     * setRootSrc.
+     *
+     * @param file File
+     */
+    public void setRootSrc(final File file) {
+        this.rootSrc = file;
+    }
+
+    /**
+     * setBagSrc.
+     *
+     * @param bagDir File
+     * @param src    File
+     */
+    public void setBagSrc(final File bagDir, final File src) {
+        // TODO given the bag location, create the location the src file will exist
+        // within the bag data directory, e.g. strip off parent of src and replace
+        // it with the bag data dir
+        this.bagSrc = new File(bagDir, src.getPath());
+    }
+
+    public void setBagSrc(final File file) {
+        this.bagSrc = file;
+    }
+
+    /**
+     * getBagSrc.
+     *
+     * @return bagSrc
+     */
+    public File getBagSrc() {
+        return this.bagSrc;
+    }
+
+    /**
+     * setBagSrc.
+     *
+     * @param file File
+     */
+
+    /**
+     * getIsInBag.
+     *
+     * @return isInBag
+     */
+    public boolean getIsInBag() {
+        return this.isInBag;
+    }
+
+    /**
+     * setIsInBag.
+     *
+     * @param b boolean
+     */
+    public void setIsInBag(final boolean b) {
+        this.isInBag = b;
+    }
+
+    /**
+     * getIsIncluded.
+     *
+     * @return isIncluded
+     */
+    public boolean getIsIncluded() {
+        return this.isIncluded;
+    }
+
+    /**
+     * setIsIncluded.
+     *
+     * @param b boolean
+     */
+    public void setIsIncluded(final boolean b) {
+        this.isIncluded = b;
+    }
+
+    /**
+     * copyRootToBag.
+     *
+     * @return success
+     */
+    public boolean copyRootToBag() {
+        final boolean success = false;
+
+        // TODO perform the copy
+        this.isInBag = true;
+        return success;
     }
 }

@@ -1,7 +1,7 @@
 {
   "ordered": [
     {
-      "FedoraHostName": {
+      "RepositoryHostName": {
         "fieldRequired": true,
         "defaultValue": "localhost"
       }
@@ -9,25 +9,25 @@
     {
       "Scheme": {
         "fieldRequired": true,
-        "defaultValue": "https"
+        "defaultValue": "http"
       }
     },
     {
       "Port": {
         "fieldRequired": false,
-        "defaultValue": "8443"
+        "defaultValue": "8080"
       }
     },
     {
-      "FedoraAppRoot": {
+      "RepositoryPartition": {
         "fieldRequired": true,
-        "defaultValue": "fcrepo"
+        "defaultValue": "repository"
       }
     },
     {
-      "RestServlet": {
+      "ResourceBaseContext": {
         "fieldRequired": true,
-        "defaultValue": "rest"
+        "defaultValue": "node"
       }
     },
     {

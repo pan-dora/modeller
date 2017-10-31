@@ -15,7 +15,6 @@
 package cool.pandora.modeller;
 
 import javax.swing.AbstractButton;
-
 import org.springframework.richclient.command.AbstractCommand;
 import org.springframework.richclient.command.config.CommandFaceDescriptor;
 import org.springframework.richclient.command.config.ToolBarCommandButtonConfigurer;

@@ -17,7 +17,6 @@ package cool.pandora.modeller;
 import java.awt.Dimension;
 import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.richclient.application.ApplicationWindow;
@@ -47,9 +46,8 @@ public class BaggerLifecycleAdvisor extends DefaultApplicationLifecycleAdvisor {
         log.debug("BaggerLifeCycleAdvisor.onPreStartup");
         final boolean useWizard = false;
         if (useWizard && getApplication().getApplicationContext().containsBean("setupWizard")) {
-            final SetupWizard setupWizard =
-                    (SetupWizard) getApplication().getApplicationContext().getBean("setupWizard",
-                            SetupWizard.class);
+            final SetupWizard setupWizard = (SetupWizard) getApplication().getApplicationContext()
+                    .getBean("setupWizard", SetupWizard.class);
             setupWizard.execute();
         }
     }
@@ -62,8 +60,8 @@ public class BaggerLifecycleAdvisor extends DefaultApplicationLifecycleAdvisor {
         super.onPreWindowOpen(configurer);
         // comment out to hide the menubar, or reduce window size...
         // configurer.setShowMenuBar(false);
-        final Rectangle rect = GraphicsEnvironment.getLocalGraphicsEnvironment()
-                .getMaximumWindowBounds();
+        final Rectangle rect =
+                GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds();
         configurer.setInitialSize(new Dimension(rect.width, rect.height));
         //configurer.setInitialSize(new Dimension(1024, 768));
     }

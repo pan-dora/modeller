@@ -26,14 +26,11 @@ import cool.pandora.modeller.ui.handlers.common.IIIFObjectURI;
 import cool.pandora.modeller.ui.jpanel.base.BagView;
 import cool.pandora.modeller.ui.jpanel.iiif.CreateCanvasesFrame;
 import cool.pandora.modeller.ui.util.ApplicationContextUtil;
-
 import java.awt.event.ActionEvent;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Map;
-
 import javax.swing.AbstractAction;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -84,9 +81,8 @@ public class CreateCanvasesHandler extends AbstractAction implements Progress {
 
     void openCreateCanvasesFrame() {
         final DefaultBag bag = bagView.getBag();
-        final CreateCanvasesFrame createCanvasesFrame =
-                new CreateCanvasesFrame(bagView, bagView.getPropertyMessage("bag" + ".frame"
-                        + ".canvas"));
+        final CreateCanvasesFrame createCanvasesFrame = new CreateCanvasesFrame(bagView,
+                bagView.getPropertyMessage("bag" + ".frame" + ".canvas"));
         createCanvasesFrame.setBag(bag);
         createCanvasesFrame.setVisible(true);
     }

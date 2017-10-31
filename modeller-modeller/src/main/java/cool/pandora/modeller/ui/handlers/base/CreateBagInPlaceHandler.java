@@ -20,16 +20,12 @@ import cool.pandora.modeller.bag.impl.DefaultBagInfo;
 import cool.pandora.modeller.ui.Progress;
 import cool.pandora.modeller.ui.jpanel.base.BagView;
 import cool.pandora.modeller.ui.jpanel.base.NewBagInPlaceFrame;
-
 import gov.loc.repository.bagit.BagFactory;
-
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
-
 import javax.swing.AbstractAction;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,8 +36,8 @@ import org.slf4j.LoggerFactory;
  * @author gov.loc
  */
 public class CreateBagInPlaceHandler extends AbstractAction implements Progress {
-    private static final long serialVersionUID = 1L;
     protected static final Logger log = LoggerFactory.getLogger(StartNewBagHandler.class);
+    private static final long serialVersionUID = 1L;
     private final BagView bagView;
 
     /**
@@ -65,9 +61,8 @@ public class CreateBagInPlaceHandler extends AbstractAction implements Progress 
     }
 
     void createBagInPlace() {
-        final NewBagInPlaceFrame newBagInPlaceFrame =
-                new NewBagInPlaceFrame(bagView, bagView.getPropertyMessage("bag" + ".frame" + ""
-                        + ".newbaginplace"));
+        final NewBagInPlaceFrame newBagInPlaceFrame = new NewBagInPlaceFrame(bagView,
+                bagView.getPropertyMessage("bag" + ".frame" + "" + ".newbaginplace"));
         newBagInPlaceFrame.setBag(bagView.getBag());
         newBagInPlaceFrame.setVisible(true);
     }
@@ -75,14 +70,13 @@ public class CreateBagInPlaceHandler extends AbstractAction implements Progress 
     /**
      * createPreBag.
      *
-     * @param dataFile File
+     * @param dataFile    File
      * @param profileName String
      */
     public void createPreBag(final File dataFile, final String profileName) {
         if (dataFile != null && profileName != null) {
             log.info("Creating a new bag in place with data: {}, version: {}, profile: {}",
-                    dataFile.getName(),
-                    BagFactory.LATEST.versionString, profileName);
+                    dataFile.getName(), BagFactory.LATEST.versionString, profileName);
             bagView.clearBagHandler.clearExistingBag();
             try {
                 bagView.getBag().createPreBag(dataFile);
@@ -109,15 +103,14 @@ public class CreateBagInPlaceHandler extends AbstractAction implements Progress 
      * Prepares the call to Create Bag in Place and
      * adding .keep files in Empty Pay load Folder(s)
      *
-     * @param dataFile File
+     * @param dataFile    File
      * @param profileName String
      */
-    public void createPreBagAddKeepFilesToEmptyFolders(final File dataFile, final String
-            profileName) {
+    public void createPreBagAddKeepFilesToEmptyFolders(final File dataFile,
+                                                       final String profileName) {
         if (dataFile != null && profileName != null) {
             log.info("Creating a new bag in place with data: {}, version: {}, profile: {}",
-                    dataFile.getName(),
-                    BagFactory.LATEST.versionString, profileName);
+                    dataFile.getName(), BagFactory.LATEST.versionString, profileName);
             bagView.clearBagHandler.clearExistingBag();
             try {
                 bagView.getBag().createPreBagAddKeepFilesToEmptyFolders(dataFile);

@@ -28,7 +28,7 @@ public class NoTabTextArea extends JTextArea {
     /**
      * NoTabTextArea.
      *
-     * @param row int
+     * @param row  int
      * @param cols int
      */
     NoTabTextArea(final int row, final int cols) {

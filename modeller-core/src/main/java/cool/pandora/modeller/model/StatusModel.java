@@ -24,9 +24,8 @@ import java.beans.PropertyChangeSupport;
  */
 public class StatusModel {
 
-    private Status status = Status.UNKNOWN;
-
     private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
+    private Status status = Status.UNKNOWN;
 
     /**
      * getStatus.

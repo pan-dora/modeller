@@ -21,15 +21,11 @@ import cool.pandora.modeller.ui.BagTree;
 import cool.pandora.modeller.ui.jpanel.base.BagView;
 import cool.pandora.modeller.ui.jpanel.base.NewBagFrame;
 import cool.pandora.modeller.ui.util.ApplicationContextUtil;
-
 import gov.loc.repository.bagit.BagFactory;
 import gov.loc.repository.bagit.BagFile;
-
 import java.awt.event.ActionEvent;
 import java.util.Collection;
-
 import javax.swing.AbstractAction;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,9 +36,8 @@ import org.slf4j.LoggerFactory;
  * @author gov.loc
  */
 public class StartNewBagHandler extends AbstractAction {
-    private static final long serialVersionUID = 1L;
     protected static final Logger log = LoggerFactory.getLogger(StartNewBagHandler.class);
-
+    private static final long serialVersionUID = 1L;
     BagView bagView;
 
     /**
@@ -61,8 +56,8 @@ public class StartNewBagHandler extends AbstractAction {
     }
 
     void newBag() {
-        final NewBagFrame newBagFrame = new NewBagFrame(bagView, bagView.getPropertyMessage("bag"
-                + ".frame.new"));
+        final NewBagFrame newBagFrame =
+                new NewBagFrame(bagView, bagView.getPropertyMessage("bag" + ".frame.new"));
         newBagFrame.setVisible(true);
     }
 
@@ -72,8 +67,8 @@ public class StartNewBagHandler extends AbstractAction {
      * @param profileName String
      */
     public void createNewBag(final String profileName) {
-        log.info("Creating a new bag with version: {}, profile: {}", BagFactory.LATEST
-                .versionString, profileName);
+        log.info("Creating a new bag with version: {}, profile: {}",
+                BagFactory.LATEST.versionString, profileName);
 
         bagView.clearBagHandler.clearExistingBag();
         final DefaultBag bag = bagView.getBag();

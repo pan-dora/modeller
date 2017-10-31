@@ -29,7 +29,6 @@ import cool.pandora.modeller.ui.jpanel.base.BagView;
 import cool.pandora.modeller.ui.jpanel.text.CreateWordsFrame;
 import cool.pandora.modeller.ui.util.ApplicationContextUtil;
 import cool.pandora.modeller.ui.util.URIResolver;
-
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.net.URI;
@@ -37,7 +36,6 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Map;
 import javax.swing.AbstractAction;
-
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -60,6 +58,38 @@ public class CreateWordsHandler extends AbstractAction implements Progress {
     public CreateWordsHandler(final BagView bagView) {
         super();
         this.bagView = bagView;
+    }
+
+    /**
+     * getWordContainerURI.
+     *
+     * @param map Map
+     * @return String
+     */
+    public static URI getWordContainerURI(final Map<String, BagInfoField> map) {
+        final URIResolver uriResolver;
+        try {
+            uriResolver = URIResolver.resolve().map(map)
+                    .containerKey(ProfileOptions.TEXT_WORD_CONTAINER_KEY).pathType(4).build();
+            return uriResolver.render();
+        } catch (final URISyntaxException e) {
+            log.debug(e.getMessage());
+        }
+        return null;
+    }
+
+    private static URI getWordObjectURI(final Map<String, BagInfoField> map,
+                                        final String resourceID) {
+        final URIResolver uriResolver;
+        try {
+            uriResolver = URIResolver.resolve().map(map)
+                    .containerKey(ProfileOptions.TEXT_WORD_CONTAINER_KEY).resource(resourceID)
+                    .pathType(5).build();
+            return uriResolver.render();
+        } catch (final URISyntaxException e) {
+            log.debug(e.getMessage());
+        }
+        return null;
     }
 
     @Override
@@ -100,39 +130,5 @@ public class CreateWordsHandler extends AbstractAction implements Progress {
                 new CreateWordsFrame(bagView, bagView.getPropertyMessage("bag.frame" + ".words"));
         createWordsFrame.setBag(bag);
         createWordsFrame.setVisible(true);
-    }
-
-    /**
-     * getWordContainerURI.
-     *
-     * @param map Map
-     * @return String
-     */
-    public static URI getWordContainerURI(final Map<String, BagInfoField> map) {
-        final URIResolver uriResolver;
-        try {
-            uriResolver =
-                    URIResolver.resolve().map(map).containerKey(ProfileOptions
-                            .TEXT_WORD_CONTAINER_KEY).pathType(4)
-                            .build();
-            return uriResolver.render();
-        } catch (final URISyntaxException e) {
-            log.debug(e.getMessage());
-        }
-        return null;
-    }
-
-    private static URI getWordObjectURI(final Map<String, BagInfoField> map, final String
-            resourceID) {
-        final URIResolver uriResolver;
-        try {
-            uriResolver = URIResolver.resolve().map(map).containerKey(ProfileOptions
-                    .TEXT_WORD_CONTAINER_KEY)
-                    .resource(resourceID).pathType(5).build();
-            return uriResolver.render();
-        } catch (final URISyntaxException e) {
-            log.debug(e.getMessage());
-        }
-        return null;
     }
 }

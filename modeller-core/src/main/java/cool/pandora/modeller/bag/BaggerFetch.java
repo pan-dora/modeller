@@ -15,7 +15,6 @@
 package cool.pandora.modeller.bag;
 
 import java.io.Serializable;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,10 +24,8 @@ import org.slf4j.LoggerFactory;
  * @author Jon Steinbach
  */
 public class BaggerFetch implements Serializable {
-    private static final long serialVersionUID = 1L;
-
     protected static final Logger log = LoggerFactory.getLogger(BaggerFetch.class);
-
+    private static final long serialVersionUID = 1L;
     private String baseURL;
     private String userName;
     private String userPassword;
@@ -41,15 +38,6 @@ public class BaggerFetch implements Serializable {
     }
 
     /**
-     * setBaseURL.
-     *
-     * @param url String
-     */
-    public void setBaseURL(final String url) {
-        this.baseURL = url;
-    }
-
-    /**
      * getBaseURL.
      *
      * @return baseURL
@@ -59,12 +47,12 @@ public class BaggerFetch implements Serializable {
     }
 
     /**
-     * setUserName.
+     * setBaseURL.
      *
-     * @param username String
+     * @param url String
      */
-    public void setUserName(final String username) {
-        this.userName = username;
+    public void setBaseURL(final String url) {
+        this.baseURL = url;
     }
 
     /**
@@ -77,12 +65,12 @@ public class BaggerFetch implements Serializable {
     }
 
     /**
-     * setUserPassword.
+     * setUserName.
      *
-     * @param password String
+     * @param username String
      */
-    public void setUserPassword(final String password) {
-        this.userPassword = password;
+    public void setUserName(final String username) {
+        this.userName = username;
     }
 
     /**
@@ -92,6 +80,15 @@ public class BaggerFetch implements Serializable {
      */
     public String getUserPassword() {
         return this.userPassword;
+    }
+
+    /**
+     * setUserPassword.
+     *
+     * @param password String
+     */
+    public void setUserPassword(final String password) {
+        this.userPassword = password;
     }
 
 }

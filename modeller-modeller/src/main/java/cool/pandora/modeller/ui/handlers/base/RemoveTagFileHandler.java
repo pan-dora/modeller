@@ -17,9 +17,7 @@ package cool.pandora.modeller.ui.handlers.base;
 import cool.pandora.modeller.bag.impl.DefaultBag;
 import cool.pandora.modeller.ui.jpanel.base.BagView;
 import cool.pandora.modeller.ui.util.ApplicationContextUtil;
-
 import java.awt.event.ActionEvent;
-
 import javax.swing.AbstractAction;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
@@ -62,13 +60,13 @@ public class RemoveTagFileHandler extends AbstractAction {
                     if (node != null) {
                         if (node instanceof MutableTreeNode) {
                             bag.removeBagFile(node.toString());
-                            ApplicationContextUtil.addConsoleMessage("Tag file removed: " + node
-                                    .toString());
+                            ApplicationContextUtil
+                                    .addConsoleMessage("Tag file removed: " + node.toString());
                             model.removeNodeFromParent((MutableTreeNode) node);
                         } else {
                             bag.removeBagFile((String) node);
-                            ApplicationContextUtil.addConsoleMessage("Tag file removed: " + node
-                                    .toString());
+                            ApplicationContextUtil
+                                    .addConsoleMessage("Tag file removed: " + node.toString());
                             final DefaultMutableTreeNode aNode = new DefaultMutableTreeNode(node);
                             model.removeNodeFromParent(aNode);
                         }

@@ -19,11 +19,9 @@ import cool.pandora.modeller.ui.BagTree;
 import cool.pandora.modeller.ui.jpanel.base.BagView;
 import cool.pandora.modeller.ui.util.ApplicationContextUtil;
 import gov.loc.repository.bagit.BagFile;
-
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.util.Collection;
-
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns="http://www.springframework.org/schema/beans"
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.springframework.org/schema/beans"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
  http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
     <!--  As you can see, I'm skipping this xml namespaces
@@ -24,8 +23,7 @@
     </bean>
 
     <bean id="baggerLifecycleAdvisor" class="cool.pandora.modeller.BaggerLifecycleAdvisor">
-        <property name="windowCommandBarDefinitions"
-                  value="classpath:cool/pandora/modeller/ui/commands-context.xml"/>
+        <property name="windowCommandBarDefinitions" value="classpath:cool/pandora/modeller/ui/commands-context.xml"/>
         <property name="startingPageId" value="proxyPage"/>
         <property name="registerableExceptionHandler" ref="exceptionHandler"/>
         <property name="menubarBeanName" value="menuBar"/>
@@ -48,8 +46,7 @@
         -->
     </bean>
 
-    <bean id="proxyPage"
-          class="org.springframework.richclient.application.docking.vldocking.VLDockingPageDescriptor">
+    <bean id="proxyPage" class="org.springframework.richclient.application.docking.vldocking.VLDockingPageDescriptor">
         <property name="initialLayout">
             <bean class="org.springframework.core.io.ClassPathResource">
                 <constructor-arg type="java.lang.String">
@@ -63,8 +60,7 @@
           class="org.springframework.richclient.exceptionhandling.delegation.DelegatingExceptionHandler">
         <property name="delegateList">
             <list>
-                <bean
-                        class="org.springframework.richclient.exceptionhandling.delegation.SimpleExceptionHandlerDelegate">
+                <bean class="org.springframework.richclient.exceptionhandling.delegation.SimpleExceptionHandlerDelegate">
                     <property name="throwableClass" value="java.lang.Error"/>
                     <property name="exceptionHandler">
                         <bean class="org.springframework.richclient.exceptionhandling.MessagesDialogExceptionHandler">
@@ -74,8 +70,7 @@
                     </property>
                 </bean>
                 <!-- The order is important: if Throwable would be first then the others would be ignored -->
-                <bean
-                        class="org.springframework.richclient.exceptionhandling.delegation.SimpleExceptionHandlerDelegate">
+                <bean class="org.springframework.richclient.exceptionhandling.delegation.SimpleExceptionHandlerDelegate">
                     <property name="throwableClass" value="java.lang.Throwable"/>
                     <property name="exceptionHandler">
                         <bean class="org.springframework.richclient.exceptionhandling.MessagesDialogExceptionHandler">
@@ -95,8 +90,7 @@
       This is a trivial singleton object providing access to the configured
       services, as specified on the applicationServices property.
     -->
-    <bean id="serviceLocator"
-          class="org.springframework.richclient.application.ApplicationServicesLocator">
+    <bean id="serviceLocator" class="org.springframework.richclient.application.ApplicationServicesLocator">
         <property name="applicationServices" ref="applicationServices"/>
     </bean>
 
@@ -129,18 +123,15 @@
 
         <property name="registryEntries">
             <map>
-                <entry key="org.springframework.richclient.command.CommandServices"
-                       value-ref="commandServices"/>
+                <entry key="org.springframework.richclient.command.CommandServices" value-ref="commandServices"/>
             </map>
         </property>
     </bean>
 
     <bean id="applicationObjectConfigurer" depends-on="serviceLocator"
-          class="org.springframework.richclient.application.config.DefaultApplicationObjectConfigurer">
-    </bean>
+          class="org.springframework.richclient.application.config.DefaultApplicationObjectConfigurer"></bean>
 
-    <bean id="applicationEventMulticaster"
-          class="org.springframework.context.event.SimpleApplicationEventMulticaster"/>
+    <bean id="applicationEventMulticaster" class="org.springframework.context.event.SimpleApplicationEventMulticaster"/>
 
     <bean id="binderSelectionStrategy"
           class="org.springframework.richclient.form.binding.swing.SwingBinderSelectionStrategy">
@@ -165,8 +156,7 @@
         </property>
     </bean>
 
-    <bean id="lookAndFeelConfigurer"
-          class="org.springframework.richclient.application.config.JGoodiesLooksConfigurer">
+    <bean id="lookAndFeelConfigurer" class="org.springframework.richclient.application.config.JGoodiesLooksConfigurer">
         <property name="popupDropShadowEnabled" value="false"/>
         <property name="theme">
             <bean class="com.jgoodies.looks.plastic.theme.ExperienceBlue"/>
@@ -186,8 +176,7 @@
       </bean>
      -->
 
-    <bean id="messageSource"
-          class="org.springframework.context.support.ResourceBundleMessageSource">
+    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
         <property name="basenames">
             <list>
                 <value>cool.pandora.modeller.ui.messages</value>
@@ -196,8 +185,7 @@
         </property>
     </bean>
 
-    <bean id="imageResourcesFactory"
-          class="org.springframework.context.support.ResourceMapFactoryBean">
+    <bean id="imageResourcesFactory" class="org.springframework.context.support.ResourceMapFactoryBean">
         <property name="locations">
             <list>
                 <value>classpath:org/springframework/richclient/image/images.properties</value>
@@ -227,11 +215,9 @@
     </bean>
 
     <bean id="applicationPageFactory" depends-on="serviceLocator"
-          class="org.springframework.richclient.application.docking.vldocking.VLDockingApplicationPageFactory">
-    </bean>
+          class="org.springframework.richclient.application.docking.vldocking.VLDockingApplicationPageFactory"></bean>
 
-    <bean id="bagView"
-          class="org.springframework.richclient.application.docking.vldocking.VLDockingViewDescriptor">
+    <bean id="bagView" class="org.springframework.richclient.application.docking.vldocking.VLDockingViewDescriptor">
         <property name="viewClass" value="cool.pandora.modeller.ui.jpanel.base.BagView"/>
         <property name="autoHideEnabled" value="true"/>
         <property name="floatEnabled" value="true"/>
@@ -245,8 +231,7 @@
         </property>
     </bean>
 
-    <bean id="profilesView"
-          class="org.springframework.richclient.application.docking.vldocking.VLDockingViewDescriptor"
+    <bean id="profilesView" class="org.springframework.richclient.application.docking.vldocking.VLDockingViewDescriptor"
           depends-on="bagView">
         <property name="viewClass" value="cool.pandora.modeller.ui.jpanel.base.ProfilesView"/>
         <property name="autoHideEnabled" value="true"/>
@@ -254,8 +239,7 @@
         <property name="maximizeEnabled" value="true"/>
     </bean>
 
-    <bean id="consoleView"
-          class="org.springframework.richclient.application.docking.vldocking.VLDockingViewDescriptor"
+    <bean id="consoleView" class="org.springframework.richclient.application.docking.vldocking.VLDockingViewDescriptor"
           depends-on="bagView">
         <property name="viewClass" value="cool.pandora.modeller.ui.ConsoleView"/>
         <property name="autoHideEnabled" value="true"/>
@@ -280,13 +264,11 @@
 
     -->
 
-    <bean id="commandServices"
-          class="org.springframework.richclient.command.support.DefaultCommandServices">
+    <bean id="commandServices" class="org.springframework.richclient.command.support.DefaultCommandServices">
         <property name="toolBarButtonConfigurer" ref="toolBarButtonConfigurer"/>
     </bean>
 
-    <bean id="toolBarButtonConfigurer"
-          class="cool.pandora.modeller.BbToolBarCommandButtonConfigurer">
+    <bean id="toolBarButtonConfigurer" class="cool.pandora.modeller.BbToolBarCommandButtonConfigurer">
         <property name="useLargeIcons" value="true"/>
     </bean>
 

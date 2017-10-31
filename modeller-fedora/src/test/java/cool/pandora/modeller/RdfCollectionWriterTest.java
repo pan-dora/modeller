@@ -17,9 +17,7 @@ package cool.pandora.modeller;
 import static junit.framework.TestCase.assertNotNull;
 
 import cool.pandora.modeller.util.RDFCollectionWriter;
-
 import java.io.IOException;
-
 import org.junit.Test;
 
 

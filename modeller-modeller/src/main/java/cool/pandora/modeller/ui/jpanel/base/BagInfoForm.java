@@ -19,7 +19,6 @@ import cool.pandora.modeller.bag.impl.DefaultBag;
 import cool.pandora.modeller.ui.BagTableFormBuilder;
 import cool.pandora.modeller.ui.NoTabTextArea;
 import cool.pandora.modeller.ui.util.LayoutUtil;
-
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -27,11 +26,9 @@ import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
-
 import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -43,7 +40,6 @@ import javax.swing.JSeparator;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.binding.form.FormModel;
@@ -58,10 +54,9 @@ public class BagInfoForm extends AbstractForm implements FocusListener {
     protected static final Logger log = LoggerFactory.getLogger(BagInfoForm.class);
 
     private static final String INFO_FORM_PAGE = "infoPage";
-
+    private final HashMap<String, BagInfoField> fieldMap;
     private JComponent focusField;
     private BagView bagView;
-    private final HashMap<String, BagInfoField> fieldMap;
     private JComponent form;
     private AddFieldPanel addFieldPannel;
 
@@ -69,11 +64,11 @@ public class BagInfoForm extends AbstractForm implements FocusListener {
      * BagInfoForm.
      *
      * @param formModel FormModel
-     * @param bagView BagView
-     * @param map HashMap
+     * @param bagView   BagView
+     * @param map       HashMap
      */
-    public BagInfoForm(final FormModel formModel, final BagView bagView, final HashMap<String,
-            BagInfoField> map) {
+    public BagInfoForm(final FormModel formModel, final BagView bagView,
+                       final HashMap<String, BagInfoField> map) {
         super(formModel, INFO_FORM_PAGE);
         this.bagView = bagView;
         this.fieldMap = map;
@@ -100,16 +95,15 @@ public class BagInfoForm extends AbstractForm implements FocusListener {
         addFieldPannel = new AddFieldPanel();
         contentPanel.add(addFieldPannel, gbc);
 
-        gbc = LayoutUtil.buildGridBagConstraints(col, row++, 1, 1, 0, 0, GridBagConstraints
-                        .HORIZONTAL,
-                GridBagConstraints.CENTER);
+        gbc = LayoutUtil
+                .buildGridBagConstraints(col, row++, 1, 1, 0, 0, GridBagConstraints.HORIZONTAL,
+                        GridBagConstraints.CENTER);
         contentPanel.add(new JSeparator(), gbc);
 
         // bag-info input form
         form = createFormFields();
-        gbc = LayoutUtil
-                .buildGridBagConstraints(col, row++, 1, 1, 1, 1, GridBagConstraints.BOTH,
-                        GridBagConstraints.WEST);
+        gbc = LayoutUtil.buildGridBagConstraints(col, row++, 1, 1, 1, 1, GridBagConstraints.BOTH,
+                GridBagConstraints.WEST);
         contentPanel.add(form, gbc);
         return contentPanel;
     }
@@ -154,9 +148,8 @@ public class BagInfoForm extends AbstractForm implements FocusListener {
             }
             switch (field.getComponentType()) {
                 case BagInfoField.TEXTAREA_COMPONENT:
-                    final JComponent[] tlist =
-                            formBuilder.addTextArea(field.isRequired(), field.getLabel(),
-                                    removeButton);
+                    final JComponent[] tlist = formBuilder
+                            .addTextArea(field.isRequired(), field.getLabel(), removeButton);
                     final JComponent textarea = tlist[index];
                     textarea.setEnabled(field.isEnabled());
                     textarea.addFocusListener(this);
@@ -168,8 +161,8 @@ public class BagInfoForm extends AbstractForm implements FocusListener {
                     }
                     break;
                 case BagInfoField.TEXTFIELD_COMPONENT:
-                    final JComponent[] flist = formBuilder.add(field.isRequired(), field.getLabel(
-                            ), removeButton);
+                    final JComponent[] flist =
+                            formBuilder.add(field.isRequired(), field.getLabel(), removeButton);
                     final JComponent comp = flist[index];
                     comp.setEnabled(field.isEnabled());
                     comp.addFocusListener(this);
@@ -181,8 +174,8 @@ public class BagInfoForm extends AbstractForm implements FocusListener {
                 case BagInfoField.LIST_COMPONENT:
                     final List<String> elements = field.getElements();
                     final JComponent[] llist = formBuilder
-                            .addList(field.isRequired(), field.getLabel(), elements, field
-                                    .getValue(), removeButton);
+                            .addList(field.isRequired(), field.getLabel(), elements,
+                                    field.getValue(), removeButton);
                     final JComponent lcomp = llist[index];
                     lcomp.setEnabled(field.isEnabled());
                     lcomp.addFocusListener(this);
@@ -211,44 +204,6 @@ public class BagInfoForm extends AbstractForm implements FocusListener {
         final DefaultBag defaultBag = bagView.getBag();
         bagView.infoInputPane.updateBagHandler.updateBag(defaultBag);
         bagView.infoInputPane.bagInfoInputPane.setSelectedIndex(0);
-    }
-
-    private class RemoveFieldHandler extends AbstractAction {
-        private static final long serialVersionUID = 1L;
-
-        @Override
-        public void actionPerformed(final ActionEvent e) {
-            final Component selected = (Component) e.getSource();
-            String key = "";
-            final Component[] components = getFieldComponents();
-            for (int i = 0; i < components.length; i++) {
-                Component c;
-                // See BagTableFormBuilder.addBinding for component info
-                // Field label
-                c = components[i];
-                if (c instanceof JLabel) {
-                    final JLabel label = (JLabel) c;
-                    key = label.getText();
-                }
-                i++;
-                // Required button
-                c = components[i];
-                i++;
-                // Input text field
-                c = components[i];
-                i++;
-                // Remove button
-                c = components[i];
-                if (c instanceof JButton && c == selected) {
-                    final BagInfoField field = getField(key);
-                    if (field != null) {
-                        // remove field
-                        bagView.getBag().removeBagInfoField(key);
-                    }
-                }
-            }
-            bagView.infoInputPane.updateInfoFormsPane();
-        }
     }
 
     /**
@@ -316,6 +271,44 @@ public class BagInfoForm extends AbstractForm implements FocusListener {
     public void setEnabled(final boolean enabled) {
         super.setEnabled(enabled);
         addFieldPannel.setEnabled(enabled);
+    }
+
+    private class RemoveFieldHandler extends AbstractAction {
+        private static final long serialVersionUID = 1L;
+
+        @Override
+        public void actionPerformed(final ActionEvent e) {
+            final Component selected = (Component) e.getSource();
+            String key = "";
+            final Component[] components = getFieldComponents();
+            for (int i = 0; i < components.length; i++) {
+                Component c;
+                // See BagTableFormBuilder.addBinding for component info
+                // Field label
+                c = components[i];
+                if (c instanceof JLabel) {
+                    final JLabel label = (JLabel) c;
+                    key = label.getText();
+                }
+                i++;
+                // Required button
+                c = components[i];
+                i++;
+                // Input text field
+                c = components[i];
+                i++;
+                // Remove button
+                c = components[i];
+                if (c instanceof JButton && c == selected) {
+                    final BagInfoField field = getField(key);
+                    if (field != null) {
+                        // remove field
+                        bagView.getBag().removeBagInfoField(key);
+                    }
+                }
+            }
+            bagView.infoInputPane.updateInfoFormsPane();
+        }
     }
 
 }

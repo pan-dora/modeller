@@ -61,19 +61,21 @@ public class CollectionScope extends Scope {
      * Item.
      */
     static class Item {
+        List<Prefix> prefixes;
+        String sequenceGraph;
+
         Item(final List<Prefix> prefixes, final String sequenceGraph) {
             this.prefixes = prefixes;
             this.sequenceGraph = sequenceGraph;
         }
-
-        List<Prefix> prefixes;
-        String sequenceGraph;
     }
 
     /**
      * Prefix.
      */
     public static class Prefix {
+        String prefix;
+
         /**
          * Prefix.
          *
@@ -82,7 +84,5 @@ public class CollectionScope extends Scope {
         public Prefix(final String prefix) {
             this.prefix = prefix;
         }
-
-        String prefix;
     }
 }

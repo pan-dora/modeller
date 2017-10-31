@@ -18,25 +18,22 @@ import cool.pandora.modeller.bag.impl.DefaultBag;
 import cool.pandora.modeller.ui.Progress;
 import cool.pandora.modeller.ui.jpanel.base.BagView;
 import cool.pandora.modeller.ui.util.ApplicationContextUtil;
-
 import gov.loc.repository.bagit.BagFactory;
 import gov.loc.repository.bagit.writer.Writer;
 import gov.loc.repository.bagit.writer.impl.FileSystemWriter;
-//import gov.loc.repository.bagit.writer.impl.TarBz2Writer;
-//import gov.loc.repository.bagit.writer.impl.TarGzWriter;
-//import gov.loc.repository.bagit.writer.impl.TarWriter;
 import gov.loc.repository.bagit.writer.impl.ZipWriter;
-
 import java.awt.event.ActionEvent;
 import java.io.File;
-
 import javax.swing.AbstractAction;
 import javax.swing.SwingUtilities;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.richclient.dialog.CloseAction;
 import org.springframework.richclient.dialog.ConfirmationDialog;
+
+//import gov.loc.repository.bagit.writer.impl.TarBz2Writer;
+//import gov.loc.repository.bagit.writer.impl.TarGzWriter;
+//import gov.loc.repository.bagit.writer.impl.TarWriter;
 
 
 /**
@@ -60,6 +57,15 @@ public class SaveBagHandler extends AbstractAction implements Progress {
     public SaveBagHandler(final BagView bagView) {
         super();
         this.bagView = bagView;
+    }
+
+    private static Writer getWriter(final BagFactory bagFactory, final DefaultBag bag) {
+        if (bag.getSerialMode() == DefaultBag.NO_MODE) {
+            return new FileSystemWriter(bagFactory);
+        } else if (bag.getSerialMode() == DefaultBag.ZIP_MODE) {
+            return new ZipWriter(bagFactory);
+        }
+        return null;
     }
 
     @Override
@@ -96,14 +102,14 @@ public class SaveBagHandler extends AbstractAction implements Progress {
                 messages = bag.write(bagWriter);
 
                 if (messages != null && !messages.trim().isEmpty()) {
-                    BagView.showWarningErrorDialog("Warning - bag not saved", "Problem saving "
-                            + "bag:\n" + messages);
+                    BagView.showWarningErrorDialog("Warning - bag not saved",
+                            "Problem saving " + "bag:\n" + messages);
                 } else {
                     BagView.showWarningErrorDialog("Bag saved", "Bag saved successfully.\n");
                 }
             } else {
-                BagView.showWarningErrorDialog("Warning - bag not saved", "Could not get writer "
-                        + "for bag");
+                BagView.showWarningErrorDialog("Warning - bag not saved",
+                        "Could not get writer " + "for bag");
             }
 
             SwingUtilities.invokeLater(() -> {
@@ -132,15 +138,6 @@ public class SaveBagHandler extends AbstractAction implements Progress {
             bagView.task.done();
             BagView.statusBarEnd();
         }
-    }
-
-    private static Writer getWriter(final BagFactory bagFactory, final DefaultBag bag) {
-        if (bag.getSerialMode() == DefaultBag.NO_MODE) {
-            return new FileSystemWriter(bagFactory);
-        } else if (bag.getSerialMode() == DefaultBag.ZIP_MODE) {
-            return new ZipWriter(bagFactory);
-        }
-        return null;
     }
 
     void setTmpRootPath(final File f) {

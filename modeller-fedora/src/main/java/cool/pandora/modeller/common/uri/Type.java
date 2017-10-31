@@ -24,6 +24,10 @@ import java.util.Hashtable;
  * @author Christopher Johnson
  */
 public class Type implements Serializable {
+    /**
+     * types.
+     */
+    private static final Hashtable<Object, Hashtable<Integer, Type>> types = new Hashtable<>();
     private final int value;
     private final transient String path;
 
@@ -31,36 +35,13 @@ public class Type implements Serializable {
      * Type.
      *
      * @param value int
-     * @param path String
+     * @param path  String
      */
     protected Type(final int value, final String path) {
         this.value = value;
         this.path = path;
         storeType(this);
     }
-
-    /**
-     * getValue.
-     *
-     * @return value
-     */
-    public int getValue() {
-        return value;
-    }
-
-    /**
-     * toString.
-     *
-     * @return path
-     */
-    public String toString() {
-        return path;
-    }
-
-    /**
-     * types.
-     */
-    private static final Hashtable<Object, Hashtable<Integer, Type>> types = new Hashtable<>();
 
     /**
      * storeType.
@@ -84,7 +65,7 @@ public class Type implements Serializable {
      * getByValue.
      *
      * @param classRef Class
-     * @param value int
+     * @param value    int
      * @return type
      */
     public static Type getByValue(final Class classRef, final int value) {
@@ -114,5 +95,23 @@ public class Type implements Serializable {
         } else {
             return null;
         }
+    }
+
+    /**
+     * getValue.
+     *
+     * @return value
+     */
+    public int getValue() {
+        return value;
+    }
+
+    /**
+     * toString.
+     *
+     * @return path
+     */
+    public String toString() {
+        return path;
     }
 }

@@ -17,17 +17,13 @@ package cool.pandora.modeller.ui.handlers.base;
 import cool.pandora.modeller.ui.Progress;
 import cool.pandora.modeller.ui.jpanel.base.BagView;
 import cool.pandora.modeller.ui.util.ApplicationContextUtil;
-
 import java.awt.event.ActionEvent;
 import java.io.File;
-
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.richclient.application.Application;
 import org.springframework.richclient.progress.BusyIndicator;
 
@@ -50,6 +46,31 @@ public class AddDataHandler extends AbstractAction implements Progress {
     public AddDataHandler(final BagView bagView) {
         super();
         this.bagView = bagView;
+    }
+
+    /**
+     * getFileNames.
+     *
+     * @param files File[]
+     * @return FileNames
+     */
+    private static String getFileNames(final File[] files) {
+        final StringBuilder stringBuff = new StringBuilder();
+        final int totalFileCount = files.length;
+        int displayCount = 20;
+        if (totalFileCount < 20) {
+            displayCount = totalFileCount;
+        }
+        for (int i = 0; i < displayCount; i++) {
+            if (i != 0) {
+                stringBuff.append("\n");
+            }
+            stringBuff.append(files[i].getAbsolutePath());
+        }
+        if (totalFileCount > displayCount) {
+            stringBuff.append("\n").append(totalFileCount - displayCount).append(" more...");
+        }
+        return stringBuff.toString();
     }
 
     /**
@@ -99,31 +120,6 @@ public class AddDataHandler extends AbstractAction implements Progress {
             bagView.bagPayloadTreePanel.refresh(bagView.bagPayloadTree);
             bagView.updateAddData();
         }
-    }
-
-    /**
-     * getFileNames.
-     *
-     * @param files File[]
-     * @return FileNames
-     */
-    private static String getFileNames(final File[] files) {
-        final StringBuilder stringBuff = new StringBuilder();
-        final int totalFileCount = files.length;
-        int displayCount = 20;
-        if (totalFileCount < 20) {
-            displayCount = totalFileCount;
-        }
-        for (int i = 0; i < displayCount; i++) {
-            if (i != 0) {
-                stringBuff.append("\n");
-            }
-            stringBuff.append(files[i].getAbsolutePath());
-        }
-        if (totalFileCount > displayCount) {
-            stringBuff.append("\n").append(totalFileCount - displayCount).append(" more...");
-        }
-        return stringBuff.toString();
     }
 
     /**

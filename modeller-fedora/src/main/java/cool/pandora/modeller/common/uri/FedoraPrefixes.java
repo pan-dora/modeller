@@ -30,16 +30,16 @@ public final class FedoraPrefixes {
     public static final String XSI = "PREFIX xsi: <http://www.w3.org/2001/XMLSchema-instance>";
     public static final String XMLNS = "PREFIX xmlns: <http://www.w3.org/2000/xmlns/>";
     public static final String RDF = "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>";
-    public static final String FEDORA = "PREFIX fedora: <http://fedora"
-            + ".info/definitions/v4/repository#>";
+    public static final String FEDORA =
+            "PREFIX fedora: <http://fedora" + ".info/definitions/v4/repository#>";
     public static final String XML = "PREFIX xml: <http://www.w3.org/XML/1998/namespace>";
     public static final String JCR = "PREFIX jcr: <http://www.jcp.org/jcr/1.0>";
-    public static final String EBUCORE = "PREFIX ebucore: <http://www.ebu"
-            + ".ch/metadata/ontologies/ebucore/ebucore#>";
+    public static final String EBUCORE =
+            "PREFIX ebucore: <http://www.ebu" + ".ch/metadata/ontologies/ebucore/ebucore#>";
     public static final String LDP = "PREFIX ldp: <http://www.w3.org/ns/ldp#>";
     public static final String XS = "PREFIX xs: <http://www.w3.org/2001/XMLSchema>";
-    public static final String FEDORACONFIG = "PREFIX fedoraconfig: <http://fedora"
-            + ".info/definitions/v4/config#>";
+    public static final String FEDORACONFIG =
+            "PREFIX fedoraconfig: <http://fedora" + ".info/definitions/v4/config#>";
     public static final String MIX = "PREFIX mix: <http://www.jcp.org/jcr/mix/1.0>";
 
     private FedoraPrefixes() {

@@ -15,7 +15,6 @@
 package cool.pandora.modeller;
 
 import java.io.StringWriter;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
@@ -28,11 +27,10 @@ import org.json.JSONWriter;
  * @author gov.loc
  */
 public class Organization {
-    private ProfileField name;
-    private ProfileField address;
-
     private static final String FIELD_SOURCE_ORGANIZATION = "Source-Organization";
     private static final String FIELD_ORGANIZATION_ADDRESS = "Organization-Address";
+    private ProfileField name;
+    private ProfileField address;
 
     /**
      * Organization.
@@ -45,12 +43,47 @@ public class Organization {
     }
 
     /**
-     * setName.
+     * createOrganization.
      *
-     * @param n name
+     * @param organizationJson JSONObject
+     * @return organization
+     * @throws JSONException exception
      */
-    public void setName(final ProfileField n) {
-        this.name = n;
+    static Organization createOrganization(final JSONObject organizationJson) throws JSONException {
+        final Organization organization = new Organization();
+        ProfileField name = null;
+        ProfileField address = null;
+        if (organizationJson != null) {
+            if (organizationJson.has(FIELD_SOURCE_ORGANIZATION)) {
+                final JSONObject jsonObjectOrgName =
+                        (JSONObject) organizationJson.get(FIELD_SOURCE_ORGANIZATION);
+                if (jsonObjectOrgName != null) {
+                    name = ProfileField
+                            .createProfileField(jsonObjectOrgName, FIELD_SOURCE_ORGANIZATION);
+                }
+            }
+
+            if (organizationJson.has(FIELD_ORGANIZATION_ADDRESS)) {
+                final JSONObject jsonObjectOrgAddr =
+                        (JSONObject) organizationJson.get(FIELD_ORGANIZATION_ADDRESS);
+                if (jsonObjectOrgAddr != null) {
+                    address = ProfileField
+                            .createProfileField(jsonObjectOrgAddr, FIELD_ORGANIZATION_ADDRESS);
+                }
+            }
+        }
+
+        if (name == null) {
+            name = new ProfileField();
+            name.setFieldName(FIELD_SOURCE_ORGANIZATION);
+        }
+        if (address == null) {
+            address = new ProfileField();
+            address.setFieldName(FIELD_ORGANIZATION_ADDRESS);
+        }
+        organization.setName(name);
+        organization.setAddress(address);
+        return organization;
     }
 
     /**
@@ -63,12 +96,12 @@ public class Organization {
     }
 
     /**
-     * setAddress.
+     * setName.
      *
-     * @param a address
+     * @param n name
      */
-    private void setAddress(final ProfileField a) {
-        this.address = a;
+    public void setName(final ProfileField n) {
+        this.name = n;
     }
 
     /**
@@ -78,6 +111,15 @@ public class Organization {
      */
     public ProfileField getAddress() {
         return this.address;
+    }
+
+    /**
+     * setAddress.
+     *
+     * @param a address
+     */
+    private void setAddress(final ProfileField a) {
+        this.address = a;
     }
 
     @Override
@@ -102,58 +144,14 @@ public class Organization {
         return String.valueOf(this.getName()) + delim + this.getAddress();
     }
 
-    /**
-     * createOrganization.
-     *
-     * @param organizationJson JSONObject
-     * @return organization
-     * @throws JSONException exception
-     */
-    static Organization createOrganization(final JSONObject organizationJson) throws JSONException {
-        final Organization organization = new Organization();
-        ProfileField name = null;
-        ProfileField address = null;
-        if (organizationJson != null) {
-            if (organizationJson.has(FIELD_SOURCE_ORGANIZATION)) {
-                final JSONObject jsonObjectOrgName = (JSONObject) organizationJson.get(
-                        FIELD_SOURCE_ORGANIZATION);
-                if (jsonObjectOrgName != null) {
-                    name = ProfileField.createProfileField(jsonObjectOrgName,
-                            FIELD_SOURCE_ORGANIZATION);
-                }
-            }
-
-            if (organizationJson.has(FIELD_ORGANIZATION_ADDRESS)) {
-                final JSONObject jsonObjectOrgAddr = (JSONObject) organizationJson.get(
-                        FIELD_ORGANIZATION_ADDRESS);
-                if (jsonObjectOrgAddr != null) {
-                    address = ProfileField.createProfileField(jsonObjectOrgAddr,
-                            FIELD_ORGANIZATION_ADDRESS);
-                }
-            }
-        }
-
-        if (name == null) {
-            name = new ProfileField();
-            name.setFieldName(FIELD_SOURCE_ORGANIZATION);
-        }
-        if (address == null) {
-            address = new ProfileField();
-            address.setFieldName(FIELD_ORGANIZATION_ADDRESS);
-        }
-        organization.setName(name);
-        organization.setAddress(address);
-        return organization;
-    }
-
     String serialize() throws JSONException {
         final StringWriter writer = new StringWriter();
         final JSONWriter orgStringer = new JSONWriter(writer);
 
         orgStringer.object().key(FIELD_ORGANIZATION_ADDRESS)
                 .value(new JSONObject(new JSONTokener(this.getAddress().serialize())));
-        orgStringer.key(FIELD_SOURCE_ORGANIZATION).value(new JSONObject(new JSONTokener(getName()
-                .serialize())));
+        orgStringer.key(FIELD_SOURCE_ORGANIZATION)
+                .value(new JSONObject(new JSONTokener(getName().serialize())));
         orgStringer.endObject();
         return writer.toString();
     }

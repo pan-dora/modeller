@@ -16,24 +16,20 @@ package cool.pandora.modeller.ui.jpanel.base;
 
 import cool.pandora.modeller.ui.util.ApplicationContextUtil;
 import cool.pandora.modeller.ui.util.LayoutUtil;
-
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.richclient.application.Application;
 import org.springframework.richclient.application.ApplicationPage;
 import org.springframework.richclient.application.PageComponent;
@@ -51,15 +47,19 @@ import org.springframework.richclient.util.GuiStandardUtils;
  */
 public class NewBagFrame extends JFrame implements ActionListener {
     protected static final Logger log = LoggerFactory.getLogger(NewBagFrame.class);
+    protected static final String DEFAULT_FINISH_COMMAND_ID = "okCommand";
+    protected static final String DEFAULT_CANCEL_COMMAND_ID = "cancelCommand";
     private static final long serialVersionUID = 1L;
     private final transient BagView bagView;
     private JComboBox<String> profileList;
+    private transient ActionCommand finishCommand;
+    private transient ActionCommand cancelCommand;
 
     /**
      * NewBagFrame.
      *
      * @param bagView BagView
-     * @param title String
+     * @param title   String
      */
     public NewBagFrame(final BagView bagView, final String title) {
         super(title);
@@ -87,6 +87,47 @@ public class NewBagFrame extends JFrame implements ActionListener {
     }
 
     /**
+     * layoutBagVersionSelection.
+     *
+     * @param contentPane JPanel
+     * @param row         int
+     */
+    private static void layoutBagVersionSelection(final JPanel contentPane, final int row) {
+        // contents
+
+        GridBagConstraints glbc;
+
+        final JLabel spacerLabel = new JLabel();
+        glbc = LayoutUtil
+                .buildGridBagConstraints(0, row, 1, 1, 5, 50, GridBagConstraints.HORIZONTAL,
+                        GridBagConstraints.WEST);
+        glbc = LayoutUtil
+                .buildGridBagConstraints(1, row, 1, 1, 40, 50, GridBagConstraints.HORIZONTAL,
+                        GridBagConstraints.CENTER);
+        glbc = LayoutUtil.buildGridBagConstraints(2, row, 1, 1, 40, 50, GridBagConstraints.NONE,
+                GridBagConstraints.EAST);
+        contentPane.add(spacerLabel, glbc);
+    }
+
+    /**
+     * getFinishCommandId.
+     *
+     * @return DEFAULT_FINISH_COMMAND_ID
+     */
+    protected static String getFinishCommandId() {
+        return DEFAULT_FINISH_COMMAND_ID;
+    }
+
+    /**
+     * getCancelCommandId.
+     *
+     * @return DEFAULT_CANCEL_COMMAND_ID
+     */
+    protected static String getCancelCommandId() {
+        return DEFAULT_CANCEL_COMMAND_ID;
+    }
+
+    /**
      * createComponents.
      *
      * @return pageControl
@@ -97,8 +138,8 @@ public class NewBagFrame extends JFrame implements ActionListener {
         final JPanel pageControl = new JPanel(new BorderLayout());
         final JPanel titlePaneContainer = new JPanel(new BorderLayout());
         titlePane.setTitle(bagView.getPropertyMessage("NewBagFrame.title"));
-        titlePane.setMessage(new DefaultMessage(bagView.getPropertyMessage("NewBagFrame"
-                + ".description")));
+        titlePane.setMessage(
+                new DefaultMessage(bagView.getPropertyMessage("NewBagFrame" + ".description")));
         titlePaneContainer.add(titlePane.getControl());
         titlePaneContainer.add(new JSeparator(), BorderLayout.SOUTH);
         pageControl.add(titlePaneContainer, BorderLayout.NORTH);
@@ -124,34 +165,10 @@ public class NewBagFrame extends JFrame implements ActionListener {
     }
 
     /**
-     * layoutBagVersionSelection.
-     *
-     * @param contentPane JPanel
-     * @param row int
-     */
-    private static void layoutBagVersionSelection(final JPanel contentPane, final int row) {
-        // contents
-
-        GridBagConstraints glbc;
-
-        final JLabel spacerLabel = new JLabel();
-        glbc = LayoutUtil
-                .buildGridBagConstraints(0, row, 1, 1, 5, 50, GridBagConstraints.HORIZONTAL,
-                        GridBagConstraints.WEST);
-        glbc = LayoutUtil.buildGridBagConstraints(1, row, 1, 1, 40, 50, GridBagConstraints
-                        .HORIZONTAL,
-                GridBagConstraints.CENTER);
-        glbc = LayoutUtil
-                .buildGridBagConstraints(2, row, 1, 1, 40, 50, GridBagConstraints.NONE,
-                        GridBagConstraints.EAST);
-        contentPane.add(spacerLabel, glbc);
-    }
-
-    /**
      * layoutProfileSelection.
      *
      * @param contentPane JPanel
-     * @param row int
+     * @param row         int
      */
     private void layoutProfileSelection(final JPanel contentPane, final int row) {
         // content
@@ -171,13 +188,12 @@ public class NewBagFrame extends JFrame implements ActionListener {
                 .buildGridBagConstraints(0, row, 1, 1, 5, 50, GridBagConstraints.HORIZONTAL,
                         GridBagConstraints.WEST);
         contentPane.add(bagProfileLabel, glbc);
-        glbc = LayoutUtil.buildGridBagConstraints(1, row, 1, 1, 40, 50, GridBagConstraints
-                        .HORIZONTAL,
-                GridBagConstraints.CENTER);
-        contentPane.add(profileList, glbc);
         glbc = LayoutUtil
-                .buildGridBagConstraints(2, row, 1, 1, 40, 50, GridBagConstraints.NONE,
-                        GridBagConstraints.EAST);
+                .buildGridBagConstraints(1, row, 1, 1, 40, 50, GridBagConstraints.HORIZONTAL,
+                        GridBagConstraints.CENTER);
+        contentPane.add(profileList, glbc);
+        glbc = LayoutUtil.buildGridBagConstraints(2, row, 1, 1, 40, 50, GridBagConstraints.NONE,
+                GridBagConstraints.EAST);
         contentPane.add(spacerLabel, glbc);
     }
 
@@ -187,8 +203,8 @@ public class NewBagFrame extends JFrame implements ActionListener {
      * @return buttonBar
      */
     protected JComponent createButtonBar() {
-        final CommandGroup dialogCommandGroup = CommandGroup.createCommandGroup(null,
-                getCommandGroupMembers());
+        final CommandGroup dialogCommandGroup =
+                CommandGroup.createCommandGroup(null, getCommandGroupMembers());
         final JComponent buttonBar = dialogCommandGroup.createButtonBar();
         GuiStandardUtils.attachDialogBorder(buttonBar);
         return buttonBar;
@@ -230,32 +246,6 @@ public class NewBagFrame extends JFrame implements ActionListener {
     private void hideNewBagFrame() {
         this.setVisible(false);
     }
-
-    /**
-     * getFinishCommandId.
-     *
-     * @return DEFAULT_FINISH_COMMAND_ID
-     */
-    protected static String getFinishCommandId() {
-        return DEFAULT_FINISH_COMMAND_ID;
-    }
-
-    /**
-     * getCancelCommandId.
-     *
-     * @return DEFAULT_CANCEL_COMMAND_ID
-     */
-    protected static String getCancelCommandId() {
-        return DEFAULT_CANCEL_COMMAND_ID;
-    }
-
-    protected static final String DEFAULT_FINISH_COMMAND_ID = "okCommand";
-
-    protected static final String DEFAULT_CANCEL_COMMAND_ID = "cancelCommand";
-
-    private transient ActionCommand finishCommand;
-
-    private transient ActionCommand cancelCommand;
 
     /**
      * actionPerformed.

@@ -78,15 +78,19 @@ public class WordScope extends Scope {
      * @return Item
      */
     List<Item> items() {
-        return Collections
-                .singletonList(new Item(this.prefixes, this.canvasURI, this.resourceContainerURI,
-                        this.chars));
+        return Collections.singletonList(
+                new Item(this.prefixes, this.canvasURI, this.resourceContainerURI, this.chars));
     }
 
     /**
      * Item.
      */
     static class Item {
+        List<Prefix> prefixes;
+        String canvasURI;
+        String resourceContainerURI;
+        String chars;
+
         Item(final List<Prefix> prefixes, final String canvasURI, final String resourceContainerURI,
              final String chars) {
             this.prefixes = prefixes;
@@ -94,17 +98,14 @@ public class WordScope extends Scope {
             this.resourceContainerURI = resourceContainerURI;
             this.chars = chars;
         }
-
-        List<Prefix> prefixes;
-        String canvasURI;
-        String resourceContainerURI;
-        String chars;
     }
 
     /**
      * Prefix.
      */
     public static class Prefix {
+        String prefix;
+
         /**
          * Prefix.
          *
@@ -113,7 +114,5 @@ public class WordScope extends Scope {
         public Prefix(final String prefix) {
             this.prefix = prefix;
         }
-
-        String prefix;
     }
 }

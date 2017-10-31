@@ -16,7 +16,6 @@ package cool.pandora.modeller;
 
 import java.io.Serializable;
 import java.io.StringWriter;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
@@ -30,23 +29,19 @@ import org.json.JSONWriter;
  * @author Jon Steinbach
  */
 public class Contact implements Serializable {
-    private static final long serialVersionUID = 1L;
-
-    private ProfileField contactName;
-    private ProfileField telephone;
-    private ProfileField email;
-
     public static final String FIELD_CONTACT_NAME = "Contact-Name";
     public static final String FIELD_CONTACT_PHONE = "Contact-Phone";
     public static final String FIELD_CONTACT_EMAIL = "Contact-Email";
-
     public static final String FIELD_TO_CONTACT_NAME = "To-Contact-Name";
     public static final String FIELD_TO_CONTACT_PHONE = "To-Contact-Phone";
     public static final String FIELD_TO_CONTACT_EMAIL = "To-Contact-Email";
-
+    private static final long serialVersionUID = 1L;
     private static final String FIELD_JSON_NAME = "name";
     private static final String FIELD_JSON_PHONE = "phone";
     private static final String FIELD_JSON_EMAIL = "email";
+    private ProfileField contactName;
+    private ProfileField telephone;
+    private ProfileField email;
 
     /**
      * Contact.
@@ -72,6 +67,70 @@ public class Contact implements Serializable {
 
         email = new ProfileField();
         email.setFieldName(mail);
+    }
+
+    /**
+     * createContact.
+     *
+     * @param contactSendToJson JSONObject
+     * @param sendTo            boolean
+     * @return contact
+     * @throws JSONException exception
+     */
+    static Contact createContact(final JSONObject contactSendToJson, final boolean sendTo)
+            throws JSONException {
+        final Contact contact = new Contact();
+        final String name = sendTo ? FIELD_TO_CONTACT_NAME : FIELD_CONTACT_NAME;
+        final String phone = sendTo ? FIELD_TO_CONTACT_PHONE : FIELD_CONTACT_PHONE;
+        final String email = sendTo ? FIELD_TO_CONTACT_EMAIL : FIELD_CONTACT_EMAIL;
+
+        ProfileField namefield = null;
+        ProfileField phonefield = null;
+        ProfileField emailfield = null;
+
+        if (contactSendToJson != null) {
+            if (contactSendToJson.has(FIELD_JSON_NAME)) {
+                final JSONObject nameJson = (JSONObject) contactSendToJson.get(FIELD_JSON_NAME);
+                if (nameJson != null) {
+                    namefield = ProfileField.createProfileField(nameJson, name);
+                }
+            }
+
+            if (contactSendToJson.has(FIELD_JSON_PHONE)) {
+                final JSONObject phoneJson = (JSONObject) contactSendToJson.get(FIELD_JSON_PHONE);
+                if (phoneJson != null) {
+                    phonefield = ProfileField.createProfileField(phoneJson, phone);
+                }
+            }
+
+            if (contactSendToJson.has(FIELD_JSON_EMAIL)) {
+                final JSONObject emailJson = (JSONObject) contactSendToJson.get(FIELD_JSON_EMAIL);
+                if (emailJson != null) {
+                    emailfield = ProfileField.createProfileField(emailJson, email);
+                }
+            }
+        }
+
+        if (namefield == null) {
+            namefield = new ProfileField();
+            namefield.setFieldName(name);
+        }
+
+        if (phonefield == null) {
+            phonefield = new ProfileField();
+            phonefield.setFieldName(phone);
+        }
+
+        if (emailfield == null) {
+            emailfield = new ProfileField();
+            emailfield.setFieldName(email);
+        }
+
+        contact.setContactName(namefield);
+        contact.setTelephone(phonefield);
+        contact.setEmail(emailfield);
+
+        return contact;
     }
 
     /**
@@ -140,70 +199,6 @@ public class Contact implements Serializable {
         return "";
     }
 
-    /**
-     * createContact.
-     *
-     * @param contactSendToJson JSONObject
-     * @param sendTo boolean
-     * @return contact
-     * @throws JSONException exception
-     */
-    static Contact createContact(final JSONObject contactSendToJson, final boolean sendTo) throws
-            JSONException {
-        final Contact contact = new Contact();
-        final String name = sendTo ? FIELD_TO_CONTACT_NAME : FIELD_CONTACT_NAME;
-        final String phone = sendTo ? FIELD_TO_CONTACT_PHONE : FIELD_CONTACT_PHONE;
-        final String email = sendTo ? FIELD_TO_CONTACT_EMAIL : FIELD_CONTACT_EMAIL;
-
-        ProfileField namefield = null;
-        ProfileField phonefield = null;
-        ProfileField emailfield = null;
-
-        if (contactSendToJson != null) {
-            if (contactSendToJson.has(FIELD_JSON_NAME)) {
-                final JSONObject nameJson = (JSONObject) contactSendToJson.get(FIELD_JSON_NAME);
-                if (nameJson != null) {
-                    namefield = ProfileField.createProfileField(nameJson, name);
-                }
-            }
-
-            if (contactSendToJson.has(FIELD_JSON_PHONE)) {
-                final JSONObject phoneJson = (JSONObject) contactSendToJson.get(FIELD_JSON_PHONE);
-                if (phoneJson != null) {
-                    phonefield = ProfileField.createProfileField(phoneJson, phone);
-                }
-            }
-
-            if (contactSendToJson.has(FIELD_JSON_EMAIL)) {
-                final JSONObject emailJson = (JSONObject) contactSendToJson.get(FIELD_JSON_EMAIL);
-                if (emailJson != null) {
-                    emailfield = ProfileField.createProfileField(emailJson, email);
-                }
-            }
-        }
-
-        if (namefield == null) {
-            namefield = new ProfileField();
-            namefield.setFieldName(name);
-        }
-
-        if (phonefield == null) {
-            phonefield = new ProfileField();
-            phonefield.setFieldName(phone);
-        }
-
-        if (emailfield == null) {
-            emailfield = new ProfileField();
-            emailfield.setFieldName(email);
-        }
-
-        contact.setContactName(namefield);
-        contact.setTelephone(phonefield);
-        contact.setEmail(emailfield);
-
-        return contact;
-    }
-
     String serialize() throws JSONException {
 
         final StringWriter writer = new StringWriter();
@@ -211,10 +206,10 @@ public class Contact implements Serializable {
 
         contactWriter.object().key(FIELD_JSON_NAME)
                 .value(new JSONObject(new JSONTokener(getContactName().serialize())));
-        contactWriter.key(FIELD_JSON_PHONE).value(new JSONObject(new JSONTokener(getTelephone()
-                .serialize())));
-        contactWriter.key(FIELD_JSON_EMAIL).value(new JSONObject(new JSONTokener(getEmail()
-                .serialize())));
+        contactWriter.key(FIELD_JSON_PHONE)
+                .value(new JSONObject(new JSONTokener(getTelephone().serialize())));
+        contactWriter.key(FIELD_JSON_EMAIL)
+                .value(new JSONObject(new JSONTokener(getEmail().serialize())));
         contactWriter.endObject();
 
         return writer.toString();

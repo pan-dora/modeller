@@ -20,11 +20,10 @@ public class JavaSpecSystemPropertyExceptionTest {
 
     @Test(expected = NumberFormatException.class)
     public void systemPropertyTest() {
-        String jvmVersionString =
-                System.getProperty("java.specification.version");
+        String jvmVersionString = System.getProperty("java.specification.version");
 
         int verIndex = jvmVersionString.indexOf("1.");
-        jvmVersionString = jvmVersionString.substring(verIndex+2);
+        jvmVersionString = jvmVersionString.substring(verIndex + 2);
 
         int jvmVersion = Integer.parseInt(jvmVersionString);
     }

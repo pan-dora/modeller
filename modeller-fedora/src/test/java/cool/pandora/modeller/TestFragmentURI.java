@@ -27,8 +27,8 @@ public class TestFragmentURI {
     }
 
     public static void main(final String[] args) {
-        final URI uri =
-                URI.create("http://localhost:8080/fcrepo/rest/collection/test/003/canvas/19#xywh"
+        final URI uri = URI.create(
+                "http://localhost:8080/fcrepo/rest/collection/test/003/canvas/19#xywh"
                         + "=2999,1542,62,56");
         final String out = uri.toString();
         System.out.println(out);

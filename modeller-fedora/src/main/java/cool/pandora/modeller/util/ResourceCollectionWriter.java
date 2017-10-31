@@ -20,13 +20,11 @@ import static org.apache.jena.riot.writer.WriterConst.RDF_Nil;
 import static org.apache.jena.riot.writer.WriterConst.RDF_Rest;
 
 import cool.pandora.modeller.common.uri.IIIFPredicates;
-
 import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-
 import org.apache.jena.graph.Node;
 import org.apache.jena.query.Dataset;
 import org.apache.jena.query.DatasetFactory;
@@ -40,39 +38,20 @@ import org.apache.jena.riot.lang.BlankNodeAllocator;
 import org.apache.jena.riot.lang.BlankNodeAllocatorHash;
 
 
-
 /**
  * ResourceCollectionWriter.
  *
  * @author Christopher Johnson
  */
 public class ResourceCollectionWriter {
-    /**
-     * collection.
-     *
-     * @return ResourceCollectionBuilder
-     */
-    public static ResourceCollectionBuilder collection() {
-        return new ResourceCollectionBuilder();
-    }
-
     private final ByteArrayOutputStream rdfCollection;
-
-    /**
-     * render.
-     *
-     * @return rdfCollection
-     */
-    public String render() {
-        return this.rdfCollection.toString();
-    }
 
     /**
      * ResourceCollectionWriter.
      *
-     * @param idList List
+     * @param idList              List
      * @param collectionPredicate String
-     * @param resourceTargetMap Map
+     * @param resourceTargetMap   Map
      */
     ResourceCollectionWriter(final List<String> idList, final String collectionPredicate,
                              final Map<String, String> resourceTargetMap) {
@@ -179,10 +158,19 @@ public class ResourceCollectionWriter {
     }
 
     /**
+     * collection.
+     *
+     * @return ResourceCollectionBuilder
+     */
+    public static ResourceCollectionBuilder collection() {
+        return new ResourceCollectionBuilder();
+    }
+
+    /**
      * getIDPos.
      *
      * @param idList List
-     * @param id String
+     * @param id     String
      * @return id position
      */
     private static int getIDPos(final List<String> idList, final String id) {
@@ -213,7 +201,7 @@ public class ResourceCollectionWriter {
     /**
      * getObjNodeFromPrevIndex.
      *
-     * @param pos int
+     * @param pos      int
      * @param bnodeMap bnodeMap
      * @return object Node
      */
@@ -226,12 +214,12 @@ public class ResourceCollectionWriter {
     /**
      * getSubjNodeForCurrentIndex.
      *
-     * @param pos int
+     * @param pos      int
      * @param bnodeMap Map
      * @return subject Node
      */
-    private static Node getSubjNodeForCurrentIndex(final int pos, final Map<String, Node>
-            bnodeMap) {
+    private static Node getSubjNodeForCurrentIndex(final int pos,
+                                                   final Map<String, Node> bnodeMap) {
         final String objKey = String.valueOf(pos) + ":subj";
         return bnodeMap.get(objKey);
     }
@@ -239,7 +227,7 @@ public class ResourceCollectionWriter {
     /**
      * getObjNodeForCurrentIndex.
      *
-     * @param pos int
+     * @param pos      int
      * @param bnodeMap Map
      * @return object Node
      */
@@ -272,6 +260,15 @@ public class ResourceCollectionWriter {
     }
 
     /**
+     * render.
+     *
+     * @return rdfCollection
+     */
+    public String render() {
+        return this.rdfCollection.toString();
+    }
+
+    /**
      * ResourceCollectionBuilder.
      */
     public static class ResourceCollectionBuilder {
@@ -286,8 +283,8 @@ public class ResourceCollectionWriter {
          * @param idList List
          * @return this
          */
-        public ResourceCollectionWriter.ResourceCollectionBuilder idList(final List<String>
-                                                                                 idList) {
+        public ResourceCollectionWriter.ResourceCollectionBuilder idList(
+                final List<String> idList) {
             this.idList = idList;
             return this;
         }
@@ -322,8 +319,8 @@ public class ResourceCollectionWriter {
          * @return ResourceCollectionWriter
          */
         public ResourceCollectionWriter build() {
-            return new ResourceCollectionWriter(this.idList, this.collectionPredicate, this
-                    .resourceTargetMap);
+            return new ResourceCollectionWriter(this.idList, this.collectionPredicate,
+                    this.resourceTargetMap);
         }
 
         /**

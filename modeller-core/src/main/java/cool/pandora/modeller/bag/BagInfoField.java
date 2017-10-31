@@ -15,7 +15,6 @@
 package cool.pandora.modeller.bag;
 
 import cool.pandora.modeller.ProfileField;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,14 +25,13 @@ import java.util.List;
  * @author gov.loc
  */
 public class BagInfoField implements Serializable {
-    private static final long serialVersionUID = 1L;
     public static final int TEXTFIELD_COMPONENT = 1;
     public static final int TEXTAREA_COMPONENT = 2;
     public static final int LIST_COMPONENT = 3;
     public static final String TEXTFIELD_CODE = "TF";
     public static final String TEXTAREA_CODE = "TA";
     public static final int MAX_VALUE = 32;
-
+    private static final long serialVersionUID = 1L;
     private String name = "";
     private String label = "";
     private String value = "";
@@ -81,15 +79,6 @@ public class BagInfoField implements Serializable {
     }
 
     /**
-     * setName.
-     *
-     * @param n String
-     */
-    public void setName(final String n) {
-        this.name = n;
-    }
-
-    /**
      * getName.
      *
      * @return name
@@ -99,12 +88,12 @@ public class BagInfoField implements Serializable {
     }
 
     /**
-     * setLabel.
+     * setName.
      *
-     * @param l String
+     * @param n String
      */
-    public void setLabel(final String l) {
-        this.label = l;
+    public void setName(final String n) {
+        this.name = n;
     }
 
     /**
@@ -117,12 +106,12 @@ public class BagInfoField implements Serializable {
     }
 
     /**
-     * setValue.
+     * setLabel.
      *
-     * @param v String
+     * @param l String
      */
-    public void setValue(final String v) {
-        this.value = v;
+    public void setLabel(final String l) {
+        this.label = l;
     }
 
     /**
@@ -135,12 +124,12 @@ public class BagInfoField implements Serializable {
     }
 
     /**
-     * setElements.
+     * setValue.
      *
-     * @param e List
+     * @param v String
      */
-    public void setElements(final List<String> e) {
-        this.elements = e;
+    public void setValue(final String v) {
+        this.value = v;
     }
 
     /**
@@ -153,12 +142,12 @@ public class BagInfoField implements Serializable {
     }
 
     /**
-     * setComponentType.
+     * setElements.
      *
-     * @param type int
+     * @param e List
      */
-    public void setComponentType(final int type) {
-        this.componentType = type;
+    public void setElements(final List<String> e) {
+        this.elements = e;
     }
 
     /**
@@ -168,6 +157,15 @@ public class BagInfoField implements Serializable {
      */
     public int getComponentType() {
         return this.componentType;
+    }
+
+    /**
+     * setComponentType.
+     *
+     * @param type int
+     */
+    public void setComponentType(final int type) {
+        this.componentType = type;
     }
 
     /**
@@ -273,12 +271,10 @@ public class BagInfoField implements Serializable {
     @Override
     public String toString() {
         return "\n" + "Label: " + getLabel() + "\n" + "Name: " + getName() + "\n" + "Value: "
-                + getValue() + "\n"
-                + "Type: " + getComponentType() + "\n" + "Elements: " + getElements() + "\n"
-                + "isRequired: "
-                + isRequired() + "\n" + "isRequiredvalue: " + isRequiredvalue() + "\n"
-                + "isEnabled: " + isEnabled()
-                + "\n" + "isEditable: " + isEditable() + "\n";
+                + getValue() + "\n" + "Type: " + getComponentType() + "\n" + "Elements: "
+                + getElements() + "\n" + "isRequired: " + isRequired() + "\n" + "isRequiredvalue: "
+                + isRequiredvalue() + "\n" + "isEnabled: " + isEnabled() + "\n" + "isEditable: "
+                + isEditable() + "\n";
     }
 
 }

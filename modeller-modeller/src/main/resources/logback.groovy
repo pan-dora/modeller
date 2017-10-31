@@ -1,7 +1,6 @@
 import ch.qos.logback.classic.encoder.PatternLayoutEncoder
 
 import static ch.qos.logback.classic.Level.DEBUG
-import static ch.qos.logback.classic.Level.INFO
 
 def LOG_PATH = "/tmp/modeller-logs"
 

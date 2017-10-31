@@ -17,9 +17,7 @@ package cool.pandora.modeller.ui.handlers.base;
 import cool.pandora.modeller.bag.impl.DefaultBag;
 import cool.pandora.modeller.ui.jpanel.base.BagView;
 import cool.pandora.modeller.ui.jpanel.base.SaveBagFrame;
-
 import java.awt.event.ActionEvent;
-
 import javax.swing.AbstractAction;
 
 /**
@@ -49,8 +47,8 @@ public class SaveBagAsHandler extends AbstractAction {
 
     void openSaveBagAsFrame() {
         bag = bagView.getBag();
-        final SaveBagFrame saveBagFrame = new SaveBagFrame(bagView, bagView.getPropertyMessage(
-                "bag.frame.save"));
+        final SaveBagFrame saveBagFrame =
+                new SaveBagFrame(bagView, bagView.getPropertyMessage("bag.frame.save"));
         saveBagFrame.setBag(bag);
         saveBagFrame.setVisible(true);
     }

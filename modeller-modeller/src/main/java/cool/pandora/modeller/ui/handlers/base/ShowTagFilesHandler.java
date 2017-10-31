@@ -17,9 +17,7 @@ package cool.pandora.modeller.ui.handlers.base;
 import cool.pandora.modeller.bag.impl.DefaultBag;
 import cool.pandora.modeller.ui.TagFilesFrame;
 import cool.pandora.modeller.ui.jpanel.base.BagView;
-
 import java.awt.event.ActionEvent;
-
 import javax.swing.AbstractAction;
 
 
@@ -51,8 +49,8 @@ public class ShowTagFilesHandler extends AbstractAction {
     private void showTagFiles() {
         bag = bagView.getBag();
         bagView.tagManifestPane.updateCompositePaneTabs(bag);
-        final TagFilesFrame tagFilesFrame = new TagFilesFrame(bagView.getPropertyMessage("bagView"
-                + ".tagFrame.title"));
+        final TagFilesFrame tagFilesFrame =
+                new TagFilesFrame(bagView.getPropertyMessage("bagView" + ".tagFrame.title"));
         tagFilesFrame.addComponents(bagView.tagManifestPane);
         tagFilesFrame.addComponents(bagView.tagManifestPane);
         tagFilesFrame.setVisible(true);

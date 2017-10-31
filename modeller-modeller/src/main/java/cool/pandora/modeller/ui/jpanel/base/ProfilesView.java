@@ -15,11 +15,9 @@
 package cool.pandora.modeller.ui.jpanel.base;
 
 import cool.pandora.modeller.ui.util.ApplicationContextUtil;
-
 import java.awt.BorderLayout;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
-
 import org.springframework.richclient.application.PageComponentContext;
 import org.springframework.richclient.application.support.AbstractView;
 
@@ -42,8 +40,8 @@ public class ProfilesView extends AbstractView {
     protected void registerLocalCommandExecutors(final PageComponentContext context) {
         context.register("startCommand", ApplicationContextUtil.getBagView().startExecutor);
         context.register("openCommand", ApplicationContextUtil.getBagView().openExecutor);
-        context.register("createBagInPlaceCommand", ApplicationContextUtil.getBagView()
-                .createBagInPlaceExecutor);
+        context.register("createBagInPlaceCommand",
+                ApplicationContextUtil.getBagView().createBagInPlaceExecutor);
         context.register("clearCommand", ApplicationContextUtil.getBagView().clearExecutor);
         context.register("validateCommand", ApplicationContextUtil.getBagView().validateExecutor);
         context.register("completeCommand", ApplicationContextUtil.getBagView().completeExecutor);

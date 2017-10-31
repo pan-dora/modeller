@@ -20,7 +20,6 @@ import java.awt.datatransfer.UnsupportedFlavorException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.JComponent;
 import javax.swing.JTree;
 import javax.swing.TransferHandler;
@@ -28,7 +27,6 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,13 +36,12 @@ import org.slf4j.LoggerFactory;
  * @author gov.loc
  */
 public class BagTreeTransferHandler extends TransferHandler {
-    private static final long serialVersionUID = 1L;
-
     protected static final Logger log = LoggerFactory.getLogger(BagTreeTransferHandler.class);
-    private static final DataFlavor uriListFlavor = new DataFlavor("text/uri-list;class=java.lang"
-            + ".String", null);
-    private DataFlavor nodesFlavor;
+    private static final long serialVersionUID = 1L;
+    private static final DataFlavor uriListFlavor =
+            new DataFlavor("text/uri-list;class=java.lang" + ".String", null);
     private final DataFlavor[] flavors = new DataFlavor[1];
+    private DataFlavor nodesFlavor;
     private DefaultMutableTreeNode[] nodesToRemove;
 
     /**
@@ -53,10 +50,8 @@ public class BagTreeTransferHandler extends TransferHandler {
     public BagTreeTransferHandler() {
         super();
         try {
-            final String mimeType =
-                    DataFlavor.javaJVMLocalObjectMimeType + ";class=\""
-                            + DefaultMutableTreeNode[].class.getName()
-                            + "\"";
+            final String mimeType = DataFlavor.javaJVMLocalObjectMimeType + ";class=\""
+                    + DefaultMutableTreeNode[].class.getName() + "\"";
             nodesFlavor = new DataFlavor(mimeType);
             flavors[0] = nodesFlavor;
         } catch (final ClassNotFoundException e) {
@@ -74,6 +69,15 @@ public class BagTreeTransferHandler extends TransferHandler {
         log.info(msg);
     }
 
+    /**
+     * copy.
+     *
+     * <p>Defensive copy used in createTransferable.
+     */
+    private static DefaultMutableTreeNode copy(final TreeNode node) {
+        return new DefaultMutableTreeNode(node);
+    }
+
     @Override
     public int getSourceActions(final JComponent c) {
         return TransferHandler.COPY;
@@ -82,7 +86,7 @@ public class BagTreeTransferHandler extends TransferHandler {
     /**
      * canImport.
      *
-     * @param comp JComponent
+     * @param comp            JComponent
      * @param transferFlavors DataFlavor
      * @return boolean
      */
@@ -125,14 +129,14 @@ public class BagTreeTransferHandler extends TransferHandler {
             // exportDone after a successful drop.
             final List<DefaultMutableTreeNode> copies = new ArrayList<>();
             final List<DefaultMutableTreeNode> toRemove = new ArrayList<>();
-            final DefaultMutableTreeNode node = (DefaultMutableTreeNode) paths[0]
-                    .getLastPathComponent();
+            final DefaultMutableTreeNode node =
+                    (DefaultMutableTreeNode) paths[0].getLastPathComponent();
             final DefaultMutableTreeNode copy = copy(node);
             copies.add(copy);
             toRemove.add(node);
             for (int i = 1; i < paths.length; i++) {
-                final DefaultMutableTreeNode next = (DefaultMutableTreeNode) paths[i]
-                        .getLastPathComponent();
+                final DefaultMutableTreeNode next =
+                        (DefaultMutableTreeNode) paths[i].getLastPathComponent();
                 // Do not allow higher level nodes to be added to list.
                 if (next.getLevel() < node.getLevel()) {
                     break;
@@ -144,8 +148,8 @@ public class BagTreeTransferHandler extends TransferHandler {
                     toRemove.add(next);
                 }
             }
-            final DefaultMutableTreeNode[] nodes = copies.toArray(new
-                    DefaultMutableTreeNode[copies.size()]);
+            final DefaultMutableTreeNode[] nodes =
+                    copies.toArray(new DefaultMutableTreeNode[copies.size()]);
             nodesToRemove = toRemove.toArray(new DefaultMutableTreeNode[toRemove.size()]);
             return new NodesTransferable(nodes);
         }
@@ -153,19 +157,10 @@ public class BagTreeTransferHandler extends TransferHandler {
     }
 
     /**
-     * copy.
-     *
-     * <p>Defensive copy used in createTransferable.
-     */
-    private static DefaultMutableTreeNode copy(final TreeNode node) {
-        return new DefaultMutableTreeNode(node);
-    }
-
-    /**
      * exportDone.
      *
      * @param source JComponent
-     * @param data Transferable
+     * @param data   Transferable
      * @param action int
      */
     @Override

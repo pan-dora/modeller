@@ -19,7 +19,6 @@ import static junit.framework.TestCase.assertEquals;
 
 import java.io.IOException;
 import java.io.InputStream;
-
 import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 

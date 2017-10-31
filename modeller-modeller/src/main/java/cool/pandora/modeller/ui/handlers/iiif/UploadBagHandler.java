@@ -27,18 +27,17 @@ import cool.pandora.modeller.ui.jpanel.base.BagView;
 import cool.pandora.modeller.ui.jpanel.iiif.UploadBagFrame;
 import cool.pandora.modeller.ui.util.ApplicationContextUtil;
 import cool.pandora.modeller.util.ImageIOUtil;
-
 import gov.loc.repository.bagit.impl.AbstractBagConstants;
-
 import java.awt.event.ActionEvent;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.net.URI;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
-
 import javax.swing.AbstractAction;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -79,13 +78,19 @@ public class UploadBagHandler extends AbstractAction implements Progress {
             final URI destinationURI = IIIFObjectURI.getDestinationURI(map, filename);
             final Path absoluteFilePath = rootDir.resolve(filePath);
             final File resourceFile = absoluteFilePath.toFile();
-            String contentType = ImageIOUtil.getImageMIMEType(resourceFile);
             try {
-                ModellerClient.doBinaryPut(destinationURI, resourceFile, contentType);
-                ApplicationContextUtil.addConsoleMessage(message + " " + destinationURI);
-            } catch (final ModellerClientFailedException e) {
-                ApplicationContextUtil.addConsoleMessage(getMessage(e));
+                final InputStream targetStream = new FileInputStream(resourceFile);
+                final String contentType = ImageIOUtil.getImageMIMEType(resourceFile);
+                try {
+                    ModellerClient.doStreamPut(destinationURI, targetStream, contentType);
+                    ApplicationContextUtil.addConsoleMessage(message + " " + destinationURI);
+                } catch (final ModellerClientFailedException e) {
+                    ApplicationContextUtil.addConsoleMessage(getMessage(e));
+                }
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
             }
+
         }
         bagView.getControl().invalidate();
     }

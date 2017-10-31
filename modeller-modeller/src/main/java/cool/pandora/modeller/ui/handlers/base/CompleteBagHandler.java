@@ -18,11 +18,8 @@ import cool.pandora.modeller.bag.impl.DefaultBag;
 import cool.pandora.modeller.ui.Progress;
 import cool.pandora.modeller.ui.jpanel.base.BagView;
 import cool.pandora.modeller.ui.util.ApplicationContextUtil;
-
 import gov.loc.repository.bagit.verify.impl.CompleteVerifierImpl;
-
 import java.awt.event.ActionEvent;
-
 import javax.swing.AbstractAction;
 import javax.swing.SwingUtilities;
 
@@ -66,8 +63,8 @@ public class CompleteBagHandler extends AbstractAction implements Progress {
             messages = bag.completeBag(completeVerifier);
 
             if (messages != null && !messages.trim().isEmpty()) {
-                BagView.showWarningErrorDialog("Warning - incomplete", "Is complete result: "
-                        + messages);
+                BagView.showWarningErrorDialog("Warning - incomplete",
+                        "Is complete result: " + messages);
             } else {
                 BagView.showWarningErrorDialog("Is Complete Dialog", "Bag is complete.");
             }

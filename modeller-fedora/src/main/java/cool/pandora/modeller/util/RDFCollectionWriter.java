@@ -24,7 +24,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-
 import org.apache.jena.graph.Node;
 import org.apache.jena.query.Dataset;
 import org.apache.jena.query.DatasetFactory;
@@ -44,32 +43,13 @@ import org.apache.jena.riot.lang.BlankNodeAllocatorHash;
  * @author Christopher Johnson
  */
 public class RDFCollectionWriter {
-    /**
-     * collection.
-     *
-     * @return RDFCollectionBuilder
-     */
-    public static RDFCollectionBuilder collection() {
-        return new RDFCollectionBuilder();
-    }
-
     private final ByteArrayOutputStream rdfCollection;
-
-    /**
-     * render.
-     *
-     * @return rdfCollection
-     */
-    public String render() {
-        return this.rdfCollection.toString();
-    }
-
 
     /**
      * RDFCollectionWriter.
      *
-     * @param idList List
-     * @param collectionPredicate String
+     * @param idList               List
+     * @param collectionPredicate  String
      * @param resourceContainerIRI resourceContainerIRI
      */
     RDFCollectionWriter(final List<String> idList, final String collectionPredicate,
@@ -152,10 +132,19 @@ public class RDFCollectionWriter {
     }
 
     /**
+     * collection.
+     *
+     * @return RDFCollectionBuilder
+     */
+    public static RDFCollectionBuilder collection() {
+        return new RDFCollectionBuilder();
+    }
+
+    /**
      * getIDPos.
      *
      * @param idList List
-     * @param id String
+     * @param id     String
      * @return index
      */
     private static int getIDPos(final List<String> idList, final String id) {
@@ -186,7 +175,7 @@ public class RDFCollectionWriter {
     /**
      * getObjNodeFromPrevIndex.
      *
-     * @param pos int
+     * @param pos      int
      * @param bnodeMap Map
      * @return objNode
      */
@@ -199,12 +188,12 @@ public class RDFCollectionWriter {
     /**
      * getSubjNodeForCurrentIndex.
      *
-     * @param pos int
+     * @param pos      int
      * @param bnodeMap Map
      * @return subjNode
      */
-    private static Node getSubjNodeForCurrentIndex(final int pos, final Map<String, Node>
-            bnodeMap) {
+    private static Node getSubjNodeForCurrentIndex(final int pos,
+                                                   final Map<String, Node> bnodeMap) {
         final String objKey = String.valueOf(pos) + ":subj";
         return bnodeMap.get(objKey);
     }
@@ -212,7 +201,7 @@ public class RDFCollectionWriter {
     /**
      * getObjNodeForCurrentIndex.
      *
-     * @param pos int
+     * @param pos      int
      * @param bnodeMap Map
      * @return objNode
      */
@@ -248,12 +237,21 @@ public class RDFCollectionWriter {
      * getResourceURI.
      *
      * @param resourceContainerIRI String
-     * @param resourceID String
+     * @param resourceID           String
      * @return resourceURI
      */
-    private static String getResourceURI(final String resourceContainerIRI, final String
-            resourceID) {
+    private static String getResourceURI(final String resourceContainerIRI,
+                                         final String resourceID) {
         return resourceContainerIRI + resourceID;
+    }
+
+    /**
+     * render.
+     *
+     * @return rdfCollection
+     */
+    public String render() {
+        return this.rdfCollection.toString();
     }
 
     public static class RDFCollectionBuilder {
@@ -279,8 +277,8 @@ public class RDFCollectionWriter {
          * @param collectionPredicate String
          * @return this
          */
-        public RDFCollectionWriter.RDFCollectionBuilder collectionPredicate(final String
-                                                                              collectionPredicate) {
+        public RDFCollectionWriter.RDFCollectionBuilder collectionPredicate(
+                final String collectionPredicate) {
             this.collectionPredicate = collectionPredicate;
             return this;
         }
@@ -291,8 +289,8 @@ public class RDFCollectionWriter {
          * @param resourceContainerIRI String
          * @return this
          */
-        public RDFCollectionWriter.RDFCollectionBuilder resourceContainerIRI(final String
-                                                                             resourceContainerIRI) {
+        public RDFCollectionWriter.RDFCollectionBuilder resourceContainerIRI(
+                final String resourceContainerIRI) {
             this.resourceContainerIRI = resourceContainerIRI;
             return this;
         }
@@ -303,8 +301,8 @@ public class RDFCollectionWriter {
          * @return collection
          */
         public RDFCollectionWriter build() {
-            return new RDFCollectionWriter(this.idList, this.collectionPredicate, this
-                    .resourceContainerIRI);
+            return new RDFCollectionWriter(this.idList, this.collectionPredicate,
+                    this.resourceContainerIRI);
         }
 
         /**

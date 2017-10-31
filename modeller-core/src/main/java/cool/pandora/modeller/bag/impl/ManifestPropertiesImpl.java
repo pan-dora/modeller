@@ -21,7 +21,6 @@ import gov.loc.repository.bagit.BagHelper;
 import gov.loc.repository.bagit.BagInfoTxt;
 import gov.loc.repository.bagit.utilities.namevalue.NameValueReader.NameValue;
 import gov.loc.repository.bagit.utilities.namevalue.impl.AbstractNameValueMapListBagFile;
-
 import java.lang.reflect.Field;
 import java.text.DateFormat;
 import java.text.MessageFormat;
@@ -42,11 +41,11 @@ public class ManifestPropertiesImpl extends AbstractNameValueMapListBagFile impl
     public static final String FIELD_ATTRIBUTION = "Attribution";
     public static final String FIELD_LICENSE = "License";
     public static final String FIELD_LABEL = "Label";
-    static final String FIELD_DESCRIPTION = "Description";
     public static final String FIELD_AUTHOR = "Author";
     public static final String FIELD_PUBLISHED = "Published";
     public static final String FIELD_INSTITUTION_LOGO_URI = "Logo URI";
     public static final String FIELD_RENDERING = "Rendering URI";
+    static final String FIELD_DESCRIPTION = "Description";
     static final String FIELD_RENDERING_LABEL = "Rendering Label";
     static final String FIELD_RENDERING_FORMAT = "Rendering MIME Type";
     private static final String FIELD_SOURCE_ORGANIZATION = "Source-Organization";
@@ -72,7 +71,7 @@ public class ManifestPropertiesImpl extends AbstractNameValueMapListBagFile impl
     /**
      * ManifestPropertiesImpl.
      *
-     * @param bagFile BagFile
+     * @param bagFile      BagFile
      * @param bagConstants BagConstants
      */
     public ManifestPropertiesImpl(final BagFile bagFile, final BagConstants bagConstants) {
@@ -92,6 +91,22 @@ public class ManifestPropertiesImpl extends AbstractNameValueMapListBagFile impl
     @Override
     public String getBagCount() {
         return this.getCaseInsensitive(FIELD_BAG_COUNT);
+    }
+
+    @Override
+    public void setBagCount(final String bagCount) {
+        this.put(FIELD_BAG_COUNT, bagCount);
+    }
+
+    @Override
+    public void setBagCount(final int bagInGroup, final int totalBagsInGroup) {
+        String totalBags = Integer.toString(totalBagsInGroup);
+        if (totalBagsInGroup == UNKNOWN_TOTAL_BAGS_IN_GROUP) {
+            totalBags = UNKNOWN_TOTAL_BAGS_IN_GROUP_MARKER;
+        }
+        this.setBagCount(
+                MessageFormat.format("{0} of {1}", Integer.toString(bagInGroup), totalBags));
+
     }
 
     @Override
@@ -149,8 +164,45 @@ public class ManifestPropertiesImpl extends AbstractNameValueMapListBagFile impl
     }
 
     @Override
+    public void setBagGroupIdentifier(final String bagGroupIdentifier) {
+        this.put(FIELD_BAG_GROUP_IDENTIFIER, bagGroupIdentifier);
+
+    }
+
+    @Override
     public String getBagSize() {
         return this.getCaseInsensitive(FIELD_BAG_SIZE);
+    }
+
+    @Override
+    public void setBagSize(final String bagSize) {
+        this.put(FIELD_BAG_SIZE, bagSize);
+
+    }
+
+    @Override
+    public void setBaggingDate(final String baggingDate) {
+        this.put(FIELD_BAGGING_DATE, baggingDate);
+    }
+
+    @Override
+    public void setBaggingDate(final Date date) {
+        String dateString = null;
+        if (date != null) {
+            dateString = this.dateFormat.format(date);
+        }
+        this.setBaggingDate(dateString);
+    }
+
+    @Override
+    public void setBaggingDate(final int year, final int month, final int day) {
+        try {
+            this.setBaggingDate(this.dateFormat.parse(MessageFormat
+                    .format("{0}-{1}-{2}", Integer.toString(year), month, day)));
+
+        } catch (final Exception ex) {
+            throw new RuntimeException(ex);
+        }
     }
 
     @Override
@@ -178,8 +230,20 @@ public class ManifestPropertiesImpl extends AbstractNameValueMapListBagFile impl
     }
 
     @Override
+    public void setContactEmail(final String contactEmail) {
+        this.put(FIELD_CONTACT_EMAIL, contactEmail);
+
+    }
+
+    @Override
     public String getContactName() {
         return this.getCaseInsensitive(FIELD_CONTACT_NAME);
+    }
+
+    @Override
+    public void setContactName(final String contactName) {
+        this.put(FIELD_CONTACT_NAME, contactName);
+
     }
 
     @Override
@@ -188,8 +252,20 @@ public class ManifestPropertiesImpl extends AbstractNameValueMapListBagFile impl
     }
 
     @Override
+    public void setContactPhone(final String contactPhone) {
+        this.put(FIELD_CONTACT_PHONE, contactPhone);
+
+    }
+
+    @Override
     public String getExternalDescription() {
         return this.getCaseInsensitive(FIELD_EXTERNAL_DESCRIPTION);
+    }
+
+    @Override
+    public void setExternalDescription(final String externalDescription) {
+        this.put(FIELD_EXTERNAL_DESCRIPTION, externalDescription);
+
     }
 
     @Override
@@ -198,8 +274,20 @@ public class ManifestPropertiesImpl extends AbstractNameValueMapListBagFile impl
     }
 
     @Override
+    public void setExternalIdentifier(final String externalIdentifier) {
+        this.put(FIELD_EXTERNAL_IDENTIFIER, externalIdentifier);
+
+    }
+
+    @Override
     public String getInternalSenderDescription() {
         return this.getCaseInsensitive(FIELD_INTERNAL_SENDER_DESCRIPTION);
+    }
+
+    @Override
+    public void setInternalSenderDescription(final String internalSenderDescription) {
+        this.put(FIELD_INTERNAL_SENDER_DESCRIPTION, internalSenderDescription);
+
     }
 
     @Override
@@ -208,13 +296,35 @@ public class ManifestPropertiesImpl extends AbstractNameValueMapListBagFile impl
     }
 
     @Override
+    public void setInternalSenderIdentifier(final String internalSenderIdentifier) {
+        this.put(FIELD_INTERNAL_SENDER_IDENTIFIER, internalSenderIdentifier);
+
+    }
+
+    @Override
     public String getOrganizationAddress() {
         return this.getCaseInsensitive(FIELD_ORGANIZATION_ADDRESS);
     }
 
     @Override
+    public void setOrganizationAddress(final String organizationAddress) {
+        this.put(FIELD_ORGANIZATION_ADDRESS, organizationAddress);
+    }
+
+    @Override
     public String getPayloadOxum() {
         return this.getCaseInsensitive(FIELD_PAYLOAD_OXUM);
+    }
+
+    @Override
+    public void setPayloadOxum(final String payloadOxsum) {
+        this.put(FIELD_PAYLOAD_OXUM, payloadOxsum);
+    }
+
+    @Override
+    public void setPayloadOxum(final long octetCount, final long streamCount) {
+        this.setPayloadOxum(Long.toString(octetCount) + "." + Long.toString(streamCount));
+
     }
 
     @Override
@@ -262,125 +372,13 @@ public class ManifestPropertiesImpl extends AbstractNameValueMapListBagFile impl
     }
 
     @Override
-    public void setBagCount(final String bagCount) {
-        this.put(FIELD_BAG_COUNT, bagCount);
-    }
-
-    @Override
-    public void setBagCount(final int bagInGroup, final int totalBagsInGroup) {
-        String totalBags = Integer.toString(totalBagsInGroup);
-        if (totalBagsInGroup == UNKNOWN_TOTAL_BAGS_IN_GROUP) {
-            totalBags = UNKNOWN_TOTAL_BAGS_IN_GROUP_MARKER;
-        }
-        this.setBagCount(MessageFormat.format("{0} of {1}", Integer.toString(bagInGroup),
-                totalBags));
-
-    }
-
-    @Override
-    public void setBagGroupIdentifier(final String bagGroupIdentifier) {
-        this.put(FIELD_BAG_GROUP_IDENTIFIER, bagGroupIdentifier);
-
-    }
-
-    @Override
-    public void setBagSize(final String bagSize) {
-        this.put(FIELD_BAG_SIZE, bagSize);
-
-    }
-
-    @Override
-    public void setBaggingDate(final String baggingDate) {
-        this.put(FIELD_BAGGING_DATE, baggingDate);
-    }
-
-    @Override
-    public void setBaggingDate(final Date date) {
-        String dateString = null;
-        if (date != null) {
-            dateString = this.dateFormat.format(date);
-        }
-        this.setBaggingDate(dateString);
-    }
-
-    @Override
-    public void setBaggingDate(final int year, final int month, final int day) {
-        try {
-            this.setBaggingDate(
-                    this.dateFormat.parse(MessageFormat.format("{0}-{1}-{2}", Integer.toString(
-                            year), month, day)));
-
-        } catch (final Exception ex) {
-            throw new RuntimeException(ex);
-        }
-    }
-
-    @Override
-    public void setContactEmail(final String contactEmail) {
-        this.put(FIELD_CONTACT_EMAIL, contactEmail);
-
-    }
-
-    @Override
-    public void setContactName(final String contactName) {
-        this.put(FIELD_CONTACT_NAME, contactName);
-
-    }
-
-    @Override
-    public void setContactPhone(final String contactPhone) {
-        this.put(FIELD_CONTACT_PHONE, contactPhone);
-
-    }
-
-    @Override
-    public void setExternalDescription(final String externalDescription) {
-        this.put(FIELD_EXTERNAL_DESCRIPTION, externalDescription);
-
-    }
-
-    @Override
-    public void setExternalIdentifier(final String externalIdentifier) {
-        this.put(FIELD_EXTERNAL_IDENTIFIER, externalIdentifier);
-
-    }
-
-    @Override
-    public void setInternalSenderDescription(final String internalSenderDescription) {
-        this.put(FIELD_INTERNAL_SENDER_DESCRIPTION, internalSenderDescription);
-
-    }
-
-    @Override
-    public void setInternalSenderIdentifier(final String internalSenderIdentifier) {
-        this.put(FIELD_INTERNAL_SENDER_IDENTIFIER, internalSenderIdentifier);
-
-    }
-
-    @Override
-    public void setOrganizationAddress(final String organizationAddress) {
-        this.put(FIELD_ORGANIZATION_ADDRESS, organizationAddress);
-    }
-
-    @Override
-    public void setPayloadOxum(final String payloadOxsum) {
-        this.put(FIELD_PAYLOAD_OXUM, payloadOxsum);
-    }
-
-    @Override
-    public void setPayloadOxum(final long octetCount, final long streamCount) {
-        this.setPayloadOxum(Long.toString(octetCount) + "." + Long.toString(streamCount));
-
+    public void setSourceOrganization(final String sourceOrganization) {
+        this.put(FIELD_SOURCE_ORGANIZATION, sourceOrganization);
     }
 
     @Override
     public void generatePayloadOxum(final Bag bag) {
         this.setPayloadOxum(BagHelper.generatePayloadOctetCount(bag), bag.getPayload().size());
-    }
-
-    @Override
-    public void setSourceOrganization(final String sourceOrganization) {
-        this.put(FIELD_SOURCE_ORGANIZATION, sourceOrganization);
     }
 
     @Override
@@ -447,8 +445,8 @@ public class ManifestPropertiesImpl extends AbstractNameValueMapListBagFile impl
         final Field[] fields = this.getClass().getFields();
         try {
             for (final Field field : fields) {
-                if (field.getName().startsWith("FIELD_") && this.containsKeyCaseInsensitive(
-                        (String) field.get(this))) {
+                if (field.getName().startsWith("FIELD_") && this
+                        .containsKeyCaseInsensitive((String) field.get(this))) {
                     standardFields.addAll(this.getActualKeys((String) field.get(this)));
                 }
             }

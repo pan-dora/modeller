@@ -24,23 +24,23 @@ public class MetadataTemplate {
     private final String renderedTemplate;
 
     /**
+     * MetadataTemplate.
+     *
+     * @param template String
+     * @param scope    Scope
+     */
+    private MetadataTemplate(final String template, final Scope scope) {
+        final TemplateBuilder mb = new TemplateBuilder().scope(scope).template(template);
+        this.renderedTemplate = mb.build();
+    }
+
+    /**
      * template.
      *
      * @return MetadataTemplateBuilder
      */
     public static MetadataTemplate.MetadataTemplateBuilder template() {
         return new MetadataTemplate.MetadataTemplateBuilder();
-    }
-
-    /**
-     * MetadataTemplate.
-     *
-     * @param template String
-     * @param scope Scope
-     */
-    private MetadataTemplate(final String template, final Scope scope) {
-        final TemplateBuilder mb = new TemplateBuilder().scope(scope).template(template);
-        this.renderedTemplate = mb.build();
     }
 
     /**

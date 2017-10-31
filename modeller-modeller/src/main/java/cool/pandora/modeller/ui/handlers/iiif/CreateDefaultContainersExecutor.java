@@ -15,7 +15,6 @@
 package cool.pandora.modeller.ui.handlers.iiif;
 
 import cool.pandora.modeller.ui.jpanel.base.BagView;
-
 import org.springframework.richclient.command.support.AbstractActionCommandExecutor;
 
 /**

@@ -18,14 +18,11 @@ import cool.pandora.modeller.bag.impl.DefaultBag;
 import cool.pandora.modeller.ui.jpanel.base.BagView;
 import cool.pandora.modeller.ui.util.ApplicationContextUtil;
 import gov.loc.repository.bagit.impl.AbstractBagConstants;
-
 import java.awt.event.ActionEvent;
 import java.io.File;
-
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -85,8 +82,8 @@ public class OpenBagHandler extends AbstractAction {
             bagView.clearBagHandler.newDefaultBag(file);
             ApplicationContextUtil.addConsoleMessage("Opened the bag " + file.getAbsolutePath());
         } catch (final Exception ex) {
-            ApplicationContextUtil.addConsoleMessage("Failed to create bag message: " + ex
-                    .getMessage());
+            ApplicationContextUtil
+                    .addConsoleMessage("Failed to create bag message: " + ex.getMessage());
             ApplicationContextUtil.addConsoleMessage("Failed to create bag exception: " + ex);
             log.error("Failed to create bag", ex);
             // showWarningErrorDialog("Warning - file not opened",

@@ -28,17 +28,14 @@ import cool.pandora.modeller.ui.jpanel.base.BagView;
 import cool.pandora.modeller.ui.jpanel.iiif.CreateXmlFilesFrame;
 import cool.pandora.modeller.ui.util.ApplicationContextUtil;
 import cool.pandora.modeller.ui.util.URIResolver;
-
 import java.awt.event.ActionEvent;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Map;
-
 import javax.swing.AbstractAction;
 import javax.xml.bind.JAXBException;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -62,6 +59,16 @@ public class CreateXmlFilesHandler extends AbstractAction implements Progress {
         this.bagView = bagView;
     }
 
+    private static ByteArrayOutputStream getXmlOutputStream(final String collectionId,
+                                                            final String objektId,
+                                                            final String resourceId)
+            throws JAXBException {
+        final ByteArrayOutputStream xmlFileWriter;
+        xmlFileWriter = XmlFileWriter.write().collectionId(collectionId).objektId(objektId)
+                .resourceId(resourceId).build();
+        return xmlFileWriter;
+    }
+
     @Override
     public void actionPerformed(final ActionEvent e) {
         openCreateXmlFilesFrame();
@@ -74,11 +81,10 @@ public class CreateXmlFilesHandler extends AbstractAction implements Progress {
         final Map<String, BagInfoField> map = bag.getInfo().getFieldMap();
         final ResourceIdentifierList idList = new ResourceIdentifierList(bagView);
         final ArrayList<String> resourceIDList = idList.getResourceIdentifierList();
-        final String collectionId =
-                URIResolver.ContainerURIResolverNormal.getMapValue(map, ProfileOptions
-                        .COLLECTION_ID_KEY);
-        final String objektId = URIResolver.ContainerURIResolverNormal.getMapValue(map,
-                ProfileOptions.OBJEKT_ID_KEY);
+        final String collectionId = URIResolver.ContainerURIResolverNormal
+                .getMapValue(map, ProfileOptions.COLLECTION_ID_KEY);
+        final String objektId = URIResolver.ContainerURIResolverNormal
+                .getMapValue(map, ProfileOptions.OBJEKT_ID_KEY);
         for (final String resourceId : resourceIDList) {
             ByteArrayOutputStream resourceFile = null;
             try {
@@ -102,21 +108,9 @@ public class CreateXmlFilesHandler extends AbstractAction implements Progress {
 
     void openCreateXmlFilesFrame() {
         final DefaultBag bag = bagView.getBag();
-        final CreateXmlFilesFrame createXmlFilesFrame =
-                new CreateXmlFilesFrame(bagView, bagView.getPropertyMessage("bag" + ".frame"
-                        + ".xmlfiles"));
+        final CreateXmlFilesFrame createXmlFilesFrame = new CreateXmlFilesFrame(bagView,
+                bagView.getPropertyMessage("bag" + ".frame" + ".xmlfiles"));
         createXmlFilesFrame.setBag(bag);
         createXmlFilesFrame.setVisible(true);
-    }
-
-    private static ByteArrayOutputStream getXmlOutputStream(final String collectionId, final
-    String objektId,
-                                                            final String resourceId) throws
-            JAXBException {
-        final ByteArrayOutputStream xmlFileWriter;
-        xmlFileWriter =
-                XmlFileWriter.write().collectionId(collectionId).objektId(objektId).resourceId(
-                        resourceId).build();
-        return xmlFileWriter;
     }
 }

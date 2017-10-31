@@ -19,7 +19,6 @@ import static org.apache.commons.lang3.exception.ExceptionUtils.getMessage;
 import cool.pandora.modeller.bag.impl.DefaultBag;
 import cool.pandora.modeller.ui.jpanel.base.BagView;
 import cool.pandora.modeller.ui.util.ApplicationContextUtil;
-
 import org.springframework.richclient.command.support.AbstractActionCommandExecutor;
 
 

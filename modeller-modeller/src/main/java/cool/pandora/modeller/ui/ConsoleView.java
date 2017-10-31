@@ -16,9 +16,7 @@ package cool.pandora.modeller.ui;
 
 import cool.pandora.modeller.ui.jpanel.base.ConsolePane;
 import cool.pandora.modeller.ui.util.ApplicationContextUtil;
-
 import javax.swing.JComponent;
-
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.richclient.application.Application;
 import org.springframework.richclient.application.PageComponentContext;
@@ -38,8 +36,7 @@ public class ConsoleView extends AbstractView {
      */
     public ConsoleView() {
         ((ConfigurableApplicationContext) Application.instance().getApplicationContext())
-                .getBeanFactory()
-                .registerSingleton("myConsoleView", this);
+                .getBeanFactory().registerSingleton("myConsoleView", this);
     }
 
     /**
@@ -62,8 +59,8 @@ public class ConsoleView extends AbstractView {
     protected void registerLocalCommandExecutors(final PageComponentContext context) {
         context.register("startCommand", ApplicationContextUtil.getBagView().startExecutor);
         context.register("openCommand", ApplicationContextUtil.getBagView().openExecutor);
-        context.register("createBagInPlaceCommand", ApplicationContextUtil.getBagView()
-                .createBagInPlaceExecutor);
+        context.register("createBagInPlaceCommand",
+                ApplicationContextUtil.getBagView().createBagInPlaceExecutor);
         context.register("clearCommand", ApplicationContextUtil.getBagView().clearExecutor);
         context.register("validateCommand", ApplicationContextUtil.getBagView().validateExecutor);
         context.register("completeCommand", ApplicationContextUtil.getBagView().completeExecutor);
@@ -87,7 +84,7 @@ public class ConsoleView extends AbstractView {
      * @return message
      */
     private String getInitialConsoleMsg() {
-        return getMessage("consolepane.msg.help") + "\n\n" + getMessage("consolepane.status"
-                + ".help") + "\n\n";
+        return getMessage("consolepane.msg.help") + "\n\n" + getMessage(
+                "consolepane.status" + ".help") + "\n\n";
     }
 }

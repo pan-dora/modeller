@@ -20,7 +20,6 @@ import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -50,101 +49,6 @@ public class Profile {
     private boolean isDefault = false;
     private LinkedHashMap<String, ProfileField> customFields = new LinkedHashMap<>();
     private LinkedHashMap<String, ProfileField> standardFields = new LinkedHashMap<>();
-
-    /**
-     * setSendToContact.
-     *
-     * @param sendToContact Contact
-     */
-    private void setSendToContact(final Contact sendToContact) {
-        this.sendToContact = sendToContact;
-    }
-
-    /**
-     * getSendToContact.
-     *
-     * @return sendToContact
-     */
-    public Contact getSendToContact() {
-        return sendToContact;
-    }
-
-    /**
-     * setSendFromContact.
-     *
-     * @param sendFromContact Contact
-     */
-    private void setSendFromContact(final Contact sendFromContact) {
-        this.sendFromContact = sendFromContact;
-    }
-
-    /**
-     * getSendFromContact.
-     *
-     * @return sendFromContact
-     */
-    public Contact getSendFromContact() {
-        return sendFromContact;
-    }
-
-    /**
-     * setOrganization.
-     *
-     * @param organization Organization
-     */
-    private void setOrganization(final Organization organization) {
-        this.organization = organization;
-    }
-
-    /**
-     * getOrganization.
-     *
-     * @return organization
-     */
-    public Organization getOrganization() {
-        return organization;
-    }
-
-    /**
-     * setName.
-     *
-     * @param profileName String
-     */
-    public void setName(final String profileName) {
-        this.name = profileName;
-    }
-
-    /**
-     * getName.
-     *
-     * @return name
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * setCustomFields.
-     *
-     * @param fields LinkedHashMap
-     */
-    private void setCustomFields(final LinkedHashMap<String, ProfileField> fields) {
-        this.customFields = fields;
-    }
-
-    /**
-     * getCustomFields.
-     *
-     * @return customFields
-     */
-    public LinkedHashMap<String, ProfileField> getCustomFields() {
-        return customFields;
-    }
-
-    @Override
-    public String toString() {
-        return "";
-    }
 
     /**
      * createProfile.
@@ -221,8 +125,8 @@ public class Profile {
             } else {
                 for (final String name : names) {
                     final JSONObject jsonObject = (JSONObject) fieldsJson.get(name);
-                    final ProfileField profileField = ProfileField.createProfileField(jsonObject,
-                            name);
+                    final ProfileField profileField =
+                            ProfileField.createProfileField(jsonObject, name);
                     profileFields.put(profileField.getFieldName(), profileField);
                 }
             }
@@ -231,12 +135,119 @@ public class Profile {
     }
 
     /**
-     * setStandardFields.
+     * seralizeFields.
      *
-     * @param standardFields LinkedHashMap
+     * @param profileFields Collection
+     * @return String
+     * @throws JSONException exception
      */
-    private void setStandardFields(final LinkedHashMap<String, ProfileField> standardFields) {
-        this.standardFields = standardFields;
+    private static String seralizeFields(final Collection<ProfileField> profileFields)
+            throws JSONException {
+        final StringWriter writer = new StringWriter();
+        final JSONWriter filedWriter = new JSONWriter(writer);
+        filedWriter.object();
+        for (final ProfileField field : profileFields) {
+            final String fieldStringer = field.serialize();
+            filedWriter.key(field.getFieldName())
+                    .value(new JSONObject(new JSONTokener(fieldStringer)));
+        }
+        filedWriter.endObject();
+        return writer.toString();
+    }
+
+    /**
+     * getSendToContact.
+     *
+     * @return sendToContact
+     */
+    public Contact getSendToContact() {
+        return sendToContact;
+    }
+
+    /**
+     * setSendToContact.
+     *
+     * @param sendToContact Contact
+     */
+    private void setSendToContact(final Contact sendToContact) {
+        this.sendToContact = sendToContact;
+    }
+
+    /**
+     * getSendFromContact.
+     *
+     * @return sendFromContact
+     */
+    public Contact getSendFromContact() {
+        return sendFromContact;
+    }
+
+    /**
+     * setSendFromContact.
+     *
+     * @param sendFromContact Contact
+     */
+    private void setSendFromContact(final Contact sendFromContact) {
+        this.sendFromContact = sendFromContact;
+    }
+
+    /**
+     * getOrganization.
+     *
+     * @return organization
+     */
+    public Organization getOrganization() {
+        return organization;
+    }
+
+    /**
+     * setOrganization.
+     *
+     * @param organization Organization
+     */
+    private void setOrganization(final Organization organization) {
+        this.organization = organization;
+    }
+
+    /**
+     * getName.
+     *
+     * @return name
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * setName.
+     *
+     * @param profileName String
+     */
+    public void setName(final String profileName) {
+        this.name = profileName;
+    }
+
+    /**
+     * getCustomFields.
+     *
+     * @return customFields
+     */
+    public LinkedHashMap<String, ProfileField> getCustomFields() {
+        return customFields;
+    }
+
+    /**
+     * setCustomFields.
+     *
+     * @param fields LinkedHashMap
+     */
+    private void setCustomFields(final LinkedHashMap<String, ProfileField> fields) {
+        this.customFields = fields;
+    }
+
+    @Override
+    public String toString() {
+        return "";
     }
 
     /**
@@ -246,6 +257,15 @@ public class Profile {
      */
     public LinkedHashMap<String, ProfileField> getStandardFields() {
         return standardFields;
+    }
+
+    /**
+     * setStandardFields.
+     *
+     * @param standardFields LinkedHashMap
+     */
+    private void setStandardFields(final LinkedHashMap<String, ProfileField> standardFields) {
+        this.standardFields = standardFields;
     }
 
     /**
@@ -284,27 +304,6 @@ public class Profile {
         writer.key(FIELD_CUSTOM_INFO).value(new JSONObject(new JSONTokener(localCustomFields)));
         writer.key(FIELD_STANDARD_INFO).value(new JSONObject(new JSONTokener(localStandardFields)));
         writer.endObject();
-    }
-
-    /**
-     * seralizeFields.
-     *
-     * @param profileFields Collection
-     * @return String
-     * @throws JSONException exception
-     */
-    private static String seralizeFields(final Collection<ProfileField> profileFields) throws
-            JSONException {
-        final StringWriter writer = new StringWriter();
-        final JSONWriter filedWriter = new JSONWriter(writer);
-        filedWriter.object();
-        for (final ProfileField field : profileFields) {
-            final String fieldStringer = field.serialize();
-            filedWriter.key(field.getFieldName()).value(new JSONObject(new JSONTokener(
-                    fieldStringer)));
-        }
-        filedWriter.endObject();
-        return writer.toString();
     }
 
     /**

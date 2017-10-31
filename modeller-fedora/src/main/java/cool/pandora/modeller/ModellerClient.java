@@ -14,10 +14,8 @@
 
 package cool.pandora.modeller;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.apache.commons.lang3.exception.ExceptionUtils.getMessage;
 
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -26,9 +24,7 @@ import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
-
 import javax.net.ssl.SSLContext;
-
 import org.apache.commons.io.IOUtils;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.conn.ssl.TrustSelfSignedStrategy;
@@ -36,7 +32,6 @@ import org.apache.http.ssl.SSLContexts;
 import org.fcrepo.client.FcrepoClient;
 import org.fcrepo.client.FcrepoOperationFailedException;
 import org.fcrepo.client.FcrepoResponse;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -59,18 +54,17 @@ public class ModellerClient {
      * doBinaryPut.
      *
      * @param destinationURI URI
-     * @param resourceFile File
-     * @param contentType String
+     * @param resourceFile   File
+     * @param contentType    String
      * @throws ModellerClientFailedException Throwable
      */
-    public static void doBinaryPut(final URI destinationURI, final File resourceFile, final
-    String contentType)
-            throws ModellerClientFailedException {
+    public static void doBinaryPut(final URI destinationURI, final File resourceFile,
+                                   final String contentType) throws ModellerClientFailedException {
         final FcrepoClient testClient;
         testClient = FcrepoClient.client().throwExceptionOnFailure().build();
         try {
-            final FcrepoResponse response = testClient.put(destinationURI).body(resourceFile,
-                    contentType).perform();
+            final FcrepoResponse response =
+                    testClient.put(destinationURI).body(resourceFile, contentType).perform();
             log.info(String.valueOf(response.getStatusCode()));
         } catch (FcrepoOperationFailedException e) {
             log.info(getMessage(e));
@@ -84,17 +78,17 @@ public class ModellerClient {
      * doStreamPut.
      *
      * @param destinationURI URI
-     * @param resourceFile ByteArrayInputStream
-     * @param contentType String
+     * @param resourceFile   ByteArrayInputStream
+     * @param contentType    String
      * @throws ModellerClientFailedException Throwable
      */
-    public static void doStreamPut(final URI destinationURI, final ByteArrayInputStream
-            resourceFile, final String contentType) throws ModellerClientFailedException {
+    public static void doStreamPut(final URI destinationURI, final InputStream resourceFile,
+                                   final String contentType) throws ModellerClientFailedException {
         final FcrepoClient testClient;
         testClient = FcrepoClient.client().throwExceptionOnFailure().build();
         try {
-            final FcrepoResponse response = testClient.put(destinationURI).body(resourceFile,
-                    contentType).perform();
+            final FcrepoResponse response =
+                    testClient.put(destinationURI).body(resourceFile, contentType).perform();
             log.info(String.valueOf(response.getStatusCode()));
         } catch (FcrepoOperationFailedException e) {
             log.info(getMessage(e));
@@ -112,12 +106,11 @@ public class ModellerClient {
         final FcrepoClient testClient;
         testClient = FcrepoClient.client().throwExceptionOnFailure().build();
         try {
-            final FcrepoResponse response = testClient.put(destinationURI).perform();
-            try {
-                log.info(IOUtils.toString(response.getBody(), UTF_8));
-            } catch (IOException e) {
-                log.info(getMessage(e));
-            }
+            final InputStream resourceFile = getFile("data/emptyFile.txt");
+            final String contentType = "text/turtle";
+            final FcrepoResponse response =
+                    testClient.put(destinationURI).body(resourceFile, contentType).perform();
+            log.info(String.valueOf(response.getStatusCode()));
         } catch (FcrepoOperationFailedException e) {
             log.info(getMessage(e));
             throw new ModellerClientFailedException(e);
@@ -128,7 +121,7 @@ public class ModellerClient {
      * doPatch.
      *
      * @param destinationURI URI
-     * @param rdfBody InputStream
+     * @param rdfBody        InputStream
      * @throws ModellerClientFailedException Throwable
      */
     public static void doPatch(final URI destinationURI, final InputStream rdfBody)
@@ -136,8 +129,8 @@ public class ModellerClient {
         final FcrepoClient testClient;
         testClient = FcrepoClient.client().throwExceptionOnFailure().build();
         try {
-            final FcrepoResponse response = testClient.patch(destinationURI).body(rdfBody)
-                    .perform();
+            final FcrepoResponse response =
+                    testClient.patch(destinationURI).body(rdfBody).perform();
             log.info(String.valueOf(response.getStatusCode()));
         } catch (FcrepoOperationFailedException e) {
             log.info(getMessage(e));
@@ -152,12 +145,12 @@ public class ModellerClient {
      * @return resources
      * @throws ModellerClientFailedException Throwable
      */
-    public static String doGetContainerResources(final URI containerURI) throws
-            ModellerClientFailedException {
+    public static String doGetContainerResources(final URI containerURI)
+            throws ModellerClientFailedException {
         final FcrepoClient testClient;
         testClient = FcrepoClient.client().throwExceptionOnFailure().build();
-        try (FcrepoResponse response = testClient.get(containerURI).accept("text/turtle").perform(
-        )) {
+        try (FcrepoResponse response = testClient.get(containerURI).accept("text/turtle")
+                .perform()) {
             return IOUtils.toString(response.getBody(), "UTF-8");
         } catch (FcrepoOperationFailedException e) {
             log.info(getMessage(e));
@@ -168,19 +161,20 @@ public class ModellerClient {
         return null;
     }
 
-    public static SSLConnectionSocketFactory getSSLFactory() throws CertificateException,
-            NoSuchAlgorithmException, KeyStoreException, IOException, KeyManagementException {
-        SSLContext sslcontext = SSLContexts.custom()
-                .loadTrustMaterial(new File(ModellerClient.class.getResource("/modeller.jks")
-                                .getFile(
-                                )), "changeme".toCharArray(),
-                        new TrustSelfSignedStrategy())
-                .build();
-        SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(
-                sslcontext,
-                new String[]{"TLSv1"},
-                null,
-                SSLConnectionSocketFactory.getDefaultHostnameVerifier());
+    public static SSLConnectionSocketFactory getSSLFactory()
+            throws CertificateException, NoSuchAlgorithmException, KeyStoreException, IOException,
+            KeyManagementException {
+        SSLContext sslcontext = SSLContexts.custom().loadTrustMaterial(
+                new File(ModellerClient.class.getResource("/modeller.jks").getFile()),
+                "changeme".toCharArray(), new TrustSelfSignedStrategy()).build();
+        SSLConnectionSocketFactory sslsf =
+                new SSLConnectionSocketFactory(sslcontext, new String[]{"TLSv1"}, null,
+                        SSLConnectionSocketFactory.getDefaultHostnameVerifier());
         return sslsf;
+    }
+
+    public static InputStream getFile(final String fileName) {
+        ClassLoader classloader = Thread.currentThread().getContextClassLoader();
+        return classloader.getResourceAsStream(fileName);
     }
 }

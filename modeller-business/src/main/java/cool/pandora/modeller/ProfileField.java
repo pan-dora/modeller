@@ -18,7 +18,6 @@ import java.io.Serializable;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -32,7 +31,12 @@ import org.json.JSONWriter;
  */
 public class ProfileField implements Serializable {
     private static final long serialVersionUID = 1L;
-
+    private static final String FIELD_REQUIRED_VALUE = "requiredValue";
+    private static final String FIELD_REQUIRED = "fieldRequired";
+    private static final String FIELD_TYPE = "fieldType";
+    private static final String FIELD_READ_ONLY = "isReadOnly";
+    private static final String FIELD_DEFAULT_VALUE = "defaultValue";
+    private static final String FIELD_VALUE_LIST = "valueList";
     private String fieldName = "";
     private String fieldValue = "";
     private String fieldType = "";
@@ -41,144 +45,11 @@ public class ProfileField implements Serializable {
     private boolean isRequired;
     private boolean isValueRequired;
 
-    private static final String FIELD_REQUIRED_VALUE = "requiredValue";
-    private static final String FIELD_REQUIRED = "fieldRequired";
-    private static final String FIELD_TYPE = "fieldType";
-    private static final String FIELD_READ_ONLY = "isReadOnly";
-    private static final String FIELD_DEFAULT_VALUE = "defaultValue";
-    private static final String FIELD_VALUE_LIST = "valueList";
-
-    void setFieldName(final String s) {
-        this.fieldName = s;
-    }
-
-    /**
-     * getFieldName.
-     *
-     * @return fieldName
-     */
-    public String getFieldName() {
-        return this.fieldName;
-    }
-
-    /**
-     * setIsRequired.
-     *
-     * @param b boolean
-     */
-    private void setIsRequired(final boolean b) {
-        this.isRequired = b;
-    }
-
-    /**
-     * getIsRequired.
-     *
-     * @return isRequired
-     */
-    public boolean getIsRequired() {
-        return this.isRequired;
-    }
-
-    /**
-     * setFieldValue.
-     *
-     * @param s String
-     */
-    public void setFieldValue(final String s) {
-        this.fieldValue = s;
-    }
-
-    /**
-     * getFieldValue.
-     *
-     * @return fieldValue
-     */
-    public String getFieldValue() {
-        return this.fieldValue;
-    }
-
-    /**
-     * setElements.
-     *
-     * @param s List
-     */
-    private void setElements(final List<String> s) {
-        this.elements = s;
-    }
-
-    /**
-     * getElements.
-     *
-     * @return elements
-     */
-    public List<String> getElements() {
-        return this.elements;
-    }
-
-    /**
-     * setFieldType.
-     *
-     * @param s String
-     */
-    private void setFieldType(final String s) {
-        this.fieldType = s;
-    }
-
-    /**
-     * getFieldType.
-     *
-     * @return fieldType
-     */
-    public String getFieldType() {
-        return this.fieldType;
-    }
-
-    /**
-     * setIsValueRequired.
-     *
-     * @param b boolean
-     */
-    public void setIsValueRequired(final boolean b) {
-        this.isValueRequired = b;
-    }
-
-    /**
-     * getIsValueRequired.
-     *
-     * @return isValueRequired
-     */
-    public boolean getIsValueRequired() {
-        return this.isValueRequired;
-    }
-
-    @Override
-    public String toString() {
-        return (this.fieldName + '=' + this.fieldValue) + '\n';
-    }
-
-    /**
-     * setReadOnly.
-     *
-     * @param isReadOnly boolean
-     */
-    private void setReadOnly(final boolean isReadOnly) {
-        this.isReadOnly = isReadOnly;
-    }
-
-    /**
-     * isReadOnly.
-     *
-     * @return isReadOnly
-     */
-    public boolean isReadOnly() {
-        return isReadOnly;
-    }
-
     /**
      * createProfileField.
      *
      * @param profileFieldJson JSONObject
-     * @param name String
+     * @param name             String
      * @return profileField
      * @throws JSONException exception
      */
@@ -229,7 +100,7 @@ public class ProfileField implements Serializable {
     /**
      * createProfileField.
      *
-     * @param name String
+     * @param name  String
      * @param value String
      * @return profileField
      */
@@ -238,6 +109,132 @@ public class ProfileField implements Serializable {
         profileField.setFieldName(name);
         profileField.setFieldValue(value);
         return profileField;
+    }
+
+    /**
+     * getFieldName.
+     *
+     * @return fieldName
+     */
+    public String getFieldName() {
+        return this.fieldName;
+    }
+
+    void setFieldName(final String s) {
+        this.fieldName = s;
+    }
+
+    /**
+     * getIsRequired.
+     *
+     * @return isRequired
+     */
+    public boolean getIsRequired() {
+        return this.isRequired;
+    }
+
+    /**
+     * setIsRequired.
+     *
+     * @param b boolean
+     */
+    private void setIsRequired(final boolean b) {
+        this.isRequired = b;
+    }
+
+    /**
+     * getFieldValue.
+     *
+     * @return fieldValue
+     */
+    public String getFieldValue() {
+        return this.fieldValue;
+    }
+
+    /**
+     * setFieldValue.
+     *
+     * @param s String
+     */
+    public void setFieldValue(final String s) {
+        this.fieldValue = s;
+    }
+
+    /**
+     * getElements.
+     *
+     * @return elements
+     */
+    public List<String> getElements() {
+        return this.elements;
+    }
+
+    /**
+     * setElements.
+     *
+     * @param s List
+     */
+    private void setElements(final List<String> s) {
+        this.elements = s;
+    }
+
+    /**
+     * getFieldType.
+     *
+     * @return fieldType
+     */
+    public String getFieldType() {
+        return this.fieldType;
+    }
+
+    /**
+     * setFieldType.
+     *
+     * @param s String
+     */
+    private void setFieldType(final String s) {
+        this.fieldType = s;
+    }
+
+    /**
+     * getIsValueRequired.
+     *
+     * @return isValueRequired
+     */
+    public boolean getIsValueRequired() {
+        return this.isValueRequired;
+    }
+
+    /**
+     * setIsValueRequired.
+     *
+     * @param b boolean
+     */
+    public void setIsValueRequired(final boolean b) {
+        this.isValueRequired = b;
+    }
+
+    @Override
+    public String toString() {
+        return (this.fieldName + '=' + this.fieldValue) + '\n';
+    }
+
+    /**
+     * isReadOnly.
+     *
+     * @return isReadOnly
+     */
+    public boolean isReadOnly() {
+        return isReadOnly;
+    }
+
+    /**
+     * setReadOnly.
+     *
+     * @param isReadOnly boolean
+     */
+    private void setReadOnly(final boolean isReadOnly) {
+        this.isReadOnly = isReadOnly;
     }
 
     /**

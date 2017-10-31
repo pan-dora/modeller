@@ -28,6 +28,15 @@ public class BagStatus {
     private StatusModel profileComplianceStatus = new StatusModel();
 
     /**
+     * getInstance.
+     *
+     * @return instance
+     */
+    public static BagStatus getInstance() {
+        return instance;
+    }
+
+    /**
      * getValidationStatus.
      *
      * @return validationStatus
@@ -79,15 +88,6 @@ public class BagStatus {
      */
     public void setProfileComplianceStatus(final StatusModel profileComplianceStatus) {
         this.profileComplianceStatus = profileComplianceStatus;
-    }
-
-    /**
-     * getInstance.
-     *
-     * @return instance
-     */
-    public static BagStatus getInstance() {
-        return instance;
     }
 
 }

@@ -24,13 +24,11 @@ import cool.pandora.modeller.CanvasPageMap;
 import cool.pandora.modeller.DocManifestBuilder;
 import cool.pandora.modeller.PageIdMap;
 import cool.pandora.modeller.hOCRData;
-
 import java.io.IOException;
 import java.net.URI;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.apache.commons.lang.StringUtils;
 
 /**
@@ -46,12 +44,12 @@ public final class NodeMap {
     /**
      * getBBoxMap.
      *
-     * @param hocr hOCRData
+     * @param hocr       hOCRData
      * @param pageIdList List
      * @return Map
      */
-    public static Map<String, String> getBBoxMap(final hOCRData hocr, final List<String>
-            pageIdList) {
+    public static Map<String, String> getBBoxMap(final hOCRData hocr,
+                                                 final List<String> pageIdList) {
         final Map<String, String> bboxMap = new HashMap<>();
         for (final String pageId : pageIdList) {
             final String bbox = getBboxForId(hocr, pageId);
@@ -63,12 +61,12 @@ public final class NodeMap {
     /**
      * getBBoxAreaMap.
      *
-     * @param hocr hOCRData
+     * @param hocr       hOCRData
      * @param areaIdList List
      * @return Map
      */
-    public static Map<String, String> getBBoxAreaMap(final hOCRData hocr, final List<String>
-            areaIdList) {
+    public static Map<String, String> getBBoxAreaMap(final hOCRData hocr,
+                                                     final List<String> areaIdList) {
         final Map<String, String> bboxMap = new HashMap<>();
         for (final String areaId : areaIdList) {
             final String bbox = getBboxForId(hocr, areaId);
@@ -80,12 +78,12 @@ public final class NodeMap {
     /**
      * getBBoxLineMap.
      *
-     * @param hocr hOCRData
+     * @param hocr       hOCRData
      * @param lineIdList List
      * @return Map
      */
-    public static Map<String, String> getBBoxLineMap(final hOCRData hocr, final List<String>
-            lineIdList) {
+    public static Map<String, String> getBBoxLineMap(final hOCRData hocr,
+                                                     final List<String> lineIdList) {
         final Map<String, String> bboxMap = new HashMap<>();
         for (final String lineId : lineIdList) {
             final String bbox = DocManifestBuilder.getBboxForId(hocr, lineId);
@@ -97,12 +95,12 @@ public final class NodeMap {
     /**
      * getBBoxWordMap.
      *
-     * @param hocr hOCRData
+     * @param hocr       hOCRData
      * @param wordIdList List
      * @return Map
      */
-    public static Map<String, String> getBBoxWordMap(final hOCRData hocr, final List<String>
-            wordIdList) {
+    public static Map<String, String> getBBoxWordMap(final hOCRData hocr,
+                                                     final List<String> wordIdList) {
         final Map<String, String> bboxMap = new HashMap<>();
         for (final String wordId : wordIdList) {
             final String bbox = DocManifestBuilder.getBboxForId(hocr, wordId);
@@ -114,12 +112,12 @@ public final class NodeMap {
     /**
      * getCharWordMap.
      *
-     * @param hocr hOCRData
+     * @param hocr       hOCRData
      * @param wordIdList List
      * @return Map
      */
-    public static Map<String, String> getCharWordMap(final hOCRData hocr, final List<String>
-            wordIdList) {
+    public static Map<String, String> getCharWordMap(final hOCRData hocr,
+                                                     final List<String> wordIdList) {
         final Map<String, String> charMap = new HashMap<>();
         for (final String wordId : wordIdList) {
             final String chars = DocManifestBuilder.getCharsForId(hocr, wordId);
@@ -131,12 +129,12 @@ public final class NodeMap {
     /**
      * getCanvasPageMap.
      *
-     * @param pageIdList List
+     * @param pageIdList         List
      * @param canvasContainerURI URI
      * @return Map
      */
-    public static Map<String, String> getCanvasPageMap(final List<String> pageIdList, final URI
-            canvasContainerURI) {
+    public static Map<String, String> getCanvasPageMap(final List<String> pageIdList,
+                                                       final URI canvasContainerURI) {
         try {
             final CanvasPageMap canvasPageMap;
             canvasPageMap = CanvasPageMap.init().canvasContainerURI(canvasContainerURI)
@@ -168,12 +166,12 @@ public final class NodeMap {
     /**
      * getAreaIdMap.
      *
-     * @param hocr hOCRData
+     * @param hocr       hOCRData
      * @param pageIdList List
      * @return Map
      */
-    public static Map<String, List<String>> getAreaIdMap(final hOCRData hocr, final List<String>
-            pageIdList) {
+    public static Map<String, List<String>> getAreaIdMap(final hOCRData hocr,
+                                                         final List<String> pageIdList) {
         final Map<String, List<String>> nodemap = new HashMap<>();
         List<String> areaIdList;
         for (String pageId : pageIdList) {
@@ -191,12 +189,12 @@ public final class NodeMap {
     /**
      * getLineIdMap.
      *
-     * @param hocr hOCRData
+     * @param hocr       hOCRData
      * @param areaIdList List
      * @return Map
      */
-    public static Map<String, List<String>> getLineIdMap(final hOCRData hocr, final List<String>
-            areaIdList) {
+    public static Map<String, List<String>> getLineIdMap(final hOCRData hocr,
+                                                         final List<String> areaIdList) {
         final Map<String, List<String>> nodemap = new HashMap<>();
         List<String> lineIdList;
         for (String areaId : areaIdList) {
@@ -214,12 +212,12 @@ public final class NodeMap {
     /**
      * getWordIdMap.
      *
-     * @param hocr hOCRData
+     * @param hocr       hOCRData
      * @param lineIdList List
      * @return Map
      */
-    public static Map<String, List<String>> getWordIdMap(final hOCRData hocr, final List<String>
-            lineIdList) {
+    public static Map<String, List<String>> getWordIdMap(final hOCRData hocr,
+                                                         final List<String> lineIdList) {
         final Map<String, List<String>> nodemap = new HashMap<>();
         List<String> wordIdList;
         for (String lineId : lineIdList) {
@@ -237,12 +235,12 @@ public final class NodeMap {
     /**
      * getWordsForPageMap.
      *
-     * @param hocr hOCRData
+     * @param hocr       hOCRData
      * @param pageIdList List
      * @return Map
      */
-    public static Map<String, List<String>> getWordsForPageMap(final hOCRData hocr, final
-    List<String> pageIdList) {
+    public static Map<String, List<String>> getWordsForPageMap(final hOCRData hocr,
+                                                               final List<String> pageIdList) {
         final Map<String, List<String>> nodemap = new HashMap<>();
         List<String> wordIdList;
         for (String pageId : pageIdList) {

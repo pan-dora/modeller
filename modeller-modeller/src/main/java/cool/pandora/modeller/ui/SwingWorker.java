@@ -31,30 +31,35 @@ import javax.swing.SwingUtilities;
  * @author gov.loc
  */
 public abstract class SwingWorker {
-    private Object value; // see getValue(), setValue()
+    private final ThreadVar threadVar;
     LongTask longTask;
+    private Object value; // see getValue(), setValue()
 
     /**
-     * Class to maintain reference to current worker thread
-     * under separate synchronization control.
+     * SwingWorker.
+     *
+     * @param longTask LongTask
      */
-    private static class ThreadVar {
-        private Thread thread;
+    SwingWorker(final LongTask longTask) {
+        this.longTask = longTask;
+        final Runnable doFinished = this::finished;
 
-        ThreadVar(final Thread t) {
-            thread = t;
-        }
+        final Runnable doConstruct = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    setValue(construct());
+                } finally {
+                    threadVar.clear();
+                }
 
-        synchronized Thread get() {
-            return thread;
-        }
+                SwingUtilities.invokeLater(doFinished);
+            }
+        };
 
-        synchronized void clear() {
-            thread = null;
-        }
+        final Thread t = new Thread(doConstruct);
+        threadVar = new ThreadVar(t);
     }
-
-    private final ThreadVar threadVar;
 
     /**
      * Get the value produced by the worker thread, or null if it
@@ -110,38 +115,32 @@ public abstract class SwingWorker {
     }
 
     /**
-     * SwingWorker.
-     *
-     * @param longTask LongTask
-     */
-    SwingWorker(final LongTask longTask) {
-        this.longTask = longTask;
-        final Runnable doFinished = this::finished;
-
-        final Runnable doConstruct = new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    setValue(construct());
-                } finally {
-                    threadVar.clear();
-                }
-
-                SwingUtilities.invokeLater(doFinished);
-            }
-        };
-
-        final Thread t = new Thread(doConstruct);
-        threadVar = new ThreadVar(t);
-    }
-
-    /**
      * Start the worker thread.
      */
     public void start() {
         final Thread t = threadVar.get();
         if (t != null) {
             t.start();
+        }
+    }
+
+    /**
+     * Class to maintain reference to current worker thread
+     * under separate synchronization control.
+     */
+    private static class ThreadVar {
+        private Thread thread;
+
+        ThreadVar(final Thread t) {
+            thread = t;
+        }
+
+        synchronized Thread get() {
+            return thread;
+        }
+
+        synchronized void clear() {
+            thread = null;
         }
     }
 }

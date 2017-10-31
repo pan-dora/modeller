@@ -19,7 +19,6 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -65,17 +64,6 @@ public class PageIdMap {
         }
 
         /**
-         * pageIdList.
-         *
-         * @param pageIdList List
-         * @return this
-         */
-        public PageIdMap.PageIdMapBuilder pageIdList(final List<String> pageIdList) {
-            this.pageIdList = pageIdList;
-            return this;
-        }
-
-        /**
          * getPageIdMap.
          *
          * @param pageIdList List
@@ -90,6 +78,17 @@ public class PageIdMap {
                 pageIdMap.put(pageId, i2.next());
             }
             return pageIdMap;
+        }
+
+        /**
+         * pageIdList.
+         *
+         * @param pageIdList List
+         * @return this
+         */
+        public PageIdMap.PageIdMapBuilder pageIdList(final List<String> pageIdList) {
+            this.pageIdList = pageIdList;
+            return this;
         }
 
         /**

@@ -16,7 +16,6 @@ package cool.pandora.modeller.ui.jpanel.base;
 
 import cool.pandora.modeller.bag.impl.DefaultBag;
 import gov.loc.repository.bagit.Manifest.Algorithm;
-
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -26,7 +25,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
-
 import javax.swing.AbstractAction;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -42,7 +40,6 @@ import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.richclient.command.AbstractCommand;
@@ -59,27 +56,31 @@ import org.springframework.richclient.util.GuiStandardUtils;
  */
 public class SaveBagFrame extends JFrame implements ActionListener {
     protected static final Logger log = LoggerFactory.getLogger(SaveBagFrame.class);
+    protected static final String DEFAULT_FINISH_COMMAND_ID = "okCommand";
+    protected static final String DEFAULT_CANCEL_COMMAND_ID = "cancelCommand";
     private static final long serialVersionUID = 1L;
     private final transient BagView bagView;
-    private File bagFile;
-    private String bagFileName = "";
     private final JPanel savePanel;
-    private JTextField bagNameField;
-    private JLabel urlLabel;
-    private JTextField urlField;
     JButton okButton;
     JButton cancelButton;
-    private JRadioButton noneButton;
-    private JRadioButton zipButton;
     JRadioButton tarButton;
     JRadioButton tarGzButton;
     JRadioButton tarBz2Button;
+    private File bagFile;
+    private String bagFileName = "";
+    private JTextField bagNameField;
+    private JLabel urlLabel;
+    private JTextField urlField;
+    private JRadioButton noneButton;
+    private JRadioButton zipButton;
+    private transient ActionCommand finishCommand;
+    private transient ActionCommand cancelCommand;
 
     /**
      * SaveBagFrame.
      *
      * @param bagView BagView
-     * @param title String
+     * @param title   String
      */
     public SaveBagFrame(final BagView bagView, final String title) {
         super(title);
@@ -97,14 +98,35 @@ public class SaveBagFrame extends JFrame implements ActionListener {
         pack();
     }
 
+    protected static String getFinishCommandId() {
+        return DEFAULT_FINISH_COMMAND_ID;
+    }
+
+    protected static String getCancelCommandId() {
+        return DEFAULT_CANCEL_COMMAND_ID;
+    }
+
+    private static void buildConstraints(final GridBagConstraints gbc, final int x, final int y,
+                                         final int w, final int h, final int wx, final int wy,
+                                         final int fill, final int anchor) {
+        gbc.gridx = x; // start cell in a row
+        gbc.gridy = y; // start cell in a column
+        gbc.gridwidth = w; // how many column does the control occupy in the row
+        gbc.gridheight = h; // how many column does the control occupy in the column
+        gbc.weightx = wx; // relative horizontal size
+        gbc.weighty = wy; // relative vertical size
+        gbc.fill = fill; // the way how the control fills cells
+        gbc.anchor = anchor; // alignment
+    }
+
     /**
      * createButtonBar.
      *
      * @return buttonBar
      */
     protected JComponent createButtonBar() {
-        final CommandGroup dialogCommandGroup = CommandGroup.createCommandGroup(null,
-                getCommandGroupMembers());
+        final CommandGroup dialogCommandGroup =
+                CommandGroup.createCommandGroup(null, getCommandGroupMembers());
         final JComponent buttonBar = dialogCommandGroup.createButtonBar();
         GuiStandardUtils.attachDialogBorder(buttonBar);
         return buttonBar;
@@ -143,22 +165,6 @@ public class SaveBagFrame extends JFrame implements ActionListener {
         };
     }
 
-    protected static String getFinishCommandId() {
-        return DEFAULT_FINISH_COMMAND_ID;
-    }
-
-    protected static String getCancelCommandId() {
-        return DEFAULT_CANCEL_COMMAND_ID;
-    }
-
-    protected static final String DEFAULT_FINISH_COMMAND_ID = "okCommand";
-
-    protected static final String DEFAULT_CANCEL_COMMAND_ID = "cancelCommand";
-
-    private transient ActionCommand finishCommand;
-
-    private transient ActionCommand cancelCommand;
-
     private JPanel createComponents() {
         final Border border = new EmptyBorder(5, 5, 5, 5);
 
@@ -167,8 +173,8 @@ public class SaveBagFrame extends JFrame implements ActionListener {
         final JPanel pageControl = new JPanel(new BorderLayout());
         final JPanel titlePaneContainer = new JPanel(new BorderLayout());
         titlePane.setTitle(bagView.getPropertyMessage("SaveBagFrame.title"));
-        titlePane.setMessage(new DefaultMessage(bagView.getPropertyMessage("Define the Bag "
-                + "settings")));
+        titlePane.setMessage(
+                new DefaultMessage(bagView.getPropertyMessage("Define the Bag " + "settings")));
         titlePaneContainer.add(titlePane.getControl());
         titlePaneContainer.add(new JSeparator(), BorderLayout.SOUTH);
         pageControl.add(titlePaneContainer, BorderLayout.NORTH);
@@ -192,8 +198,8 @@ public class SaveBagFrame extends JFrame implements ActionListener {
         // Holey bag control
         final JLabel holeyLabel = new JLabel(bagView.getPropertyMessage("bag.label.isholey"));
         holeyLabel.setToolTipText(bagView.getPropertyMessage("bag.isholey.help"));
-        final JCheckBox holeyCheckbox = new JCheckBox(bagView.getPropertyMessage("bag.checkbox"
-                + ".isholey"));
+        final JCheckBox holeyCheckbox =
+                new JCheckBox(bagView.getPropertyMessage("bag.checkbox" + ".isholey"));
         holeyCheckbox.setBorder(border);
         holeyCheckbox.addActionListener(new HoleyBagHandler());
         holeyCheckbox.setToolTipText(bagView.getPropertyMessage("bag.isholey.help"));
@@ -231,12 +237,12 @@ public class SaveBagFrame extends JFrame implements ActionListener {
      * tarButton.setEnabled(true);
      * tarButton.addActionListener(serializeListener);
      * tarButton.setToolTipText(getMessage("bag.serializetype.tar.help"));
-     * 
+     *
      * tarGzButton = new JRadioButton(getMessage("bag.serializetype.targz"));
      * tarGzButton.setEnabled(true);
      * tarGzButton.addActionListener(serializeListener);
      * tarGzButton.setToolTipText(getMessage("bag.serializetype.targz.help"));
-     * 
+     *
      * tarBz2Button = new JRadioButton(getMessage("bag.serializetype.tarbz2"));
      * tarBz2Button.setEnabled(true);
      * tarBz2Button.addActionListener(serializeListener);
@@ -285,8 +291,8 @@ public class SaveBagFrame extends JFrame implements ActionListener {
         for (final Algorithm algorithm : Algorithm.values()) {
             listModel.add(algorithm.bagItAlgorithm);
         }
-        final JComboBox<String> tagAlgorithmList = new JComboBox<>(listModel.toArray(new
-                String[listModel.size()]));
+        final JComboBox<String> tagAlgorithmList =
+                new JComboBox<>(listModel.toArray(new String[listModel.size()]));
         tagAlgorithmList.setName(getMessage("bag.tagalgorithmlist"));
         tagAlgorithmList.addActionListener(new TagAlgorithmListHandler());
         tagAlgorithmList.setToolTipText(getMessage("bag.tagalgorithmlist.help"));
@@ -298,8 +304,8 @@ public class SaveBagFrame extends JFrame implements ActionListener {
         isPayloadCheckbox.addActionListener(new PayloadManifestHandler());
         isPayloadCheckbox.setToolTipText(getMessage("bag.ispayload.help"));
 
-        final JLabel payAlgorithmLabel = new JLabel(bagView.getPropertyMessage("bag.label"
-                + ".payalgorithm"));
+        final JLabel payAlgorithmLabel =
+                new JLabel(bagView.getPropertyMessage("bag.label" + ".payalgorithm"));
         payAlgorithmLabel.setToolTipText(getMessage("bag.payalgorithm.help"));
         final JComboBox<String> payAlgorithmList =
                 new JComboBox<String>(listModel.toArray(new String[listModel.size()]));
@@ -328,13 +334,13 @@ public class SaveBagFrame extends JFrame implements ActionListener {
 
         int row = 0;
 
-        buildConstraints(glbc, 0, row, 1, 1, 1, 50, GridBagConstraints.NONE, GridBagConstraints
-                .WEST);
+        buildConstraints(glbc, 0, row, 1, 1, 1, 50, GridBagConstraints.NONE,
+                GridBagConstraints.WEST);
         layout.setConstraints(location, glbc);
         panel.add(location);
 
-        buildConstraints(glbc, 2, row, 1, 1, 1, 50, GridBagConstraints.NONE, GridBagConstraints
-                .EAST);
+        buildConstraints(glbc, 2, row, 1, 1, 1, 50, GridBagConstraints.NONE,
+                GridBagConstraints.EAST);
         glbc.ipadx = 5;
         layout.setConstraints(browseButton, glbc);
         glbc.ipadx = 0;
@@ -348,17 +354,17 @@ public class SaveBagFrame extends JFrame implements ActionListener {
         panel.add(bagNameField);
 
         row++;
-        buildConstraints(glbc, 0, row, 1, 1, 1, 50, GridBagConstraints.NONE, GridBagConstraints
-                .WEST);
+        buildConstraints(glbc, 0, row, 1, 1, 1, 50, GridBagConstraints.NONE,
+                GridBagConstraints.WEST);
         layout.setConstraints(holeyLabel, glbc);
         panel.add(holeyLabel);
-        buildConstraints(glbc, 1, row, 1, 1, 80, 50, GridBagConstraints.WEST, GridBagConstraints
-                .WEST);
+        buildConstraints(glbc, 1, row, 1, 1, 80, 50, GridBagConstraints.WEST,
+                GridBagConstraints.WEST);
         layout.setConstraints(holeyCheckbox, glbc);
         panel.add(holeyCheckbox);
         row++;
-        buildConstraints(glbc, 0, row, 1, 1, 1, 50, GridBagConstraints.NONE, GridBagConstraints
-                .WEST);
+        buildConstraints(glbc, 0, row, 1, 1, 1, 50, GridBagConstraints.NONE,
+                GridBagConstraints.WEST);
         layout.setConstraints(urlLabel, glbc);
         panel.add(urlLabel);
         buildConstraints(glbc, 1, row, 1, 1, 80, 50, GridBagConstraints.HORIZONTAL,
@@ -366,8 +372,8 @@ public class SaveBagFrame extends JFrame implements ActionListener {
         layout.setConstraints(urlField, glbc);
         panel.add(urlField);
         row++;
-        buildConstraints(glbc, 0, row, 1, 1, 1, 50, GridBagConstraints.NONE, GridBagConstraints
-                .WEST);
+        buildConstraints(glbc, 0, row, 1, 1, 1, 50, GridBagConstraints.NONE,
+                GridBagConstraints.WEST);
         layout.setConstraints(serializeLabel, glbc);
         panel.add(serializeLabel);
         buildConstraints(glbc, 1, row, 2, 1, 80, 50, GridBagConstraints.HORIZONTAL,
@@ -375,8 +381,8 @@ public class SaveBagFrame extends JFrame implements ActionListener {
         layout.setConstraints(serializeGroupPanel, glbc);
         panel.add(serializeGroupPanel);
         row++;
-        buildConstraints(glbc, 0, row, 1, 1, 1, 50, GridBagConstraints.NONE, GridBagConstraints
-                .WEST);
+        buildConstraints(glbc, 0, row, 1, 1, 1, 50, GridBagConstraints.NONE,
+                GridBagConstraints.WEST);
         layout.setConstraints(tagLabel, glbc);
         panel.add(tagLabel);
         buildConstraints(glbc, 1, row, 2, 1, 80, 50, GridBagConstraints.HORIZONTAL,
@@ -384,8 +390,8 @@ public class SaveBagFrame extends JFrame implements ActionListener {
         layout.setConstraints(isTagCheckbox, glbc);
         panel.add(isTagCheckbox);
         row++;
-        buildConstraints(glbc, 0, row, 1, 1, 1, 50, GridBagConstraints.NONE, GridBagConstraints
-                .WEST);
+        buildConstraints(glbc, 0, row, 1, 1, 1, 50, GridBagConstraints.NONE,
+                GridBagConstraints.WEST);
         layout.setConstraints(tagAlgorithmLabel, glbc);
         panel.add(tagAlgorithmLabel);
         buildConstraints(glbc, 1, row, 2, 1, 80, 50, GridBagConstraints.HORIZONTAL,
@@ -393,8 +399,8 @@ public class SaveBagFrame extends JFrame implements ActionListener {
         layout.setConstraints(tagAlgorithmList, glbc);
         panel.add(tagAlgorithmList);
         row++;
-        buildConstraints(glbc, 0, row, 1, 1, 1, 50, GridBagConstraints.NONE, GridBagConstraints
-                .WEST);
+        buildConstraints(glbc, 0, row, 1, 1, 1, 50, GridBagConstraints.NONE,
+                GridBagConstraints.WEST);
         layout.setConstraints(payloadLabel, glbc);
         panel.add(payloadLabel);
         buildConstraints(glbc, 1, row, 2, 1, 80, 50, GridBagConstraints.HORIZONTAL,
@@ -402,8 +408,8 @@ public class SaveBagFrame extends JFrame implements ActionListener {
         layout.setConstraints(isPayloadCheckbox, glbc);
         panel.add(isPayloadCheckbox);
         row++;
-        buildConstraints(glbc, 0, row, 1, 1, 1, 50, GridBagConstraints.NONE, GridBagConstraints
-                .WEST);
+        buildConstraints(glbc, 0, row, 1, 1, 1, 50, GridBagConstraints.NONE,
+                GridBagConstraints.WEST);
         layout.setConstraints(payAlgorithmLabel, glbc);
         panel.add(payAlgorithmLabel);
         buildConstraints(glbc, 1, row, 2, 1, 80, 50, GridBagConstraints.HORIZONTAL,
@@ -411,8 +417,8 @@ public class SaveBagFrame extends JFrame implements ActionListener {
         layout.setConstraints(payAlgorithmList, glbc);
         panel.add(payAlgorithmList);
         row++;
-        buildConstraints(glbc, 0, row, 1, 1, 1, 50, GridBagConstraints.NONE, GridBagConstraints
-                .WEST);
+        buildConstraints(glbc, 0, row, 1, 1, 1, 50, GridBagConstraints.NONE,
+                GridBagConstraints.WEST);
         buildConstraints(glbc, 1, row, 2, 1, 80, 50, GridBagConstraints.HORIZONTAL,
                 GridBagConstraints.CENTER);
 
@@ -456,6 +462,10 @@ public class SaveBagFrame extends JFrame implements ActionListener {
         repaint();
     }
 
+    private String getMessage(final String property) {
+        return bagView.getPropertyMessage(property);
+    }
+
     public class SerializeBagHandler extends AbstractAction {
         private static final long serialVersionUID = 1L;
 
@@ -495,9 +505,8 @@ public class SaveBagFrame extends JFrame implements ActionListener {
             fs.setDialogTitle("Save Bag As");
             final DefaultBag bag = bagView.getBag();
             fs.setCurrentDirectory(bag.getRootDir());
-            if (bag.getName() != null
-                    && !bag.getName().equalsIgnoreCase(bagView.getPropertyMessage("bag.label" + ""
-                            + ".noname"))) {
+            if (bag.getName() != null && !bag.getName()
+                    .equalsIgnoreCase(bagView.getPropertyMessage("bag.label" + "" + ".noname"))) {
                 String selectedName = bag.getName();
                 if (bag.getSerialMode() == DefaultBag.ZIP_MODE) {
                     selectedName += "." + DefaultBag.ZIP_LABEL;
@@ -525,17 +534,16 @@ public class SaveBagFrame extends JFrame implements ActionListener {
 
         @Override
         public void actionPerformed(final ActionEvent e) {
-            if (bagNameField.getText().trim().isEmpty()
-                   || bagNameField.getText().equalsIgnoreCase(bagView.getPropertyMessage("bag.label"
-                            + ".noname"))) {
-                BagView.showWarningErrorDialog("Error - bag not saved", "The bag must have a file"
-                        + " name.");
+            if (bagNameField.getText().trim().isEmpty() || bagNameField.getText()
+                    .equalsIgnoreCase(bagView.getPropertyMessage("bag.label" + ".noname"))) {
+                BagView.showWarningErrorDialog("Error - bag not saved",
+                        "The bag must have a file" + " name.");
                 return;
             }
             if (bagView.getBag().isHoley()) {
                 if (urlField.getText().trim().isEmpty()) {
-                    BagView.showWarningErrorDialog("Error - bag not saved", "A holey bag must "
-                            + "have a URL value.");
+                    BagView.showWarningErrorDialog("Error - bag not saved",
+                            "A holey bag must " + "have a URL value.");
                     return;
                 }
                 bagView.getBag().getFetch().setBaseURL(urlField.getText().trim());
@@ -637,23 +645,5 @@ public class SaveBagFrame extends JFrame implements ActionListener {
                 urlField.setEnabled(false);
             }
         }
-    }
-
-    private static void buildConstraints(final GridBagConstraints gbc, final int x, final int y,
-                                         final int w,
-                                         final int h, final int wx, final int wy, final int fill,
-                                         final int anchor) {
-        gbc.gridx = x; // start cell in a row
-        gbc.gridy = y; // start cell in a column
-        gbc.gridwidth = w; // how many column does the control occupy in the row
-        gbc.gridheight = h; // how many column does the control occupy in the column
-        gbc.weightx = wx; // relative horizontal size
-        gbc.weighty = wy; // relative vertical size
-        gbc.fill = fill; // the way how the control fills cells
-        gbc.anchor = anchor; // alignment
-    }
-
-    private String getMessage(final String property) {
-        return bagView.getPropertyMessage(property);
     }
 }
