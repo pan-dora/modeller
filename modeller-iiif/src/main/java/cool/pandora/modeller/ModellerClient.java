@@ -26,8 +26,13 @@ import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
 import javax.net.ssl.SSLContext;
 import org.apache.commons.io.IOUtils;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.conn.ssl.TrustSelfSignedStrategy;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
 import org.apache.http.ssl.SSLContexts;
 import org.fcrepo.client.FcrepoClient;
 import org.fcrepo.client.FcrepoOperationFailedException;
@@ -54,8 +59,8 @@ public class ModellerClient {
      * doBinaryPut.
      *
      * @param destinationURI URI
-     * @param resourceFile   File
-     * @param contentType    String
+     * @param resourceFile File
+     * @param contentType String
      * @throws ModellerClientFailedException Throwable
      */
     public static void doBinaryPut(final URI destinationURI, final File resourceFile,
@@ -78,8 +83,8 @@ public class ModellerClient {
      * doStreamPut.
      *
      * @param destinationURI URI
-     * @param resourceFile   ByteArrayInputStream
-     * @param contentType    String
+     * @param resourceFile ByteArrayInputStream
+     * @param contentType String
      * @throws ModellerClientFailedException Throwable
      */
     public static void doStreamPut(final URI destinationURI, final InputStream resourceFile,
@@ -118,10 +123,39 @@ public class ModellerClient {
     }
 
     /**
+     * doPost.
+     *
+     * @param parentURI URI
+     * @throws IOException Throwable
+     */
+    public static void doCreateDirectContainer(final URI parentURI, final String slug)
+            throws IOException {
+        CloseableHttpClient client = HttpClients.createDefault();
+        String path = parentURI.getPath();
+        String membershipObj = "http://trellis:8080" + path;
+        try {
+            HttpPost post = new HttpPost(parentURI);
+            final String contentType = "text/turtle";
+            final String entity = "@prefix ldp: <http://www.w3.org/ns/ldp#>\n"
+                    + "<> ldp:hasMemberRelation <http://purl.org/dc/terms/isPartOf> ;\n"
+                    + "ldp:membershipResource " + "<" + membershipObj + ">";
+            post.setEntity(new StringEntity(entity));
+            post.setHeader("Content-Type", contentType);
+            post.setHeader("Slug", slug);
+            post.setHeader("Link", "<http://www.w3.org/ns/ldp#DirectContainer>; rel=\"type\"");
+            HttpResponse response = client.execute(post);
+            log.info(String.valueOf(response.getStatusLine()));
+        } catch (IOException e) {
+            log.info(getMessage(e));
+            throw new IOException(e);
+        }
+    }
+
+    /**
      * doPatch.
      *
      * @param destinationURI URI
-     * @param rdfBody        InputStream
+     * @param rdfBody InputStream
      * @throws ModellerClientFailedException Throwable
      */
     public static void doPatch(final URI destinationURI, final InputStream rdfBody)

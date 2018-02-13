@@ -14,10 +14,13 @@
 
 package cool.pandora.modeller.ui.handlers.iiif;
 
-import static org.apache.commons.lang3.exception.ExceptionUtils.getMessage;
+import static java.util.Collections.singletonMap;
+import static java.util.Optional.ofNullable;
+import static javax.ws.rs.core.HttpHeaders.CONTENT_TYPE;
+import static javax.ws.rs.core.MediaType.APPLICATION_OCTET_STREAM;
 
-import cool.pandora.modeller.ModellerClient;
-import cool.pandora.modeller.ModellerClientFailedException;
+
+import cool.pandora.modeller.ldpclient.HttpClient9;
 import cool.pandora.modeller.bag.BagInfoField;
 import cool.pandora.modeller.bag.BaggerFileEntity;
 import cool.pandora.modeller.bag.impl.DefaultBag;
@@ -26,18 +29,23 @@ import cool.pandora.modeller.ui.handlers.common.IIIFObjectURI;
 import cool.pandora.modeller.ui.jpanel.base.BagView;
 import cool.pandora.modeller.ui.jpanel.iiif.UploadBagFrame;
 import cool.pandora.modeller.ui.util.ApplicationContextUtil;
-import cool.pandora.modeller.util.ImageIOUtil;
 import gov.loc.repository.bagit.impl.AbstractBagConstants;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import javax.activation.FileTypeMap;
+import javax.activation.MimetypesFileTypeMap;
 import javax.swing.AbstractAction;
+import org.apache.commons.rdf.api.IRI;
+import org.apache.commons.rdf.jena.JenaRDF;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -50,6 +58,8 @@ public class UploadBagHandler extends AbstractAction implements Progress {
     protected static final Logger log = LoggerFactory.getLogger(UploadBagHandler.class);
     private static final long serialVersionUID = 1L;
     private final BagView bagView;
+    private final HttpClient9 client = new HttpClient9();
+    private static final JenaRDF rdf = new JenaRDF();
 
     /**
      * UploadBagHandler.
@@ -75,19 +85,22 @@ public class UploadBagHandler extends AbstractAction implements Progress {
         final Path rootDir = bagView.getBagRootPath().toPath();
         for (final String filePath : payload) {
             final String filename = BaggerFileEntity.removeBasePath(basePath, filePath);
-            final URI destinationURI = IIIFObjectURI.getDestinationURI(map, filename);
+            URI uri = IIIFObjectURI.getDestinationURI(map, filename);
+            final IRI identifier = rdf.createIRI(Objects.requireNonNull(uri).toString());
             final Path absoluteFilePath = rootDir.resolve(filePath);
             final File resourceFile = absoluteFilePath.toFile();
+            final String hash = bag.;
             try {
                 final InputStream targetStream = new FileInputStream(resourceFile);
-                final String contentType = ImageIOUtil.getImageMIMEType(resourceFile);
-                try {
-                    ModellerClient.doStreamPut(destinationURI, targetStream, contentType);
-                    ApplicationContextUtil.addConsoleMessage(message + " " + destinationURI);
-                } catch (final ModellerClientFailedException e) {
-                    ApplicationContextUtil.addConsoleMessage(getMessage(e));
-                }
-            } catch (FileNotFoundException e) {
+                final FileTypeMap mimes = FileTypeMap.getDefaultFileTypeMap();
+                ((MimetypesFileTypeMap) mimes).addMimeTypes("application/xml xml XML");
+                final String contentType = mimes.getContentType(resourceFile);
+                final Map<String, String> metadata = singletonMap(
+                        CONTENT_TYPE, ofNullable(contentType)
+                                .orElse(APPLICATION_OCTET_STREAM));
+                client.putStream(identifier, targetStream, metadata);
+                ApplicationContextUtil.addConsoleMessage(message + " " + identifier);
+            } catch (InterruptedException | IOException | URISyntaxException e) {
                 e.printStackTrace();
             }
 

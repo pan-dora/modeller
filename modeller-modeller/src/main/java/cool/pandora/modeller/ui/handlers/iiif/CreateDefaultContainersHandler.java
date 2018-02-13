@@ -16,8 +16,7 @@ package cool.pandora.modeller.ui.handlers.iiif;
 
 import static org.apache.commons.lang3.exception.ExceptionUtils.getMessage;
 
-import cool.pandora.modeller.ModellerClient;
-import cool.pandora.modeller.ModellerClientFailedException;
+import cool.pandora.modeller.ldpclient.HttpClient9;
 import cool.pandora.modeller.ProfileOptions;
 import cool.pandora.modeller.bag.BagInfoField;
 import cool.pandora.modeller.bag.impl.DefaultBag;
@@ -28,11 +27,16 @@ import cool.pandora.modeller.ui.jpanel.base.BagView;
 import cool.pandora.modeller.ui.jpanel.iiif.CreateDefaultContainersFrame;
 import cool.pandora.modeller.ui.util.ApplicationContextUtil;
 import java.awt.event.ActionEvent;
+import java.io.File;
+import java.io.IOException;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Stream;
 import javax.swing.AbstractAction;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,6 +50,7 @@ public class CreateDefaultContainersHandler extends AbstractAction implements Pr
     protected static final Logger log = LoggerFactory.getLogger(SaveBagHandler.class);
     private static final long serialVersionUID = 1L;
     private final BagView bagView;
+    private final HttpClient9 client = new HttpClient9();
 
     /**
      * CreateDefaultContainersHandler.
@@ -71,13 +76,20 @@ public class CreateDefaultContainersHandler extends AbstractAction implements Pr
         final URI objektURI = IIIFObjectURI.getObjektURI(map);
 
         try {
-            ModellerClient.doPut(collectionIDURI);
-        } catch (final ModellerClientFailedException e) {
+            URI collParent = new URI(StringUtils.substringBeforeLast(
+                    Objects.requireNonNull(collectionIDURI).toString(),"/"));
+            String collSlug = new File(Objects.requireNonNull(collectionIDURI).getPath()).getName();
+            client.doCreateDirectContainer(collParent, collSlug);
+        } catch (IOException | URISyntaxException | InterruptedException e) {
             ApplicationContextUtil.addConsoleMessage(getMessage(e));
         }
+
         try {
-            ModellerClient.doPut(objektURI);
-        } catch (final ModellerClientFailedException e) {
+            URI objParent = new URI(StringUtils.substringBeforeLast(
+                    Objects.requireNonNull(objektURI).toString(),"/"));
+            String objSlug = new File(Objects.requireNonNull(objektURI).getPath()).getName();
+            client.doCreateDirectContainer(objParent, objSlug);
+        } catch (IOException | URISyntaxException | InterruptedException e) {
             ApplicationContextUtil.addConsoleMessage(getMessage(e));
         }
 
@@ -101,9 +113,12 @@ public class CreateDefaultContainersHandler extends AbstractAction implements Pr
         for (final String containerKey : Containers) {
             final URI containerURI = IIIFObjectURI.buildContainerURI(map, containerKey);
             try {
-                ModellerClient.doPut(containerURI);
+                URI parent = new URI(StringUtils.substringBeforeLast(
+                        Objects.requireNonNull(containerURI).toString(),"/"));
+                String slug = new File(Objects.requireNonNull(containerURI).getPath()).getName();
+                client.doCreateDirectContainer(parent, slug);
                 ApplicationContextUtil.addConsoleMessage(message + " " + containerURI);
-            } catch (final ModellerClientFailedException e) {
+            } catch (final IOException | URISyntaxException | InterruptedException e) {
                 ApplicationContextUtil.addConsoleMessage(getMessage(e));
             }
         }

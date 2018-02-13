@@ -2,7 +2,9 @@ rootProject.name = 'modeller'
 include 'modeller-core'
 include 'modeller-modeller'
 include 'modeller-business'
-include 'modeller-fedora'
-include 'modeller-marshaller'
 include 'modeller-hocr'
+include 'modeller-iiif'
+include 'modeller-ldpclient'
+include 'modeller-marshaller'
+
 

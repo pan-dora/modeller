@@ -1,0 +1,4 @@
+@prefix ldp: <http://www.w3.org/ns/ldp#>
+
+<> ldp:hasMemberRelation <http://purl.org/dc/terms/isPartOf> ;
+ldp:membershipResource <http://trellis:8080/repository/node/de-15/collection/res> .

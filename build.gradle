@@ -20,7 +20,7 @@ plugins {
 
 ext {
     name = 'Modeller'
-    description = 'A BagIt and Fedora Client'
+    description = 'A BagIt and LDP Client'
     url = 'https://github.com/pan-dora/modeller/'
     inceptionYear = '2017'
     vendor = 'Pandora Ecosystem'
@@ -67,10 +67,12 @@ configure(allprojects) { project ->
     ext.bagItVersion = "4.12.1"
     ext.commonsIoVersion = "2.5"
     ext.commonsLangVersion = "2.6"
+    ext.commonsRdfVersion = '0.5.0'
     ext.fcrepoClientVersion = "0.3.0"
     ext.groovyVersion = "2.4.12"
     ext.imageIoVersion = "3.2.1"
     ext.jaiImageIoVersion = "1.3.0"
+    ext.jaxrsVersion = '2.1'
     ext.javaxRsApiVersion = "2.0"
     ext.jenaVersion = "3.1.0"
     ext.jerseyVersion = "2.23.2"
@@ -81,11 +83,13 @@ configure(allprojects) { project ->
     ext.logbackVersion = "1.2.3"
     ext.mustacheVersion = "0.9.3"
     ext.nachoCalendarVersion = "0.23"
+    ext.slf4jVersion = "1.7.25"
     ext.springBootVersion = "1.4.0.RELEASE"
     ext.springBootLoggingVersion = "1.3.2.RELEASE"
     ext.springFrameworkVersion = "2.5.1"
     ext.springRichclientVersion = "1.1.0"
     ext.swinglabsVersion = "1.6.1"
+    ext.trellisApiVersion = "0.5.2"
     ext.vldockingVersion = "2.1.4"
     ext.xbeamVersion = "1.4.8"
 
@@ -96,7 +100,7 @@ configure(allprojects) { project ->
         tasks.withType(JavaCompile) {
             options.compilerArgs.add("-Xlint:unchecked")
             options.compilerArgs.add("-Xlint:deprecation")
-            options.compilerArgs.addAll(["--add-modules", "java.se.ee"])
+            options.compilerArgs.addAll(["--add-modules=jdk.incubator.httpclient", "--add-modules=java.xml.bind"])
         }
 
         tasks.withType(Javadoc) {
@@ -144,7 +148,7 @@ configure(subprojects) { subproject ->
     def exportedProjects = [
             ":modeller-business",
             ":modeller-core",
-            ":modeller-fedora",
+            ":modeller-iiif",
             ":modeller-marshaller",
             ":modeller-modeller",
             ":modeller-hocr"
@@ -263,7 +267,7 @@ project("modeller-modeller") {
     apply plugin: "application"
 
     mainClassName = "cool.pandora.modeller.ModellerApplication"
-    applicationDefaultJvmArgs += ["--add-modules=java.se.ee"]
+    applicationDefaultJvmArgs += ["--add-modules=jdk.incubator.httpclient","--add-modules=java.xml.bind"]
 
     description = """Spring richclient Modeller GUI"""
 
@@ -272,7 +276,8 @@ project("modeller-modeller") {
     dependencies {
         compile project(":modeller-core"),
                 project(":modeller-business"),
-                project(":modeller-fedora"),
+                project(":modeller-iiif"),
+                project(":modeller-ldpclient"),
                 project(":modeller-marshaller"),
                 project(":modeller-hocr"),
                 "com.vlsolutions:vldocking:${vldockingVersion}",
@@ -283,6 +288,11 @@ project("modeller-modeller") {
         compile("org.springframework.richclient:spring-richclient-core:${springRichclientVersion}") {
             exclude group: 'org.springframework', module: 'spring-core'
         }
+        compile group: 'com.sun.activation', name: 'javax.activation', version: '1.2.0'
+        compile group: 'org.apache.commons', name: 'commons-rdf-jena', version: commonsRdfVersion
+        compile group: 'org.trellisldp', name: 'trellis-api', version: trellisApiVersion
+        compile group: 'org.apache.commons', name: 'commons-rdf-api', version: commonsRdfVersion
+        compile group: 'org.apache.jena', name: 'jena-arq', version: '3.4.0'
         compile "com.jgoodies:forms:${jgoodiesVersion}"
         compile "org.swinglabs:swingx:${swinglabsVersion}"
         compile "org.codehaus.groovy:groovy-all:${groovyVersion}"
@@ -338,32 +348,42 @@ project("modeller-core") {
     }
 }
 
-project("modeller-fedora") {
+project("modeller-hocr") {
+    dependencies {
+        compile project(":modeller-iiif")
+        compile "commons-io:commons-io:${commonsIoVersion}"
+        compile "org.xmlbeam:xmlprojector:${xbeamVersion}"
+        compile "org.apache.jena:jena-arq:${jenaVersion}"
+        compile "org.apache.jena:jena-core:${jenaVersion}"
+        testCompile "junit:junit:${junitVersion}"
+    }
+}
+
+project("modeller-iiif") {
     group 'cool.pandora'
 
     dependencies {
+
+
         compile "org.fcrepo.client:fcrepo-java-client:${fcrepoClientVersion}"
         compile "com.github.spullara.mustache.java:compiler:${mustacheVersion}"
         compile "commons-io:commons-io:${commonsIoVersion}"
         compile "org.apache.jena:jena-core:${jenaVersion}"
         compile "org.apache.jena:jena-arq:${jenaVersion}"
         compile "com.twelvemonkeys.imageio:imageio-tiff:${imageIoVersion}"
-        compile "javax.ws.rs:javax.ws.rs-api:${javaxRsApiVersion}"
-        compile "org.glassfish.jersey.core:jersey-common:${javaxRsApiVersion}"
         compile "com.github.jai-imageio:jai-imageio-jpeg2000:${jaiImageIoVersion}"
+        testCompile group: 'org.apache.commons', name: 'commons-lang3', version: '3.7'
         testCompile "junit:junit:${junitVersion}"
         testCompile "ch.qos.logback:logback-classic:${logbackVersion}"
     }
 
 }
 
-project("modeller-hocr") {
+project("modeller-ldpclient") {
     dependencies {
-        compile project(":modeller-fedora")
-        compile "commons-io:commons-io:${commonsIoVersion}"
-        compile "org.xmlbeam:xmlprojector:${xbeamVersion}"
-        compile "org.apache.jena:jena-arq:${jenaVersion}"
-        compile "org.apache.jena:jena-core:${jenaVersion}"
+        compile group: 'org.slf4j', name: 'slf4j-api', version: slf4jVersion
+        compile group: 'org.apache.commons', name: 'commons-rdf-jena', version: commonsRdfVersion
+        compile "javax.ws.rs:javax.ws.rs-api:${javaxRsApiVersion}"
         testCompile "junit:junit:${junitVersion}"
     }
 }
